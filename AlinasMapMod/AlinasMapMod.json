@@ -1,0 +1,458 @@
+{
+  "items": {
+    "AN_Sylva_Interchange_Yard": {
+      "identifier": "AN_Sylva_Interchange_Yard",
+      "name": "Sylva Interchange Yard",
+      "groupIds": [
+        "AN_Sylva_Interchange_Yard"
+      ],
+      "description": "A yard that can be useful for organizing west bound trains and storing cars if the Interchange is filled to capacity.",
+      "deliveryPhases": [
+        {
+          "cost": 2000,
+          "deliveries": [
+            {
+              "carTypeFilter": "GB*",
+              "count": 4,
+              "load": "ballast",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "GB*",
+              "count": 12,
+              "load": "gravel",
+              "direction": 0
+            }
+          ]
+        },
+        {
+          "cost": 2000,
+          "deliveries": [
+            {
+              "carTypeFilter": "GB*",
+              "count": 2,
+              "load": "gravel",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "GB*",
+              "count": 8,
+              "load": "ties",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "FM*",
+              "count": 6,
+              "load": "rails",
+              "direction": 0
+            }
+          ]
+        }
+      ],
+      "prerequisiteSections": [
+        "s1"
+      ],
+      "area": "sylva",
+      "trackSpans": [
+        "PAN_Sylva_Interchange_Yard_00"
+      ]
+    },
+    "AN_Sylva_Wye": {
+      "identifier": "AN_Sylva_Wye",
+      "name": "Sylva Wye",
+      "groupIds": [
+        "AN_Sylva_Wye"
+      ],
+      "description": "Adds a Wye at the Sylva Interchange, great for turning around those massive Berks.",
+      "area": "sylva",
+      "trackSpans": [
+        "PAN_Sylva_Wye_00"
+      ],
+      "deliveryPhases": [
+        {
+          "cost": 2000,
+          "deliveries": [
+            {
+              "carTypeFilter": "FM",
+              "count": 1,
+              "load": "mow-machinery",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "GB",
+              "count": 100,
+              "load": "debris",
+              "direction": 0
+            }
+          ]
+        },
+        {
+          "cost": 2000,
+          "deliveries": [
+            {
+              "carTypeFilter": "FM",
+              "count": 1,
+              "load": "mow-machinery",
+              "direction": 1
+            },
+            {
+              "carTypeFilter": "GB*",
+              "count": 6,
+              "load": "ballast",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "GB*",
+              "count": 5,
+              "load": "gravel",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "GB*",
+              "count": 2,
+              "load": "ties",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "FM*",
+              "count": 2,
+              "load": "rails",
+              "direction": 0
+            }
+          ]
+        }
+      ],
+      "prerequisiteSections": [
+        "s1",
+        "AN_Sylva_Interchange_Yard"
+      ]
+    },
+    "AN_Whittier_Yard_Sawmill": {
+      "identifier": "AN_Whittier_Yard_Sawmill",
+      "name": "Whittier Sawmill Connection",
+      "groupIds": [
+        "AN_Whittier_Yard_Sawmill"
+      ],
+      "description": "Extend the sawmill track over to the interchange",
+      "trackSpans": [
+        "PAN_Whittier_Yard_00"
+      ],
+      "area": "whittier",
+      "deliveryPhases": [
+        {
+          "cost": 2000,
+          "deliveries": [
+            {
+              "carTypeFilter": "GB*",
+              "count": 4,
+              "load": "ballast",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "GB*",
+              "count": 2,
+              "load": "gravel",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "GB*",
+              "count": 2,
+              "load": "ties",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "FM*",
+              "count": 1,
+              "load": "rails",
+              "direction": 0
+            }
+          ]
+        }
+      ]
+    },
+    "AN_Whittier_Yard_1": {
+      "identifier": "AN_Whittier_Yard_1",
+      "name": "Whittier Yard ",
+      "groupIds": [
+        "AN_Whittier_Yard_Yard_Lead",
+        "AN_Whittier_Yard_Yard_Track_6",
+        "AN_Whittier_Yard_Yard_Track_7",
+        "AN_Whittier_Yard_Yard_Track_8"
+      ],
+      "trackSpans": [
+        "PAN_Whittier_Yard_01"
+      ],
+      "area": "whittier",
+      "description": "A yard that can be useful for organizing trains and storing cars.",
+      "prerequisiteSections": [
+        "AN_Whittier_Yard_Sawmill"
+      ],
+      "deliveryPhases": [
+        {
+          "cost": 2000,
+          "deliveries": [
+            {
+              "carTypeFilter": "GB*",
+              "count": 8,
+              "load": "ballast",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "GB*",
+              "count": 12,
+              "load": "gravel",
+              "direction": 0
+            }
+          ]
+        },
+        {
+          "cost": 2000,
+          "deliveries": [
+            {
+              "carTypeFilter": "GB*",
+              "count": 6,
+              "load": "gravel",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "GB*",
+              "count": 8,
+              "load": "ties",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "FM*",
+              "count": 6,
+              "load": "rails",
+              "direction": 0
+            }
+          ]
+        }
+      ]
+    },
+    "AN_Whittier_Yard_2": {
+      "identifier": "AN_Whittier_Yard_2",
+      "name": "Whittier Yard Extension 2",
+      "groupIds": [
+        "AN_Whittier_Yard_Yard_Track_3",
+        "AN_Whittier_Yard_Yard_Track_4",
+        "AN_Whittier_Yard_Yard_Track_5"
+      ],
+      "trackSpans": [
+        "PAN_Whittier_Yard_01"
+      ],
+      "area": "whittier",
+      "description": "An additional 3 tracks for the Whittier yard",
+      "prerequisiteSections": [
+        "AN_Whittier_Yard_Sawmill",
+        "AN_Whittier_Yard_1"
+      ],
+      "deliveryPhases": [
+        {
+          "cost": 2000,
+          "deliveries": [
+            {
+              "carTypeFilter": "GB*",
+              "count": 8,
+              "load": "ballast",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "GB*",
+              "count": 12,
+              "load": "gravel",
+              "direction": 0
+            }
+          ]
+        },
+        {
+          "cost": 2000,
+          "deliveries": [
+            {
+              "carTypeFilter": "GB*",
+              "count": 6,
+              "load": "gravel",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "GB*",
+              "count": 8,
+              "load": "ties",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "FM*",
+              "count": 6,
+              "load": "rails",
+              "direction": 0
+            }
+          ]
+        }
+      ]
+    },
+    "AN_Whittier_Yard_3": {
+      "identifier": "AN_Whittier_Yard_3",
+      "name": "Whittier Yard Extension 3",
+      "groupIds": [
+        "AN_Whittier_Yard_Yard_Track_0",
+        "AN_Whittier_Yard_Yard_Track_1",
+        "AN_Whittier_Yard_Yard_Track_2"
+      ],
+      "trackSpans": [
+        "PAN_Whittier_Yard_01"
+      ],
+      "area": "whittier",
+      "description": "An additional 3 tracks for the Whittier yard",
+      "prerequisiteSections": [
+        "AN_Whittier_Yard_Sawmill",
+        "AN_Whittier_Yard_1",
+        "AN_Whittier_Yard_2"
+      ],
+      "deliveryPhases": [
+        {
+          "cost": 2000,
+          "deliveries": [
+            {
+              "carTypeFilter": "GB*",
+              "count": 8,
+              "load": "ballast",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "GB*",
+              "count": 12,
+              "load": "gravel",
+              "direction": 0
+            }
+          ]
+        },
+        {
+          "cost": 2000,
+          "deliveries": [
+            {
+              "carTypeFilter": "GB*",
+              "count": 6,
+              "load": "gravel",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "GB*",
+              "count": 8,
+              "load": "ties",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "FM*",
+              "count": 6,
+              "load": "rails",
+              "direction": 0
+            }
+          ]
+        }
+      ]
+    },
+    "AN_Andrews_Interchange_Yard": {
+      "identifier": "AN_Andrews_Interchange_Yard",
+      "name": "Andrews Interchange Yard",
+      "groupIds": [
+        "AN_Andrews_Interchange_Yard"
+      ],
+      "description": "A yard that can be useful for organizing east bound trains and storing cars if the Interchange is filled to capacity.",
+      "trackSpans": [
+        "PAN_Andrews_Interchange_Yard_00"
+      ],
+      "deliveryPhases": [
+        {
+          "cost": 2000,
+          "deliveries": [
+            {
+              "carTypeFilter": "GB*",
+              "count": 4,
+              "load": "ballast",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "GB*",
+              "count": 12,
+              "load": "gravel",
+              "direction": 0
+            }
+          ]
+        },
+        {
+          "cost": 2000,
+          "deliveries": [
+            {
+              "carTypeFilter": "GB*",
+              "count": 2,
+              "load": "gravel",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "GB*",
+              "count": 8,
+              "load": "ties",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "FM*",
+              "count": 6,
+              "load": "rails",
+              "direction": 0
+            }
+          ]
+        }
+      ],
+      "prerequisiteSections": [
+        "s6"
+      ],
+      "area": "andrews"
+    },
+    "AN_Alarka_Jct_Additional": {
+      "identifier": "AN_Alarka_Jct_Additional",
+      "name": "Alarka Jct Additional Tracks",
+      "groupIds": [
+        "AN_Alarka_Jct_Additional"
+      ],
+      "description": "Additional tracks in Alarka Jct, currently just a bypass around the interchange.",
+      "prerequisiteSections": [
+        "alarka-jct"
+      ],
+      "trackSpans": [
+        "Pevc"
+      ],
+      "area": "alarka-jct",
+      "deliveryPhases": [
+        {
+          "cost": 2000,
+          "deliveries": [
+            {
+              "carTypeFilter": "GB*",
+              "count": 4,
+              "load": "ballast",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "GB*",
+              "count": 2,
+              "load": "gravel",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "GB*",
+              "count": 2,
+              "load": "ties",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "FM*",
+              "count": 1,
+              "load": "rails",
+              "direction": 0
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,2060 @@
+{
+  "nodes": {
+    "NAN_Sylva_Interchange_Yard_T0_00": {
+      "position": {
+        "x": 25709.23228603163,
+        "y": 630,
+        "z": 463.32630472142216
+      },
+      "rotation": {
+        "y": 53.8292122
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Interchange_Yard_T0_01": {
+      "position": {
+        "x": 25725.377512571613,
+        "y": 630,
+        "z": 475.1301879795992
+      },
+      "rotation": {
+        "y": 53.8292122
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Interchange_Yard_T0_02": {
+      "position": {
+        "x": 26088.6451097212,
+        "y": 630,
+        "z": 740.7175612885828
+      },
+      "rotation": {
+        "y": 53.8292122
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Interchange_Yard_T1_00": {
+      "position": {
+        "x": 25731.34045909764,
+        "y": 630,
+        "z": 483.42302827592
+      },
+      "rotation": {
+        "y": 45.8292122
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Interchange_Yard_T1_01": {
+      "position": {
+        "x": 25746.895491474712,
+        "y": 630,
+        "z": 496.0341728610961
+      },
+      "rotation": {
+        "y": 53.8292122
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Interchange_Yard_T1_02": {
+      "position": {
+        "x": 26086.180935166583,
+        "y": 630,
+        "z": 744.0880331534909
+      },
+      "rotation": {
+        "y": 53.8292122
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Interchange_Yard_T2_00": {
+      "position": {
+        "x": 25752.858438000738,
+        "y": 630,
+        "z": 504.3270131574169
+      },
+      "rotation": {
+        "y": 45.8292122
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Interchange_Yard_T2_01": {
+      "position": {
+        "x": 25768.41347037781,
+        "y": 630,
+        "z": 516.938157742593
+      },
+      "rotation": {
+        "y": 53.8292122
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Interchange_Yard_T2_02": {
+      "position": {
+        "x": 26083.71676061197,
+        "y": 630,
+        "z": 747.4585050183989
+      },
+      "rotation": {
+        "y": 53.8292122
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Interchange_Yard_T3_00": {
+      "position": {
+        "x": 25774.376416903833,
+        "y": 630,
+        "z": 525.2309980389139
+      },
+      "rotation": {
+        "y": 45.8292122
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Interchange_Yard_T3_01": {
+      "position": {
+        "x": 25789.931449280906,
+        "y": 630,
+        "z": 537.84214262409
+      },
+      "rotation": {
+        "y": 53.8292122
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Interchange_Yard_T3_02": {
+      "position": {
+        "x": 26081.25258605735,
+        "y": 630,
+        "z": 750.8289768833068
+      },
+      "rotation": {
+        "y": 53.8292122
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Interchange_Yard_T4_00": {
+      "position": {
+        "x": 25795.894395806932,
+        "y": 630,
+        "z": 546.1349829204107
+      },
+      "rotation": {
+        "y": 45.8292122
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Interchange_Yard_T4_01": {
+      "position": {
+        "x": 25811.449428184005,
+        "y": 630,
+        "z": 558.7461275055869
+      },
+      "rotation": {
+        "y": 53.8292122
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Interchange_Yard_T4_02": {
+      "position": {
+        "x": 26078.788411502734,
+        "y": 630,
+        "z": 754.1994487482148
+      },
+      "rotation": {
+        "y": 53.8292122
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Interchange_Yard_T5_00": {
+      "position": {
+        "x": 25817.412374710028,
+        "y": 630,
+        "z": 567.0389678019076
+      },
+      "rotation": {
+        "y": 45.8292122
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Interchange_Yard_T5_01": {
+      "position": {
+        "x": 25832.9674070871,
+        "y": 630,
+        "z": 579.6501123870837
+      },
+      "rotation": {
+        "y": 53.8292122
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Interchange_Yard_T5_02": {
+      "position": {
+        "x": 26076.32423694812,
+        "y": 630,
+        "z": 757.5699206131228
+      },
+      "rotation": {
+        "y": 53.8292122
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Interchange_Yard_T6_00": {
+      "position": {
+        "x": 25838.930353613126,
+        "y": 630,
+        "z": 587.9429526834044
+      },
+      "rotation": {
+        "y": 45.8292122
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Interchange_Yard_T6_01": {
+      "position": {
+        "x": 25854.4853859902,
+        "y": 630,
+        "z": 600.5540972685806
+      },
+      "rotation": {
+        "y": 53.8292122
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Interchange_Yard_T6_02": {
+      "position": {
+        "x": 26073.8600623935,
+        "y": 630,
+        "z": 760.9403924780308
+      },
+      "rotation": {
+        "y": 53.8292122
+      },
+      "flipSwitchStand": false
+    },
+    "Nf8a": {
+      "position": {
+        "x": 25667.2,
+        "y": 630,
+        "z": 427.5
+      },
+      "rotation": {
+        "y": 53.839138
+      },
+      "flipSwitchStand": false
+    },
+    "Nmjn": {
+      "position": {
+        "x": 25922.7969,
+        "y": 630,
+        "z": 614.0962
+      },
+      "rotation": {
+        "y": 53.839138
+      },
+      "flipSwitchStand": false
+    },
+    "N86n": {
+      "position": {
+        "x": 25522.2,
+        "y": 629.7,
+        "z": 274.5
+      },
+      "rotation": {
+        "x": 359.769775,
+        "y": 21.165329,
+        "z": 3.33508e-9
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Wye_00": {
+      "position": {
+        "x": 25534.673285912555,
+        "y": 629.7,
+        "z": 373.7190361702013
+      },
+      "rotation": {
+        "y": 4.165329
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Wye_01": {
+      "position": {
+        "x": 25530.606953754646,
+        "y": 629.7,
+        "z": 413.5118111775008
+      },
+      "rotation": {
+        "y": 164.16532899999999
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Wye_02": {
+      "position": {
+        "x": 25699.081790576856,
+        "y": 629.7,
+        "z": 661.7379769169921
+      },
+      "rotation": {
+        "y": 54.165328999999986
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Wye_03": {
+      "position": {
+        "x": 25256.89655283699,
+        "y": 629.7,
+        "z": 536.3231153375688
+      },
+      "rotation": {
+        "y": 274.165329
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Wye_04": {
+      "position": {
+        "x": 25780.15276048797,
+        "y": 633.7,
+        "z": 720.2828130485516
+      },
+      "rotation": {
+        "y": 54.165328999999986
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Wye_05": {
+      "position": {
+        "x": 25157.16069156182,
+        "y": 633.7,
+        "z": 543.5865839098111
+      },
+      "rotation": {
+        "y": 274.165329
+      },
+      "flipSwitchStand": false
+    },
+    "Njk9": {
+      "position": {
+        "x": 13206.42,
+        "y": 561.25,
+        "z": 4371.01
+      },
+      "rotation": {
+        "y": 115.81
+      },
+      "flipSwitchStand": true
+    },
+    "N1be": {
+      "position": {
+        "x": 12961.83,
+        "y": 561.25,
+        "z": 4517.96
+      },
+      "rotation": {
+        "y": 314.583435
+      },
+      "flipSwitchStand": true
+    },
+    "N72a": {
+      "position": {
+        "x": 12777.7236,
+        "y": 559.6,
+        "z": 4687.71045
+      },
+      "rotation": {
+        "x": -9.49194771e-7,
+        "y": 126.406487,
+        "z": 0.0000041335843
+      },
+      "flipSwitchStand": false
+    },
+    "Nijv": {
+      "position": {
+        "x": 12671.06,
+        "y": 559.6,
+        "z": 4766.41
+      },
+      "rotation": {
+        "x": -9.49194771e-7,
+        "y": 126.406487,
+        "z": 0.0000041335843
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_00": {
+      "position": {
+        "x": 13155,
+        "y": 561.25,
+        "z": 4414.5
+      },
+      "rotation": {
+        "y": 303
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_01": {
+      "position": {
+        "x": 12915,
+        "y": 561.25,
+        "z": 4564
+      },
+      "rotation": {
+        "y": 312
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_02": {
+      "position": {
+        "x": 12828.434850373267,
+        "y": 561.25,
+        "z": 4643.727083478861
+      },
+      "rotation": {
+        "y": 312.6
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_03": {
+      "position": {
+        "x": 13251.43213977665,
+        "y": 561.25,
+        "z": 4349.240588599432
+      },
+      "rotation": {
+        "y": 115.81
+      },
+      "flipSwitchStand": true
+    },
+    "NAN_Whittier_Yard_04": {
+      "position": {
+        "x": 13225.66602431137,
+        "y": 561.25,
+        "z": 4364.6063718150635
+      },
+      "rotation": {
+        "y": 305.81
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T0_00": {
+      "position": {
+        "x": 13137.679491924311,
+        "y": 561.25,
+        "z": 4425
+      },
+      "rotation": {
+        "y": 300
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T0_01": {
+      "position": {
+        "x": 13112.42429056935,
+        "y": 561.25,
+        "z": 4444.382612127177
+      },
+      "rotation": {
+        "y": 312
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T0_02": {
+      "position": {
+        "x": 12926.638084200002,
+        "y": 561.25,
+        "z": 4611.665263716892
+      },
+      "rotation": {
+        "y": 312
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T0_03": {
+      "position": {
+        "x": 12901.382882845042,
+        "y": 561.25,
+        "z": 4631.047875844069
+      },
+      "rotation": {
+        "y": 300
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T1_00": {
+      "position": {
+        "x": 13120.358983848622,
+        "y": 561.25,
+        "z": 4435
+      },
+      "rotation": {
+        "y": 300
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T1_01": {
+      "position": {
+        "x": 13095.103782493661,
+        "y": 561.25,
+        "z": 4454.382612127177
+      },
+      "rotation": {
+        "y": 312
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T1_02": {
+      "position": {
+        "x": 12909.317576124313,
+        "y": 561.25,
+        "z": 4621.665263716892
+      },
+      "rotation": {
+        "y": 312
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T1_03": {
+      "position": {
+        "x": 12884.062374769353,
+        "y": 561.25,
+        "z": 4641.047875844069
+      },
+      "rotation": {
+        "y": 300
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T2_00": {
+      "position": {
+        "x": 13103.038475772933,
+        "y": 561.25,
+        "z": 4445
+      },
+      "rotation": {
+        "y": 300
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T2_01": {
+      "position": {
+        "x": 13077.783274417972,
+        "y": 561.25,
+        "z": 4464.382612127177
+      },
+      "rotation": {
+        "y": 312
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T2_02": {
+      "position": {
+        "x": 12891.997068048624,
+        "y": 561.25,
+        "z": 4631.665263716892
+      },
+      "rotation": {
+        "y": 312
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T2_03": {
+      "position": {
+        "x": 12866.741866693665,
+        "y": 561.25,
+        "z": 4651.047875844069
+      },
+      "rotation": {
+        "y": 300
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T3_00": {
+      "position": {
+        "x": 13085.717967697245,
+        "y": 561.25,
+        "z": 4455
+      },
+      "rotation": {
+        "y": 300
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T3_01": {
+      "position": {
+        "x": 13060.462766342283,
+        "y": 561.25,
+        "z": 4474.382612127177
+      },
+      "rotation": {
+        "y": 312
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T3_02": {
+      "position": {
+        "x": 12874.676559972935,
+        "y": 561.25,
+        "z": 4641.665263716892
+      },
+      "rotation": {
+        "y": 312
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T3_03": {
+      "position": {
+        "x": 12849.421358617976,
+        "y": 561.25,
+        "z": 4661.047875844069
+      },
+      "rotation": {
+        "y": 300
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T4_00": {
+      "position": {
+        "x": 13068.397459621556,
+        "y": 561.25,
+        "z": 4465
+      },
+      "rotation": {
+        "y": 300
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T4_01": {
+      "position": {
+        "x": 13043.142258266595,
+        "y": 561.25,
+        "z": 4484.382612127177
+      },
+      "rotation": {
+        "y": 312
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T4_02": {
+      "position": {
+        "x": 12857.356051897246,
+        "y": 561.25,
+        "z": 4651.665263716892
+      },
+      "rotation": {
+        "y": 312
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T4_03": {
+      "position": {
+        "x": 12832.100850542287,
+        "y": 561.25,
+        "z": 4671.047875844069
+      },
+      "rotation": {
+        "y": 300
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T5_00": {
+      "position": {
+        "x": 13051.076951545867,
+        "y": 561.25,
+        "z": 4475
+      },
+      "rotation": {
+        "y": 300
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T5_01": {
+      "position": {
+        "x": 13025.821750190906,
+        "y": 561.25,
+        "z": 4494.382612127177
+      },
+      "rotation": {
+        "y": 312
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T5_02": {
+      "position": {
+        "x": 12840.035543821557,
+        "y": 561.25,
+        "z": 4661.665263716892
+      },
+      "rotation": {
+        "y": 312
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T5_03": {
+      "position": {
+        "x": 12814.780342466598,
+        "y": 561.25,
+        "z": 4681.047875844069
+      },
+      "rotation": {
+        "y": 300
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T6_00": {
+      "position": {
+        "x": 13033.756443470178,
+        "y": 561.25,
+        "z": 4485
+      },
+      "rotation": {
+        "y": 300
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T6_01": {
+      "position": {
+        "x": 13008.501242115217,
+        "y": 561.25,
+        "z": 4504.382612127177
+      },
+      "rotation": {
+        "y": 312
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T6_02": {
+      "position": {
+        "x": 12822.715035745869,
+        "y": 561.25,
+        "z": 4671.665263716892
+      },
+      "rotation": {
+        "y": 312
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T6_03": {
+      "position": {
+        "x": 12797.45983439091,
+        "y": 561.25,
+        "z": 4691.047875844069
+      },
+      "rotation": {
+        "y": 300
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T7_00": {
+      "position": {
+        "x": 13016.43593539449,
+        "y": 561.25,
+        "z": 4495
+      },
+      "rotation": {
+        "y": 300
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T7_01": {
+      "position": {
+        "x": 12991.180734039528,
+        "y": 561.25,
+        "z": 4514.382612127177
+      },
+      "rotation": {
+        "y": 312
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T7_02": {
+      "position": {
+        "x": 12805.39452767018,
+        "y": 561.25,
+        "z": 4681.665263716892
+      },
+      "rotation": {
+        "y": 312
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T7_03": {
+      "position": {
+        "x": 12780.13932631522,
+        "y": 561.25,
+        "z": 4701.047875844069
+      },
+      "rotation": {
+        "y": 300
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T8_00": {
+      "position": {
+        "x": 12999.1154273188,
+        "y": 561.25,
+        "z": 4505
+      },
+      "rotation": {
+        "y": 300
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T8_01": {
+      "position": {
+        "x": 12973.86022596384,
+        "y": 561.25,
+        "z": 4524.382612127177
+      },
+      "rotation": {
+        "y": 312
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T8_02": {
+      "position": {
+        "x": 12788.07401959449,
+        "y": 561.25,
+        "z": 4691.665263716892
+      },
+      "rotation": {
+        "y": 312
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_T8_03": {
+      "position": {
+        "x": 12762.818818239532,
+        "y": 561.25,
+        "z": 4711.047875844069
+      },
+      "rotation": {
+        "y": 300
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_05": {
+      "position": {
+        "x": 12672.669653211204,
+        "y": 559.6,
+        "z": 4765.222979975039
+      },
+      "rotation": {
+        "y": 126.406487
+      },
+      "flipSwitchStand": true
+    },
+    "NAN_Whittier_Yard_06": {
+      "position": {
+        "x": 12696.81445137928,
+        "y": 559.6,
+        "z": 4747.41767960063
+      },
+      "rotation": {
+        "y": 126.406487
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Whittier_Yard_07": {
+      "position": {
+        "x": 12698.274407311712,
+        "y": 559.6,
+        "z": 4749.589791961954
+      },
+      "rotation": {
+        "y": 121.406487
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Andrews_Interchange_Yard_T0_00": {
+      "position": {
+        "x": -30691.757667859638,
+        "y": 531.9,
+        "z": -20424.61179931156
+      },
+      "rotation": {
+        "y": 249.07799999999997
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Andrews_Interchange_Yard_T0_01": {
+      "position": {
+        "x": -30710.439016417615,
+        "y": 531.9,
+        "z": -20431.753732947163
+      },
+      "rotation": {
+        "y": 249.07799999999997
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Andrews_Interchange_Yard_T0_02": {
+      "position": {
+        "x": -31037.36261618221,
+        "y": 528.9,
+        "z": -20556.737571570236
+      },
+      "rotation": {
+        "y": 249.07799999999997
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Andrews_Interchange_Yard_T1_00": {
+      "position": {
+        "x": -30718.373131402033,
+        "y": 531.9,
+        "z": -20438.18628693967
+      },
+      "rotation": {
+        "y": 241.07799999999997
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Andrews_Interchange_Yard_T1_01": {
+      "position": {
+        "x": -30736.69738327823,
+        "y": 531.9,
+        "z": -20446.26228800317
+      },
+      "rotation": {
+        "y": 249.07799999999997
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Andrews_Interchange_Yard_T1_02": {
+      "position": {
+        "x": -31035.871668605832,
+        "y": 528.9,
+        "z": -20560.63748338363
+      },
+      "rotation": {
+        "y": 249.07799999999997
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Andrews_Interchange_Yard_T2_00": {
+      "position": {
+        "x": -30744.63149826265,
+        "y": 531.9,
+        "z": -20452.69484199568
+      },
+      "rotation": {
+        "y": 241.07799999999997
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Andrews_Interchange_Yard_T2_01": {
+      "position": {
+        "x": -30762.955750138848,
+        "y": 531.9,
+        "z": -20460.77084305918
+      },
+      "rotation": {
+        "y": 249.07799999999997
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Andrews_Interchange_Yard_T2_02": {
+      "position": {
+        "x": -31034.380721029454,
+        "y": 528.9,
+        "z": -20564.537395197025
+      },
+      "rotation": {
+        "y": 249.07799999999997
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Andrews_Interchange_Yard_T3_00": {
+      "position": {
+        "x": -30770.889865123267,
+        "y": 531.9,
+        "z": -20467.203397051686
+      },
+      "rotation": {
+        "y": 241.07799999999997
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Andrews_Interchange_Yard_T3_01": {
+      "position": {
+        "x": -30789.214116999465,
+        "y": 531.9,
+        "z": -20475.27939811519
+      },
+      "rotation": {
+        "y": 249.07799999999997
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Andrews_Interchange_Yard_T3_02": {
+      "position": {
+        "x": -31032.889773453076,
+        "y": 528.9,
+        "z": -20568.43730701042
+      },
+      "rotation": {
+        "y": 249.07799999999997
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Andrews_Interchange_Yard_T4_00": {
+      "position": {
+        "x": -30797.148231983883,
+        "y": 531.9,
+        "z": -20481.711952107697
+      },
+      "rotation": {
+        "y": 241.07799999999997
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Andrews_Interchange_Yard_T4_01": {
+      "position": {
+        "x": -30815.47248386008,
+        "y": 531.9,
+        "z": -20489.7879531712
+      },
+      "rotation": {
+        "y": 249.07799999999997
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Andrews_Interchange_Yard_T4_02": {
+      "position": {
+        "x": -31031.398825876702,
+        "y": 528.9,
+        "z": -20572.337218823814
+      },
+      "rotation": {
+        "y": 249.07799999999997
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Andrews_Interchange_Yard_T5_00": {
+      "position": {
+        "x": -30823.4065988445,
+        "y": 531.9,
+        "z": -20496.220507163707
+      },
+      "rotation": {
+        "y": 241.07799999999997
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Andrews_Interchange_Yard_T5_01": {
+      "position": {
+        "x": -30841.730850720698,
+        "y": 531.9,
+        "z": -20504.29650822721
+      },
+      "rotation": {
+        "y": 249.07799999999997
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Andrews_Interchange_Yard_T5_02": {
+      "position": {
+        "x": -31029.907878300324,
+        "y": 528.9,
+        "z": -20576.237130637208
+      },
+      "rotation": {
+        "y": 249.07799999999997
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Andrews_Interchange_Yard_T6_00": {
+      "position": {
+        "x": -30849.664965705117,
+        "y": 531.9,
+        "z": -20510.729062219718
+      },
+      "rotation": {
+        "y": 241.07799999999997
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Andrews_Interchange_Yard_T6_01": {
+      "position": {
+        "x": -30867.989217581315,
+        "y": 531.9,
+        "z": -20518.80506328322
+      },
+      "rotation": {
+        "y": 249.07799999999997
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Andrews_Interchange_Yard_T6_02": {
+      "position": {
+        "x": -31028.416930723946,
+        "y": 528.9,
+        "z": -20580.137042450602
+      },
+      "rotation": {
+        "y": 249.07799999999997
+      },
+      "flipSwitchStand": false
+    },
+    "Nrgu": {
+      "position": {
+        "x": -30663.2,
+        "y": 531.9,
+        "z": -20415.3
+      },
+      "rotation": {
+        "x": 0.700002849,
+        "y": 257.078,
+        "z": -2.66824181e-8
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Andrews_Interchange_Yard_MainlineExtension_00": {
+      "position": {
+        "x": -30692.440262013373,
+        "y": 531.9,
+        "z": -20422.00873142922
+      },
+      "rotation": {
+        "y": 257.078
+      },
+      "flipSwitchStand": false
+    },
+    "N3cj": {
+      "position": {
+        "x": 1738.28,
+        "y": 589.950867,
+        "z": 1455.21
+      },
+      "rotation": {
+        "x": 0.312111974,
+        "y": 182.763672,
+        "z": -8.3377566e-10
+      },
+      "flipSwitchStand": true
+    },
+    "N3wo": {
+      "position": {
+        "x": 1849.7,
+        "y": 586.12,
+        "z": 1005.3
+      },
+      "rotation": {
+        "x": 0.08594362,
+        "y": 164.467529,
+        "z": -1.30900972e-7
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Alarka_Jct_Additional_00": {
+      "position": {
+        "x": 1754.0480592832957,
+        "y": 589.950867,
+        "z": 1397.3189963255218
+      },
+      "rotation": {
+        "y": 158.763672
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Alarka_Jct_Additional_01": {
+      "position": {
+        "x": 1790.8917786856287,
+        "y": 587.950867,
+        "z": 1294.7886202207392
+      },
+      "rotation": {
+        "y": 163.763672
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Alarka_Jct_Additional_02": {
+      "position": {
+        "x": 1840.560363390912,
+        "y": 586.12,
+        "z": 1054.457573604215
+      },
+      "rotation": {
+        "y": 352.467529
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Alarka_Jct_Additional_03": {
+      "position": {
+        "x": 1828.6907723325005,
+        "y": 586.12,
+        "z": 1133.572128574246
+      },
+      "rotation": {
+        "y": 349.467529
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Alarka_Jct_Additional_04": {
+      "position": {
+        "x": 1821.3790630452302,
+        "y": 587.12,
+        "z": 1172.8981874576182
+      },
+      "rotation": {
+        "y": 349.467529
+      },
+      "flipSwitchStand": false
+    }
+  },
+  "segments": {
+    "SAN_Sylva_Interchange_Yard_T0_00": {
+      "style": "Standard",
+      "startId": "Nf8a",
+      "endId": "NAN_Sylva_Interchange_Yard_T0_00",
+      "priority": 0,
+      "groupId": "AN_Sylva_Interchange_Yard"
+    },
+    "SAN_Sylva_Interchange_Yard_T0_01": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Interchange_Yard_T0_00",
+      "endId": "NAN_Sylva_Interchange_Yard_T0_01",
+      "priority": 0,
+      "groupId": "AN_Sylva_Interchange_Yard"
+    },
+    "SAN_Sylva_Interchange_Yard_T0_02": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Interchange_Yard_T0_01",
+      "endId": "NAN_Sylva_Interchange_Yard_T0_02",
+      "priority": 0,
+      "groupId": "AN_Sylva_Interchange_Yard"
+    },
+    "SAN_Sylva_Interchange_Yard_T1_00": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Interchange_Yard_T0_00",
+      "endId": "NAN_Sylva_Interchange_Yard_T1_00",
+      "priority": 0,
+      "groupId": "AN_Sylva_Interchange_Yard"
+    },
+    "SAN_Sylva_Interchange_Yard_T1_01": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Interchange_Yard_T1_00",
+      "endId": "NAN_Sylva_Interchange_Yard_T1_01",
+      "priority": 0,
+      "groupId": "AN_Sylva_Interchange_Yard"
+    },
+    "SAN_Sylva_Interchange_Yard_T1_02": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Interchange_Yard_T1_01",
+      "endId": "NAN_Sylva_Interchange_Yard_T1_02",
+      "priority": 0,
+      "groupId": "AN_Sylva_Interchange_Yard"
+    },
+    "SAN_Sylva_Interchange_Yard_T2_00": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Interchange_Yard_T1_00",
+      "endId": "NAN_Sylva_Interchange_Yard_T2_00",
+      "priority": 0,
+      "groupId": "AN_Sylva_Interchange_Yard"
+    },
+    "SAN_Sylva_Interchange_Yard_T2_01": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Interchange_Yard_T2_00",
+      "endId": "NAN_Sylva_Interchange_Yard_T2_01",
+      "priority": 0,
+      "groupId": "AN_Sylva_Interchange_Yard"
+    },
+    "SAN_Sylva_Interchange_Yard_T2_02": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Interchange_Yard_T2_01",
+      "endId": "NAN_Sylva_Interchange_Yard_T2_02",
+      "priority": 0,
+      "groupId": "AN_Sylva_Interchange_Yard"
+    },
+    "SAN_Sylva_Interchange_Yard_T3_00": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Interchange_Yard_T2_00",
+      "endId": "NAN_Sylva_Interchange_Yard_T3_00",
+      "priority": 0,
+      "groupId": "AN_Sylva_Interchange_Yard"
+    },
+    "SAN_Sylva_Interchange_Yard_T3_01": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Interchange_Yard_T3_00",
+      "endId": "NAN_Sylva_Interchange_Yard_T3_01",
+      "priority": 0,
+      "groupId": "AN_Sylva_Interchange_Yard"
+    },
+    "SAN_Sylva_Interchange_Yard_T3_02": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Interchange_Yard_T3_01",
+      "endId": "NAN_Sylva_Interchange_Yard_T3_02",
+      "priority": 0,
+      "groupId": "AN_Sylva_Interchange_Yard"
+    },
+    "SAN_Sylva_Interchange_Yard_T4_00": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Interchange_Yard_T3_00",
+      "endId": "NAN_Sylva_Interchange_Yard_T4_00",
+      "priority": 0,
+      "groupId": "AN_Sylva_Interchange_Yard"
+    },
+    "SAN_Sylva_Interchange_Yard_T4_01": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Interchange_Yard_T4_00",
+      "endId": "NAN_Sylva_Interchange_Yard_T4_01",
+      "priority": 0,
+      "groupId": "AN_Sylva_Interchange_Yard"
+    },
+    "SAN_Sylva_Interchange_Yard_T4_02": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Interchange_Yard_T4_01",
+      "endId": "NAN_Sylva_Interchange_Yard_T4_02",
+      "priority": 0,
+      "groupId": "AN_Sylva_Interchange_Yard"
+    },
+    "SAN_Sylva_Interchange_Yard_T5_00": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Interchange_Yard_T4_00",
+      "endId": "NAN_Sylva_Interchange_Yard_T5_00",
+      "priority": 0,
+      "groupId": "AN_Sylva_Interchange_Yard"
+    },
+    "SAN_Sylva_Interchange_Yard_T5_01": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Interchange_Yard_T5_00",
+      "endId": "NAN_Sylva_Interchange_Yard_T5_01",
+      "priority": 0,
+      "groupId": "AN_Sylva_Interchange_Yard"
+    },
+    "SAN_Sylva_Interchange_Yard_T5_02": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Interchange_Yard_T5_01",
+      "endId": "NAN_Sylva_Interchange_Yard_T5_02",
+      "priority": 0,
+      "groupId": "AN_Sylva_Interchange_Yard"
+    },
+    "SAN_Sylva_Interchange_Yard_T6_00": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Interchange_Yard_T5_00",
+      "endId": "NAN_Sylva_Interchange_Yard_T6_00",
+      "priority": 0,
+      "groupId": "AN_Sylva_Interchange_Yard"
+    },
+    "SAN_Sylva_Interchange_Yard_T6_01": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Interchange_Yard_T6_00",
+      "endId": "NAN_Sylva_Interchange_Yard_T6_01",
+      "priority": 0,
+      "groupId": "AN_Sylva_Interchange_Yard"
+    },
+    "SAN_Sylva_Interchange_Yard_T6_02": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Interchange_Yard_T6_01",
+      "endId": "NAN_Sylva_Interchange_Yard_T6_02",
+      "priority": 0,
+      "groupId": "AN_Sylva_Interchange_Yard"
+    },
+    "SAN_Sylva_Wye_00": {
+      "style": "Standard",
+      "startId": "N86n",
+      "endId": "NAN_Sylva_Wye_00",
+      "priority": 0,
+      "groupId": "AN_Sylva_Wye"
+    },
+    "SAN_Sylva_Wye_01": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Wye_00",
+      "endId": "NAN_Sylva_Wye_01",
+      "priority": 0,
+      "groupId": "AN_Sylva_Wye"
+    },
+    "SAN_Sylva_Wye_02": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Wye_01",
+      "endId": "NAN_Sylva_Wye_02",
+      "priority": 0,
+      "groupId": "AN_Sylva_Wye"
+    },
+    "SAN_Sylva_Wye_03": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Wye_01",
+      "endId": "NAN_Sylva_Wye_03",
+      "priority": 0,
+      "groupId": "AN_Sylva_Wye"
+    },
+    "SAN_Sylva_Wye_04": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Wye_02",
+      "endId": "NAN_Sylva_Wye_04",
+      "priority": 0,
+      "groupId": "AN_Sylva_Wye"
+    },
+    "SAN_Sylva_Wye_05": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Wye_03",
+      "endId": "NAN_Sylva_Wye_05",
+      "priority": 0,
+      "groupId": "AN_Sylva_Wye"
+    },
+    "SAN_Sylva_Wye_06": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Wye_02",
+      "endId": "NAN_Sylva_Wye_03",
+      "priority": 0,
+      "groupId": "AN_Sylva_Wye"
+    },
+    "SAN_Whittier_Yard_00": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_01",
+      "endId": "NAN_Whittier_Yard_02",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Sawmill"
+    },
+    "Sj4c": {
+      "style": "Standard",
+      "startId": "N5es",
+      "endId": "NAN_Whittier_Yard_03",
+      "priority": 0,
+      "groupId": ""
+    },
+    "SAN_Whittier_Yard_01": {
+      "style": "Standard",
+      "startId": "Njk9",
+      "endId": "NAN_Whittier_Yard_03",
+      "priority": 0,
+      "groupId": ""
+    },
+    "SAN_Whittier_Yard_02": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_03",
+      "endId": "NAN_Whittier_Yard_04",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Lead"
+    },
+    "SAN_Whittier_Yard_03": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_00",
+      "endId": "NAN_Whittier_Yard_04",
+      "priority": -1,
+      "groupId": "AN_Whittier_Yard_Yard_Lead"
+    },
+    "SAN_Whittier_Yard_04": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_01",
+      "endId": "N1be",
+      "priority": -1,
+      "groupId": "AN_Whittier_Yard_Sawmill"
+    },
+    "SAN_Whittier_Yard_05": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_02",
+      "endId": "N72a",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Sawmill"
+    },
+    "SAN_Whittier_Yard_L0_00": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_00",
+      "endId": "NAN_Whittier_Yard_T0_00",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Lead"
+    },
+    "SAN_Whittier_Yard_T0_00": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T0_00",
+      "endId": "NAN_Whittier_Yard_T0_01",
+      "priority": -1,
+      "groupId": "AN_Whittier_Yard_Yard_Track_0"
+    },
+    "SAN_Whittier_Yard_T0_01": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T0_01",
+      "endId": "NAN_Whittier_Yard_T0_02",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Track_0"
+    },
+    "SAN_Whittier_Yard_T0_02": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T0_02",
+      "endId": "NAN_Whittier_Yard_T0_03",
+      "priority": -1,
+      "groupId": "AN_Whittier_Yard_Yard_Track_0"
+    },
+    "SAN_Whittier_Yard_L1_00": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T0_00",
+      "endId": "NAN_Whittier_Yard_T1_00",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Lead"
+    },
+    "SAN_Whittier_Yard_T1_00": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T1_00",
+      "endId": "NAN_Whittier_Yard_T1_01",
+      "priority": -1,
+      "groupId": "AN_Whittier_Yard_Yard_Track_1"
+    },
+    "SAN_Whittier_Yard_T1_01": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T1_01",
+      "endId": "NAN_Whittier_Yard_T1_02",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Track_1"
+    },
+    "SAN_Whittier_Yard_T1_02": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T1_02",
+      "endId": "NAN_Whittier_Yard_T1_03",
+      "priority": -1,
+      "groupId": "AN_Whittier_Yard_Yard_Track_1"
+    },
+    "SAN_Whittier_Yard_L2_00": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T1_00",
+      "endId": "NAN_Whittier_Yard_T2_00",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Lead"
+    },
+    "SAN_Whittier_Yard_T2_00": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T2_00",
+      "endId": "NAN_Whittier_Yard_T2_01",
+      "priority": -1,
+      "groupId": "AN_Whittier_Yard_Yard_Track_2"
+    },
+    "SAN_Whittier_Yard_T2_01": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T2_01",
+      "endId": "NAN_Whittier_Yard_T2_02",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Track_2"
+    },
+    "SAN_Whittier_Yard_T2_02": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T2_02",
+      "endId": "NAN_Whittier_Yard_T2_03",
+      "priority": -1,
+      "groupId": "AN_Whittier_Yard_Yard_Track_2"
+    },
+    "SAN_Whittier_Yard_L3_00": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T2_00",
+      "endId": "NAN_Whittier_Yard_T3_00",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Lead"
+    },
+    "SAN_Whittier_Yard_T3_00": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T3_00",
+      "endId": "NAN_Whittier_Yard_T3_01",
+      "priority": -1,
+      "groupId": "AN_Whittier_Yard_Yard_Track_3"
+    },
+    "SAN_Whittier_Yard_T3_01": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T3_01",
+      "endId": "NAN_Whittier_Yard_T3_02",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Track_3"
+    },
+    "SAN_Whittier_Yard_T3_02": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T3_02",
+      "endId": "NAN_Whittier_Yard_T3_03",
+      "priority": -1,
+      "groupId": "AN_Whittier_Yard_Yard_Track_3"
+    },
+    "SAN_Whittier_Yard_L4_00": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T3_00",
+      "endId": "NAN_Whittier_Yard_T4_00",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Lead"
+    },
+    "SAN_Whittier_Yard_T4_00": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T4_00",
+      "endId": "NAN_Whittier_Yard_T4_01",
+      "priority": -1,
+      "groupId": "AN_Whittier_Yard_Yard_Track_4"
+    },
+    "SAN_Whittier_Yard_T4_01": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T4_01",
+      "endId": "NAN_Whittier_Yard_T4_02",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Track_4"
+    },
+    "SAN_Whittier_Yard_T4_02": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T4_02",
+      "endId": "NAN_Whittier_Yard_T4_03",
+      "priority": -1,
+      "groupId": "AN_Whittier_Yard_Yard_Track_4"
+    },
+    "SAN_Whittier_Yard_L5_00": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T4_00",
+      "endId": "NAN_Whittier_Yard_T5_00",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Lead"
+    },
+    "SAN_Whittier_Yard_T5_00": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T5_00",
+      "endId": "NAN_Whittier_Yard_T5_01",
+      "priority": -1,
+      "groupId": "AN_Whittier_Yard_Yard_Track_5"
+    },
+    "SAN_Whittier_Yard_T5_01": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T5_01",
+      "endId": "NAN_Whittier_Yard_T5_02",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Track_5"
+    },
+    "SAN_Whittier_Yard_T5_02": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T5_02",
+      "endId": "NAN_Whittier_Yard_T5_03",
+      "priority": -1,
+      "groupId": "AN_Whittier_Yard_Yard_Track_5"
+    },
+    "SAN_Whittier_Yard_L6_00": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T5_00",
+      "endId": "NAN_Whittier_Yard_T6_00",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Lead"
+    },
+    "SAN_Whittier_Yard_T6_00": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T6_00",
+      "endId": "NAN_Whittier_Yard_T6_01",
+      "priority": -1,
+      "groupId": "AN_Whittier_Yard_Yard_Track_6"
+    },
+    "SAN_Whittier_Yard_T6_01": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T6_01",
+      "endId": "NAN_Whittier_Yard_T6_02",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Track_6"
+    },
+    "SAN_Whittier_Yard_T6_02": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T6_02",
+      "endId": "NAN_Whittier_Yard_T6_03",
+      "priority": -1,
+      "groupId": "AN_Whittier_Yard_Yard_Track_6"
+    },
+    "SAN_Whittier_Yard_L7_00": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T6_00",
+      "endId": "NAN_Whittier_Yard_T7_00",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Lead"
+    },
+    "SAN_Whittier_Yard_T7_00": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T7_00",
+      "endId": "NAN_Whittier_Yard_T7_01",
+      "priority": -1,
+      "groupId": "AN_Whittier_Yard_Yard_Track_7"
+    },
+    "SAN_Whittier_Yard_T7_01": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T7_01",
+      "endId": "NAN_Whittier_Yard_T7_02",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Track_7"
+    },
+    "SAN_Whittier_Yard_T7_02": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T7_02",
+      "endId": "NAN_Whittier_Yard_T7_03",
+      "priority": -1,
+      "groupId": "AN_Whittier_Yard_Yard_Track_7"
+    },
+    "SAN_Whittier_Yard_L8_00": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T7_00",
+      "endId": "NAN_Whittier_Yard_T8_00",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Lead"
+    },
+    "SAN_Whittier_Yard_T8_00": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T8_00",
+      "endId": "NAN_Whittier_Yard_T8_01",
+      "priority": -1,
+      "groupId": "AN_Whittier_Yard_Yard_Track_8"
+    },
+    "SAN_Whittier_Yard_T8_01": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T8_01",
+      "endId": "NAN_Whittier_Yard_T8_02",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Track_8"
+    },
+    "SAN_Whittier_Yard_T8_02": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T8_02",
+      "endId": "NAN_Whittier_Yard_T8_03",
+      "priority": -1,
+      "groupId": "AN_Whittier_Yard_Yard_Track_8"
+    },
+    "Sj6n": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_06",
+      "endId": "N72a",
+      "priority": 0,
+      "groupId": ""
+    },
+    "SAN_Whittier_Yard_06": {
+      "style": "Standard",
+      "startId": "Nijv",
+      "endId": "NAN_Whittier_Yard_05",
+      "priority": 0,
+      "groupId": ""
+    },
+    "SAN_Whittier_Yard_07": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_05",
+      "endId": "NAN_Whittier_Yard_06",
+      "priority": 0,
+      "groupId": ""
+    },
+    "SAN_Whittier_Yard_08": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_05",
+      "endId": "NAN_Whittier_Yard_07",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Lead"
+    },
+    "SAN_Whittier_Yard_L0_01": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T0_03",
+      "endId": "NAN_Whittier_Yard_T1_03",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Lead"
+    },
+    "SAN_Whittier_Yard_L1_01": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T1_03",
+      "endId": "NAN_Whittier_Yard_T2_03",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Lead"
+    },
+    "SAN_Whittier_Yard_L2_01": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T2_03",
+      "endId": "NAN_Whittier_Yard_T3_03",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Lead"
+    },
+    "SAN_Whittier_Yard_L3_01": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T3_03",
+      "endId": "NAN_Whittier_Yard_T4_03",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Lead"
+    },
+    "SAN_Whittier_Yard_L4_01": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T4_03",
+      "endId": "NAN_Whittier_Yard_T5_03",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Lead"
+    },
+    "SAN_Whittier_Yard_L5_01": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T5_03",
+      "endId": "NAN_Whittier_Yard_T6_03",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Lead"
+    },
+    "SAN_Whittier_Yard_L6_01": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T6_03",
+      "endId": "NAN_Whittier_Yard_T7_03",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Lead"
+    },
+    "SAN_Whittier_Yard_L7_01": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T7_03",
+      "endId": "NAN_Whittier_Yard_T8_03",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Lead"
+    },
+    "SAN_Whittier_Yard_L8_01": {
+      "style": "Standard",
+      "startId": "NAN_Whittier_Yard_T8_03",
+      "endId": "NAN_Whittier_Yard_07",
+      "priority": 0,
+      "groupId": "AN_Whittier_Yard_Yard_Lead"
+    },
+    "SAN_Andrews_Interchange_Yard_L0_00": {
+      "style": "Standard",
+      "startId": "Nrgu",
+      "endId": "NAN_Andrews_Interchange_Yard_T0_00",
+      "priority": 0,
+      "groupId": "AN_Andrews_Interchange_Yard"
+    },
+    "SAN_Andrews_Interchange_Yard_T0_00": {
+      "style": "Standard",
+      "startId": "NAN_Andrews_Interchange_Yard_T0_00",
+      "endId": "NAN_Andrews_Interchange_Yard_T0_01",
+      "priority": 0,
+      "groupId": "AN_Andrews_Interchange_Yard"
+    },
+    "SAN_Andrews_Interchange_Yard_T0_01": {
+      "style": "Standard",
+      "startId": "NAN_Andrews_Interchange_Yard_T0_01",
+      "endId": "NAN_Andrews_Interchange_Yard_T0_02",
+      "priority": 0,
+      "groupId": "AN_Andrews_Interchange_Yard"
+    },
+    "SAN_Andrews_Interchange_Yard_L1_00": {
+      "style": "Standard",
+      "startId": "NAN_Andrews_Interchange_Yard_T0_00",
+      "endId": "NAN_Andrews_Interchange_Yard_T1_00",
+      "priority": 0,
+      "groupId": "AN_Andrews_Interchange_Yard"
+    },
+    "SAN_Andrews_Interchange_Yard_T1_00": {
+      "style": "Standard",
+      "startId": "NAN_Andrews_Interchange_Yard_T1_00",
+      "endId": "NAN_Andrews_Interchange_Yard_T1_01",
+      "priority": 0,
+      "groupId": "AN_Andrews_Interchange_Yard"
+    },
+    "SAN_Andrews_Interchange_Yard_T1_01": {
+      "style": "Standard",
+      "startId": "NAN_Andrews_Interchange_Yard_T1_01",
+      "endId": "NAN_Andrews_Interchange_Yard_T1_02",
+      "priority": 0,
+      "groupId": "AN_Andrews_Interchange_Yard"
+    },
+    "SAN_Andrews_Interchange_Yard_L2_00": {
+      "style": "Standard",
+      "startId": "NAN_Andrews_Interchange_Yard_T1_00",
+      "endId": "NAN_Andrews_Interchange_Yard_T2_00",
+      "priority": 0,
+      "groupId": "AN_Andrews_Interchange_Yard"
+    },
+    "SAN_Andrews_Interchange_Yard_T2_00": {
+      "style": "Standard",
+      "startId": "NAN_Andrews_Interchange_Yard_T2_00",
+      "endId": "NAN_Andrews_Interchange_Yard_T2_01",
+      "priority": 0,
+      "groupId": "AN_Andrews_Interchange_Yard"
+    },
+    "SAN_Andrews_Interchange_Yard_T2_01": {
+      "style": "Standard",
+      "startId": "NAN_Andrews_Interchange_Yard_T2_01",
+      "endId": "NAN_Andrews_Interchange_Yard_T2_02",
+      "priority": 0,
+      "groupId": "AN_Andrews_Interchange_Yard"
+    },
+    "SAN_Andrews_Interchange_Yard_L3_00": {
+      "style": "Standard",
+      "startId": "NAN_Andrews_Interchange_Yard_T2_00",
+      "endId": "NAN_Andrews_Interchange_Yard_T3_00",
+      "priority": 0,
+      "groupId": "AN_Andrews_Interchange_Yard"
+    },
+    "SAN_Andrews_Interchange_Yard_T3_00": {
+      "style": "Standard",
+      "startId": "NAN_Andrews_Interchange_Yard_T3_00",
+      "endId": "NAN_Andrews_Interchange_Yard_T3_01",
+      "priority": 0,
+      "groupId": "AN_Andrews_Interchange_Yard"
+    },
+    "SAN_Andrews_Interchange_Yard_T3_01": {
+      "style": "Standard",
+      "startId": "NAN_Andrews_Interchange_Yard_T3_01",
+      "endId": "NAN_Andrews_Interchange_Yard_T3_02",
+      "priority": 0,
+      "groupId": "AN_Andrews_Interchange_Yard"
+    },
+    "SAN_Andrews_Interchange_Yard_L4_00": {
+      "style": "Standard",
+      "startId": "NAN_Andrews_Interchange_Yard_T3_00",
+      "endId": "NAN_Andrews_Interchange_Yard_T4_00",
+      "priority": 0,
+      "groupId": "AN_Andrews_Interchange_Yard"
+    },
+    "SAN_Andrews_Interchange_Yard_T4_00": {
+      "style": "Standard",
+      "startId": "NAN_Andrews_Interchange_Yard_T4_00",
+      "endId": "NAN_Andrews_Interchange_Yard_T4_01",
+      "priority": 0,
+      "groupId": "AN_Andrews_Interchange_Yard"
+    },
+    "SAN_Andrews_Interchange_Yard_T4_01": {
+      "style": "Standard",
+      "startId": "NAN_Andrews_Interchange_Yard_T4_01",
+      "endId": "NAN_Andrews_Interchange_Yard_T4_02",
+      "priority": 0,
+      "groupId": "AN_Andrews_Interchange_Yard"
+    },
+    "SAN_Andrews_Interchange_Yard_L5_00": {
+      "style": "Standard",
+      "startId": "NAN_Andrews_Interchange_Yard_T4_00",
+      "endId": "NAN_Andrews_Interchange_Yard_T5_00",
+      "priority": 0,
+      "groupId": "AN_Andrews_Interchange_Yard"
+    },
+    "SAN_Andrews_Interchange_Yard_T5_00": {
+      "style": "Standard",
+      "startId": "NAN_Andrews_Interchange_Yard_T5_00",
+      "endId": "NAN_Andrews_Interchange_Yard_T5_01",
+      "priority": 0,
+      "groupId": "AN_Andrews_Interchange_Yard"
+    },
+    "SAN_Andrews_Interchange_Yard_T5_01": {
+      "style": "Standard",
+      "startId": "NAN_Andrews_Interchange_Yard_T5_01",
+      "endId": "NAN_Andrews_Interchange_Yard_T5_02",
+      "priority": 0,
+      "groupId": "AN_Andrews_Interchange_Yard"
+    },
+    "SAN_Andrews_Interchange_Yard_L6_00": {
+      "style": "Standard",
+      "startId": "NAN_Andrews_Interchange_Yard_T5_00",
+      "endId": "NAN_Andrews_Interchange_Yard_T6_00",
+      "priority": 0,
+      "groupId": "AN_Andrews_Interchange_Yard"
+    },
+    "SAN_Andrews_Interchange_Yard_T6_00": {
+      "style": "Standard",
+      "startId": "NAN_Andrews_Interchange_Yard_T6_00",
+      "endId": "NAN_Andrews_Interchange_Yard_T6_01",
+      "priority": 0,
+      "groupId": "AN_Andrews_Interchange_Yard"
+    },
+    "SAN_Andrews_Interchange_Yard_T6_01": {
+      "style": "Standard",
+      "startId": "NAN_Andrews_Interchange_Yard_T6_01",
+      "endId": "NAN_Andrews_Interchange_Yard_T6_02",
+      "priority": 0,
+      "groupId": "AN_Andrews_Interchange_Yard"
+    },
+    "Sinb": {
+      "style": "Standard",
+      "startId": "NAN_Andrews_Interchange_Yard_MainlineExtension_00",
+      "endId": "Nomqv",
+      "priority": 0,
+      "groupId": ""
+    },
+    "SAN_Andrews_Interchange_Yard_MainlineExtension_00": {
+      "style": "Standard",
+      "startId": "Nrgu",
+      "endId": "NAN_Andrews_Interchange_Yard_MainlineExtension_00",
+      "priority": 0,
+      "groupId": ""
+    },
+    "SAN_Alarka_Jct_Additional_00": {
+      "style": "Standard",
+      "startId": "N3cj",
+      "endId": "NAN_Alarka_Jct_Additional_00",
+      "priority": 0,
+      "groupId": "AN_Alarka_Jct_Additional"
+    },
+    "SAN_Alarka_Jct_Additional_01": {
+      "style": "Standard",
+      "startId": "NAN_Alarka_Jct_Additional_00",
+      "endId": "NAN_Alarka_Jct_Additional_01",
+      "priority": 0,
+      "groupId": "AN_Alarka_Jct_Additional"
+    },
+    "SAN_Alarka_Jct_Additional_02": {
+      "style": "Standard",
+      "startId": "N3wo",
+      "endId": "NAN_Alarka_Jct_Additional_02",
+      "priority": 0,
+      "groupId": "AN_Alarka_Jct_Additional"
+    },
+    "SAN_Alarka_Jct_Additional_03": {
+      "style": "Standard",
+      "startId": "NAN_Alarka_Jct_Additional_02",
+      "endId": "NAN_Alarka_Jct_Additional_03",
+      "priority": 0,
+      "groupId": "AN_Alarka_Jct_Additional"
+    },
+    "SAN_Alarka_Jct_Additional_04": {
+      "style": "Standard",
+      "startId": "NAN_Alarka_Jct_Additional_03",
+      "endId": "NAN_Alarka_Jct_Additional_04",
+      "priority": 0,
+      "groupId": "AN_Alarka_Jct_Additional"
+    },
+    "SAN_Alarka_Jct_Additional_05": {
+      "style": "Standard",
+      "startId": "NAN_Alarka_Jct_Additional_04",
+      "endId": "NAN_Alarka_Jct_Additional_01",
+      "priority": 0,
+      "groupId": "AN_Alarka_Jct_Additional"
+    }
+  },
+  "areas": {},
+  "spans": {
+    "PAN_Sylva_Interchange_Yard_00": {
+      "upper": {
+        "segmentId": "S3ns",
+        "end": "Start",
+        "distance": 0
+      },
+      "lower": {
+        "segmentId": "S3ns",
+        "end": "End",
+        "distance": 0
+      }
+    },
+    "PAN_Sylva_Wye_00": {
+      "upper": {
+        "segmentId": "SAN_Sylva_Interchange_Yard_T0_02",
+        "end": "Start",
+        "distance": 0
+      },
+      "lower": {
+        "segmentId": "SAN_Sylva_Interchange_Yard_T0_02",
+        "end": "End",
+        "distance": 0
+      }
+    },
+    "PAN_Whittier_Yard_00": {
+      "upper": {
+        "segmentId": "Sj6n",
+        "end": "End",
+        "distance": 0
+      },
+      "lower": {
+        "segmentId": "S6if",
+        "end": "End",
+        "distance": 0
+      }
+    },
+    "PAN_Whittier_Yard_01": {
+      "upper": {
+        "segmentId": "SAN_Whittier_Yard_06",
+        "end": "Start",
+        "distance": 0
+      },
+      "lower": {
+        "segmentId": "SAN_Whittier_Yard_04",
+        "end": "Start",
+        "distance": 0
+      }
+    },
+    "PAN_Andrews_Interchange_Yard_00": {
+      "upper": {
+        "segmentId": "S8gq9",
+        "end": "Start",
+        "distance": 0
+      },
+      "lower": {
+        "segmentId": "S8gq9",
+        "end": "End",
+        "distance": 0
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- Optionally, set a few things to your liking -->
+    <MajorVersion>1</MajorVersion>
+    <MinorVersion>3</MinorVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <GameAssembly Include="Assembly-CSharp" />
+    <GameAssembly Include="0Harmony" />
+    <GameAssembly Include="Ops" />
+    <GameAssembly Include="Definition" />
+    <GameAssembly Include="Railloader.Interchange" />
+    <GameAssembly Include="Serilog" />
+    <GameAssembly Include="Newtonsoft.Json" />
+    <GameAssembly Include="Unity.TextMeshPro" />
+    <GameAssembly Include="UnityEngine.CoreModule" />
+  </ItemGroup>
+</Project>

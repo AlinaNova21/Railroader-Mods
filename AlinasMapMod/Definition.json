@@ -1,0 +1,20 @@
+{
+  "manifestVersion": 1,
+  "id": "AlinaNova21.AlinasMapMod",
+  "name": "Alina's Map Mod",
+  "version": "$(AssemblyVersion)",
+  "assemblies": [ "AlinasMapMod" ],
+  "_requires": [
+    {
+      "id": "Zamu.StrangeCustoms",
+      "notBefore": "1.6.24069.2251"
+    }
+  ],
+  "requires": [
+    "Zamu.StrangeCustoms"
+  ],
+  "mixintos": {
+    "game-graph": "file(game-graph.json)",
+    "AlinasMapMod": "file(AlinasMapMod.json)"
+  }
+}

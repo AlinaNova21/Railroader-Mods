@@ -1,0 +1,6 @@
+﻿<Project>
+  <PropertyGroup>
+    <!-- Directory that the game (Railroader.exe) is in -->
+    <GameDir>C:\Steam\steamapps\common\Railroader</GameDir>
+  </PropertyGroup>
+</Project>

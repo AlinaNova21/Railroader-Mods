@@ -1,0 +1,26 @@
+﻿<Project>
+  <Import Project="Paths.user" Condition="Exists('Paths.user')" />
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>false</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Definition.json" CopyToOutputDirectory="Always" />
+    <Content Include="AlinasMapMod.json" CopyToOutputDirectory="Always" />
+    <Content Include="game-graph.json" CopyToOutputDirectory="Always" />
+    <PackageReference Include="BUTR.Harmony.Analyzer" Version="1.0.1.50">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+</Project>
