@@ -66,5 +66,8 @@
     
     <!-- Move them to the game directory -->
     <Copy SourceFiles="@(OutputFiles)" DestinationFolder="$(GameModDir)" />
+
+    <!-- Publish to GitHub -->
+    <Exec Command="gh release create v$(AssemblyVersion) --generate-notes $(ZipName)" />
   </Target>
 </Project>

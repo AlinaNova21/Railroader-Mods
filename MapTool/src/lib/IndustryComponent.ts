@@ -1,6 +1,6 @@
-import { GraphPart } from "./Graph.js"
+import { Load } from "./Load.js"
 import { TrackSpan } from "./TrackSpan.js"
-import { Id } from "./utils.js"
+import { Id, isDirty } from "./utils.js"
 
 enum CarTypes {
   All = "*",
@@ -25,29 +25,79 @@ export enum IndustryComponentType {
   TeleportLoadingIndustry = "Model.OpsNew.TeleportLoadingIndustry",
 }
 
-export interface IndustryComponentJson {
-  type: IndustryComponentType
+export type Interchange = {
+  type: IndustryComponentType.Interchange
+} & IndustryComponentBase
+
+export type InterchangedIndustryLoader = {
+  type: IndustryComponentType.InterchangedIndustryLoader
+} & IndustryComponentBase
+
+export type RepairTrack = {
+  type: IndustryComponentType.RepairTrack
+} & IndustryComponentBase
+
+export type TeamTrack = {
+  type: IndustryComponentType.TeamTrack
+} & IndustryComponentBase
+
+export type TeleportLoadingIndustry = {
+  type: IndustryComponentType.TeleportLoadingIndustry
+} & IndustryComponentBase
+
+export type ProgressionIndustryComponent = {
+  type: IndustryComponentType.ProgressionIndustryComponent
+} & IndustryComponentBase
+
+export type FormulaicIndustryComponent = {
+  type: IndustryComponentType.FormulaicIndustryComponent
+  inputTermsPerDay: Record<Id<Load>, number>
+  outputTermsPerDay: Record<Id<Load>, number>
+} & IndustryComponentBase
+
+export type IndustryLoader = {
+  type: IndustryComponentType.IndustryLoader
+} & _IndustryLoaderUnLoader
+
+export type IndustryUnLoader = {
+  type: IndustryComponentType.IndustryUnLoader
+} & _IndustryLoaderUnLoader
+
+export type _IndustryLoaderUnLoader = {
+  loadId: Id<Load>
+  storageChangeRate: number
+  maxStorage: number
+  orderAroundEmpties: boolean
+  carTransferRate: number
+  orderAroundLoaded: boolean
+} & IndustryComponentBase
+
+export interface IndustryComponentBase extends isDirty{
+  name: string
   trackSpans: Id<TrackSpan>[]
-  carTypeFiler: string
+  carTypeFilter: string
   sharedStorage: boolean
 }
 
-export class IndustryComponent implements GraphPart<IndustryComponentJson, IndustryComponent> {
-  public trackSpans: Id<TrackSpan>[] = []
-  public carTypeFilter = ""
-  public sharedStorage = false
-  constructor(public id: Id<IndustryComponent>, public type: IndustryComponentType) { }
-  toJson(): IndustryComponentJson {
-    return {
-      type: this.type,
-      trackSpans: this.trackSpans,
-      carTypeFiler: this.carTypeFilter,
-      sharedStorage: this.sharedStorage,
-    }
-  }
-  static fromJson(id: Id<IndustryComponent>, data: IndustryComponentJson): IndustryComponent {
-    const { type, ...props } = data
-    return Object.assign(new IndustryComponent(id, type), props)
-  }
+export type IndustryComponent =
+  | FormulaicIndustryComponent
+  | IndustryLoader
+  | IndustryUnLoader
+  | Interchange
+  | InterchangedIndustryLoader
+  | ProgressionIndustryComponent
+  | RepairTrack
+  | TeamTrack
+  | TeleportLoadingIndustry
 
-}
+export type IndustryComponentTypeMap<T> =
+  T extends "Model.OpsNew.FormulaicIndustryComponent" ? FormulaicIndustryComponent :
+  T extends "Model.OpsNew.IndustryLoader" ? IndustryLoader :
+  T extends "Model.OpsNew.IndustryUnLoader" ? IndustryUnLoader :
+  T extends "Model.OpsNew.Interchange" ? Interchange :
+  T extends "Model.OpsNew.InterchangedIndustryLoader" ? InterchangedIndustryLoader :
+  T extends "Model.OpsNew.ProgressionIndustryComponent" ? ProgressionIndustryComponent :
+  T extends "Model.OpsNew.RepairTrack" ? RepairTrack :
+  T extends "Model.OpsNew.TeamTrack" ? TeamTrack :
+  T extends "Model.OpsNew.TeleportLoadingIndustry" ? TeleportLoadingIndustry :
+  never

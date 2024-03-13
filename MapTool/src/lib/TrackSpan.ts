@@ -1,6 +1,6 @@
 import { GraphPart } from "./Graph.js"
 import { Segment } from "./Segment.js"
-import { Id } from "./utils.js"
+import { Id, dirtyLogSym, isDirtySym } from "./utils.js"
 
 export interface TrackSpanJson {
   upper: TrackSpanPart
@@ -18,7 +18,10 @@ export interface TrackSpanPart {
   end: TrackSpanPartEnd
 }
 
-export class TrackSpan implements GraphPart<TrackSpanJson,TrackSpan> {
+export class TrackSpan implements GraphPart<TrackSpanJson, TrackSpan> {
+  public [isDirtySym] = false
+  public [dirtyLogSym] = new Set<string>()
+  
   constructor(public id: Id<TrackSpan>, public upper: TrackSpanPart, public lower: TrackSpanPart) {}
   toJson(): TrackSpanJson {
     const { upper, lower } = this
@@ -29,6 +32,6 @@ export class TrackSpan implements GraphPart<TrackSpanJson,TrackSpan> {
   }
   static fromJson(id: Id<TrackSpan>, data: TrackSpanJson): TrackSpan {
     const { upper, lower, ...props } = data
-    return Object.assign(new TrackSpan(id, upper, lower), props)
+    return Object.assign(new TrackSpan(id, upper, lower), props, { [isDirtySym]: false })
   }
 }

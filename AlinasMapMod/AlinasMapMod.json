@@ -55,7 +55,8 @@
       "area": "sylva",
       "trackSpans": [
         "PAN_Sylva_Interchange_Yard_00"
-      ]
+      ],
+      "industryComponent": "AN_Sylva_Interchange_Yard.interchange-yard-site"
     },
     "AN_Sylva_Wye": {
       "identifier": "AN_Sylva_Wye",
@@ -125,7 +126,8 @@
       "prerequisiteSections": [
         "s1",
         "AN_Sylva_Interchange_Yard"
-      ]
+      ],
+      "industryComponent": "AN_Sylva_Wye.wye-site"
     },
     "AN_Whittier_Yard_Sawmill": {
       "identifier": "AN_Whittier_Yard_Sawmill",
@@ -138,6 +140,7 @@
         "PAN_Whittier_Yard_00"
       ],
       "area": "whittier",
+      "industryComponent": "AN_Whittier_Yard.sawmill-site",
       "deliveryPhases": [
         {
           "cost": 2000,
@@ -182,6 +185,7 @@
       "trackSpans": [
         "PAN_Whittier_Yard_01"
       ],
+      "industryComponent": "AN_Whittier_Yard.yard-site-1",
       "area": "whittier",
       "description": "A yard that can be useful for organizing trains and storing cars.",
       "prerequisiteSections": [
@@ -241,6 +245,7 @@
       "trackSpans": [
         "PAN_Whittier_Yard_01"
       ],
+      "industryComponent": "AN_Whittier_Yard.yard-site-2",
       "area": "whittier",
       "description": "An additional 3 tracks for the Whittier yard",
       "prerequisiteSections": [
@@ -301,6 +306,7 @@
       "trackSpans": [
         "PAN_Whittier_Yard_01"
       ],
+      "industryComponent": "AN_Whittier_Yard.yard-site-3",
       "area": "whittier",
       "description": "An additional 3 tracks for the Whittier yard",
       "prerequisiteSections": [
@@ -361,6 +367,7 @@
       "trackSpans": [
         "PAN_Andrews_Interchange_Yard_00"
       ],
+      "industryComponent": "AN_Andrews_Interchange_Yard.interchange-yard-site",
       "deliveryPhases": [
         {
           "cost": 2000,
@@ -421,6 +428,7 @@
       "trackSpans": [
         "Pevc"
       ],
+      "industryComponent": "AN_Alarka_Jct_Additional.alarka-bypass-site",
       "area": "alarka-jct",
       "deliveryPhases": [
         {

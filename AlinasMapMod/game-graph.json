@@ -1,5 +1,11 @@
 {
   "nodes": {
+    "Njk9": {
+      "flipSwitchStand": true
+    },
+    "N1be": {
+      "flipSwitchStand": true
+    },
     "NAN_Sylva_Interchange_Yard_T0_00": {
       "position": {
         "x": 25709.23228603163,
@@ -231,41 +237,6 @@
       },
       "flipSwitchStand": false
     },
-    "Nf8a": {
-      "position": {
-        "x": 25667.2,
-        "y": 630,
-        "z": 427.5
-      },
-      "rotation": {
-        "y": 53.839138
-      },
-      "flipSwitchStand": false
-    },
-    "Nmjn": {
-      "position": {
-        "x": 25922.7969,
-        "y": 630,
-        "z": 614.0962
-      },
-      "rotation": {
-        "y": 53.839138
-      },
-      "flipSwitchStand": false
-    },
-    "N86n": {
-      "position": {
-        "x": 25522.2,
-        "y": 629.7,
-        "z": 274.5
-      },
-      "rotation": {
-        "x": 359.769775,
-        "y": 21.165329,
-        "z": 3.33508e-9
-      },
-      "flipSwitchStand": false
-    },
     "NAN_Sylva_Wye_00": {
       "position": {
         "x": 25534.673285912555,
@@ -329,54 +300,6 @@
       },
       "rotation": {
         "y": 274.165329
-      },
-      "flipSwitchStand": false
-    },
-    "Njk9": {
-      "position": {
-        "x": 13206.42,
-        "y": 561.25,
-        "z": 4371.01
-      },
-      "rotation": {
-        "y": 115.81
-      },
-      "flipSwitchStand": true
-    },
-    "N1be": {
-      "position": {
-        "x": 12961.83,
-        "y": 561.25,
-        "z": 4517.96
-      },
-      "rotation": {
-        "y": 314.583435
-      },
-      "flipSwitchStand": true
-    },
-    "N72a": {
-      "position": {
-        "x": 12777.7236,
-        "y": 559.6,
-        "z": 4687.71045
-      },
-      "rotation": {
-        "x": -9.49194771e-7,
-        "y": 126.406487,
-        "z": 0.0000041335843
-      },
-      "flipSwitchStand": false
-    },
-    "Nijv": {
-      "position": {
-        "x": 12671.06,
-        "y": 559.6,
-        "z": 4766.41
-      },
-      "rotation": {
-        "x": -9.49194771e-7,
-        "y": 126.406487,
-        "z": 0.0000041335843
       },
       "flipSwitchStand": false
     },
@@ -1095,19 +1018,6 @@
       },
       "flipSwitchStand": false
     },
-    "Nrgu": {
-      "position": {
-        "x": -30663.2,
-        "y": 531.9,
-        "z": -20415.3
-      },
-      "rotation": {
-        "x": 0.700002849,
-        "y": 257.078,
-        "z": -2.66824181e-8
-      },
-      "flipSwitchStand": false
-    },
     "NAN_Andrews_Interchange_Yard_MainlineExtension_00": {
       "position": {
         "x": -30692.440262013373,
@@ -1116,32 +1026,6 @@
       },
       "rotation": {
         "y": 257.078
-      },
-      "flipSwitchStand": false
-    },
-    "N3cj": {
-      "position": {
-        "x": 1738.28,
-        "y": 589.950867,
-        "z": 1455.21
-      },
-      "rotation": {
-        "x": 0.312111974,
-        "y": 182.763672,
-        "z": -8.3377566e-10
-      },
-      "flipSwitchStand": true
-    },
-    "N3wo": {
-      "position": {
-        "x": 1849.7,
-        "y": 586.12,
-        "z": 1005.3
-      },
-      "rotation": {
-        "x": 0.08594362,
-        "y": 164.467529,
-        "z": -1.30900972e-7
       },
       "flipSwitchStand": false
     },
@@ -1199,9 +1083,27 @@
         "y": 349.467529
       },
       "flipSwitchStand": false
+    },
+    "AlinasMapMod": {
+      "position": {
+        "x": 0.9748534877312929,
+        "y": 0.07658129017671556,
+        "z": 0.2649902895850078
+      },
+      "rotation": {},
+      "flipSwitchStand": false
     }
   },
   "segments": {
+    "Sj6n": {
+      "startId": "NAN_Whittier_Yard_06"
+    },
+    "Sinb": {
+      "startId": "NAN_Andrews_Interchange_Yard_MainlineExtension_00"
+    },
+    "Sj4c": {
+      "endId": "NAN_Whittier_Yard_03"
+    },
     "SAN_Sylva_Interchange_Yard_T0_00": {
       "style": "Standard",
       "startId": "Nf8a",
@@ -1404,13 +1306,6 @@
       "endId": "NAN_Whittier_Yard_02",
       "priority": 0,
       "groupId": "AN_Whittier_Yard_Sawmill"
-    },
-    "Sj4c": {
-      "style": "Standard",
-      "startId": "N5es",
-      "endId": "NAN_Whittier_Yard_03",
-      "priority": 0,
-      "groupId": ""
     },
     "SAN_Whittier_Yard_01": {
       "style": "Standard",
@@ -1699,13 +1594,6 @@
       "priority": -1,
       "groupId": "AN_Whittier_Yard_Yard_Track_8"
     },
-    "Sj6n": {
-      "style": "Standard",
-      "startId": "NAN_Whittier_Yard_06",
-      "endId": "N72a",
-      "priority": 0,
-      "groupId": ""
-    },
     "SAN_Whittier_Yard_06": {
       "style": "Standard",
       "startId": "Nijv",
@@ -1937,13 +1825,6 @@
       "priority": 0,
       "groupId": "AN_Andrews_Interchange_Yard"
     },
-    "Sinb": {
-      "style": "Standard",
-      "startId": "NAN_Andrews_Interchange_Yard_MainlineExtension_00",
-      "endId": "Nomqv",
-      "priority": 0,
-      "groupId": ""
-    },
     "SAN_Andrews_Interchange_Yard_MainlineExtension_00": {
       "style": "Standard",
       "startId": "Nrgu",
@@ -1994,7 +1875,131 @@
       "groupId": "AN_Alarka_Jct_Additional"
     }
   },
-  "areas": {},
+  "areas": {
+    "sylva": {
+      "industries": {
+        "AN_Sylva_Interchange_Yard": {
+          "name": "Sylva Expansion",
+          "localPosition": {},
+          "usesContract": false,
+          "components": {
+            "interchange-yard-site": {
+              "name": "Sylva Expansion Site",
+              "type": "Model.OpsNew.ProgressionIndustryComponent",
+              "carTypeFilter": "*",
+              "sharedStorage": true,
+              "trackSpans": [
+                "PAN_Sylva_Interchange_Yard_00"
+              ]
+            }
+          }
+        },
+        "AN_Sylva_Wye": {
+          "name": "Sylva Expansion",
+          "localPosition": {},
+          "usesContract": false,
+          "components": {
+            "wye-site": {
+              "name": "Sylva Expansion Site",
+              "type": "Model.OpsNew.ProgressionIndustryComponent",
+              "carTypeFilter": "*",
+              "sharedStorage": true,
+              "trackSpans": [
+                "PAN_Sylva_Wye_00"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "whittier": {
+      "industries": {
+        "AN_Whittier_Yard": {
+          "name": "East Whittier Expansion",
+          "localPosition": {},
+          "usesContract": false,
+          "components": {
+            "sawmill-site": {
+              "name": "East Whittier Expansion Site",
+              "type": "Model.OpsNew.ProgressionIndustryComponent",
+              "carTypeFilter": "*",
+              "sharedStorage": true,
+              "trackSpans": [
+                "PAN_Whittier_Yard_00"
+              ]
+            },
+            "yard-site-1": {
+              "name": "East Whittier Expansion Site",
+              "type": "Model.OpsNew.ProgressionIndustryComponent",
+              "carTypeFilter": "*",
+              "sharedStorage": true,
+              "trackSpans": [
+                "PAN_Whittier_Yard_01"
+              ]
+            },
+            "yard-site-2": {
+              "name": "East Whittier Expansion Site",
+              "type": "Model.OpsNew.ProgressionIndustryComponent",
+              "carTypeFilter": "*",
+              "sharedStorage": true,
+              "trackSpans": [
+                "PAN_Whittier_Yard_01"
+              ]
+            },
+            "yard-site-3": {
+              "name": "East Whittier Expansion Site",
+              "type": "Model.OpsNew.ProgressionIndustryComponent",
+              "carTypeFilter": "*",
+              "sharedStorage": true,
+              "trackSpans": [
+                "PAN_Whittier_Yard_01"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "alarka-jct": {
+      "industries": {
+        "AN_Alarka_Jct_Additional": {
+          "name": "Alarka Jct Expansion",
+          "localPosition": {},
+          "usesContract": false,
+          "components": {
+            "alarka-bypass-site": {
+              "name": "Alarka Jct Expansion Site",
+              "type": "Model.OpsNew.ProgressionIndustryComponent",
+              "carTypeFilter": "*",
+              "sharedStorage": true,
+              "trackSpans": [
+                "Pevc"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "andrews": {
+      "industries": {
+        "AN_Andrews_Interchange_Yard": {
+          "name": "Andrews Expansion",
+          "localPosition": {},
+          "usesContract": false,
+          "components": {
+            "interchange-yard-site": {
+              "name": "Andrews Expansion Site",
+              "type": "Model.OpsNew.ProgressionIndustryComponent",
+              "carTypeFilter": "*",
+              "sharedStorage": true,
+              "trackSpans": [
+                "PAN_Andrews_Interchange_Yard_00"
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
   "spans": {
     "PAN_Sylva_Interchange_Yard_00": {
       "upper": {
@@ -2056,5 +2061,7 @@
         "distance": 0
       }
     }
-  }
+  },
+  "scenery": {},
+  "loads": {}
 }

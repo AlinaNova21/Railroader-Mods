@@ -2,7 +2,7 @@
 import { Euler, MathUtils, Vector3 } from 'three'
 
 import { AlinasMapModMixin, AlinasMapModMixinItem } from '../lib/AlinasMapMod.js'
-import { Graph, Id, Segment, TrackNode, TrackSpanPartEnd, idGenerator, loadHelper } from '../lib/index.js'
+import { Area, Graph, Id, Industry, IndustryComponentId, IndustryComponentType, Segment, TrackNode, TrackSpan, TrackSpanPartEnd, idGenerator, loadHelper } from '../lib/index.js'
 
 const UP = new Vector3(0, 1, 0)
 
@@ -10,32 +10,32 @@ const UP = new Vector3(0, 1, 0)
 export default async function whittierYard(graph: Graph, originalTracks: Graph) {
   const tracks = 9
 
-  const area = `AN_Whittier_Yard`
-  const sawmillGroup = `${area}_Sawmill`
-  const extGroup = `${area}_Ext`
-  const leadGroup = `${area}_Yard_Lead`
-  const trackGroupFn = (i: number) => `${area}_Yard_Track_${i}`
+  const zone = `AN_Whittier_Yard`
+  const sawmillGroup = `${zone}_Sawmill`
+  const extGroup = `${zone}_Ext`
+  const leadGroup = `${zone}_Yard_Lead`
+  const trackGroupFn = (i: number) => `${zone}_Yard_Track_${i}`
   const noGroupSids = [] as Id<Segment>[]
 
   const groups = {} as Record<string, Id<Segment>[]>
 
 
-  const { nid, sid, pid } = idGenerator(area);
+  const { nid, sid, pid } = idGenerator(zone);
 
   // const interchange1 = graph.newNode(Id('N9m4'), new Vector3(0, 561.25, 0))
-  const interchange1 = graph.importNode(originalTracks.nodes.get(Id('Njk9')) as TrackNode)
-  // const interchange1 = graph.importNode(originalTracks.nodes.get(Id('N5es')) as TrackNode)
-  // const interchange1 = graph.importNode(originalTracks.nodes.get(Id('N731')) as TrackNode)
-  const interchange2 = graph.importNode(originalTracks.nodes.get(Id('N1be')) as TrackNode)
-  // const sawmill = graph.importNode(originalTracks.nodes.get(Id('N72a')) as TrackNode)
-  const sawmill = graph.importNode(originalTracks.nodes.get(Id('N72a')) as TrackNode)
-  const sawmill2 = graph.importNode(originalTracks.nodes.get(Id('Nijv')) as TrackNode)
+  const interchange1 = graph.importNode(originalTracks.getNode(Id('Njk9')))
+  // const interchange1 = graph.importNode(originalTracks.getNode(Id('N5es')))
+  // const interchange1 = graph.importNode(originalTracks.getNode(Id('N731')))
+  const interchange2 = graph.importNode(originalTracks.getNode(Id('N1be')))
+  // const sawmill = graph.importNode(originalTracks.getNode(Id('N72a')))
+  const sawmill = graph.importNode(originalTracks.getNode(Id('N72a')))
+  const sawmill2 = graph.importNode(originalTracks.getNode(Id('Nijv')))
 
   const start = graph.newNode(nid(), new Vector3(13155, 561.25, 4415))
   const yard00 = graph.newNode(nid(), new Vector3(12915, 561.25, 4564), new Euler(0, 312, 0))
   const yard01 = yard00.extend(nid(), sid(), 120, -1, 0, sawmillGroup)
   
-  const inSeg = graph.importSegment(originalTracks.segments.get(Id("Sj4c")) as Segment);
+  const inSeg = graph.importSegment(originalTracks.getSegment(Id("Sj4c")));
 
   const inext1 = interchange1.extend(nid(), sid(), 50, 0, 0, extGroup)
   // const inext2 = inext1.extend(nid(), sid(), 30, 0, 0, extGroup)
@@ -79,7 +79,7 @@ export default async function whittierYard(graph: Graph, originalTracks: Graph) 
   for (let i = 0; i < tracks; i++) {
     const trackGroup = trackGroupFn(i)
     const entry = (entryNodes.slice(-1)[0] || start)
-      .extend(Id(`N${area}_T${i}_00`), Id(`S${area}_L${i}_00`), 20, 0, 0, leadGroup)
+      .extend(Id(`N${zone}_T${i}_00`), Id(`S${zone}_L${i}_00`), 20, 0, 0, leadGroup)
 
     entryNodes.push(entry)
 
@@ -99,13 +99,13 @@ export default async function whittierYard(graph: Graph, originalTracks: Graph) 
     // trackPos2.y -= 0.5
     // exitPos.y -= 0.5
 
-    const trackNode1 = graph.newNode(Id(`N${area}_T${i}_01`), trackPos1, new Euler(0, switchAngle + entry.rotation.y, 0))
-    const trackNode2 = graph.newNode(Id(`N${area}_T${i}_02`), trackPos2, new Euler(0, switchAngle + entry.rotation.y, 0))
-    const exit = graph.newNode(Id(`N${area}_T${i}_03`), exitPos, entry.rotation.clone())
+    const trackNode1 = graph.newNode(Id(`N${zone}_T${i}_01`), trackPos1, new Euler(0, switchAngle + entry.rotation.y, 0))
+    const trackNode2 = graph.newNode(Id(`N${zone}_T${i}_02`), trackPos2, new Euler(0, switchAngle + entry.rotation.y, 0))
+    const exit = graph.newNode(Id(`N${zone}_T${i}_03`), exitPos, entry.rotation.clone())
 
-    const entrySeg = entry.toNode(Id(`S${area}_T${i}_00`), trackNode1)
-    const trackSeg = trackNode1.toNode(Id(`S${area}_T${i}_01`), trackNode2)
-    const exitSeg = trackNode2.toNode(Id(`S${area}_T${i}_02`), exit)
+    const entrySeg = entry.toNode(Id(`S${zone}_T${i}_00`), trackNode1)
+    const trackSeg = trackNode1.toNode(Id(`S${zone}_T${i}_01`), trackNode2)
+    const exitSeg = trackNode2.toNode(Id(`S${zone}_T${i}_02`), exit)
 
     entrySeg.groupId = trackGroup
     trackSeg.groupId = trackGroup
@@ -121,7 +121,7 @@ export default async function whittierYard(graph: Graph, originalTracks: Graph) 
   start.rotation.y += 3
 
 
-  const ss1 = graph.importSegment(originalTracks.segments.get(Id('Sj6n')) as Segment)
+  const ss1 = graph.importSegment(originalTracks.getSegment(Id('Sj6n')))
   const ext1 = sawmill2.extend(nid(), sid(), 2, 0, 0, extGroup)
   const ssId = sid.last()
   const ext2 = ext1.extend(nid(), sid(), 30, 0, 0, extGroup)
@@ -134,11 +134,11 @@ export default async function whittierYard(graph: Graph, originalTracks: Graph) 
   ext1.flipSwitchStand = true
 
   for (let i = 1; i < exitNodes.length; i++) {
-    exitNodes[i - 1].toNode(Id(`S${area}_L${i - 1}_01`), exitNodes[i]).groupId = leadGroup
+    exitNodes[i - 1].toNode(Id(`S${zone}_L${i - 1}_01`), exitNodes[i]).groupId = leadGroup
   }
 
-  graph.segments.forEach((segment, id) => {
-    if (!id.startsWith(`S${area}`) || noGroupSids.includes(id)) return
+  Object.entries(graph.segments).forEach(([id, segment]) => {
+    if(!id.startsWith(`S${zone}`) || noGroupSids.includes(Id(id))) return
     if(segment.groupId == "") console.log(`Warning: Segment ${id} has no groupId!`)
     if(segment.groupId === extGroup) segment.groupId = ""
     //   segment.groupId = area
@@ -166,13 +166,30 @@ export default async function whittierYard(graph: Graph, originalTracks: Graph) 
 
   const items = [] as AlinasMapModMixinItem[]
 
+  const indId = Id<Industry>(zone)
+  
+  const area = graph.areas[Id<Area>('whittier')] ?? graph.importArea(originalTracks.getArea(Id('whittier')))
+
+  const ind = area.industries[indId] ?? area.newIndustry(indId, 'East Whittier Expansion')
+  
+  const makeProgIndComp = (id: IndustryComponentId, trackSpans: Id<TrackSpan>[]) => {
+    ind.newComponent(id, `${ind.name} Site`, {
+      type: IndustryComponentType.ProgressionIndustryComponent,
+      carTypeFilter: '*',
+      sharedStorage: true,
+      trackSpans: trackSpans,
+    })
+    return `${zone}.${id}`
+  }
+
   items.push({
-    identifier: `${area}_Sawmill`,
+    identifier: `${zone}_Sawmill`,
     name: `Whittier Sawmill Connection`,
     groupIds: [sawmillGroup],
     description: 'Extend the sawmill track over to the interchange',
     trackSpans: [site1.id],
-    area: 'whittier',
+    area: area.id,
+    industryComponent: makeProgIndComp('sawmill-site', [site1.id]),
     deliveryPhases: [
       { 
         cost: 2000,
@@ -187,8 +204,9 @@ export default async function whittierYard(graph: Graph, originalTracks: Graph) 
   })
 
   for(let i = 1; i <= tracks / 3; i++) {
+    const id = `${zone}_${i}`
     const item = {
-      identifier: `${area}_${i}`,
+      identifier: id,
       name: `Whittier Yard ${i>1?`Extension ${i}`:''}`,
       groupIds: [
         ...(i==1?[leadGroup]:[]),
@@ -197,9 +215,10 @@ export default async function whittierYard(graph: Graph, originalTracks: Graph) 
         trackGroupFn(tracks - (i * 3) + 2),
       ],
       trackSpans: [site2.id],
-      area: 'whittier',
+      industryComponent: makeProgIndComp(`yard-site-${i}`, [site2.id]),
+      area: area.id,
       description: i == 1 ? 'A yard that can be useful for organizing trains and storing cars.' : 'An additional 3 tracks for the Whittier yard',
-      prerequisiteSections: [`${area}_Sawmill`],
+      prerequisiteSections: [`${zone}_Sawmill`],
       deliveryPhases: [
         {
           cost: 2000,
@@ -221,9 +240,14 @@ export default async function whittierYard(graph: Graph, originalTracks: Graph) 
     items.push(item)
     if(i > 1) {
       for(let j = 1; j < i; j++) {
-        item.prerequisiteSections?.push(`${area}_${j}`)
+        item.prerequisiteSections?.push(`${zone}_${j}`)
       }
     }
+  }
+  
+  for (const item of items) {
+    // makeProgIndComp(item.identifier, [site1.id])
+    // item.industryComponent = item.identifier
   }
 
   const mixin: AlinasMapModMixin = {

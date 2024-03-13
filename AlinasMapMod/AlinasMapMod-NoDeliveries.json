@@ -61,7 +61,8 @@
           "cost": 2000,
           "deliveries": []
         }
-      ]
+      ],
+      "industryComponent": "AN_Whittier_Yard_Sawmill"
     },
     "AN_Whittier_Yard_1": {
       "identifier": "AN_Whittier_Yard_1",
@@ -87,7 +88,8 @@
           "cost": 2000,
           "deliveries": []
         }
-      ]
+      ],
+      "industryComponent": "AN_Whittier_Yard_1"
     },
     "AN_Whittier_Yard_2": {
       "identifier": "AN_Whittier_Yard_2",
@@ -113,7 +115,8 @@
           "cost": 2000,
           "deliveries": []
         }
-      ]
+      ],
+      "industryComponent": "AN_Whittier_Yard_2"
     },
     "AN_Whittier_Yard_3": {
       "identifier": "AN_Whittier_Yard_3",
@@ -140,7 +143,8 @@
           "cost": 2000,
           "deliveries": []
         }
-      ]
+      ],
+      "industryComponent": "AN_Whittier_Yard_3"
     },
     "AN_Andrews_Interchange_Yard": {
       "identifier": "AN_Andrews_Interchange_Yard",
@@ -182,6 +186,25 @@
           "cost": 2000,
           "deliveries": []
         }
+      ]
+    },
+    "AN_Walker_Uranium_Mine": {
+      "identifier": "AN_Walker_Uranium_Mine",
+      "name": "Walker Uranium Mine",
+      "groupIds": [
+        "AN_Walker_Uranium_Mine"
+      ],
+      "description": "Adds a uranium mine at Walker",
+      "area": "above-bryson",
+      "trackSpans": [],
+      "deliveryPhases": [
+        {
+          "cost": 0,
+          "deliveries": []
+        }
+      ],
+      "prerequisiteSections": [
+        "s2"
       ]
     }
   }

@@ -1,6 +1,9 @@
 import { Euler, Vector3 } from "three"
-import { AlinasMapModMixin, DeliveryDirection } from "./AlinasMapMod.js"
+import { AlinasMapModMixin, AlinasMapModMixinItem, DeliveryDirection } from "./AlinasMapMod.js"
+import { Area } from "./Area.js"
 import { Graph, GraphJson, GraphPart } from "./Graph.js"
+import { Industry } from "./Industry.js"
+import { IndustryComponentType } from "./IndustryComponent.js"
 import { Segment } from "./Segment.js"
 import { TrackNode } from "./TrackNode.js"
 import { TrackSpan } from "./TrackSpan.js"
@@ -12,6 +15,9 @@ export interface Vector3Json {
   y?: Number
   z?: Number
 }
+
+
+export type WithId<T> = T & { id: Id<WithId<T>> }
 
 export interface _HasId {
   id: Id<this>
@@ -82,17 +88,30 @@ export function Id<T extends _HasId>(id: string): Id<T> {
   return id as Id<T>
 }
 
-export const recordImporter = <T, R extends _HasId>(data: Record<Id<R>, T>, fn: isFromJson<T, R>) => {
-  const ret = new Map<Id<R>, R>()
+export const recordImporter = <T, R extends _HasId & isDirty>(data: Record<Id<R>, T>, fn: isFromJson<T, R>, parent?: isDirty) => {
+  const ret: Record<Id<R>, R> = {}
   for (const id in data) {
-    ret.set(Id(id), fn(Id(id), data[Id<R>(id)]))
+    ret[Id<R>(id)] = dirtyWrap(fn(Id(id), data[Id<R>(id)]), false, parent)
   }
   return ret
 }
 
-export const recordExporter = <T extends GraphPart<R, T>, R>(records: Map<Id<T>, T>) => {
+export const recordExporter = <T extends GraphPart<R, T>, R>(records: Record<Id<T>, T>) => {
   const ret: Record<Id<T>, R> = {}
-  records.forEach(r => ret[r.id] = r.toJson())
+  Object.values(records).forEach(r => {
+    if (r.id == 'AN_Test_Mod_00') console.log(r, r[isDirtySym])
+    if(!r[isDirtySym]) return
+    const out = r.toJson()
+    const log = r[dirtyLogSym]
+    ret[r.id] = out
+    if (!log.has('*')) {
+      for(const key in out) {
+        if(!log.has(key)) {
+          delete out[key]
+        }
+      }
+    }
+  })
   return ret
 }
 
@@ -118,3 +137,66 @@ export const loadHelper = (load: string, count: number, carTypeFilter: string, d
   load,
   direction,
 })
+
+export const generateIndustryForMilestones = (graph: Graph, id: Id<Industry>, mixin: AlinasMapModMixinItem) => {
+  const area = graph.areas[Id<Area>(mixin.area || '')]
+  if (!area) throw new ReferenceError(`Area '${mixin.area}' not found for mixin ${mixin.name}`)
+
+  const ind = area.industries[id] ?? area.newIndustry(id, mixin.name)
+  ind.newComponent(Id(mixin.identifier), mixin.name, {
+    type: IndustryComponentType.ProgressionIndustryComponent,
+    carTypeFilter: '*',
+    sharedStorage: true,
+    trackSpans: mixin.trackSpans || [],
+  })
+} 
+
+export const isDirtySym = Symbol()
+export const dirtyLogSym = Symbol()
+
+export interface isDirty {
+  [isDirtySym]: boolean
+  readonly [dirtyLogSym]: Set<string>
+}
+
+export const dirtyWrap = <T extends isDirty>(tgt: T, markDirty = false, parent?: isDirty) => {
+  tgt[isDirtySym] = tgt[isDirtySym] ?? false
+  if (markDirty) {
+    tgt[isDirtySym] = true
+    tgt[dirtyLogSym].add('*')
+  }
+  return new Proxy(tgt, {
+    get: (tgt, p) => {
+      return p in tgt ? tgt[p as keyof typeof tgt] : tgt
+    },
+    set: (tgt, p, value) => {
+      tgt[p as keyof typeof tgt] = value
+      if(p == isDirtySym) return true
+      tgt[dirtyLogSym].add(String(p))
+      tgt[isDirtySym] = true
+      if (parent) parent[isDirtySym] = true
+      return true
+    }
+  })
+}
+
+export function WatchDirty<T extends { new (...args:any[]): {}}>(props: string[] = []) {
+  let dirty = false
+  return (ctr: T) => {
+    for(const key in ctr.prototype) {
+      if (props.length == 0 || props.includes(key)) {
+        let orig = ctr.prototype[key]
+        Object.defineProperty(ctr.prototype, key, {
+          get: () => orig,
+          set: v => {
+            orig = v
+            dirty = true
+          }
+        })
+      }
+    }
+    Object.defineProperty(ctr.prototype, isDirtySym, {
+      get: () => dirty
+    })
+  }
+}

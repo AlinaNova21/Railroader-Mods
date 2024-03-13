@@ -1,6 +1,7 @@
-import { GraphPart, } from "./Graph.js"
+import { DEG2RAD } from "three/src/math/MathUtils.js"
+import { Graph, GraphPart, } from "./Graph.js"
 import { TrackNode } from "./TrackNode.js"
-import { Id } from "./utils.js"
+import { Id, UP, dirtyLogSym, isDirtySym } from "./utils.js"
 
 export enum SegmentStyle {
   Standard = "Standard",
@@ -20,7 +21,24 @@ export class Segment implements GraphPart<SegmentJson,Segment> {
   public style = SegmentStyle.Standard
   public priority = 0
   public groupId = ""
+  public graph: Graph = new Graph()
+  public [isDirtySym] = false
+  public [dirtyLogSym] = new Set<string>()
+  
   constructor(public id: Id<Segment>, public startId: Id<TrackNode> = Id(""), public endId: Id<TrackNode> = Id("")) {}
+  flip() {
+    const tmp = this.startId
+    this.startId = this.endId
+    this.endId = tmp
+    this[isDirtySym] = true
+  }
+  vector(flip = false) {
+    const n1 = this.graph.getNode(this.startId)
+    const n2 = this.graph.getNode(this.endId)
+    const diff = n1.position.clone().sub(n2.position)
+    if (flip) diff.applyAxisAngle(UP, 180 * DEG2RAD)
+    return diff.normalize()
+  }
   toJson() {
     return {
       style: this.style,
@@ -30,7 +48,8 @@ export class Segment implements GraphPart<SegmentJson,Segment> {
       groupId: this.groupId,
     }
   }
+  
   static fromJson(id: Id<Segment>, data: SegmentJson): Segment {
-    return Object.assign(new Segment(id as Id<Segment>), data)
+    return Object.assign(new Segment(id as Id<Segment>), data, { [isDirtySym]: false })
   }
 }

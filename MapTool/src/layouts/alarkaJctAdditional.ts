@@ -1,15 +1,15 @@
 
 
 import { AlinasMapModMixin } from '../lib/AlinasMapMod.js'
-import { Graph, Id, LayoutFunctionResult, TrackNode, idGenerator, loadHelper } from '../lib/index.js'
+import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, LayoutFunctionResult, TrackSpan, idGenerator, loadHelper } from '../lib/index.js'
 
 export default async function alarkaJctAdditional(graph: Graph, originalTracks: Graph): Promise<LayoutFunctionResult> {
-  const area = `AN_Alarka_Jct_Additional`
+  const zone = `AN_Alarka_Jct_Additional`
  
-  const { nid, sid } = idGenerator(area)
+  const { nid, sid } = idGenerator(zone)
 
-  const node1 = graph.importNode(originalTracks.nodes.get(Id('N3cj')) as TrackNode)
-  const node2 = graph.importNode(originalTracks.nodes.get(Id('N3wo')) as TrackNode)
+  const node1 = graph.importNode(originalTracks.getNode(Id('N3cj')))
+  const node2 = graph.importNode(originalTracks.getNode(Id('N3wo')))
 
   // Shift node back to move switch back from sign
   node2.position.x += 5
@@ -33,24 +33,38 @@ export default async function alarkaJctAdditional(graph: Graph, originalTracks: 
   
   n3.toNode(sid(), n1)
 
-  graph.segments.forEach((segment, id) => {
-    if (id.startsWith(`S${area}`)) {
-      segment.groupId = area
+  Object.entries(graph.segments).forEach(([id, segment]) => {
+    if (id.startsWith(`S${zone}`)) {
+      segment.groupId = zone
     }
   })
 
+  const area = graph.getArea(Id('alarka-jct'))
+  const indId = Id<Industry>(zone)
+  const ind = area.industries[indId] ?? area.newIndustry(indId, 'Alarka Jct Expansion')
+
+  const makeProgIndComp = (id: IndustryComponentId, trackSpans: Id<TrackSpan>[]) => {
+    ind.newComponent(id, `${ind.name} Site`, {
+      type: IndustryComponentType.ProgressionIndustryComponent,
+      carTypeFilter: '*',
+      sharedStorage: true,
+      trackSpans: trackSpans,
+    })
+    return `${zone}.${id}`
+  } 
 
   const mixinName = 'Alarka Jct Additional Tracks'
   const mixin: AlinasMapModMixin = {
     items: {
-      [area]: { 
-        identifier: area,
+      [zone]: { 
+        identifier: zone,
         name: mixinName,
-        groupIds: [area],
+        groupIds: [zone],
         description: 'Additional tracks in Alarka Jct, currently just a bypass around the interchange.',
         prerequisiteSections: ['alarka-jct'],
         trackSpans: [Id('Pevc')],
-        area: 'alarka-jct',
+        industryComponent: makeProgIndComp('alarka-bypass-site', [Id('Pevc')]),
+        area: area.id,
         deliveryPhases: [
           {
             // TODO: Debug why this doesn't work

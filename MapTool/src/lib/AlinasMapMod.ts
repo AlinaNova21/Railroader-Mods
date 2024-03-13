@@ -32,4 +32,5 @@ export interface AlinasMapModMixinItem {
     deliveryPhases: DeliveryPhase[]
     area?: string
     trackSpans?: Id<TrackSpan>[]
+    industryComponent?: string
 }

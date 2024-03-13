@@ -2,15 +2,15 @@
 import { Vector3 } from 'three'
 
 import { AlinasMapModMixin, DeliveryDirection } from '../lib/AlinasMapMod.js'
-import { Graph, Id, TrackNode, TrackSpanPartEnd, idGenerator, loadHelper } from '../lib/index.js'
+import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, TrackSpan, TrackSpanPartEnd, idGenerator, loadHelper } from '../lib/index.js'
 
 const UP = new Vector3(0, 1, 0)
 
 export default async function sylvaWye(graph: Graph, originalTracks: Graph) {
-  const area = `AN_Sylva_Wye`
-  const { nid, sid, pid } = idGenerator(area)
+  const zone = `AN_Sylva_Wye`
+  const { nid, sid, pid } = idGenerator(zone)
 
-  const start1 = graph.importNode(originalTracks.nodes.get(Id('N86n')) as TrackNode)
+  const start1 = graph.importNode(originalTracks.getNode(Id('N86n')))
 
   const lead = start1
     .extend(nid(), sid(), 100, -14, -3)
@@ -24,13 +24,13 @@ export default async function sylvaWye(graph: Graph, originalTracks: Graph) {
 
   graph.newSegment(sid(), branch1, branch2)
 
-  graph.segments.forEach((segment, id) => {
-    if (id.startsWith(`S${area}`)) {
-      segment.groupId = area
+  Object.entries(graph.segments).forEach(([id, segment]) => {
+    if (id.startsWith(`S${zone}`)) {
+      segment.groupId = zone
     }
   })
 
-  const spans = []
+  const spans = [] as Id<TrackSpan>[]
   for(let i = 0; i < 1; i++) {
     const span = graph.newSpan(pid(), {
       segmentId: Id(`SAN_Sylva_Interchange_Yard_T${i}_02`),
@@ -52,15 +52,28 @@ export default async function sylvaWye(graph: Graph, originalTracks: Graph) {
   //   end: TrackSpanPartEnd.End,
   //   distance: 0
   // })
+  const area = graph.getArea(Id('sylva'))
+  const indId = Id<Industry>(zone)
+  const ind = area.industries[indId] ?? area.newIndustry(indId, 'Sylva Expansion')
+
+  const makeProgIndComp = (id: IndustryComponentId, trackSpans: Id<TrackSpan>[]) => {
+    ind.newComponent(id, `${ind.name} Site`, {
+      type: IndustryComponentType.ProgressionIndustryComponent,
+      carTypeFilter: '*',
+      sharedStorage: true,
+      trackSpans: trackSpans,
+    })
+    return `${zone}.${id}`
+  }
 
   const mixin: AlinasMapModMixin = {
     items: {
-      [area]: {
-        identifier: area,
+      [zone]: {
+        identifier: zone,
         name: 'Sylva Wye',
-        groupIds: [area],
+        groupIds: [zone],
         description: 'Adds a Wye at the Sylva Interchange, great for turning around those massive Berks.',
-        area: 'sylva',
+        area: area.id,
         trackSpans: spans,
         deliveryPhases: [{
           cost: 2000,
@@ -79,12 +92,13 @@ export default async function sylvaWye(graph: Graph, originalTracks: Graph) {
           ]
         }],
         prerequisiteSections: ['s1', 'AN_Sylva_Interchange_Yard'],
+        industryComponent: makeProgIndComp('wye-site', spans),
       }
     }
   }
 
   return {
-    name: mixin.items[area].name,
+    name: mixin.items[zone].name,
     mixins: {
       alinasMapMod: mixin
     }

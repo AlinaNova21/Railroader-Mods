@@ -2,53 +2,53 @@
 import { MathUtils, Matrix4, Vector3 } from 'three'
 
 import { AlinasMapModMixin } from '../lib/AlinasMapMod.js'
-import { Graph, Id, Segment, TrackNode, TrackSpanPartEnd, loadHelper } from '../lib/index.js'
+import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, TrackSpan, TrackSpanPartEnd, loadHelper } from '../lib/index.js'
 
 const UP = new Vector3(0, 1, 0)
 
 /** @param {Graph} graph */
 export default async function andrewsInterchangeYard(graph: Graph, originalTracks: Graph) {
-  const area = `AN_Andrews_Interchange_Yard`
+  const zone = `AN_Andrews_Interchange_Yard`
 
   const additionalTracks = 7
 
   const switchAngle = 8
   const trackLength = 400
-  const node = graph.newNode(Id(`N${area}_00`), new Vector3())
+  const node = graph.newNode(Id(`N${zone}_00`), new Vector3())
   let lastNode = node
   for (let i = 0; i < additionalTracks; i++) {
     
     lastNode = lastNode
-      .extend(Id(`N${area}_T${i}_00`), Id(`S${area}_L${i}_00`), 30)
+      .extend(Id(`N${zone}_T${i}_00`), Id(`S${zone}_L${i}_00`), 30)
     
     lastNode.rotation.y = -switchAngle
 
     const n1 = lastNode
-      .extend(Id(`N${area}_T${i}_01`), Id(`S${area}_T${i}_00`), 20, switchAngle)
+      .extend(Id(`N${zone}_T${i}_01`), Id(`S${zone}_T${i}_00`), 20, switchAngle)
     
     n1.position.add(new Vector3(-1, 0, 0))
-    const end = n1.extend(Id(`N${area}_T${i}_02`), Id(`S${area}_T${i}_01`), trackLength - n1.position.z, 0)
+    const end = n1.extend(Id(`N${zone}_T${i}_02`), Id(`S${zone}_T${i}_01`), trackLength - n1.position.z, 0)
     end.position.y -= 3
   }
 
-  const n1 = graph.nodes.get(Id(`N${area}_T0_00`)) as TrackNode
-  const n2 = graph.nodes.get(Id(`N${area}_T0_01`)) as TrackNode
+  const n1 = graph.getNode(Id(`N${zone}_T0_00`))
+  const n2 = graph.getNode(Id(`N${zone}_T0_01`))
 
   n1.position.x = n2.position.x
   n1.rotation.y = 0
 
   // Integrate yard
-  const ref = originalTracks.nodes.get(Id('Nrgu')) as TrackNode
-  const in1 = originalTracks.nodes.get(Id('Nrgu')) as TrackNode
-  const is1 = originalTracks.segments.get(Id('Sinb')) as Segment
+  const ref = originalTracks.getNode(Id('Nrgu'))
+  const in1 = originalTracks.getNode(Id('Nrgu'))
+  const is1 = originalTracks.getSegment(Id('Sinb'))
   graph.importNode(in1)
   graph.importSegment(is1)
 
-  graph.nodes.delete(node.id) // Remove starter
-  const seg = graph.segments.get(Id(`S${area}_L0_00`)) as Segment
+  delete graph.nodes[node.id] // Remove starter
+  const seg = graph.getSegment(Id(`S${zone}_L0_00`))
   seg.startId = in1.id
 
-  const ext = in1.extend(Id(`N${area}_MainlineExtension_00`), Id(`S${area}_MainlineExtension_00`), 30, 0, 0)
+  const ext = in1.extend(Id(`N${zone}_MainlineExtension_00`), Id(`S${zone}_MainlineExtension_00`), 30, 0, 0)
   is1.startId = ext.id
 
   const matrix = new Matrix4()
@@ -56,8 +56,8 @@ export default async function andrewsInterchangeYard(graph: Graph, originalTrack
   const positionOffset = new Vector3(2.5, 0, 0)
   matrix.makeRotationAxis(UP, MathUtils.degToRad(ref.rotation.y - angleOffset))
 
-  graph.nodes.forEach((node, id) => {
-    if (id.startsWith(`N${area}`) && !id.includes('Mainline')) {
+  Object.entries(graph.nodes).forEach(([id, node]) => {
+    if (id.startsWith(`N${zone}`) && !id.includes('Mainline')) {
       node.position
         .add(positionOffset)
         .applyMatrix4(matrix)
@@ -66,13 +66,13 @@ export default async function andrewsInterchangeYard(graph: Graph, originalTrack
     }
   })
 
-  graph.segments.forEach((segment, id) => {
-    if (id.startsWith(`S${area}`) && !id.includes('Mainline')) {
-      segment.groupId = area
+  Object.entries(graph.segments).forEach(([id, segment]) => {
+    if (id.startsWith(`S${zone}`) && !id.includes('Mainline')) {
+      segment.groupId = zone
     }
   })
 
-  const span = graph.newSpan(Id(`P${area}_00`), {
+  const span = graph.newSpan(Id(`P${zone}_00`), {
     segmentId: Id('S8gq9'),
     end: TrackSpanPartEnd.Start,
     distance: 0
@@ -82,14 +82,29 @@ export default async function andrewsInterchangeYard(graph: Graph, originalTrack
     distance: 0
   })
 
+  const area = graph.getArea(Id('andrews'))
+  const indId = Id<Industry>(zone)
+  const ind = area.industries[indId] ?? area.newIndustry(indId, 'Andrews Expansion')
+
+  const makeProgIndComp = (id: IndustryComponentId, trackSpans: Id<TrackSpan>[]) => {
+    ind.newComponent(id, `${ind.name} Site`, {
+      type: IndustryComponentType.ProgressionIndustryComponent,
+      carTypeFilter: '*',
+      sharedStorage: true,
+      trackSpans: trackSpans,
+    })
+    return `${zone}.${id}`
+  }
+
   const mixin: AlinasMapModMixin = {
     items: {
-      [area]: {
-        identifier: area,
+      [zone]: {
+        identifier: zone,
         name: 'Andrews Interchange Yard',
-        groupIds: [area],
+        groupIds: [zone],
         description: 'A yard that can be useful for organizing east bound trains and storing cars if the Interchange is filled to capacity.',
         trackSpans: [span.id],
+        industryComponent: makeProgIndComp('interchange-yard-site', [span.id]),
         deliveryPhases: [{
           cost: 2000,
           deliveries: [
@@ -112,7 +127,7 @@ export default async function andrewsInterchangeYard(graph: Graph, originalTrack
   }
 
   return {
-    name: mixin.items[area].name,
+    name: mixin.items[zone].name,
     mixins: {
       alinasMapMod: mixin
     }

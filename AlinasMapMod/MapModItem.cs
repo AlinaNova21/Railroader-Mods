@@ -17,5 +17,6 @@ namespace AlinasMapMod
         public Section.DeliveryPhase[] DeliveryPhases { get; set; } = [];
         public string Area { get; set; } = "";
         public string[] TrackSpans { get; set; } = [];
+        public string IndustryComponent {get; set; } = "";
     }
 }
