@@ -4,6 +4,22 @@ This is a collection of my mods for Railroader.
 
 All mods are installable through [Railloader](https://railroader.stelltis.ch/)
 
+## Installation
+
+### Requirements:
+- [Railloader](https://railroader.stelltis.ch/) 1.6
+- [Strange Customs](https://railroader.stelltis.ch/mods/strange-customs) 1.6+ (Beta Version)
+
+### Steps:
+
+1. Download the latest release from [Releases](releases)
+2. Drop onto Railloader.exe
+3. Done!
+
+### Troubleshooting
+
+If it doesn't work, check in Preferences => Features => Mod Settings
+Alina's Map Mod should show loaded, if not an error will show. If it says Strange Customs did not load, and you use UMM, goto Railloader at the top and click the big magic button.
 
 ## Project Setup
 
