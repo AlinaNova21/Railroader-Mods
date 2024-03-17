@@ -2,7 +2,7 @@
 import { Euler, MathUtils, Vector3 } from 'three'
 
 import { AlinasMapModMixin, AlinasMapModMixinItem } from '../lib/AlinasMapMod.js'
-import { Area, Graph, Id, Industry, IndustryComponentId, IndustryComponentType, Segment, TrackNode, TrackSpan, TrackSpanPartEnd, idGenerator, loadHelper } from '../lib/index.js'
+import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, Segment, TrackNode, TrackSpan, TrackSpanPartEnd, createNode, getNode, getSegment, loadHelper } from '../lib/index.js'
 
 const UP = new Vector3(0, 1, 0)
 
@@ -20,22 +20,22 @@ export default async function whittierYard(graph: Graph, originalTracks: Graph) 
   const groups = {} as Record<string, Id<Segment>[]>
 
 
-  const { nid, sid, pid } = idGenerator(zone);
+  const { nid, sid, pid } = Graph.Shared.pushIdGenerator('Whittier_Yard')
 
-  // const interchange1 = graph.newNode(Id('N9m4'), new Vector3(0, 561.25, 0))
-  const interchange1 = graph.importNode(originalTracks.getNode(Id('Njk9')))
-  // const interchange1 = graph.importNode(originalTracks.getNode(Id('N5es')))
-  // const interchange1 = graph.importNode(originalTracks.getNode(Id('N731')))
-  const interchange2 = graph.importNode(originalTracks.getNode(Id('N1be')))
-  // const sawmill = graph.importNode(originalTracks.getNode(Id('N72a')))
-  const sawmill = graph.importNode(originalTracks.getNode(Id('N72a')))
-  const sawmill2 = graph.importNode(originalTracks.getNode(Id('Nijv')))
+  // const interchange1 = newNode(Id('N9m4'), new Vector3(0, 561.25, 0))
+  const interchange1 = getNode(Id('Njk9'))
+  // const interchange1 = getNode(Id('N5es')))
+  // const interchange1 = getNode(Id('N731')))
+  const interchange2 = getNode(Id('N1be'))
+  // const sawmill = getNode(Id('N72a')))
+  const sawmill = getNode(Id('N72a'))
+  const sawmill2 = getNode(Id('Nijv'))
 
-  const start = graph.newNode(nid(), new Vector3(13155, 561.25, 4415))
-  const yard00 = graph.newNode(nid(), new Vector3(12915, 561.25, 4564), new Euler(0, 312, 0))
+  const start = createNode(new Vector3(13155, 561.25, 4415))
+  const yard00 = createNode(new Vector3(12915, 561.25, 4564), new Euler(0, 312, 0))
   const yard01 = yard00.extend(nid(), sid(), 120, -1, 0, sawmillGroup)
   
-  const inSeg = graph.importSegment(originalTracks.getSegment(Id("Sj4c")));
+  const inSeg = getSegment(Id("Sj4c"));
 
   const inext1 = interchange1.extend(nid(), sid(), 50, 0, 0, extGroup)
   // const inext2 = inext1.extend(nid(), sid(), 30, 0, 0, extGroup)
@@ -121,7 +121,7 @@ export default async function whittierYard(graph: Graph, originalTracks: Graph) 
   start.rotation.y += 3
 
 
-  const ss1 = graph.importSegment(originalTracks.getSegment(Id('Sj6n')))
+  const ss1 = graph.getSegment(Id('Sj6n'))
   const ext1 = sawmill2.extend(nid(), sid(), 2, 0, 0, extGroup)
   const ssId = sid.last()
   const ext2 = ext1.extend(nid(), sid(), 30, 0, 0, extGroup)
@@ -168,7 +168,7 @@ export default async function whittierYard(graph: Graph, originalTracks: Graph) 
 
   const indId = Id<Industry>(zone)
   
-  const area = graph.areas[Id<Area>('whittier')] ?? graph.importArea(originalTracks.getArea(Id('whittier')))
+  const area = graph.getArea(Id('whittier'))
 
   const ind = area.industries[indId] ?? area.newIndustry(indId, 'East Whittier Expansion')
   

@@ -2,7 +2,7 @@
 import { MathUtils, Matrix4, Vector3 } from 'three'
 
 import { AlinasMapModMixin } from '../lib/AlinasMapMod.js'
-import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, TrackSpan, TrackSpanPartEnd, loadHelper } from '../lib/index.js'
+import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, TrackSpan, TrackSpanPartEnd, getNode, getSegment, loadHelper } from '../lib/index.js'
 
 const UP = new Vector3(0, 1, 0)
 
@@ -38,11 +38,9 @@ export default async function andrewsInterchangeYard(graph: Graph, originalTrack
   n1.rotation.y = 0
 
   // Integrate yard
-  const ref = originalTracks.getNode(Id('Nrgu'))
-  const in1 = originalTracks.getNode(Id('Nrgu'))
-  const is1 = originalTracks.getSegment(Id('Sinb'))
-  graph.importNode(in1)
-  graph.importSegment(is1)
+  const ref = getNode(Id('Nrgu'))
+  const in1 = getNode(Id('Nrgu'))
+  const is1 = getSegment(Id('Sinb'))
 
   delete graph.nodes[node.id] // Remove starter
   const seg = graph.getSegment(Id(`S${zone}_L0_00`))

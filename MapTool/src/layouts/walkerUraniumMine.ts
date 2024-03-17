@@ -1,21 +1,17 @@
 
 
 import { AlinasMapModMixin } from '../lib/AlinasMapMod.js'
-import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, TrackSpan, idGenerator } from '../lib/index.js'
+import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, TrackSpan, getArea, getNode } from '../lib/index.js'
 
 export default async function walkerUraniumMine(graph: Graph, originalTracks: Graph) {
   const zone = `AN_Walker_Uranium_Mine`
-  const { nid, sid, pid } = idGenerator(zone)
-  const ng = (id: string) => originalTracks.getNode(Id(id))
-  const sg = (id: string) => originalTracks.getSegment(Id(id))
-  const pg = (id: string) => originalTracks.getSpan(Id(id))
+  const { nid, sid } = Graph.Shared.pushIdGenerator('Walker_Uranium_Mine')
 
-
-  const start = graph.importNode(ng('Ncyr'))
-  const segs = Object.values(originalTracks.segments)
+  const start = getNode(Id('Ncyr'))
+  const segs = Object.values(Graph.Shared.segments)
     .filter(s => s.startId == start.id || s.endId == start.id)
   const seg = segs[0]
-  const n = graph.importNode(ng(seg.startId == start.id ? seg.endId : seg.startId))
+  const n = getNode(Id(seg.startId == start.id ? seg.endId : seg.startId))
   n.flipSwitchStand = true
   console.log(n.id)
   start.flipSwitchStand = true
@@ -37,14 +33,14 @@ export default async function walkerUraniumMine(graph: Graph, originalTracks: Gr
   tn.position.y += 2
   
 
-  Object.entries(graph.segments).forEach(([id, segment]) => {
+  Object.entries(Graph.Shared.segments).forEach(([id, segment]) => {
     if (id.startsWith(`S${zone}`)) {
       segment.groupId = ''
     }
   })
 
 
-  const area = graph.getArea(Id('bryson-above'))
+  const area = getArea(Id('bryson-above'))
   const indId = Id<Industry>(zone)
   const ind = area.industries[indId] ?? area.newIndustry(indId, 'Walker Expansion')
 

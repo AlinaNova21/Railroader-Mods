@@ -7,7 +7,7 @@ const UP = new Vector3(0, 1, 0)
 
 export default async function testMod(graph: Graph, originalTracks: Graph) {
   const area = `AN_Test_Mod`
-  const { nid, sid, pid } = idGenerator(area)
+  const { nid, sid, pid } = idGenerator('Test_Mod')
   
   const cranky = {
     id: Id('cranky'),
@@ -19,7 +19,7 @@ export default async function testMod(graph: Graph, originalTracks: Graph) {
       return this
     }
   }
-  graph.scenery[Id('cranky')] = cranky
+  // graph.scenery[Id('cranky')] = cranky
   graph[isDirtySym] = true
 
   // const orig = Graph.fromJSON(JSON.parse(await readFile("tracks.json", "utf8")))

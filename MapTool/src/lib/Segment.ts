@@ -17,6 +17,9 @@ export interface SegmentJson {
   style?: SegmentStyle
 }
 
+export const createSegment = (start: Id<TrackNode>, end: Id<TrackNode>) => Graph.Shared.createSegment(start, end)
+export const getSegment = (id: Id<Segment>) => Graph.Shared.getSegment(id)
+
 export class Segment implements GraphPart<SegmentJson,Segment> {
   public style = SegmentStyle.Standard
   public priority = 0

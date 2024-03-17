@@ -2,7 +2,7 @@
 import { Vector3 } from 'three'
 
 import { AlinasMapModMixin, DeliveryDirection } from '../lib/AlinasMapMod.js'
-import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, TrackSpan, TrackSpanPartEnd, idGenerator, loadHelper } from '../lib/index.js'
+import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, TrackSpan, TrackSpanPartEnd, getNode, idGenerator, loadHelper } from '../lib/index.js'
 
 const UP = new Vector3(0, 1, 0)
 
@@ -10,7 +10,7 @@ export default async function sylvaWye(graph: Graph, originalTracks: Graph) {
   const zone = `AN_Sylva_Wye`
   const { nid, sid, pid } = idGenerator(zone)
 
-  const start1 = graph.importNode(originalTracks.getNode(Id('N86n')))
+  const start1 = getNode(Id('N86n'))
 
   const lead = start1
     .extend(nid(), sid(), 100, -14, -3)

@@ -3,7 +3,7 @@ import { Euler, MathUtils, Vector3 } from 'three'
 
 import { DEG2RAD } from 'three/src/math/MathUtils.js'
 import { Graph, GraphPart } from './Graph.js'
-import { Segment } from './Segment.js'
+import { Segment, createSegment } from './Segment.js'
 import { EulerJson, Id, UP, Vector3Json, dirtyLogSym, eulToJSON, isDirtySym, vecToJSON } from './utils.js'
 
 export interface TrackNodeJson {
@@ -12,6 +12,25 @@ export interface TrackNodeJson {
   flipSwitchStand?: boolean
 }
 
+export const createNode = (position?: Vector3, rotation?: Euler) => Graph.Shared.createNode(position, rotation)
+export const getNode = (id: Id<TrackNode>) => Graph.Shared.getNode(id)
+
+export const createSwitch = (node: TrackNode | Id<TrackNode>, distance: number, angle = 10, addAngle = 0, groupId = "", flip = false, og?: Graph) => {
+  const n = (typeof node == 'string') ? Graph.Shared.getNode(node) : node
+  const segs = Object.values(Graph.Shared.segments)
+    .filter(s => s.startId == n.id || s.endId == n.id)
+  const seg = segs[flip ? 0 : 1]
+  const vec = seg.vector(seg.endId == n.id)
+  const diff = vec.clone()
+  diff.applyAxisAngle(UP, angle * DEG2RAD)
+  diff.normalize()
+  diff.multiplyScalar(distance)
+  diff.add(n.position)
+  const nnode = createNode(diff, new Euler(0, n.rotation.y + angle + addAngle, 0))
+  const segment = createSegment(n.id, nnode.id)
+  segment.groupId = groupId
+  return { node: nnode, segment }
+}
 export class TrackNode implements GraphPart<TrackNodeJson,TrackNode> {
   public flipSwitchStand = false
   public graph: Graph = new Graph()

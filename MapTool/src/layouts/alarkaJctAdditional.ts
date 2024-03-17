@@ -1,15 +1,15 @@
 
 
 import { AlinasMapModMixin } from '../lib/AlinasMapMod.js'
-import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, LayoutFunctionResult, TrackSpan, idGenerator, loadHelper } from '../lib/index.js'
+import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, LayoutFunctionResult, TrackSpan, getNode, idGenerator, loadHelper } from '../lib/index.js'
 
 export default async function alarkaJctAdditional(graph: Graph, originalTracks: Graph): Promise<LayoutFunctionResult> {
   const zone = `AN_Alarka_Jct_Additional`
  
   const { nid, sid } = idGenerator(zone)
 
-  const node1 = graph.importNode(originalTracks.getNode(Id('N3cj')))
-  const node2 = graph.importNode(originalTracks.getNode(Id('N3wo')))
+  const node1 = getNode(Id('N3cj'))
+  const node2 = getNode(Id('N3wo'))
 
   // Shift node back to move switch back from sign
   node2.position.x += 5

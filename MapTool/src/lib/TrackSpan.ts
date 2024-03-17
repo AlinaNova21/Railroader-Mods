@@ -1,4 +1,4 @@
-import { GraphPart } from "./Graph.js"
+import { Graph, GraphPart } from "./Graph.js"
 import { Segment } from "./Segment.js"
 import { Id, dirtyLogSym, isDirtySym } from "./utils.js"
 
@@ -17,6 +17,8 @@ export interface TrackSpanPart {
   distance: Number,
   end: TrackSpanPartEnd
 }
+
+const createTrackSpan = (upper: TrackSpanPart, lower: TrackSpanPart) => Graph.Shared.createSpan(upper, lower)
 
 export class TrackSpan implements GraphPart<TrackSpanJson, TrackSpan> {
   public [isDirtySym] = false

@@ -1,4 +1,5 @@
 import { Vector3 } from "three"
+import { Area, getArea } from "./Area.js"
 import { GraphPart } from "./Graph.js"
 import { IndustryComponent } from "./IndustryComponent.js"
 import { Id, Vector3Json, dirtyLogSym, dirtyWrap, isDirtySym, vecToJSON } from "./utils.js"
@@ -42,7 +43,8 @@ function Serializable<T>() {
   }
 }
 
-// @Serializable<IndustryJson>()
+export const createIndustry = (area: Id<Area>, id: Id<Industry>, name: string) => getArea(area).createIndustry(id, name)
+export const getIndustry = (area: Id<Area>, id: Id<Industry>) => getArea(area).getIndustry(id)
 export class Industry implements GraphPart<IndustryJson,Industry> {
   public localPosition = new Vector3()
   public usesContract = false

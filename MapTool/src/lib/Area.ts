@@ -1,5 +1,5 @@
 import { Color, Vector3 } from "three"
-import { GraphPart } from "./Graph.js"
+import { Graph, GraphPart } from "./Graph.js"
 import { Industry, IndustryJson } from "./Industry.js"
 import { Id, Vector3Json, dirtyLogSym, dirtyWrap, isDirtySym, recordExporter, recordImporter, vecToJSON as vecToJson } from "./utils.js"
 
@@ -11,6 +11,9 @@ export interface AreaJson {
 }
 
 export type ColorJson = [r: number, g: number, b: number]
+
+export const createArea = (id: Id<Area>, position: Vector3, radius: number) => new Area(id, position, radius)
+export const getArea = (id: Id<Area>) => Graph.Shared.areas[id]
 
 export class Area implements GraphPart<AreaJson, Area> {
   public industries: Record<Id<Industry>, Industry> = {}
@@ -24,6 +27,13 @@ export class Area implements GraphPart<AreaJson, Area> {
     const ret = this.industries[id]
     if (!ret) throw new Error(`Industry ${id} not found`)
     return ret
+  }
+  createIndustry(id: Id<Industry>, name: string) {
+    const ind = dirtyWrap(new Industry(id, name), true)
+    this[isDirtySym] = true
+    this[dirtyLogSym].add('industries')
+    this.industries[id] = ind
+    return ind
   }
   newIndustry(id: Id<Industry>, name: string) {
     const ind = dirtyWrap(new Industry(id, name), true)

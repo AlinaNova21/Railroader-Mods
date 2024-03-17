@@ -1,10 +1,11 @@
 import { Euler, MathUtils, Vector3 } from 'three'
 import { Area, AreaJson } from './Area.js'
 import { Load, LoadFromJson, Unit } from './Load.js'
+import { Scenery } from './Scenery.js'
 import { Segment, SegmentJson } from './Segment.js'
 import { TrackNode, TrackNodeJson } from './TrackNode.js'
 import { TrackSpan, TrackSpanJson, TrackSpanPart } from './TrackSpan.js'
-import { Id, UP, _HasId, dirtyLogSym, dirtyWrap, isDirty, isDirtySym, recordExporter, recordImporter } from './utils.js'
+import { Id, IdGenerator, UP, _HasId, dirtyLogSym, dirtyWrap, idGenerator, isDirty, isDirtySym, recordExporter, recordImporter } from './utils.js'
 
 export interface GraphPart<T,C extends _HasId> extends isDirty {
   id: Id<C>
@@ -21,23 +22,63 @@ export interface GraphJson {
 }
 
 export class Graph implements isDirty {
+  private static instance: Graph
+  static get Shared() {
+    if(!Graph.instance) Graph.instance = new Graph()
+    return Graph.instance
+  }
   public nodes:Record<Id<TrackNode>, TrackNode> = {}
   public segments:Record<Id<Segment>, Segment> = {}
   public areas:Record<Id<Area>, Area> = {}
   public spans:Record<Id<TrackSpan>, TrackSpan> = {}
-  public scenery:Record<Id<any>, any> = {}
+  public scenery:Record<Id<Scenery>, Scenery> = {}
   public loads:Record<Id<Load>, Load> = {}
   public [isDirtySym] = false
   public [dirtyLogSym] = new Set<string>()
+  private idStack = [] as [string, IdGenerator][]
+  private get idGenerator() {
+    return this.idStack[this.idStack.length - 1][1]
+  } 
+  public get id() {
+    return {
+      Node: () => this.idGenerator.nid(),
+      Segment: () => this.idGenerator.sid(),
+      Span: () => this.idGenerator.pid(),      
+      Scenery: () => this.idGenerator.scid(),
+      Load: () => this.idGenerator.lid(),
+    }
+  } 
 
   constructor() {
+    this.resetIdGenerator()
   }
+  resetIdGenerator() {
+    this.idStack = []
+    this.pushIdGenerator('AN', true)
+  }
+  pushIdGenerator(zone: string, full = false) {
+    if(!full) {
+      const lastZone = this.idStack[this.idStack.length - 1][0]
+      zone = `${lastZone}_${zone}`
+    }
+    this.idStack.push([zone, idGenerator(zone)])
+    return this.idGenerator
+  }
+  popIdGenerator() {
+    this.idStack.pop()
+  }
+
   getNode(id: Id<TrackNode>) {
     const ret = this.nodes[id]
     if (!ret) throw new Error(`Node ${id} not found`)
     return ret
   }
-  newNode(id: Id<TrackNode>, position: Vector3, rotation = new Euler()) {
+  createNode(position = new Vector3(), rotation = new Euler()) {
+    return this.newNode(this.idGenerator.nid(), position, rotation)
+  }
+  /** @deprecated use createNode instead */
+  newNode(id?: Id<TrackNode>, position: Vector3 = new Vector3(), rotation = new Euler()): TrackNode {
+    id = id || this.idGenerator.nid()
     const node = dirtyWrap(new TrackNode(id, position, rotation), true)
     this[isDirtySym] = true
     this[dirtyLogSym].add('nodes')
@@ -45,20 +86,16 @@ export class Graph implements isDirty {
     node.graph = this
     return node
   }
-  importNode(node: TrackNode) {
-    if (this.nodes[node.id]) return this.nodes[node.id] 
-    node = dirtyWrap(node, true)
-    this[isDirtySym] = true
-    this[dirtyLogSym].add('nodes')
-    this.nodes[node.id] = node
-    node.graph = this
-    return node
+
+  createSegment(node1: Id<TrackNode>, node2: Id<TrackNode>) {
+    return this.newSegment(this.idGenerator.sid(), node1, node2)
   }
   getSegment(id: Id<Segment>) {
     const ret = this.segments[id]
     if (!ret) throw new Error(`Segment ${id} not found`)
     return ret
   }
+  /** @deprecated use createSegment instead */
   newSegment(id: Id<Segment>, node1: TrackNode | Id<TrackNode>, node2: TrackNode | Id<TrackNode>) {
     if (node1 instanceof TrackNode) node1 = node1.id
     if (node2 instanceof TrackNode) node2 = node2.id
@@ -69,18 +106,16 @@ export class Graph implements isDirty {
     segment.graph = this
     return segment
   }
-  importSegment(segment: Segment) {
-    this[isDirtySym] = true
-    this[dirtyLogSym].add('segments')
-    this.segments[segment.id] = segment
-    segment.graph = this
-    return segment
+
+  createArea(id: Id<Area>) {
+    return this.newArea(id)
   }
   getArea(id: Id<Area>) {
     const ret = this.areas[id]
     if (!ret) throw new Error(`Area ${id} not found`)
     return ret
   }
+  /** @deprecated use createArea instead */
   newArea(id: Id<Area>) {
     const area = dirtyWrap(new Area(id), true)
     this[isDirtySym] = true
@@ -88,17 +123,16 @@ export class Graph implements isDirty {
     this.areas[id] = area
     return area
   }
-  importArea(area: Area) {
-    this[isDirtySym] = true
-    this[dirtyLogSym].add('areas')
-    this.areas[area.id] = area
-    return area
+
+  createSpan(upper: TrackSpanPart, lower: TrackSpanPart) {
+    return this.newSpan(this.idGenerator.pid(), upper, lower)
   }
   getSpan(id: Id<TrackSpan>) {
     const ret = this.spans[id]
     if (!ret) throw new Error(`Span ${id} not found`)
     return ret
   }
+  /** @deprecated use createSpan instead */
   newSpan(id: Id<TrackSpan>, upper: TrackSpanPart, lower: TrackSpanPart) {
     const span = dirtyWrap(new TrackSpan(id, upper, lower), true)
     this[isDirtySym] = true
@@ -106,11 +140,33 @@ export class Graph implements isDirty {
     this.spans[id] = span
     return span
   }
+
+  createScenery(modelIdentifier: string, position = new Vector3(), rotation = new Euler(), scale = new Vector3(1, 1, 1)) {
+    const id = this.idGenerator.scid()
+    this.scenery[id] = dirtyWrap(new Scenery(id), true)
+    this.scenery[id].modelIdentifier = modelIdentifier
+    this.scenery[id].position = position
+    this.scenery[id].rotation = rotation
+    this.scenery[id].scale = scale
+    this[isDirtySym] = true
+    this[dirtyLogSym].add('scenery')
+    return this.scenery[id]
+  }
+  getScenery(id: Id<Scenery>) {
+    const ret = this.scenery[id]
+    if (!ret) throw new Error(`Scenery ${id} not found`)
+    return ret
+  }
+
+  createLoad(id: Id<Load>, params: Partial<Load>) {
+    return this.newLoad(id, params)
+  }
   getLoad(id: Id<Load>) {
     const ret = this.loads[id]
     if (!ret) throw new Error(`Load ${id} not found`)
     return ret
   }
+  /** @deprecated use createLoad instead */
   newLoad(id: Id<Load>, params: Partial<Load>) {
     const load = dirtyWrap(Object.assign({
       id,
@@ -129,9 +185,9 @@ export class Graph implements isDirty {
     this.loads[id] = load
     return load
   }
-  cloneNode(id: Id<TrackNode>, newId: Id<TrackNode>) {
+  cloneNode(id: Id<TrackNode>) {
     const { position, rotation } = this.nodes[id] as TrackNode
-    return this.newNode(newId, position.clone(), rotation.clone())
+    return this.newNode(this.idGenerator.nid(), position.clone(), rotation.clone())
   }
   extend(srcNode: TrackNode, id: Id<TrackNode>, segmentId: Id<Segment>, distance: number, angle = 0, addAngle = 0) {
     const dir = new Vector3(0, 0, 1)
@@ -144,6 +200,7 @@ export class Graph implements isDirty {
 
   static fromJSON(data: GraphJson) {
     const g = new Graph()
+    if (!Graph.instance) Graph.instance = g
     
     g.nodes = recordImporter(data.nodes, TrackNode.fromJson)
     Object.values(g.nodes).forEach(node => {

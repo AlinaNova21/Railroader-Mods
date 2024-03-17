@@ -17,12 +17,14 @@ async function run() {
     WhittierYard: whittierYard,
     AndrewsInterchangeYard: andrewsInterchangeYard,
     AlarkaJctAdditional: alarkaJctAdditional,
+    // AlarkaLoop: alarkaLoop,
     // WalkerUraniumMine: walkerUraniumMine,
     // TestMod: testMod,
   } as Record<string, LayoutFunction>
   const allMixins = [] as Mixins[]
   for (const [id, fn] of Object.entries(layouts)) {
     console.log(`Processing ${id}...`)
+    graph.resetIdGenerator()
     const { mixins = {} } = await fn(graph, graph)
     allMixins.push(mixins)
   }

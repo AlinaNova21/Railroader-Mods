@@ -4,6 +4,8 @@ import { Area } from "./Area.js"
 import { Graph, GraphJson, GraphPart } from "./Graph.js"
 import { Industry } from "./Industry.js"
 import { IndustryComponentType } from "./IndustryComponent.js"
+import { Load } from "./Load.js"
+import { Scenery } from "./Scenery.js"
 import { Segment } from "./Segment.js"
 import { TrackNode } from "./TrackNode.js"
 import { TrackSpan } from "./TrackSpan.js"
@@ -64,11 +66,27 @@ export function eulToJSON(euler: Euler) {
   }
 }
 
-export function idGenerator(area: string) {
-  const nid = incId<TrackNode>(`N${area}`)
-  const sid = incId<Segment>(`S${area}`)
-  const pid = incId<TrackSpan>(`P${area}`)
-  return { nid, sid, pid }
+export interface IdGenerator {
+  nid: idIncrementer<TrackNode>
+  sid: idIncrementer<Segment>
+  pid: idIncrementer<TrackSpan>
+  scid: idIncrementer<Scenery>
+  lid: idIncrementer<Load>
+}
+
+export function idGenerator(zone: string) {
+  const nid = incId<TrackNode>(`N${zone}`)
+  const sid = incId<Segment>(`S${zone}`)
+  const pid = incId<TrackSpan>(`P${zone}`)
+  const scid = incId<Scenery>(`Sc${zone}`)
+  const lid = incId<Load>(`L${zone}`)
+  return { nid, sid, pid, scid, lid }
+}
+
+interface idIncrementer<T extends _HasId> {
+  (): Id<T>
+  all(): Id<T>[]
+  last(): Id<T>
 }
 
 export function incId<T extends _HasId>(prefix: string) {
