@@ -1,6 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises"
 import { Vector3 } from 'three'
 import alarkaJctAdditional from './layouts/alarkaJctAdditional.js'
+import alarkaLoop from "./layouts/alarkaLoop.js"
 import andrewsInterchangeYard from './layouts/andrewsInterchangeYard.js'
 import sylvaInterchangeYard from './layouts/sylvaInterchangeYard.js'
 import sylvaWye from './layouts/sylvaWye.js'
@@ -17,7 +18,7 @@ async function run() {
     WhittierYard: whittierYard,
     AndrewsInterchangeYard: andrewsInterchangeYard,
     AlarkaJctAdditional: alarkaJctAdditional,
-    // AlarkaLoop: alarkaLoop,
+    AlarkaLoop: alarkaLoop,
     // WalkerUraniumMine: walkerUraniumMine,
     // TestMod: testMod,
   } as Record<string, LayoutFunction>

@@ -27,7 +27,8 @@ namespace AlinasMapMod
       if (launched)
         return;
       launched = true;
-      // StartGameSinglePlayer(__instance, new GameSetup("mapTest"));
+      StartGameSinglePlayer(__instance, new GameSetup("mapTest"));
+      return;
       var gameManagerField = typeof(MenuManager).GetField("gameManager", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
       var gameManager = (GlobalGameManager)gameManagerField.GetValue(__instance);
 
@@ -36,7 +37,7 @@ namespace AlinasMapMod
       
       List<SceneDescriptor> list1= new List<SceneDescriptor>
       {
-        // SceneDescriptor.Editor,
+        SceneDescriptor.Editor,
         descriptor,
         SceneDescriptor.EnvironmentEnviro
       };

@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using HarmonyLib;
 using RLD;
 using Serilog;
 using Track;
@@ -10,7 +12,7 @@ using UnityEngine;
 
 namespace AlinasMapMod.Editor
 {
-  class NodeHelpers: MonoBehaviour
+  class NodeHelpers : MonoBehaviour
   {
 
     private readonly Serilog.ILogger logger = Log.ForContext<NodeHelpers>();
@@ -33,22 +35,27 @@ namespace AlinasMapMod.Editor
       StopGizmoSync();
     }
 
-    void StartGizmoSync() {
+    void StartGizmoSync()
+    {
       StopGizmoSync();
       _gizmoSyncTask = StartCoroutine(SyncGizmos());
     }
 
-    void StopGizmoSync() {
-      if (_gizmoSyncTask != null) {
+    void StopGizmoSync()
+    {
+      if (_gizmoSyncTask != null)
+      {
         StopCoroutine(_gizmoSyncTask);
         _gizmoSyncTask = null;
       }
     }
 
-    private IEnumerator SyncGizmos() {
+    private IEnumerator SyncGizmos()
+    {
       var graph = Graph.Shared;
       LastTrackNodeCount = 0;
-      while (true) {
+      while (true)
+      {
         logger.Debug("SyncGizmos() LastTrackNodeCount: {LastTrackNodeCount}");
         var trackNodes = graph.gameObject.GetComponentsInChildren<TrackNode>();
         if (trackNodes.Length != LastTrackNodeCount)
@@ -64,7 +71,8 @@ namespace AlinasMapMod.Editor
     {
       logger.Debug("AttachGizmos() trackNodes: {trackNodes}", trackNodes.Length);
       var sharedMesh = GameObject.CreatePrimitive(PrimitiveType.Cube).GetComponent<MeshFilter>().sharedMesh;
-      foreach (var trackNode in trackNodes) {
+      foreach (var trackNode in trackNodes)
+      {
         var id = trackNode.id;
         var test = GetComponentsInChildren<TrackNodeEditor>().Any(tne => tne.trackNode?.id == id);
         if (!test)
@@ -86,6 +94,13 @@ namespace AlinasMapMod.Editor
           target.AddComponent<MeshCollider>().sharedMesh = sharedMesh;
         }
       }
+    }
+
+    internal void Reset()
+    {
+      GetComponentsInChildren<TrackNodeEditor>()
+        .Do(tne => Destroy(tne.gameObject));
+      LastTrackNodeCount = 0;
     }
   }
 }

@@ -58,6 +58,12 @@ namespace AlinasMapMod.Editor
       window.Title = "Map Editor";
       uiHelper.PopulateWindow(window, builder => {
         ModTabDidOpen(builder);
+        builder.AddButton("Reset Node Helpers", () => {
+          var nodeHelpers = GameObject.FindObjectOfType<NodeHelpers>();
+          if (nodeHelpers != null) {
+            nodeHelpers.Reset();
+          }
+        });
         builder.AddExpandingVerticalSpacer();
       });
       #if DEBUG

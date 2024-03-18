@@ -461,6 +461,51 @@
           ]
         }
       ]
+    },
+    "AN_Alarka_Loop": {
+      "identifier": "AN_Alarka_Loop",
+      "name": "Alarka Balloon Loop",
+      "groupIds": [
+        "AN_Alarka_Loop"
+      ],
+      "description": "Balloon loop in Alarka, no more fighting with a Wye.",
+      "prerequisiteSections": [],
+      "trackSpans": [
+        "PAN_Alarka_Loop_00"
+      ],
+      "industryComponent": "AN_Alarka_Loop.alarka-bypass-site",
+      "area": "alarka",
+      "deliveryPhases": [
+        {
+          "cost": 2000,
+          "deliveries": [
+            {
+              "carTypeFilter": "GB*",
+              "count": 4,
+              "load": "ballast",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "GB*",
+              "count": 2,
+              "load": "gravel",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "GB*",
+              "count": 2,
+              "load": "ties",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "FM*",
+              "count": 1,
+              "load": "rails",
+              "direction": 0
+            }
+          ]
+        }
+      ]
     }
   }
 }

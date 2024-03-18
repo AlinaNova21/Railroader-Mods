@@ -1,9 +1,9 @@
 {
   "nodes": {
-    "Njk9": {
+    "N1be": {
       "flipSwitchStand": true
     },
-    "N1be": {
+    "Njk9": {
       "flipSwitchStand": true
     },
     "NAN_Sylva_Interchange_Yard_T0_00": {
@@ -1084,25 +1084,111 @@
       },
       "flipSwitchStand": false
     },
+    "NAN_Alarka_Loop_00": {
+      "position": {
+        "x": 4264.377,
+        "y": 646.1399966,
+        "z": -3197.042
+      },
+      "rotation": {
+        "x": 359.427063,
+        "y": 131.808289,
+        "z": 1.33408795e-8
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Alarka_Loop_01": {
+      "position": {
+        "x": 4281.325000000001,
+        "y": 646.3399830000001,
+        "z": -3212.21
+      },
+      "rotation": {
+        "x": 359.427063,
+        "y": 131.808289,
+        "z": 1.33408795e-8
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Alarka_Loop_02": {
+      "position": {
+        "x": 4281.198778569183,
+        "y": 646.3399830000001,
+        "z": -3216.208008022804
+      },
+      "rotation": {
+        "x": 359.427063,
+        "y": 141.808289,
+        "z": 1.33408795e-8
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Alarka_Loop_03": {
+      "position": {
+        "x": 4295.447352663973,
+        "y": 646.3399830000001,
+        "z": -3315.1876934954566
+      },
+      "rotation": {
+        "y": 201.808289
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Alarka_Loop_04": {
+      "position": {
+        "x": 4216.852717633457,
+        "y": 646.3399830000001,
+        "z": -3377.0171633655764
+      },
+      "rotation": {
+        "y": 261.808289
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Alarka_Loop_05": {
+      "position": {
+        "x": 4124.009508508151,
+        "y": 646.3399830000001,
+        "z": -3339.8669477630433
+      },
+      "rotation": {
+        "y": 321.808289
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Alarka_Loop_06": {
+      "position": {
+        "x": 4064.295170428704,
+        "y": 645,
+        "z": -3246.5195508822135
+      },
+      "rotation": {
+        "y": 155.538345
+      },
+      "flipSwitchStand": false
+    },
     "AlinasMapMod": {
       "position": {
-        "x": 0.0778481542025744,
-        "y": 0.6080721239563116,
-        "z": 0.507803921457608
+        "x": 0.3075459008264785,
+        "y": 0.2600226897138924,
+        "z": 0.14601327911562478
       },
       "rotation": {},
       "flipSwitchStand": false
     }
   },
   "segments": {
-    "Sj4c": {
-      "endId": "NAN_Whittier_Yard_03"
+    "Sj6n": {
+      "startId": "NAN_Whittier_Yard_06"
     },
     "Sinb": {
       "startId": "NAN_Andrews_Interchange_Yard_MainlineExtension_00"
     },
-    "Sj6n": {
-      "startId": "NAN_Whittier_Yard_06"
+    "Sj4c": {
+      "endId": "NAN_Whittier_Yard_03"
+    },
+    "Sk7x": {
+      "endId": "NAN_Alarka_Loop_01"
     },
     "SAN_Sylva_Interchange_Yard_T0_00": {
       "style": "Standard",
@@ -1873,9 +1959,85 @@
       "endId": "NAN_Alarka_Jct_Additional_01",
       "priority": 0,
       "groupId": "AN_Alarka_Jct_Additional"
+    },
+    "SAN_Alarka_Loop_00": {
+      "style": "Standard",
+      "startId": "Nhph",
+      "endId": "NAN_Alarka_Loop_00",
+      "priority": 0,
+      "groupId": ""
+    },
+    "SAN_Alarka_Loop_01": {
+      "style": "Standard",
+      "startId": "NAN_Alarka_Loop_00",
+      "endId": "NAN_Alarka_Loop_01",
+      "priority": 0,
+      "groupId": ""
+    },
+    "SAN_Alarka_Loop_02": {
+      "style": "Standard",
+      "startId": "NAN_Alarka_Loop_00",
+      "endId": "NAN_Alarka_Loop_02",
+      "priority": 0,
+      "groupId": "AN_Alarka_Loop"
+    },
+    "SAN_Alarka_Loop_03": {
+      "style": "Standard",
+      "startId": "NAN_Alarka_Loop_02",
+      "endId": "NAN_Alarka_Loop_03",
+      "priority": 0,
+      "groupId": "AN_Alarka_Loop"
+    },
+    "SAN_Alarka_Loop_04": {
+      "style": "Standard",
+      "startId": "NAN_Alarka_Loop_03",
+      "endId": "NAN_Alarka_Loop_04",
+      "priority": 0,
+      "groupId": "AN_Alarka_Loop"
+    },
+    "SAN_Alarka_Loop_05": {
+      "style": "Standard",
+      "startId": "NAN_Alarka_Loop_04",
+      "endId": "NAN_Alarka_Loop_05",
+      "priority": 0,
+      "groupId": "AN_Alarka_Loop"
+    },
+    "SAN_Alarka_Loop_06": {
+      "style": "Standard",
+      "startId": "Nt99",
+      "endId": "NAN_Alarka_Loop_06",
+      "priority": 0,
+      "groupId": "AN_Alarka_Loop"
+    },
+    "SAN_Alarka_Loop_07": {
+      "style": "Standard",
+      "startId": "NAN_Alarka_Loop_05",
+      "endId": "NAN_Alarka_Loop_06",
+      "priority": 0,
+      "groupId": "AN_Alarka_Loop"
     }
   },
   "areas": {
+    "andrews": {
+      "industries": {
+        "AN_Andrews_Interchange_Yard": {
+          "name": "Andrews Expansion",
+          "localPosition": {},
+          "usesContract": false,
+          "components": {
+            "interchange-yard-site": {
+              "name": "Andrews Expansion Site",
+              "type": "Model.OpsNew.ProgressionIndustryComponent",
+              "carTypeFilter": "*",
+              "sharedStorage": true,
+              "trackSpans": [
+                "PAN_Andrews_Interchange_Yard_00"
+              ]
+            }
+          }
+        }
+      }
+    },
     "sylva": {
       "industries": {
         "AN_Sylva_Interchange_Yard": {
@@ -1906,6 +2068,26 @@
               "sharedStorage": true,
               "trackSpans": [
                 "PAN_Sylva_Wye_00"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "alarka": {
+      "industries": {
+        "AN_Alarka_Loop": {
+          "name": "Alarka Expansion",
+          "localPosition": {},
+          "usesContract": false,
+          "components": {
+            "alarka-bypass-site": {
+              "name": "Alarka Expansion Site",
+              "type": "Model.OpsNew.ProgressionIndustryComponent",
+              "carTypeFilter": "*",
+              "sharedStorage": true,
+              "trackSpans": [
+                "PAN_Alarka_Loop_00"
               ]
             }
           }
@@ -1978,26 +2160,6 @@
           }
         }
       }
-    },
-    "andrews": {
-      "industries": {
-        "AN_Andrews_Interchange_Yard": {
-          "name": "Andrews Expansion",
-          "localPosition": {},
-          "usesContract": false,
-          "components": {
-            "interchange-yard-site": {
-              "name": "Andrews Expansion Site",
-              "type": "Model.OpsNew.ProgressionIndustryComponent",
-              "carTypeFilter": "*",
-              "sharedStorage": true,
-              "trackSpans": [
-                "PAN_Andrews_Interchange_Yard_00"
-              ]
-            }
-          }
-        }
-      }
     }
   },
   "spans": {
@@ -2059,6 +2221,18 @@
         "segmentId": "S8gq9",
         "end": "End",
         "distance": 0
+      }
+    },
+    "PAN_Alarka_Loop_00": {
+      "upper": {
+        "segmentId": "S6np",
+        "end": "Start",
+        "distance": 0
+      },
+      "lower": {
+        "segmentId": "Sok6",
+        "end": "End",
+        "distance": 1
       }
     }
   },
