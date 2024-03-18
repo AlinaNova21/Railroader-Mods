@@ -5,6 +5,11 @@
     <MinorVersion>3</MinorVersion>
   </PropertyGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\factory-icon.png" />
+    <EmbeddedResource Include="Resources\construction-icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <GameAssembly Include="Assembly-CSharp" />
     <GameAssembly Include="0Harmony" />
     <GameAssembly Include="Ops" />
@@ -14,5 +19,9 @@
     <GameAssembly Include="Newtonsoft.Json" />
     <GameAssembly Include="Unity.TextMeshPro" />
     <GameAssembly Include="UnityEngine.CoreModule" />
+    <GameAssembly Include="UnityEngine.PhysicsModule" />
+    <GameAssembly Include="UnityEngine.ImageConversionModule" />
+    <GameAssembly Include="UnityEngine.UI" />
+    <GameAssembly Include="RuntimeLevelDesign.Runtime" />
   </ItemGroup>
 </Project>

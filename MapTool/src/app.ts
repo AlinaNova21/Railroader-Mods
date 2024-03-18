@@ -9,8 +9,8 @@ import { AlinasMapModMixin } from './lib/AlinasMapMod.js'
 import { Graph, Id, LayoutFunction, Mixins } from './lib/index.js'
 
 async function run() {
-  console.log(`Loading tracks.json...`)
-  const graph = Graph.fromJSON(JSON.parse(await readFile("tracks.json", "utf8")))
+  console.log(`Loading graph-json-dump.json...`)
+  const graph = Graph.fromJSON(JSON.parse(await readFile("game-graph-dump.json", "utf8")))
   const layouts = {
     SylvaInterchangeYard: sylvaInterchangeYard,
     SylvaWye: sylvaWye,

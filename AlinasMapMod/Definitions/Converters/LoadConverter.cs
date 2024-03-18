@@ -4,7 +4,7 @@ using Model.Ops.Definition;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace AlinasMapMod
+namespace AlinasMapMod.Definitions.Converters
 {
   public class LoadConverter : JsonConverter<Load>
   {

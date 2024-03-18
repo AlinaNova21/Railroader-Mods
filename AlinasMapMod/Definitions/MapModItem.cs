@@ -1,12 +1,7 @@
-using System.Collections.Generic;
 using Game.Progression;
 
-namespace AlinasMapMod
+namespace AlinasMapMod.Definitions
 {
-    public class MixinDef
-    {
-        public Dictionary<string, MapModItem> Items { get; set; } = new Dictionary<string, MapModItem>();
-    }
     public class MapModItem
     {
         public string Identifier { get; set; } = "";

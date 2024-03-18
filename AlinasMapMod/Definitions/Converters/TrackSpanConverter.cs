@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using Track;
 using UnityEngine;
 
-namespace AlinasMapMod
+namespace AlinasMapMod.Definitions.Converters
 {
   public class TrackSpanConverter : JsonConverter<TrackSpan>
   {

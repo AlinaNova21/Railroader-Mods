@@ -1086,23 +1086,23 @@
     },
     "AlinasMapMod": {
       "position": {
-        "x": 0.9748534877312929,
-        "y": 0.07658129017671556,
-        "z": 0.2649902895850078
+        "x": 0.0778481542025744,
+        "y": 0.6080721239563116,
+        "z": 0.507803921457608
       },
       "rotation": {},
       "flipSwitchStand": false
     }
   },
   "segments": {
-    "Sj6n": {
-      "startId": "NAN_Whittier_Yard_06"
+    "Sj4c": {
+      "endId": "NAN_Whittier_Yard_03"
     },
     "Sinb": {
       "startId": "NAN_Andrews_Interchange_Yard_MainlineExtension_00"
     },
-    "Sj4c": {
-      "endId": "NAN_Whittier_Yard_03"
+    "Sj6n": {
+      "startId": "NAN_Whittier_Yard_06"
     },
     "SAN_Sylva_Interchange_Yard_T0_00": {
       "style": "Standard",
@@ -1912,6 +1912,26 @@
         }
       }
     },
+    "alarka-jct": {
+      "industries": {
+        "AN_Alarka_Jct_Additional": {
+          "name": "Alarka Jct Expansion",
+          "localPosition": {},
+          "usesContract": false,
+          "components": {
+            "alarka-bypass-site": {
+              "name": "Alarka Jct Expansion Site",
+              "type": "Model.OpsNew.ProgressionIndustryComponent",
+              "carTypeFilter": "*",
+              "sharedStorage": true,
+              "trackSpans": [
+                "Pevc"
+              ]
+            }
+          }
+        }
+      }
+    },
     "whittier": {
       "industries": {
         "AN_Whittier_Yard": {
@@ -1953,26 +1973,6 @@
               "sharedStorage": true,
               "trackSpans": [
                 "PAN_Whittier_Yard_01"
-              ]
-            }
-          }
-        }
-      }
-    },
-    "alarka-jct": {
-      "industries": {
-        "AN_Alarka_Jct_Additional": {
-          "name": "Alarka Jct Expansion",
-          "localPosition": {},
-          "usesContract": false,
-          "components": {
-            "alarka-bypass-site": {
-              "name": "Alarka Jct Expansion Site",
-              "type": "Model.OpsNew.ProgressionIndustryComponent",
-              "carTypeFilter": "*",
-              "sharedStorage": true,
-              "trackSpans": [
-                "Pevc"
               ]
             }
           }

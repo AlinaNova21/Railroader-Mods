@@ -4,7 +4,7 @@ using Model.OpsNew;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace AlinasMapMod
+namespace AlinasMapMod.Definitions.Converters
 {
   public class CarTypeFilterConverter : JsonConverter<CarTypeFilter>
   {

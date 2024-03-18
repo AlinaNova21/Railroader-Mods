@@ -3,7 +3,7 @@ using System.Linq;
 using Model.OpsNew;
 using Newtonsoft.Json;
 
-namespace AlinasMapMod
+namespace AlinasMapMod.Definitions.Converters
 {
   public class ProgressionIndustryComponentConverter : JsonConverter<ProgressionIndustryComponent>
   {
