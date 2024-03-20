@@ -103,7 +103,7 @@ export default async function alarkaLoop(graph: Graph) {
         name: mixinName,
         groupIds: [zone],
         description: 'Balloon loop in Alarka, no more fighting with a Wye.',
-        prerequisiteSections: [],
+        prerequisiteSections: ['alarka-branch'],
         trackSpans: [span1.id],
         industryComponent: makeProgIndComp('alarka-bypass-site', [span1.id]),
         area: area.id,

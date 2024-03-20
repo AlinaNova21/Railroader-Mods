@@ -469,7 +469,9 @@
         "AN_Alarka_Loop"
       ],
       "description": "Balloon loop in Alarka, no more fighting with a Wye.",
-      "prerequisiteSections": [],
+      "prerequisiteSections": [
+        "alarka-branch"
+      ],
       "trackSpans": [
         "PAN_Alarka_Loop_00"
       ],

@@ -15,11 +15,6 @@ namespace AlinasMapMod
   {
     private static bool launched;
 
-    [HarmonyReversePatch]
-    [HarmonyPatch("StartGameSinglePlayer")]
-    private static void StartGameSinglePlayer(MenuManager __instance, GameSetup setup)
-        => throw new NotImplementedException();
-
     [HarmonyPostfix]
     [HarmonyPatch("Start")]
     public static void SkipStart(MenuManager __instance)
@@ -27,8 +22,6 @@ namespace AlinasMapMod
       if (launched)
         return;
       launched = true;
-      StartGameSinglePlayer(__instance, new GameSetup("mapTest"));
-      return;
       var gameManagerField = typeof(MenuManager).GetField("gameManager", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
       var gameManager = (GlobalGameManager)gameManagerField.GetValue(__instance);
 

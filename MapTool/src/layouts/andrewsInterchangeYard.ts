@@ -2,7 +2,7 @@
 import { MathUtils, Matrix4, Vector3 } from 'three'
 
 import { AlinasMapModMixin } from '../lib/AlinasMapMod.js'
-import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, TrackSpan, TrackSpanPartEnd, getNode, getSegment, loadHelper } from '../lib/index.js'
+import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, TrackSpan, TrackSpanPartEnd, dirtyLogSym, getNode, getSegment, isDirtySym, loadHelper } from '../lib/index.js'
 
 const UP = new Vector3(0, 1, 0)
 
@@ -28,7 +28,6 @@ export default async function andrewsInterchangeYard(graph: Graph, originalTrack
     
     n1.position.add(new Vector3(-1, 0, 0))
     const end = n1.extend(Id(`N${zone}_T${i}_02`), Id(`S${zone}_T${i}_01`), trackLength - n1.position.z, 0)
-    end.position.y -= 3
   }
 
   const n1 = graph.getNode(Id(`N${zone}_T0_00`))
@@ -37,22 +36,63 @@ export default async function andrewsInterchangeYard(graph: Graph, originalTrack
   n1.position.x = n2.position.x
   n1.rotation.y = 0
 
-  // Integrate yard
-  const ref = getNode(Id('Nrgu'))
-  const in1 = getNode(Id('Nrgu'))
-  const is1 = getSegment(Id('Sinb'))
+  // Integrate yard into the mainline
+
+  const interchangeNodes = [
+    'N9nx', 'Nd65', 'Nomqv', 'Nd137', 'Nryh', 'N7el', 'Ncq3u', 'pqs0s7', 'N8rmr', 'Napj', 'Nalfc', 'Nl1i9', 'N4bnk', 'N2dng', 'Nal7s', 'Nfq6'
+  ]
+
+  interchangeNodes.forEach(id => {
+    const node = getNode(Id(id))
+    node.position.y = 528
+    node.rotation.x = 0
+    node.rotation.z = 0
+    node[isDirtySym] = true
+    node[dirtyLogSym].add('position')
+    node[dirtyLogSym].add('rotation')
+  })
+  // const hillNode1 = getNode(Id('Nrgu'))
+
+  const hillNode1 = getNode(Id('Nrgu'))
+  hillNode1.position.y = 529.5
+  hillNode1.rotation.x += 0.3
+  hillNode1[isDirtySym] = true
+  hillNode1[dirtyLogSym].add('position')
+  hillNode1[dirtyLogSym].add('rotation')
+
+
+  const hillNode2 = getNode(Id('Nugw'))
+  hillNode2.position.y -= 1.5
+  hillNode2.rotation.x += 0.5
+  hillNode2[isDirtySym] = true
+  hillNode2[dirtyLogSym].add('position')
+  hillNode2[dirtyLogSym].add('rotation')
+  // hillNode.rotation.x = 0.5
+
+  const in1 = getNode(Id('N4bnk'))
+  const is1 = getSegment(Id('S8gq9'))
+
+  const ext1 = in1.extend(Id(`N${zone}_MainlineSwitch_01`), Id(`S${zone}_MainlineSwitch_01`), 40, -4, 0, zone)
+  
+
+  // createSwitch(in1, 10, -50, 0, '', true)
+  // const ref = getNode(Id('Nrgu'))
+  // const in1 = getNode(Id('Nrgu'))
+  // const is1 = getSegment(Id('Sinb'))
 
   delete graph.nodes[node.id] // Remove starter
   const seg = graph.getSegment(Id(`S${zone}_L0_00`))
-  seg.startId = in1.id
+  seg.startId = ext1.id
 
-  const ext = in1.extend(Id(`N${zone}_MainlineExtension_00`), Id(`S${zone}_MainlineExtension_00`), 30, 0, 0)
-  is1.startId = ext.id
+  // const ext = in1.extend(Id(`N${zone}_MainlineExtension_00`), Id(`S${zone}_MainlineExtension_00`), 30, 0, 0)
+  // is1.startId = ext.id
+
 
   const matrix = new Matrix4()
-  const angleOffset = 8
-  const positionOffset = new Vector3(2.5, 0, 0)
-  matrix.makeRotationAxis(UP, MathUtils.degToRad(ref.rotation.y - angleOffset))
+  const angleOffset = 0
+  const alt = 528
+  const positionOffset = new Vector3(-3, alt - in1.position.y, 40)
+  matrix.makeRotationAxis(UP, MathUtils.degToRad(in1.rotation.y - angleOffset))
 
   Object.entries(graph.nodes).forEach(([id, node]) => {
     if (id.startsWith(`N${zone}`) && !id.includes('Mainline')) {
@@ -60,7 +100,7 @@ export default async function andrewsInterchangeYard(graph: Graph, originalTrack
         .add(positionOffset)
         .applyMatrix4(matrix)
         .add(in1.position)
-      node.rotation.y += ref.rotation.y - angleOffset
+      node.rotation.y += in1.rotation.y - angleOffset
     }
   })
 

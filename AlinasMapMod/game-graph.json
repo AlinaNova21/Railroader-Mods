@@ -1,10 +1,226 @@
 {
   "nodes": {
+    "Njk9": {
+      "flipSwitchStand": true
+    },
+    "Nrgu": {
+      "position": {
+        "x": -30663.2,
+        "y": 529.5,
+        "z": -20415.3
+      },
+      "rotation": {
+        "x": 1.000002849,
+        "y": 257.078,
+        "z": -2.66824181e-8
+      }
+    },
+    "Nomqv": {
+      "position": {
+        "x": -30768.4824,
+        "y": 528,
+        "z": -20439.416
+      },
+      "rotation": {
+        "x": 0,
+        "y": 257.078,
+        "z": 0
+      }
+    },
+    "Nryh": {
+      "position": {
+        "x": -31200.83,
+        "y": 528,
+        "z": -20533.83
+      },
+      "rotation": {
+        "x": 0,
+        "y": 257.837,
+        "z": 0
+      }
+    },
     "N1be": {
       "flipSwitchStand": true
     },
-    "Njk9": {
-      "flipSwitchStand": true
+    "pqs0s7": {
+      "position": {
+        "x": -31166.752,
+        "y": 528,
+        "z": -20526.4941
+      },
+      "rotation": {
+        "x": 0,
+        "y": 257.838,
+        "z": 0
+      }
+    },
+    "Napj": {
+      "position": {
+        "x": -31104.4434,
+        "y": 528,
+        "z": -20519.9629
+      },
+      "rotation": {
+        "x": 0,
+        "y": 87.09689,
+        "z": 0
+      }
+    },
+    "N9nx": {
+      "position": {
+        "x": -30870.5977,
+        "y": 528,
+        "z": -20456.9219
+      },
+      "rotation": {
+        "x": 0,
+        "y": 257.83725,
+        "z": 0
+      }
+    },
+    "N4bnk": {
+      "position": {
+        "x": -30851.8477,
+        "y": 528,
+        "z": -20467.8555
+      },
+      "rotation": {
+        "x": 0,
+        "y": 257.077942,
+        "z": 0
+      }
+    },
+    "Nd65": {
+      "position": {
+        "x": -31144.9,
+        "y": 528,
+        "z": -20516.72
+      },
+      "rotation": {
+        "x": 0,
+        "y": 257.83725,
+        "z": 0
+      }
+    },
+    "Nal7s": {
+      "position": {
+        "x": -30799.2,
+        "y": 528,
+        "z": -20448.8
+      },
+      "rotation": {
+        "x": 0,
+        "y": 248.99794,
+        "z": 0
+      }
+    },
+    "Nalfc": {
+      "position": {
+        "x": -31095.5039,
+        "y": 528,
+        "z": -20516.1484
+      },
+      "rotation": {
+        "x": 0,
+        "y": 257.077942,
+        "z": 0
+      }
+    },
+    "Ncq3u": {
+      "position": {
+        "x": -31127.47,
+        "y": 528,
+        "z": -20518.03
+      },
+      "rotation": {
+        "x": 0,
+        "y": 257.838,
+        "z": 0
+      }
+    },
+    "Nfq6": {
+      "position": {
+        "x": -31269.95,
+        "y": 528,
+        "z": -20548.6719
+      },
+      "rotation": {
+        "x": 0,
+        "y": 257.83725,
+        "z": 0
+      }
+    },
+    "N7el": {
+      "position": {
+        "x": -30869.5078,
+        "y": 528,
+        "z": -20462.0684
+      },
+      "rotation": {
+        "x": 0,
+        "y": 257.691437,
+        "z": 0
+      }
+    },
+    "N8rmr": {
+      "position": {
+        "x": -31128.7539,
+        "y": 528,
+        "z": -20521.1836
+      },
+      "rotation": {
+        "x": 0,
+        "y": 87.09736,
+        "z": 0
+      }
+    },
+    "Nl1i9": {
+      "position": {
+        "x": -31070.377,
+        "y": 528,
+        "z": -20515.377
+      },
+      "rotation": {
+        "x": 0,
+        "y": 257.077942,
+        "z": 0
+      }
+    },
+    "Nd137": {
+      "position": {
+        "x": -30814.6855,
+        "y": 528,
+        "z": -20449.69
+      },
+      "rotation": {
+        "x": 0,
+        "y": 77.35661,
+        "z": 0
+      }
+    },
+    "Nugw": {
+      "position": {
+        "x": -30538.29,
+        "y": 532.102234,
+        "z": -20375.36
+      },
+      "rotation": {
+        "x": 1.2412790660000002,
+        "y": 242.678009,
+        "z": -1.33413309e-7
+      }
+    },
+    "N2dng": {
+      "position": {
+        "x": -30840.6875,
+        "y": 528,
+        "z": -20460.252
+      },
+      "rotation": {
+        "x": 0,
+        "y": 257.077942,
+        "z": 0
+      }
     },
     "NAN_Sylva_Interchange_Yard_T0_00": {
       "position": {
@@ -13,7 +229,9 @@
         "z": 463.32630472142216
       },
       "rotation": {
-        "y": 53.8292122
+        "x": 0,
+        "y": 53.8292122,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -24,7 +242,9 @@
         "z": 475.1301879795992
       },
       "rotation": {
-        "y": 53.8292122
+        "x": 0,
+        "y": 53.8292122,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -35,7 +255,9 @@
         "z": 740.7175612885828
       },
       "rotation": {
-        "y": 53.8292122
+        "x": 0,
+        "y": 53.8292122,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -46,7 +268,9 @@
         "z": 483.42302827592
       },
       "rotation": {
-        "y": 45.8292122
+        "x": 0,
+        "y": 45.8292122,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -57,7 +281,9 @@
         "z": 496.0341728610961
       },
       "rotation": {
-        "y": 53.8292122
+        "x": 0,
+        "y": 53.8292122,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -68,7 +294,9 @@
         "z": 744.0880331534909
       },
       "rotation": {
-        "y": 53.8292122
+        "x": 0,
+        "y": 53.8292122,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -79,7 +307,9 @@
         "z": 504.3270131574169
       },
       "rotation": {
-        "y": 45.8292122
+        "x": 0,
+        "y": 45.8292122,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -90,7 +320,9 @@
         "z": 516.938157742593
       },
       "rotation": {
-        "y": 53.8292122
+        "x": 0,
+        "y": 53.8292122,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -101,7 +333,9 @@
         "z": 747.4585050183989
       },
       "rotation": {
-        "y": 53.8292122
+        "x": 0,
+        "y": 53.8292122,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -112,7 +346,9 @@
         "z": 525.2309980389139
       },
       "rotation": {
-        "y": 45.8292122
+        "x": 0,
+        "y": 45.8292122,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -123,7 +359,9 @@
         "z": 537.84214262409
       },
       "rotation": {
-        "y": 53.8292122
+        "x": 0,
+        "y": 53.8292122,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -134,7 +372,9 @@
         "z": 750.8289768833068
       },
       "rotation": {
-        "y": 53.8292122
+        "x": 0,
+        "y": 53.8292122,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -145,7 +385,9 @@
         "z": 546.1349829204107
       },
       "rotation": {
-        "y": 45.8292122
+        "x": 0,
+        "y": 45.8292122,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -156,7 +398,9 @@
         "z": 558.7461275055869
       },
       "rotation": {
-        "y": 53.8292122
+        "x": 0,
+        "y": 53.8292122,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -167,7 +411,9 @@
         "z": 754.1994487482148
       },
       "rotation": {
-        "y": 53.8292122
+        "x": 0,
+        "y": 53.8292122,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -178,7 +424,9 @@
         "z": 567.0389678019076
       },
       "rotation": {
-        "y": 45.8292122
+        "x": 0,
+        "y": 45.8292122,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -189,7 +437,9 @@
         "z": 579.6501123870837
       },
       "rotation": {
-        "y": 53.8292122
+        "x": 0,
+        "y": 53.8292122,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -200,7 +450,9 @@
         "z": 757.5699206131228
       },
       "rotation": {
-        "y": 53.8292122
+        "x": 0,
+        "y": 53.8292122,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -211,7 +463,9 @@
         "z": 587.9429526834044
       },
       "rotation": {
-        "y": 45.8292122
+        "x": 0,
+        "y": 45.8292122,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -222,7 +476,9 @@
         "z": 600.5540972685806
       },
       "rotation": {
-        "y": 53.8292122
+        "x": 0,
+        "y": 53.8292122,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -233,7 +489,9 @@
         "z": 760.9403924780308
       },
       "rotation": {
-        "y": 53.8292122
+        "x": 0,
+        "y": 53.8292122,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -244,7 +502,9 @@
         "z": 373.7190361702013
       },
       "rotation": {
-        "y": 4.165329
+        "x": 0,
+        "y": 4.165329,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -255,7 +515,9 @@
         "z": 413.5118111775008
       },
       "rotation": {
-        "y": 164.16532899999999
+        "x": 0,
+        "y": 164.16532899999999,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -266,7 +528,9 @@
         "z": 661.7379769169921
       },
       "rotation": {
-        "y": 54.165328999999986
+        "x": 0,
+        "y": 54.165328999999986,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -277,7 +541,9 @@
         "z": 536.3231153375688
       },
       "rotation": {
-        "y": 274.165329
+        "x": 0,
+        "y": 274.165329,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -288,7 +554,9 @@
         "z": 720.2828130485516
       },
       "rotation": {
-        "y": 54.165328999999986
+        "x": 0,
+        "y": 54.165328999999986,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -299,7 +567,9 @@
         "z": 543.5865839098111
       },
       "rotation": {
-        "y": 274.165329
+        "x": 0,
+        "y": 274.165329,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -310,7 +580,9 @@
         "z": 4414.5
       },
       "rotation": {
-        "y": 303
+        "x": 0,
+        "y": 303,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -321,7 +593,9 @@
         "z": 4564
       },
       "rotation": {
-        "y": 312
+        "x": 0,
+        "y": 312,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -332,7 +606,9 @@
         "z": 4643.727083478861
       },
       "rotation": {
-        "y": 312.6
+        "x": 0,
+        "y": 312.6,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -343,7 +619,9 @@
         "z": 4349.240588599432
       },
       "rotation": {
-        "y": 115.81
+        "x": 0,
+        "y": 115.81,
+        "z": 0
       },
       "flipSwitchStand": true
     },
@@ -354,7 +632,9 @@
         "z": 4364.6063718150635
       },
       "rotation": {
-        "y": 305.81
+        "x": 0,
+        "y": 305.81,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -365,7 +645,9 @@
         "z": 4425
       },
       "rotation": {
-        "y": 300
+        "x": 0,
+        "y": 300,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -376,7 +658,9 @@
         "z": 4444.382612127177
       },
       "rotation": {
-        "y": 312
+        "x": 0,
+        "y": 312,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -387,7 +671,9 @@
         "z": 4611.665263716892
       },
       "rotation": {
-        "y": 312
+        "x": 0,
+        "y": 312,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -398,7 +684,9 @@
         "z": 4631.047875844069
       },
       "rotation": {
-        "y": 300
+        "x": 0,
+        "y": 300,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -409,7 +697,9 @@
         "z": 4435
       },
       "rotation": {
-        "y": 300
+        "x": 0,
+        "y": 300,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -420,7 +710,9 @@
         "z": 4454.382612127177
       },
       "rotation": {
-        "y": 312
+        "x": 0,
+        "y": 312,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -431,7 +723,9 @@
         "z": 4621.665263716892
       },
       "rotation": {
-        "y": 312
+        "x": 0,
+        "y": 312,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -442,7 +736,9 @@
         "z": 4641.047875844069
       },
       "rotation": {
-        "y": 300
+        "x": 0,
+        "y": 300,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -453,7 +749,9 @@
         "z": 4445
       },
       "rotation": {
-        "y": 300
+        "x": 0,
+        "y": 300,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -464,7 +762,9 @@
         "z": 4464.382612127177
       },
       "rotation": {
-        "y": 312
+        "x": 0,
+        "y": 312,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -475,7 +775,9 @@
         "z": 4631.665263716892
       },
       "rotation": {
-        "y": 312
+        "x": 0,
+        "y": 312,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -486,7 +788,9 @@
         "z": 4651.047875844069
       },
       "rotation": {
-        "y": 300
+        "x": 0,
+        "y": 300,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -497,7 +801,9 @@
         "z": 4455
       },
       "rotation": {
-        "y": 300
+        "x": 0,
+        "y": 300,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -508,7 +814,9 @@
         "z": 4474.382612127177
       },
       "rotation": {
-        "y": 312
+        "x": 0,
+        "y": 312,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -519,7 +827,9 @@
         "z": 4641.665263716892
       },
       "rotation": {
-        "y": 312
+        "x": 0,
+        "y": 312,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -530,7 +840,9 @@
         "z": 4661.047875844069
       },
       "rotation": {
-        "y": 300
+        "x": 0,
+        "y": 300,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -541,7 +853,9 @@
         "z": 4465
       },
       "rotation": {
-        "y": 300
+        "x": 0,
+        "y": 300,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -552,7 +866,9 @@
         "z": 4484.382612127177
       },
       "rotation": {
-        "y": 312
+        "x": 0,
+        "y": 312,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -563,7 +879,9 @@
         "z": 4651.665263716892
       },
       "rotation": {
-        "y": 312
+        "x": 0,
+        "y": 312,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -574,7 +892,9 @@
         "z": 4671.047875844069
       },
       "rotation": {
-        "y": 300
+        "x": 0,
+        "y": 300,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -585,7 +905,9 @@
         "z": 4475
       },
       "rotation": {
-        "y": 300
+        "x": 0,
+        "y": 300,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -596,7 +918,9 @@
         "z": 4494.382612127177
       },
       "rotation": {
-        "y": 312
+        "x": 0,
+        "y": 312,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -607,7 +931,9 @@
         "z": 4661.665263716892
       },
       "rotation": {
-        "y": 312
+        "x": 0,
+        "y": 312,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -618,7 +944,9 @@
         "z": 4681.047875844069
       },
       "rotation": {
-        "y": 300
+        "x": 0,
+        "y": 300,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -629,7 +957,9 @@
         "z": 4485
       },
       "rotation": {
-        "y": 300
+        "x": 0,
+        "y": 300,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -640,7 +970,9 @@
         "z": 4504.382612127177
       },
       "rotation": {
-        "y": 312
+        "x": 0,
+        "y": 312,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -651,7 +983,9 @@
         "z": 4671.665263716892
       },
       "rotation": {
-        "y": 312
+        "x": 0,
+        "y": 312,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -662,7 +996,9 @@
         "z": 4691.047875844069
       },
       "rotation": {
-        "y": 300
+        "x": 0,
+        "y": 300,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -673,7 +1009,9 @@
         "z": 4495
       },
       "rotation": {
-        "y": 300
+        "x": 0,
+        "y": 300,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -684,7 +1022,9 @@
         "z": 4514.382612127177
       },
       "rotation": {
-        "y": 312
+        "x": 0,
+        "y": 312,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -695,7 +1035,9 @@
         "z": 4681.665263716892
       },
       "rotation": {
-        "y": 312
+        "x": 0,
+        "y": 312,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -706,7 +1048,9 @@
         "z": 4701.047875844069
       },
       "rotation": {
-        "y": 300
+        "x": 0,
+        "y": 300,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -717,7 +1061,9 @@
         "z": 4505
       },
       "rotation": {
-        "y": 300
+        "x": 0,
+        "y": 300,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -728,7 +1074,9 @@
         "z": 4524.382612127177
       },
       "rotation": {
-        "y": 312
+        "x": 0,
+        "y": 312,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -739,7 +1087,9 @@
         "z": 4691.665263716892
       },
       "rotation": {
-        "y": 312
+        "x": 0,
+        "y": 312,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -750,7 +1100,9 @@
         "z": 4711.047875844069
       },
       "rotation": {
-        "y": 300
+        "x": 0,
+        "y": 300,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -761,7 +1113,9 @@
         "z": 4765.222979975039
       },
       "rotation": {
-        "y": 126.406487
+        "x": 0,
+        "y": 126.406487,
+        "z": 0
       },
       "flipSwitchStand": true
     },
@@ -772,7 +1126,9 @@
         "z": 4747.41767960063
       },
       "rotation": {
-        "y": 126.406487
+        "x": 0,
+        "y": 126.406487,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -783,249 +1139,295 @@
         "z": 4749.589791961954
       },
       "rotation": {
-        "y": 121.406487
+        "x": 0,
+        "y": 121.406487,
+        "z": 0
       },
       "flipSwitchStand": false
     },
     "NAN_Andrews_Interchange_Yard_T0_00": {
       "position": {
-        "x": -30691.757667859638,
-        "y": 531.9,
-        "z": -20424.61179931156
+        "x": -30919.18046071454,
+        "y": 528,
+        "z": -20487.40797643032
       },
       "rotation": {
-        "y": 249.07799999999997
+        "x": 0,
+        "y": 257.077942,
+        "z": 0
       },
       "flipSwitchStand": false
     },
     "NAN_Andrews_Interchange_Yard_T0_01": {
       "position": {
-        "x": -30710.439016417615,
-        "y": 531.9,
-        "z": -20431.753732947163
+        "x": -30938.673964195987,
+        "y": 528,
+        "z": -20491.8804837829
       },
       "rotation": {
-        "y": 249.07799999999997
+        "x": 0,
+        "y": 257.077942,
+        "z": 0
       },
       "flipSwitchStand": false
     },
     "NAN_Andrews_Interchange_Yard_T0_02": {
       "position": {
-        "x": -31037.36261618221,
-        "y": 528.9,
-        "z": -20556.737571570236
+        "x": -31279.810275121275,
+        "y": 528,
+        "z": -20570.149362453063
       },
       "rotation": {
-        "y": 249.07799999999997
+        "x": 0,
+        "y": 257.077942,
+        "z": 0
       },
       "flipSwitchStand": false
     },
     "NAN_Andrews_Interchange_Yard_T1_00": {
       "position": {
-        "x": -30718.373131402033,
-        "y": 531.9,
-        "z": -20438.18628693967
+        "x": -30947.42609807455,
+        "y": 528,
+        "z": -20497.14623007609
       },
       "rotation": {
-        "y": 241.07799999999997
+        "x": 0,
+        "y": 249.077942,
+        "z": 0
       },
       "flipSwitchStand": false
     },
     "NAN_Andrews_Interchange_Yard_T1_01": {
       "position": {
-        "x": -30736.69738327823,
-        "y": 531.9,
-        "z": -20446.26228800317
+        "x": -30966.695976188363,
+        "y": 528,
+        "z": -20502.593412602746
       },
       "rotation": {
-        "y": 249.07799999999997
+        "x": 0,
+        "y": 257.077942,
+        "z": 0
       },
       "flipSwitchStand": false
     },
     "NAN_Andrews_Interchange_Yard_T1_02": {
       "position": {
-        "x": -31035.871668605832,
-        "y": 528.9,
-        "z": -20560.63748338363
+        "x": -31278.876596045287,
+        "y": 528,
+        "z": -20574.218819445196
       },
       "rotation": {
-        "y": 249.07799999999997
+        "x": 0,
+        "y": 257.077942,
+        "z": 0
       },
       "flipSwitchStand": false
     },
     "NAN_Andrews_Interchange_Yard_T2_00": {
       "position": {
-        "x": -30744.63149826265,
-        "y": 531.9,
-        "z": -20452.69484199568
+        "x": -30975.448110066925,
+        "y": 528,
+        "z": -20507.85915889593
       },
       "rotation": {
-        "y": 241.07799999999997
+        "x": 0,
+        "y": 249.077942,
+        "z": 0
       },
       "flipSwitchStand": false
     },
     "NAN_Andrews_Interchange_Yard_T2_01": {
       "position": {
-        "x": -30762.955750138848,
-        "y": 531.9,
-        "z": -20460.77084305918
+        "x": -30994.717988180742,
+        "y": 528,
+        "z": -20513.306341422587
       },
       "rotation": {
-        "y": 249.07799999999997
+        "x": 0,
+        "y": 257.077942,
+        "z": 0
       },
       "flipSwitchStand": false
     },
     "NAN_Andrews_Interchange_Yard_T2_02": {
       "position": {
-        "x": -31034.380721029454,
-        "y": 528.9,
-        "z": -20564.537395197025
+        "x": -31277.9429169693,
+        "y": 528,
+        "z": -20578.288276437328
       },
       "rotation": {
-        "y": 249.07799999999997
+        "x": 0,
+        "y": 257.077942,
+        "z": 0
       },
       "flipSwitchStand": false
     },
     "NAN_Andrews_Interchange_Yard_T3_00": {
       "position": {
-        "x": -30770.889865123267,
-        "y": 531.9,
-        "z": -20467.203397051686
+        "x": -31003.470122059305,
+        "y": 528,
+        "z": -20518.572087715773
       },
       "rotation": {
-        "y": 241.07799999999997
+        "x": 0,
+        "y": 249.077942,
+        "z": 0
       },
       "flipSwitchStand": false
     },
     "NAN_Andrews_Interchange_Yard_T3_01": {
       "position": {
-        "x": -30789.214116999465,
-        "y": 531.9,
-        "z": -20475.27939811519
+        "x": -31022.740000173122,
+        "y": 528,
+        "z": -20524.01927024243
       },
       "rotation": {
-        "y": 249.07799999999997
+        "x": 0,
+        "y": 257.077942,
+        "z": 0
       },
       "flipSwitchStand": false
     },
     "NAN_Andrews_Interchange_Yard_T3_02": {
       "position": {
-        "x": -31032.889773453076,
-        "y": 528.9,
-        "z": -20568.43730701042
+        "x": -31277.00923789331,
+        "y": 528,
+        "z": -20582.35773342946
       },
       "rotation": {
-        "y": 249.07799999999997
+        "x": 0,
+        "y": 257.077942,
+        "z": 0
       },
       "flipSwitchStand": false
     },
     "NAN_Andrews_Interchange_Yard_T4_00": {
       "position": {
-        "x": -30797.148231983883,
-        "y": 531.9,
-        "z": -20481.711952107697
+        "x": -31031.492134051685,
+        "y": 528,
+        "z": -20529.285016535614
       },
       "rotation": {
-        "y": 241.07799999999997
+        "x": 0,
+        "y": 249.077942,
+        "z": 0
       },
       "flipSwitchStand": false
     },
     "NAN_Andrews_Interchange_Yard_T4_01": {
       "position": {
-        "x": -30815.47248386008,
-        "y": 531.9,
-        "z": -20489.7879531712
+        "x": -31050.762012165498,
+        "y": 528,
+        "z": -20534.73219906227
       },
       "rotation": {
-        "y": 249.07799999999997
+        "x": 0,
+        "y": 257.077942,
+        "z": 0
       },
       "flipSwitchStand": false
     },
     "NAN_Andrews_Interchange_Yard_T4_02": {
       "position": {
-        "x": -31031.398825876702,
-        "y": 528.9,
-        "z": -20572.337218823814
+        "x": -31276.075558817323,
+        "y": 528,
+        "z": -20586.427190421593
       },
       "rotation": {
-        "y": 249.07799999999997
+        "x": 0,
+        "y": 257.077942,
+        "z": 0
       },
       "flipSwitchStand": false
     },
     "NAN_Andrews_Interchange_Yard_T5_00": {
       "position": {
-        "x": -30823.4065988445,
-        "y": 531.9,
-        "z": -20496.220507163707
+        "x": -31059.51414604406,
+        "y": 528,
+        "z": -20539.99794535546
       },
       "rotation": {
-        "y": 241.07799999999997
+        "x": 0,
+        "y": 249.077942,
+        "z": 0
       },
       "flipSwitchStand": false
     },
     "NAN_Andrews_Interchange_Yard_T5_01": {
       "position": {
-        "x": -30841.730850720698,
-        "y": 531.9,
-        "z": -20504.29650822721
+        "x": -31078.784024157878,
+        "y": 528,
+        "z": -20545.44512788211
       },
       "rotation": {
-        "y": 249.07799999999997
+        "x": 0,
+        "y": 257.077942,
+        "z": 0
       },
       "flipSwitchStand": false
     },
     "NAN_Andrews_Interchange_Yard_T5_02": {
       "position": {
-        "x": -31029.907878300324,
-        "y": 528.9,
-        "z": -20576.237130637208
+        "x": -31275.141879741335,
+        "y": 528,
+        "z": -20590.496647413725
       },
       "rotation": {
-        "y": 249.07799999999997
+        "x": 0,
+        "y": 257.077942,
+        "z": 0
       },
       "flipSwitchStand": false
     },
     "NAN_Andrews_Interchange_Yard_T6_00": {
       "position": {
-        "x": -30849.664965705117,
-        "y": 531.9,
-        "z": -20510.729062219718
+        "x": -31087.53615803644,
+        "y": 528,
+        "z": -20550.7108741753
       },
       "rotation": {
-        "y": 241.07799999999997
+        "x": 0,
+        "y": 249.077942,
+        "z": 0
       },
       "flipSwitchStand": false
     },
     "NAN_Andrews_Interchange_Yard_T6_01": {
       "position": {
-        "x": -30867.989217581315,
-        "y": 531.9,
-        "z": -20518.80506328322
+        "x": -31106.806036150258,
+        "y": 528,
+        "z": -20556.158056701952
       },
       "rotation": {
-        "y": 249.07799999999997
+        "x": 0,
+        "y": 257.077942,
+        "z": 0
       },
       "flipSwitchStand": false
     },
     "NAN_Andrews_Interchange_Yard_T6_02": {
       "position": {
-        "x": -31028.416930723946,
-        "y": 528.9,
-        "z": -20580.137042450602
+        "x": -31274.208200665347,
+        "y": 528,
+        "z": -20594.566104405858
       },
       "rotation": {
-        "y": 249.07799999999997
+        "x": 0,
+        "y": 257.077942,
+        "z": 0
       },
       "flipSwitchStand": false
     },
-    "NAN_Andrews_Interchange_Yard_MainlineExtension_00": {
+    "NAN_Andrews_Interchange_Yard_MainlineSwitch_01": {
       "position": {
-        "x": -30692.440262013373,
-        "y": 531.9,
-        "z": -20422.00873142922
+        "x": -30890.115763889986,
+        "y": 528,
+        "z": -20479.498321226485
       },
       "rotation": {
-        "y": 257.078
+        "x": 0,
+        "y": 253.077942,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -1036,7 +1438,9 @@
         "z": 1397.3189963255218
       },
       "rotation": {
-        "y": 158.763672
+        "x": 0,
+        "y": 158.763672,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -1047,7 +1451,9 @@
         "z": 1294.7886202207392
       },
       "rotation": {
-        "y": 163.763672
+        "x": 0,
+        "y": 163.763672,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -1058,7 +1464,9 @@
         "z": 1054.457573604215
       },
       "rotation": {
-        "y": 352.467529
+        "x": 0,
+        "y": 352.467529,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -1069,7 +1477,9 @@
         "z": 1133.572128574246
       },
       "rotation": {
-        "y": 349.467529
+        "x": 0,
+        "y": 349.467529,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -1080,7 +1490,9 @@
         "z": 1172.8981874576182
       },
       "rotation": {
-        "y": 349.467529
+        "x": 0,
+        "y": 349.467529,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -1130,7 +1542,9 @@
         "z": -3315.1876934954566
       },
       "rotation": {
-        "y": 201.808289
+        "x": 0,
+        "y": 201.808289,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -1141,7 +1555,9 @@
         "z": -3377.0171633655764
       },
       "rotation": {
-        "y": 261.808289
+        "x": 0,
+        "y": 261.808289,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -1152,7 +1568,9 @@
         "z": -3339.8669477630433
       },
       "rotation": {
-        "y": 321.808289
+        "x": 0,
+        "y": 321.808289,
+        "z": 0
       },
       "flipSwitchStand": false
     },
@@ -1163,17 +1581,23 @@
         "z": -3246.5195508822135
       },
       "rotation": {
-        "y": 155.538345
+        "x": 0,
+        "y": 155.538345,
+        "z": 0
       },
       "flipSwitchStand": false
     },
     "AlinasMapMod": {
       "position": {
-        "x": 0.3075459008264785,
-        "y": 0.2600226897138924,
-        "z": 0.14601327911562478
+        "x": 0.5347069692478768,
+        "y": 0.6229287561072254,
+        "z": 0.9135241500451914
       },
-      "rotation": {},
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
       "flipSwitchStand": false
     }
   },
@@ -1181,14 +1605,11 @@
     "Sj6n": {
       "startId": "NAN_Whittier_Yard_06"
     },
-    "Sinb": {
-      "startId": "NAN_Andrews_Interchange_Yard_MainlineExtension_00"
+    "Sk7x": {
+      "endId": "NAN_Alarka_Loop_01"
     },
     "Sj4c": {
       "endId": "NAN_Whittier_Yard_03"
-    },
-    "Sk7x": {
-      "endId": "NAN_Alarka_Loop_01"
     },
     "SAN_Sylva_Interchange_Yard_T0_00": {
       "style": "Standard",
@@ -1766,7 +2187,7 @@
     },
     "SAN_Andrews_Interchange_Yard_L0_00": {
       "style": "Standard",
-      "startId": "Nrgu",
+      "startId": "NAN_Andrews_Interchange_Yard_MainlineSwitch_01",
       "endId": "NAN_Andrews_Interchange_Yard_T0_00",
       "priority": 0,
       "groupId": "AN_Andrews_Interchange_Yard"
@@ -1911,12 +2332,12 @@
       "priority": 0,
       "groupId": "AN_Andrews_Interchange_Yard"
     },
-    "SAN_Andrews_Interchange_Yard_MainlineExtension_00": {
+    "SAN_Andrews_Interchange_Yard_MainlineSwitch_01": {
       "style": "Standard",
-      "startId": "Nrgu",
-      "endId": "NAN_Andrews_Interchange_Yard_MainlineExtension_00",
+      "startId": "N4bnk",
+      "endId": "NAN_Andrews_Interchange_Yard_MainlineSwitch_01",
       "priority": 0,
-      "groupId": ""
+      "groupId": "AN_Andrews_Interchange_Yard"
     },
     "SAN_Alarka_Jct_Additional_00": {
       "style": "Standard",
@@ -2018,107 +2439,15 @@
     }
   },
   "areas": {
-    "andrews": {
-      "industries": {
-        "AN_Andrews_Interchange_Yard": {
-          "name": "Andrews Expansion",
-          "localPosition": {},
-          "usesContract": false,
-          "components": {
-            "interchange-yard-site": {
-              "name": "Andrews Expansion Site",
-              "type": "Model.OpsNew.ProgressionIndustryComponent",
-              "carTypeFilter": "*",
-              "sharedStorage": true,
-              "trackSpans": [
-                "PAN_Andrews_Interchange_Yard_00"
-              ]
-            }
-          }
-        }
-      }
-    },
-    "sylva": {
-      "industries": {
-        "AN_Sylva_Interchange_Yard": {
-          "name": "Sylva Expansion",
-          "localPosition": {},
-          "usesContract": false,
-          "components": {
-            "interchange-yard-site": {
-              "name": "Sylva Expansion Site",
-              "type": "Model.OpsNew.ProgressionIndustryComponent",
-              "carTypeFilter": "*",
-              "sharedStorage": true,
-              "trackSpans": [
-                "PAN_Sylva_Interchange_Yard_00"
-              ]
-            }
-          }
-        },
-        "AN_Sylva_Wye": {
-          "name": "Sylva Expansion",
-          "localPosition": {},
-          "usesContract": false,
-          "components": {
-            "wye-site": {
-              "name": "Sylva Expansion Site",
-              "type": "Model.OpsNew.ProgressionIndustryComponent",
-              "carTypeFilter": "*",
-              "sharedStorage": true,
-              "trackSpans": [
-                "PAN_Sylva_Wye_00"
-              ]
-            }
-          }
-        }
-      }
-    },
-    "alarka": {
-      "industries": {
-        "AN_Alarka_Loop": {
-          "name": "Alarka Expansion",
-          "localPosition": {},
-          "usesContract": false,
-          "components": {
-            "alarka-bypass-site": {
-              "name": "Alarka Expansion Site",
-              "type": "Model.OpsNew.ProgressionIndustryComponent",
-              "carTypeFilter": "*",
-              "sharedStorage": true,
-              "trackSpans": [
-                "PAN_Alarka_Loop_00"
-              ]
-            }
-          }
-        }
-      }
-    },
-    "alarka-jct": {
-      "industries": {
-        "AN_Alarka_Jct_Additional": {
-          "name": "Alarka Jct Expansion",
-          "localPosition": {},
-          "usesContract": false,
-          "components": {
-            "alarka-bypass-site": {
-              "name": "Alarka Jct Expansion Site",
-              "type": "Model.OpsNew.ProgressionIndustryComponent",
-              "carTypeFilter": "*",
-              "sharedStorage": true,
-              "trackSpans": [
-                "Pevc"
-              ]
-            }
-          }
-        }
-      }
-    },
     "whittier": {
       "industries": {
         "AN_Whittier_Yard": {
           "name": "East Whittier Expansion",
-          "localPosition": {},
+          "localPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
           "usesContract": false,
           "components": {
             "sawmill-site": {
@@ -2155,6 +2484,122 @@
               "sharedStorage": true,
               "trackSpans": [
                 "PAN_Whittier_Yard_01"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "alarka": {
+      "industries": {
+        "AN_Alarka_Loop": {
+          "name": "Alarka Expansion",
+          "localPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "usesContract": false,
+          "components": {
+            "alarka-bypass-site": {
+              "name": "Alarka Expansion Site",
+              "type": "Model.OpsNew.ProgressionIndustryComponent",
+              "carTypeFilter": "*",
+              "sharedStorage": true,
+              "trackSpans": [
+                "PAN_Alarka_Loop_00"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "sylva": {
+      "industries": {
+        "AN_Sylva_Interchange_Yard": {
+          "name": "Sylva Expansion",
+          "localPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "usesContract": false,
+          "components": {
+            "interchange-yard-site": {
+              "name": "Sylva Expansion Site",
+              "type": "Model.OpsNew.ProgressionIndustryComponent",
+              "carTypeFilter": "*",
+              "sharedStorage": true,
+              "trackSpans": [
+                "PAN_Sylva_Interchange_Yard_00"
+              ]
+            }
+          }
+        },
+        "AN_Sylva_Wye": {
+          "name": "Sylva Expansion",
+          "localPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "usesContract": false,
+          "components": {
+            "wye-site": {
+              "name": "Sylva Expansion Site",
+              "type": "Model.OpsNew.ProgressionIndustryComponent",
+              "carTypeFilter": "*",
+              "sharedStorage": true,
+              "trackSpans": [
+                "PAN_Sylva_Wye_00"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "andrews": {
+      "industries": {
+        "AN_Andrews_Interchange_Yard": {
+          "name": "Andrews Expansion",
+          "localPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "usesContract": false,
+          "components": {
+            "interchange-yard-site": {
+              "name": "Andrews Expansion Site",
+              "type": "Model.OpsNew.ProgressionIndustryComponent",
+              "carTypeFilter": "*",
+              "sharedStorage": true,
+              "trackSpans": [
+                "PAN_Andrews_Interchange_Yard_00"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "alarka-jct": {
+      "industries": {
+        "AN_Alarka_Jct_Additional": {
+          "name": "Alarka Jct Expansion",
+          "localPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "usesContract": false,
+          "components": {
+            "alarka-bypass-site": {
+              "name": "Alarka Jct Expansion Site",
+              "type": "Model.OpsNew.ProgressionIndustryComponent",
+              "carTypeFilter": "*",
+              "sharedStorage": true,
+              "trackSpans": [
+                "Pevc"
               ]
             }
           }

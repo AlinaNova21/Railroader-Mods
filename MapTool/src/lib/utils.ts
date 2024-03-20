@@ -54,16 +54,17 @@ export type fromId<T> = T extends Id<infer R> ? R : never;
 export type EulerJson = Vector3Json
 
 export function vecToJSON(vector: Vector3) {
-  const [x, y, z] = Array.from(vector).map(v => v || undefined)
+  const [x, y, z] = Array.from(vector) //.map(v => v || undefined)
   return { x, y, z }
 }
 export function eulToJSON(euler: Euler) {
   let {x, y, z} = euler
-  return {
-    x: x || undefined,
-    y: y || undefined,
-    z: z || undefined
-  }
+  return { x, y, z }
+  // return {
+  //   x: x || undefined,
+  //   y: y || undefined,
+  //   z: z || undefined
+  // }
 }
 
 export interface IdGenerator {

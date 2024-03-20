@@ -77,7 +77,6 @@ namespace AlinasMapMod.Editor
           window.ShowWindow();
         });
         var rawIcon = Assembly.GetExecutingAssembly().GetManifestResourceStream("AlinasMapMod.Resources.construction-icon.png");
-        logger.Debug("rawIcon: {rawIcon.Length}", rawIcon.Length);
         var iconData = new BinaryReader(rawIcon).ReadBytes((int)rawIcon.Length);
         var icon = go.AddComponent<Image>();
         var tex = new Texture2D(24,24, TextureFormat.ARGB32, false);

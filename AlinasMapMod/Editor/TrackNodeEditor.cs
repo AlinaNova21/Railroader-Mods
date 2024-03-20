@@ -24,8 +24,8 @@ namespace AlinasMapMod.Editor
     {
       var sb = new StringBuilder();
       sb.AppendLine($"ID: {trackNode?.id}");
-      sb.AppendLine($"Pos: {trackNode?.transform.position}");
-      sb.AppendLine($"Rot: {trackNode?.transform.rotation}");
+      sb.AppendLine($"Pos: {trackNode?.transform.localPosition}");
+      sb.AppendLine($"Rot: {trackNode?.transform.localEulerAngles}");
       sb.AppendLine($"Segments: {String.Join(", ", Graph.Shared.SegmentsConnectedTo(trackNode).Select(s => s.id))}");
       return sb.ToString();
     }

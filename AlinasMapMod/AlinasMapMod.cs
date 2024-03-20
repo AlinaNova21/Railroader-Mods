@@ -161,6 +161,11 @@ namespace AlinasMapMod
         });
         window.ShowWindow();
       }
+
+      var sections = UnityEngine.Object.FindObjectsByType<Section>(FindObjectsSortMode.None);
+      foreach(var section in sections) {
+        logger.Information($"Section: {section.identifier} {section.name}");
+      }
     }
     public void ModTabDidOpen(UIPanelBuilder builder)
     {
