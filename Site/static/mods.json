@@ -1,7 +1,9 @@
 {
   "AlinaNova21.AlinasMapMod": {
-    "name": "AlinasMapMod",
-    "desccription": "",
+    "id": "AlinaNova21.AlinasMapMod",
+    "name": "Alina's Map Mod",
+    "desc": "A mod that adds a new milestones to the game adding additional tracks, such as yards, wyes, and more.",
+    "version": "1.3.24078.548",
     "changelog": [
       {
         "version": "1.3.24078.548",
@@ -20,7 +22,6 @@
         "desc": "Re-release of discord version here.\nv1.3 Changelog:\n\n- Better error when SC is outdated\n- Added configuration settings:\n  - Deliveries Enabled: Turns deliveries on and off, potentially weird behaviour if milestone is in progress.\n  - Free Milestones: Sets cost for each phase to $0\n  - Car Count Multiplier: Allows you to turn up the number of cars in each delivery"
       }
     ],
-    "version": "1.3.24078.548",
     "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.3.24078.548/AlinasMapMod_1.3.24078.548.zip"
   }
 }

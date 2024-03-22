@@ -1,21 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html data-bs-theme="dark">
   <head>
     <title>Alina's Railroader Mods</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   </head>
   <body>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <div id="app">
-      <h2>Alina's Railroader Mods:</h2>
-      <div class="mod" v-for="(mod,id) in mods" :key="id">
-        <h3>{{ mod.name }}</h3>
-        <div><a :href="mod.downloadUrl">Download v{{mod.version}}</a></div>
-        <br />
-        <h3>Changelog</h3>
-        <div v-for="c in mod.changelog" class="changelog">
-          <h4>{{ c.version }}:</h4>
-          <pre>{{ c.desc }}</pre>
+      <h1 class="text-center">Alina's Railroader Mods:</h1>
+      <div>All mods are installed by and require <a href="https://railroader.stelltis.ch/">Railloader</a> 1.6+.</div>
+      <div>For AlinasMapMod, <a href="https://railroader.stelltis.ch/mods/strange-customs">StrangeCustoms</a> 1.6+ (Beta) is required.</div>
+      <div class="card" v-for="(mod,id) in mods" :key="id">
+        <div class="card-body">
+          <div class="card-title">{{ mod.name }}</div>
+          <div class="card-text">
+            <div><a :href="mod.downloadUrl" type="button" class="btn btn-primary">Download v{{mod.version}}</a></div>
+            {{ mod.desc }}
+            <h3>Changelog</h3>
+            <div class="container">
+              <div v-for="c in mod.changelog" class="row changelog">
+                <div class="col-2">{{ c.version }}:</div>
+                <div class="col-10 text-left" v-html="markdown(c.desc)"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -35,11 +46,20 @@
             .then(data => {
               mods.value = data
             })
+          const download = mod => {
+            window.open(mod.downloadUrl)
+          }
+          const markdown = md => marked.parse(md)
           return {
+            markdown,
+            download,
             mods
           }
         }
       }).mount('#app')
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
   </body>
 </html>
