@@ -16,8 +16,6 @@
 
   <ItemGroup>
     <Content Include="Definition.json" CopyToOutputDirectory="Always" />
-    <Content Include="AlinasMapMod.json" CopyToOutputDirectory="Always" />
-    <Content Include="game-graph.json" CopyToOutputDirectory="Always" />
     <PackageReference Include="BUTR.Harmony.Analyzer" Version="1.0.1.50">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

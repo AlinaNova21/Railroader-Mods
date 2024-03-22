@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using AlinasMapMod.Definitions;
-using AlinasMapMod.Editor;
 using GalaSoft.MvvmLight.Messaging;
 using Game.Events;
 using Game.Progression;
@@ -67,6 +68,17 @@ namespace AlinasMapMod
       carCountMultiplier = 1;
       MixinCache.Clear();
       Run();
+    }
+
+    public IEnumerable<ModMixinto> GetMixintos(string identifier) {
+      var basedir = moddingContext.ModsBaseDirectory;
+      foreach(var mixinto in moddingContext.GetMixintos(identifier)) {
+        var path = Path.GetFullPath(mixinto.Mixinto);
+        if (!path.StartsWith(basedir)) {
+          logger.Warning($"Mixinto {mixinto} is not in the mods directory, skipping");
+        }
+        yield return mixinto;
+      }
     }
 
     MapModDef GetMapModDef(string file)
@@ -231,6 +243,10 @@ namespace AlinasMapMod
       if (scOutdated) return;
       if (nextTry == DateTime.MaxValue) nextTry = DateTime.Now.AddMilliseconds(500);
       logger.Information($"Run()");
+
+      var patcher = new Patcher();
+      patcher.Dump();
+      patcher.Patch();
       objectCache.Rebuild();
       var mixins = moddingContext.GetMixintos("AlinasMapMod");
 
@@ -241,7 +257,7 @@ namespace AlinasMapMod
         foreach (var item in obj.Items.Values)
         {
           logger.Information($"Processing Item {item.Identifier} - {item.Name}");
-          ConfigureFeature(item);
+          // ConfigureFeature(item);
           if (scVersion < industryMinVersion)
           {
             logger.Information($"Older SC ({scVersion} < {industryMinVersion}), Managing Industries manually");
@@ -251,7 +267,7 @@ namespace AlinasMapMod
               ConfigureProgressionIndustryComponent(item);
             }
           }
-          ConfigureSection(item);
+          // ConfigureSection(item);
         }
       }
     }

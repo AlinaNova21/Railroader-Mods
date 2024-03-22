@@ -1,4 +1,4 @@
-namespace AlinasMapMod.Editor
+namespace MapEditor
 {
   class Settings
   {

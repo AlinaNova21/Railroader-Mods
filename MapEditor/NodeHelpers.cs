@@ -10,7 +10,7 @@ using Serilog;
 using Track;
 using UnityEngine;
 
-namespace AlinasMapMod.Editor
+namespace MapEditor
 {
   class NodeHelpers : MonoBehaviour
   {

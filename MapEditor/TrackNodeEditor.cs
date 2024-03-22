@@ -8,7 +8,7 @@ using Serilog;
 using Track;
 using UnityEngine;
 
-namespace AlinasMapMod.Editor
+namespace MapEditor
 {
   class TrackNodeEditor : MonoBehaviour, IPickable, IRTTransformGizmoListener
   {

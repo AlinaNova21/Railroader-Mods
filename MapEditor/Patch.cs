@@ -4,7 +4,7 @@ using Railloader;
 using Serilog;
 using Track;
 
-namespace AlinasMapMod.Editor
+namespace MapEditor
 {
 
   [HarmonyPatch(typeof(Graph), "RebuildCollections")]

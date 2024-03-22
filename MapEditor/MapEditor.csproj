@@ -2,15 +2,10 @@
   <PropertyGroup>
     <!-- Optionally, set a few things to your liking -->
     <MajorVersion>1</MajorVersion>
-    <MinorVersion>3</MinorVersion>
+    <MinorVersion>0</MinorVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="AlinasMapMod.json" CopyToOutputDirectory="Always" />
-    <Content Include="game-graph.json" CopyToOutputDirectory="Always" />
-    <Content Include="progressions.json" CopyToOutputDirectory="Always" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\factory-icon.png" />
+    <EmbeddedResource Include="Resources\construction-icon.png" />
   </ItemGroup>
   <ItemGroup>
     <GameAssembly Include="Assembly-CSharp" />

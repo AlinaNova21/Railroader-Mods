@@ -1,18 +1,105 @@
 {
   "nodes": {
+    "Nalfc": {
+      "position": {
+        "x": -31095.5039,
+        "y": 528,
+        "z": -20516.1484
+      },
+      "rotation": {
+        "x": 0,
+        "y": 257.077942,
+        "z": 0
+      }
+    },
     "Njk9": {
       "flipSwitchStand": true
     },
-    "Nrgu": {
+    "Ncq3u": {
       "position": {
-        "x": -30663.2,
-        "y": 529.5,
-        "z": -20415.3
+        "x": -31127.47,
+        "y": 528,
+        "z": -20518.03
       },
       "rotation": {
-        "x": 1.000002849,
-        "y": 257.078,
-        "z": -2.66824181e-8
+        "x": 0,
+        "y": 257.838,
+        "z": 0
+      }
+    },
+    "Nl1i9": {
+      "position": {
+        "x": -31070.377,
+        "y": 528,
+        "z": -20515.377
+      },
+      "rotation": {
+        "x": 0,
+        "y": 257.077942,
+        "z": 0
+      }
+    },
+    "Nugw": {
+      "position": {
+        "x": -30538.29,
+        "y": 532.102234,
+        "z": -20375.36
+      },
+      "rotation": {
+        "x": 1.2412790660000002,
+        "y": 242.678009,
+        "z": -1.33413309e-7
+      }
+    },
+    "N1be": {
+      "flipSwitchStand": true
+    },
+    "Nd137": {
+      "position": {
+        "x": -30814.6855,
+        "y": 528,
+        "z": -20449.69
+      },
+      "rotation": {
+        "x": 0,
+        "y": 77.35661,
+        "z": 0
+      }
+    },
+    "pqs0s7": {
+      "position": {
+        "x": -31166.752,
+        "y": 528,
+        "z": -20526.4941
+      },
+      "rotation": {
+        "x": 0,
+        "y": 257.838,
+        "z": 0
+      }
+    },
+    "N2dng": {
+      "position": {
+        "x": -30840.6875,
+        "y": 528,
+        "z": -20460.252
+      },
+      "rotation": {
+        "x": 0,
+        "y": 257.077942,
+        "z": 0
+      }
+    },
+    "N7el": {
+      "position": {
+        "x": -30869.5078,
+        "y": 528,
+        "z": -20462.0684
+      },
+      "rotation": {
+        "x": 0,
+        "y": 257.691437,
+        "z": 0
       }
     },
     "Nomqv": {
@@ -27,43 +114,16 @@
         "z": 0
       }
     },
-    "Nryh": {
+    "Nrgu": {
       "position": {
-        "x": -31200.83,
-        "y": 528,
-        "z": -20533.83
+        "x": -30663.2,
+        "y": 529.5,
+        "z": -20415.3
       },
       "rotation": {
-        "x": 0,
-        "y": 257.837,
-        "z": 0
-      }
-    },
-    "N1be": {
-      "flipSwitchStand": true
-    },
-    "pqs0s7": {
-      "position": {
-        "x": -31166.752,
-        "y": 528,
-        "z": -20526.4941
-      },
-      "rotation": {
-        "x": 0,
-        "y": 257.838,
-        "z": 0
-      }
-    },
-    "Napj": {
-      "position": {
-        "x": -31104.4434,
-        "y": 528,
-        "z": -20519.9629
-      },
-      "rotation": {
-        "x": 0,
-        "y": 87.09689,
-        "z": 0
+        "x": 1.000002849,
+        "y": 257.078,
+        "z": -2.66824181e-8
       }
     },
     "N9nx": {
@@ -75,6 +135,30 @@
       "rotation": {
         "x": 0,
         "y": 257.83725,
+        "z": 0
+      }
+    },
+    "Nal7s": {
+      "position": {
+        "x": -30799.2,
+        "y": 528,
+        "z": -20448.8
+      },
+      "rotation": {
+        "x": 0,
+        "y": 248.99794,
+        "z": 0
+      }
+    },
+    "Nryh": {
+      "position": {
+        "x": -31200.83,
+        "y": 528,
+        "z": -20533.83
+      },
+      "rotation": {
+        "x": 0,
+        "y": 257.837,
         "z": 0
       }
     },
@@ -102,42 +186,6 @@
         "z": 0
       }
     },
-    "Nal7s": {
-      "position": {
-        "x": -30799.2,
-        "y": 528,
-        "z": -20448.8
-      },
-      "rotation": {
-        "x": 0,
-        "y": 248.99794,
-        "z": 0
-      }
-    },
-    "Nalfc": {
-      "position": {
-        "x": -31095.5039,
-        "y": 528,
-        "z": -20516.1484
-      },
-      "rotation": {
-        "x": 0,
-        "y": 257.077942,
-        "z": 0
-      }
-    },
-    "Ncq3u": {
-      "position": {
-        "x": -31127.47,
-        "y": 528,
-        "z": -20518.03
-      },
-      "rotation": {
-        "x": 0,
-        "y": 257.838,
-        "z": 0
-      }
-    },
     "Nfq6": {
       "position": {
         "x": -31269.95,
@@ -147,18 +195,6 @@
       "rotation": {
         "x": 0,
         "y": 257.83725,
-        "z": 0
-      }
-    },
-    "N7el": {
-      "position": {
-        "x": -30869.5078,
-        "y": 528,
-        "z": -20462.0684
-      },
-      "rotation": {
-        "x": 0,
-        "y": 257.691437,
         "z": 0
       }
     },
@@ -174,51 +210,15 @@
         "z": 0
       }
     },
-    "Nl1i9": {
+    "Napj": {
       "position": {
-        "x": -31070.377,
+        "x": -31104.4434,
         "y": 528,
-        "z": -20515.377
+        "z": -20519.9629
       },
       "rotation": {
         "x": 0,
-        "y": 257.077942,
-        "z": 0
-      }
-    },
-    "Nd137": {
-      "position": {
-        "x": -30814.6855,
-        "y": 528,
-        "z": -20449.69
-      },
-      "rotation": {
-        "x": 0,
-        "y": 77.35661,
-        "z": 0
-      }
-    },
-    "Nugw": {
-      "position": {
-        "x": -30538.29,
-        "y": 532.102234,
-        "z": -20375.36
-      },
-      "rotation": {
-        "x": 1.2412790660000002,
-        "y": 242.678009,
-        "z": -1.33413309e-7
-      }
-    },
-    "N2dng": {
-      "position": {
-        "x": -30840.6875,
-        "y": 528,
-        "z": -20460.252
-      },
-      "rotation": {
-        "x": 0,
-        "y": 257.077942,
+        "y": 87.09689,
         "z": 0
       }
     },
@@ -1576,9 +1576,9 @@
     },
     "NAN_Alarka_Loop_06": {
       "position": {
-        "x": 4064.295170428704,
+        "x": 4025.433978521458,
         "y": 645,
-        "z": -3246.5195508822135
+        "z": -3176.747816042769
       },
       "rotation": {
         "x": 0,
@@ -1589,9 +1589,9 @@
     },
     "AlinasMapMod": {
       "position": {
-        "x": 0.5347069692478768,
-        "y": 0.6229287561072254,
-        "z": 0.9135241500451914
+        "x": 0.6241088561529098,
+        "y": 0.01326035283719551,
+        "z": 0.45040773596925954
       },
       "rotation": {
         "x": 0,
@@ -1602,14 +1602,14 @@
     }
   },
   "segments": {
+    "Sj4c": {
+      "endId": "NAN_Whittier_Yard_03"
+    },
     "Sj6n": {
       "startId": "NAN_Whittier_Yard_06"
     },
     "Sk7x": {
       "endId": "NAN_Alarka_Loop_01"
-    },
-    "Sj4c": {
-      "endId": "NAN_Whittier_Yard_03"
     },
     "SAN_Sylva_Interchange_Yard_T0_00": {
       "style": "Standard",
@@ -2490,30 +2490,6 @@
         }
       }
     },
-    "alarka": {
-      "industries": {
-        "AN_Alarka_Loop": {
-          "name": "Alarka Expansion",
-          "localPosition": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "usesContract": false,
-          "components": {
-            "alarka-bypass-site": {
-              "name": "Alarka Expansion Site",
-              "type": "Model.OpsNew.ProgressionIndustryComponent",
-              "carTypeFilter": "*",
-              "sharedStorage": true,
-              "trackSpans": [
-                "PAN_Alarka_Loop_00"
-              ]
-            }
-          }
-        }
-      }
-    },
     "sylva": {
       "industries": {
         "AN_Sylva_Interchange_Yard": {
@@ -2558,6 +2534,30 @@
         }
       }
     },
+    "alarka-jct": {
+      "industries": {
+        "AN_Alarka_Jct_Additional": {
+          "name": "Alarka Jct Expansion",
+          "localPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "usesContract": false,
+          "components": {
+            "alarka-bypass-site": {
+              "name": "Alarka Jct Expansion Site",
+              "type": "Model.OpsNew.ProgressionIndustryComponent",
+              "carTypeFilter": "*",
+              "sharedStorage": true,
+              "trackSpans": [
+                "Pevc"
+              ]
+            }
+          }
+        }
+      }
+    },
     "andrews": {
       "industries": {
         "AN_Andrews_Interchange_Yard": {
@@ -2582,10 +2582,10 @@
         }
       }
     },
-    "alarka-jct": {
+    "alarka": {
       "industries": {
-        "AN_Alarka_Jct_Additional": {
-          "name": "Alarka Jct Expansion",
+        "AN_Alarka_Loop": {
+          "name": "Alarka Expansion",
           "localPosition": {
             "x": 0,
             "y": 0,
@@ -2594,12 +2594,12 @@
           "usesContract": false,
           "components": {
             "alarka-bypass-site": {
-              "name": "Alarka Jct Expansion Site",
+              "name": "Alarka Expansion Site",
               "type": "Model.OpsNew.ProgressionIndustryComponent",
               "carTypeFilter": "*",
               "sharedStorage": true,
               "trackSpans": [
-                "Pevc"
+                "PAN_Alarka_Loop_00"
               ]
             }
           }

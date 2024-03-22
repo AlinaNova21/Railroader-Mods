@@ -1,0 +1,17 @@
+{
+  "manifestVersion": 1,
+  "id": "AlinaNova21.MapEditor",
+  "name": "Map Editor",
+  "version": "$(AssemblyVersion)",
+  "assemblies": [ "MapEditor" ],
+  "_requires": [
+    {
+      "id": "Zamu.StrangeCustoms",
+      "notBefore": "1.6.24069.2251"
+    }
+  ],
+  "requires": [
+    "Zamu.StrangeCustoms"
+  ],
+  "mixintos": {}
+}

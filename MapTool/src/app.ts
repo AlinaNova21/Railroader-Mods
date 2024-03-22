@@ -45,6 +45,36 @@ async function run() {
   }
   await writeFile(`../AlinasMapMod/AlinasMapMod.json`, JSON.stringify(amm, null, 2))
   await writeFile(`../../AlinasMapMod/AlinasMapMod.json`, JSON.stringify(amm, null, 2))
+
+  const state = {
+    progressions: {
+      ewh: {
+        sections: {} as any,
+      },
+    },
+    mapFeatures: {} as any,
+  }
+  const mapToBool = (list: string[] = []) => Object.fromEntries(list.map(x => [x, true]))
+  for(const [id, item] of Object.entries(amm.items)) {
+    item.deliveryPhases.forEach(dp => {
+      dp.industryComponent = item.industryComponent
+    })
+    state.mapFeatures[item.identifier] = {
+      displayName: item.name,
+      name: item.name,
+      trackGroupsEnableOnUnlock: mapToBool(item.groupIds),
+      trackGroupsAvailableOnUnlock: mapToBool(item.groupIds),
+    }
+    state.progressions.ewh.sections[item.identifier] = {
+      displayName: item.name,
+      deliveryPhases: item.deliveryPhases,
+      enableFeaturesOnUnlock: mapToBool([item.identifier]),
+      prerequisiteSections: mapToBool(item.prerequisiteSections),
+      description: item.description,
+    }
+  }
+  await writeFile(`../AlinasMapMod/progressions.json`, JSON.stringify(state, null, 2))
+  await writeFile(`../../AlinasMapMod/progressions.json`, JSON.stringify(state, null, 2))
 }
 
 run().catch(console.error)

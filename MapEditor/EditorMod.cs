@@ -14,9 +14,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace AlinasMapMod.Editor
+namespace MapEditor
 {
-  class EditorMod : SingletonPluginBase<EditorMod>, IUpdateHandler, IModTabHandler
+    class EditorMod : SingletonPluginBase<EditorMod>, IUpdateHandler, IModTabHandler
   {
     public Settings Settings { get; }
     private IModdingContext context;

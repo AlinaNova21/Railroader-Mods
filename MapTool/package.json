@@ -1,8 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "dev": "nodemon",
-    "new": "ts-node ./src/newMod.ts --project ./tsconfig.json"
+    "dev": "nodemon"
   },
   "nodemonConfig": {
     "verbose": true,
