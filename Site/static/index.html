@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Alina's Railroader Mods</title>
+  </head>
+  <body>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    
+    <div id="app">
+      <h2>Mods:</h2>
+      <div class="mod" v-for="(mod,id) in mods" :key="id">
+        <h3>{{ mod.name }}</h3>
+        <div><a :href="mod.downloadUrl">Download v{{mod.version}}</a></div>
+        <br />
+        <div>Changelog</div>
+        <div v-for="c in mod.changelog">
+          {{ c.version }}: <pre>{{ c.desc }}</pre>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      const { createApp, ref } = Vue
+
+      createApp({
+        setup () {
+          const mods = ref({})
+          fetch('mods.json')
+            .then(response => response.json())
+            .then(data => {
+              mods.value = data
+            })
+          return {
+            mods
+          }
+        }
+      }).mount('#app')
+    </script>
+  </body>
+</html>

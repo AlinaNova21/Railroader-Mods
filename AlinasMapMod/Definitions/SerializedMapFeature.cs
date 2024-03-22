@@ -73,138 +73,14 @@ namespace AlinasMapMod.Definitions
             // TODO: Handle GameObjectsEnableOnUnlock
             feat.gameObjectsEnableOnUnlock = [];
             // feat.gameObjectsEnableOnUnlock = GameObjectsEnableOnUnlock.Keys.Select(g => gameObjectFromPath(g)).ToArray();
-            feat.prerequisites = ApplyList(feat.prerequisites ?? [], Prerequisites, cache.MapFeatures);
-            feat.areasEnableOnUnlock = ApplyList(feat.areasEnableOnUnlock ?? [], AreasEnableOnUnlock, cache.Areas);
-            feat.trackGroupsAvailableOnUnlock = ApplyList(feat.trackGroupsAvailableOnUnlock ?? [], TrackGroupsAvailableOnUnlock);
-            feat.trackGroupsEnableOnUnlock = ApplyList(feat.trackGroupsEnableOnUnlock ?? [], TrackGroupsEnableOnUnlock);
-            feat.unlockExcludeIndustries = ApplyList(feat.unlockExcludeIndustries ?? [], UnlockExcludeIndustries, cache.Industries);
-            feat.unlockIncludeIndustries = ApplyList(feat.unlockIncludeIndustries ?? [], UnlockIncludeIndustries, cache.Industries);
-            feat.unlockIncludeIndustryComponents = ApplyList(feat.unlockIncludeIndustryComponents ?? [], UnlockIncludeIndustryComponents, cache.IndustryComponents);
+            feat.prerequisites = Utils.ApplyList(feat.prerequisites ?? [], Prerequisites, cache.MapFeatures);
+            feat.areasEnableOnUnlock = Utils.ApplyList(feat.areasEnableOnUnlock ?? [], AreasEnableOnUnlock, cache.Areas);
+            feat.trackGroupsAvailableOnUnlock = Utils.ApplyList(feat.trackGroupsAvailableOnUnlock ?? [], TrackGroupsAvailableOnUnlock);
+            feat.trackGroupsEnableOnUnlock = Utils.ApplyList(feat.trackGroupsEnableOnUnlock ?? [], TrackGroupsEnableOnUnlock);
+            feat.unlockExcludeIndustries = Utils.ApplyList(feat.unlockExcludeIndustries ?? [], UnlockExcludeIndustries, cache.Industries);
+            feat.unlockIncludeIndustries = Utils.ApplyList(feat.unlockIncludeIndustries ?? [], UnlockIncludeIndustries, cache.Industries);
+            feat.unlockIncludeIndustryComponents = Utils.ApplyList(feat.unlockIncludeIndustryComponents ?? [], UnlockIncludeIndustryComponents, cache.IndustryComponents);
         }
-
-        private string[] ApplyList(string[] vals, Dictionary<string, bool> dict)
-        {
-            var items = vals.ToHashSet();
-            foreach (var pair in dict)
-            { 
-                var val = pair.Key;
-                var include = pair.Value;
-                if (include)
-                {
-                    items.Add(val);
-                }
-                else
-                {
-                    items.Remove(val);
-                }
-            }
-            return items.ToArray();
-        }
-
-        private MapFeature[] ApplyList(MapFeature[] list, Dictionary<string, bool> dict, Dictionary<string, MapFeature> cached)
-        {
-            var items = list.ToDictionary(s => s.identifier, s => s);
-            foreach (var pair in dict)
-            {
-                var identifier = pair.Key;
-                var val = pair.Value;
-                if (val && !items.ContainsKey(identifier))
-                {
-                    if (cached.TryGetValue(identifier, out var item))
-                    {
-                        items.Add(identifier, item);
-                    }
-                    else
-                    {
-                        Log.Warning("MapFeature not found: {id}", identifier);
-                    }
-                }
-                else
-                {
-                    items.Remove(identifier);
-                }
-            }
-            return items.Values.ToArray();
-        }
-
-        private Area[] ApplyList(Area[] list, Dictionary<string, bool> dict, Dictionary<string, Area> cached)
-        {
-            var items = list.ToDictionary(s => s.identifier, s => s);
-            foreach (var pair in dict)
-            {
-                var identifier = pair.Key;
-                var val = pair.Value;
-                if (val && !items.ContainsKey(identifier))
-                {
-                    if (cached.TryGetValue(identifier, out var item))
-                    {
-                        items.Add(identifier, item);
-                    }
-                    else
-                    {
-                        Log.Warning("Area not found: {id}", identifier);
-                    }
-                }
-                else
-                {
-                    items.Remove(identifier);
-                }
-            }
-            return items.Values.ToArray();
-        }
-
-        private Industry[] ApplyList(Industry[] list, Dictionary<string, bool> dict, Dictionary<string, Industry> cached)
-        {
-            var items = list.ToDictionary(s => s.identifier, s => s);
-            foreach (var pair in dict)
-            {
-                var identifier = pair.Key;
-                var val = pair.Value;
-                if (val && !items.ContainsKey(identifier))
-                {
-                    if (cached.TryGetValue(identifier, out var item))
-                    {
-                        items.Add(identifier, item);
-                    }
-                    else
-                    {
-                        Log.Warning("Industry not found: {id}", identifier);
-                    }
-                }
-                else
-                {
-                    items.Remove(identifier);
-                }
-            }
-            return items.Values.ToArray();
-        }
-
-        private IndustryComponent[] ApplyList(IndustryComponent[] list, Dictionary<string, bool> dict, Dictionary<string, IndustryComponent> cached)
-        {
-            var items = list.ToDictionary(s => s.Identifier, s => s);
-            foreach (var pair in dict)
-            {
-                var identifier = pair.Key;
-                var val = pair.Value;
-                if (val && !items.ContainsKey(identifier))
-                {
-                    if (cached.TryGetValue(identifier, out var item))
-                    {
-                        items.Add(identifier, item);
-                    }
-                    else
-                    {
-                        Log.Warning("IndustryComponent not found: {id}", identifier);
-                    }
-                }
-                else
-                {
-                    items.Remove(identifier);
-                }
-            }
-            return items.Values.ToArray();
-        }
-
 
         private string getPath(GameObject go)
         {

@@ -1,7 +1,8 @@
 {
   "type": "module",
   "scripts": {
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "generateUpdate": "ts-node ./src/generateUpdate.ts --project ./tsconfig.json"
   },
   "nodemonConfig": {
     "verbose": true,
@@ -10,17 +11,22 @@
       "package.json"
     ],
     "ext": "ts",
-    "ignore": ["*game-graph.json", "dist/**/*.*"],
+    "ignore": [
+      "*game-graph.json",
+      "dist/**/*.*"
+    ],
     "exec": "ts-node ./src/app.ts --project ./tsconfig.json"
   },
   "dependencies": {
     "@rollup/plugin-typescript": "^11.1.6",
     "date-fns": "^3.3.1",
+    "glob": "^10.3.10",
     "jszip": "^3.10.1",
     "rollup": "^4.12.1",
     "three": "^0.162.0",
     "threejs-math": "^0.147.0",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "yaml": "^2.4.1"
   },
   "devDependencies": {
     "@tsconfig/node18": "^18.2.2",

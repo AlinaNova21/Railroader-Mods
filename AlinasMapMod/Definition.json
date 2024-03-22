@@ -4,6 +4,7 @@
   "name": "Alina's Map Mod",
   "version": "$(AssemblyVersion)",
   "assemblies": [ "AlinasMapMod" ],
+  "updateUrl": "https://railroader.alinanova.dev/update.json",
   "_requires": [
     {
       "id": "Zamu.StrangeCustoms",

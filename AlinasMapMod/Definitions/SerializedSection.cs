@@ -32,66 +32,14 @@ namespace AlinasMapMod.Definitions
             EnableFeaturesOnAvailable = s.enableFeaturesOnAvailable.ToDictionary(f => f.identifier, f => true);
         }
 
-        private Section[] ApplyList(Section[] sections, Dictionary<string, bool> dict, Dictionary<string, Section> cached)
-        {
-            var items = sections.ToDictionary(s => s.identifier, s => s);
-            foreach (var pair in dict)
-            {
-                var identifier = pair.Key;
-                var val = pair.Value;
-                if (val) {
-                    if(!items.ContainsKey(identifier))
-                    {
-                        if (cached.TryGetValue(identifier, out var item))
-                        {
-                            items.Add(identifier, item);
-                        } else {
-                            Log.Warning("Section not found: {id}", identifier);
-                        }
-                    }
-                }
-                else
-                {
-                    items.Remove(identifier);
-                }
-            }
-            return items.Values.ToArray();
-        }
-
-        private MapFeature[] ApplyList(MapFeature[] features, Dictionary<string, bool> dict, Dictionary<string, MapFeature> cached)
-        {
-            var items = features.ToDictionary(s => s.identifier, s => s);
-            foreach (var pair in dict)
-            {
-                var identifier = pair.Key;
-                var val = pair.Value;
-                if (val) {
-                    if(!items.ContainsKey(identifier))
-                    {
-                        if (cached.TryGetValue(identifier, out var item))
-                        {
-                            items.Add(identifier, item);
-                        } else {
-                            Log.Warning("MapFeature not found: {id}", identifier);
-                        }
-                    }
-                }
-                else
-                {
-                    items.Remove(identifier);
-                }
-            }
-            return items.Values.ToArray();
-        }
-
         internal void ApplyTo(Section sec, ObjectCache cache)
         {
             sec.displayName = DisplayName;
             sec.description = Description;
-            sec.prerequisiteSections = ApplyList(sec.prerequisiteSections ?? [], PrerequisiteSections, cache.Sections);
-            sec.disableFeaturesOnUnlock = ApplyList(sec.disableFeaturesOnUnlock ?? [], DisableFeaturesOnUnlock, cache.MapFeatures);
-            sec.enableFeaturesOnUnlock = ApplyList(sec.enableFeaturesOnUnlock ?? [], EnableFeaturesOnUnlock, cache.MapFeatures);
-            sec.enableFeaturesOnAvailable = ApplyList(sec.enableFeaturesOnAvailable ?? [], EnableFeaturesOnAvailable, cache.MapFeatures);
+            sec.prerequisiteSections = Utils.ApplyList(sec.prerequisiteSections ?? [], PrerequisiteSections, cache.Sections);
+            sec.disableFeaturesOnUnlock = Utils.ApplyList(sec.disableFeaturesOnUnlock ?? [], DisableFeaturesOnUnlock, cache.MapFeatures);
+            sec.enableFeaturesOnUnlock = Utils.ApplyList(sec.enableFeaturesOnUnlock ?? [], EnableFeaturesOnUnlock, cache.MapFeatures);
+            sec.enableFeaturesOnAvailable = Utils.ApplyList(sec.enableFeaturesOnAvailable ?? [], EnableFeaturesOnAvailable, cache.MapFeatures);
 
             sec.deliveryPhases = DeliveryPhases.Select(dp =>
             {

@@ -34,7 +34,7 @@ namespace AlinasMapMod
         descriptor,
         SceneDescriptor.EnvironmentEnviro
       };
-      gameManager.Launch(new GlobalGameManager.SceneLoadSetup(list1, descriptor), null, default(StartSingleplayerSetup));
+      gameManager.Launch(new GlobalGameManager.SceneLoadSetup(list1, descriptor), new GameSetup("mapTest"), default(StartSingleplayerSetup));
     }
   }
 }
