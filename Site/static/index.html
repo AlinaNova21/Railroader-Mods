@@ -7,7 +7,7 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     
     <div id="app">
-      <h2>Mods:</h2>
+      <h2>Alina's Railroader Mods:</h2>
       <div class="mod" v-for="(mod,id) in mods" :key="id">
         <h3>{{ mod.name }}</h3>
         <div><a :href="mod.downloadUrl">Download v{{mod.version}}</a></div>
