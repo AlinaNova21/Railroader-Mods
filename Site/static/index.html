@@ -12,13 +12,18 @@
         <h3>{{ mod.name }}</h3>
         <div><a :href="mod.downloadUrl">Download v{{mod.version}}</a></div>
         <br />
-        <div>Changelog</div>
-        <div v-for="c in mod.changelog">
-          {{ c.version }}: <pre>{{ c.desc }}</pre>
+        <h3>Changelog</h3>
+        <div v-for="c in mod.changelog" class="changelog">
+          <h4>{{ c.version }}:</h4>
+          <pre>{{ c.desc }}</pre>
         </div>
       </div>
     </div>
-    
+    <style>
+      .changelog {
+        border-top: 1px solid;
+      }
+    </style>
     <script>
       const { createApp, ref } = Vue
 
