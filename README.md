@@ -12,7 +12,7 @@ All mods are installable through [Railloader](https://railroader.stelltis.ch/)
 
 ### Steps:
 
-1. Download the latest release from [Releases](releases)
+1. Download the latest release from the [website](https://railroader.alinanova.dev)
 2. Drop onto Railloader.exe
 3. Done!
 

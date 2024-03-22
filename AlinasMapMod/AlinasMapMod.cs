@@ -18,7 +18,7 @@ using UnityEngine;
 
 namespace AlinasMapMod
 {
-  public partial class AlinasMapMod : SingletonPluginBase<AlinasMapMod>, IUpdateHandler, IModTabHandler
+  public partial class AlinasMapMod : SingletonPluginBase<AlinasMapMod>, IUpdateHandler, IModTabHandler, IMixintoProvider
   {
     private IModdingContext moddingContext;
     private IModDefinition definition;
@@ -70,11 +70,14 @@ namespace AlinasMapMod
       Run();
     }
 
-    public IEnumerable<ModMixinto> GetMixintos(string identifier) {
+    public IEnumerable<ModMixinto> GetMixintos(string identifier)
+    {
       var basedir = moddingContext.ModsBaseDirectory;
-      foreach(var mixinto in moddingContext.GetMixintos(identifier)) {
+      foreach (var mixinto in moddingContext.GetMixintos(identifier))
+      {
         var path = Path.GetFullPath(mixinto.Mixinto);
-        if (!path.StartsWith(basedir)) {
+        if (!path.StartsWith(basedir))
+        {
           logger.Warning($"Mixinto {mixinto} is not in the mods directory, skipping");
         }
         yield return mixinto;
@@ -175,7 +178,8 @@ namespace AlinasMapMod
       }
 
       var sections = UnityEngine.Object.FindObjectsByType<Section>(FindObjectsSortMode.None);
-      foreach(var section in sections) {
+      foreach (var section in sections)
+      {
         logger.Information($"Section: {section.identifier} {section.name}");
       }
     }
@@ -209,10 +213,10 @@ namespace AlinasMapMod
           () => String.Format("{0:0}%", settings.DeliveryCarCountMultiplier * 100),
           v =>
           {
-            settings.DeliveryCarCountMultiplier = v;
+            settings.DeliveryCarCountMultiplier = (int)v;
             Rebuild();
           },
-          1, 5, false, null
+          1, 5, true, null
       ));
 
       builder.AddSection("Map Sections", builder =>
@@ -460,6 +464,22 @@ namespace AlinasMapMod
       }
       toRemove.ForEach(id => set.Remove(id));
       return toRemove.Count > 0;
+    }
+
+    IEnumerable<string> IMixintoProvider.GetMixintos(string mixintoIdentifier)
+    {
+      if (mixintoIdentifier == "game-graph") {
+        if (!settings.EnableDeliveries) {
+          yield return "file(no-deliveries.json)";
+        }
+        if (settings.FreeMilestones) {
+          yield return "file(free-milestones.json)";
+        }
+        if (settings.DeliveryCarCountMultiplier != 1) {
+          yield return $"file(car-count-multiplier-{settings.DeliveryCarCountMultiplier}.json)";
+        }
+      }
+      yield break;
     }
   }
 }

@@ -5,9 +5,7 @@
     <MinorVersion>3</MinorVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="AlinasMapMod.json" CopyToOutputDirectory="Always" />
-    <Content Include="game-graph.json" CopyToOutputDirectory="Always" />
-    <Content Include="progressions.json" CopyToOutputDirectory="Always" />
+    <Content Include="*.json" CopyToOutputDirectory="Always" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\factory-icon.png" />
