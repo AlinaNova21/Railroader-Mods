@@ -1,10 +1,15 @@
-{
-  "AlinaNova21.AlinasMapMod": {
-    "id": "AlinaNova21.AlinasMapMod",
+[
+  {
+    "id": "alinas-map-mod",
+    "modId": "AlinaNova21.AlinasMapMod",
     "name": "Alina's Map Mod",
     "desc": "A mod that adds a new milestones to the game adding additional tracks, such as yards, wyes, and more.",
-    "version": "1.3.24082.33",
+    "version": "1.3.24083.2023",
     "changelog": [
+      {
+        "version": "1.3.24083.2023",
+        "desc": "- Shifted Whittier yard to make room for a new telegraph poles.\n- Rebuild to fix Alarka Balloon Loop\n- Potential migration for Industry name change for pre-1.3.24073.2240 version.\n  - Requires SC 1.6.24083.1951 or later."
+      },
       {
         "version": "1.3.24082.33",
         "desc": "- Map Editor removed."
@@ -30,6 +35,7 @@
         "desc": "Re-release of discord version here.\nv1.3 Changelog:\n\n- Better error when SC is outdated\n- Added configuration settings:\n  - Deliveries Enabled: Turns deliveries on and off, potentially weird behaviour if milestone is in progress.\n  - Free Milestones: Sets cost for each phase to $0\n  - Car Count Multiplier: Allows you to turn up the number of cars in each delivery"
       }
     ],
-    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.3.24082.33/AlinasMapMod_1.3.24082.33.zip"
+    "assemblyName": "AlinasMapMod",
+    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.3.24083.2023/AlinasMapMod_1.3.24083.2023.zip"
   }
-}
+]
