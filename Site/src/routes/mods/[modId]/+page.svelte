@@ -4,8 +4,11 @@
   import type { PageData } from './$types'
 	export let data: PageData;
 </script>
+<div>
 WIP, check back later.
-{ JSON.stringify(data.mod) }
+</div>
+<!-- { JSON.stringify(data.mod) } -->
+Changelog:
 <Container>
   {@const mod = data.mod}
   {#each mod.changelog as c}
