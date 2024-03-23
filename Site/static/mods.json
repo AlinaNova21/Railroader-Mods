@@ -6,6 +6,14 @@
     "version": "1.3.24078.548",
     "changelog": [
       {
+        "version": "v1.3.24082.33",
+        "desc": "- Map Editor removed."
+      },
+      {
+        "version": "v1.3.24080.327",
+        "desc": "- Flatten Andrews Interchange and yard"
+      },
+      {
         "version": "1.3.24078.548",
         "desc": "- Added Alarka Balloon Loop #4"
       },
