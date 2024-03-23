@@ -1,3 +1,6 @@
+using Game.Messages;
+using Game.Messages.OpsSnapshot;
+using Game.Persistence;
 using Game.Progression;
 using HarmonyLib;
 using Railloader;
@@ -5,6 +8,7 @@ using Serilog;
 
 namespace AlinasMapMod
 {
+  [HarmonyPatch()]
   [HarmonyPatch(typeof(MapFeatureManager), "Awake")]
   [HarmonyPatchCategory("AlinasMapMod")]
   internal static class MapFeatureManagerAdd

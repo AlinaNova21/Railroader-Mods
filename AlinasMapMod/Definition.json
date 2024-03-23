@@ -16,6 +16,7 @@
   ],
   "mixintos": {
     "game-graph": "file(game-graph.json)",
+    "game-migrations": "file(game-migrations.json)",
     "AlinasMapMod": "file(AlinasMapMod.json)",
     "progressions": "file(progressions.json)"
   }

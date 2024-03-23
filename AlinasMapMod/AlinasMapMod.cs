@@ -6,6 +6,9 @@ using System.Linq;
 using AlinasMapMod.Definitions;
 using GalaSoft.MvvmLight.Messaging;
 using Game.Events;
+using Game.Messages;
+using Game.Messages.OpsSnapshot;
+using Game.Persistence;
 using Game.Progression;
 using HarmonyLib;
 using Model.OpsNew;
@@ -247,10 +250,11 @@ namespace AlinasMapMod
       if (scOutdated) return;
       if (nextTry == DateTime.MaxValue) nextTry = DateTime.Now.AddMilliseconds(500);
       logger.Information($"Run()");
-
+      #if DEBUG
       var patcher = new Patcher();
       patcher.Dump();
       patcher.Patch();
+      #endif
       objectCache.Rebuild();
       var mixins = moddingContext.GetMixintos("AlinasMapMod");
 
@@ -261,7 +265,9 @@ namespace AlinasMapMod
         foreach (var item in obj.Items.Values)
         {
           logger.Information($"Processing Item {item.Identifier} - {item.Name}");
-          // ConfigureFeature(item);
+          #if !DEBUG
+          ConfigureFeature(item);
+          #endif
           if (scVersion < industryMinVersion)
           {
             logger.Information($"Older SC ({scVersion} < {industryMinVersion}), Managing Industries manually");
@@ -271,7 +277,9 @@ namespace AlinasMapMod
               ConfigureProgressionIndustryComponent(item);
             }
           }
-          // ConfigureSection(item);
+          #if !DEBUG
+          ConfigureSection(item);
+          #endif
         }
       }
     }
@@ -468,16 +476,30 @@ namespace AlinasMapMod
 
     IEnumerable<string> IMixintoProvider.GetMixintos(string mixintoIdentifier)
     {
-      if (mixintoIdentifier == "game-graph") {
-        if (!settings.EnableDeliveries) {
-          yield return "file(no-deliveries.json)";
-        }
-        if (settings.FreeMilestones) {
-          yield return "file(free-milestones.json)";
-        }
-        if (settings.DeliveryCarCountMultiplier != 1) {
-          yield return $"file(car-count-multiplier-{settings.DeliveryCarCountMultiplier}.json)";
-        }
+      if (mixintoIdentifier == "game-graph")
+      {
+        // if (settings.enableSylvaCrossovers)
+        // {
+        //   yield return "file(sylva-crossovers.json)";
+        // }
+        // if (settings.enableWhittierCrossovers)
+        // {
+        //   yield return "file(whittier-crossovers.json)";
+        // }
+      }
+      if (mixintoIdentifier == "progressions") {
+        // if (!settings.EnableDeliveries)
+        // {
+        //   yield return "file(no-deliveries.json)";
+        // }
+        // if (settings.FreeMilestones)
+        // {
+        //   yield return "file(free-milestones.json)";
+        // }
+        // if (settings.DeliveryCarCountMultiplier != 1)
+        // {
+        //   yield return $"file(car-count-multiplier-{settings.DeliveryCarCountMultiplier}.json)";
+        // }
       }
       yield break;
     }
