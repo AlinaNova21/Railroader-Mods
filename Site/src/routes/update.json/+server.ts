@@ -8,8 +8,8 @@ export const GET: RequestHandler = async ({ fetch }) => {
   const mods = await fetch('/mods.json').then(r => r.json()) as ModsJson
   const update: UpdateJson = {}
   for(const k in mods) {
-    const { version, changelog } = mods[k]
-    update[k] = { version, changelog }
+    const { modId, version, changelog } = mods[k]
+    update[modId] = { version, changelog }
   }
   return json(update)
 }

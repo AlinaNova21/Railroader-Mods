@@ -1,7 +1,19 @@
 <script lang="ts">
   import Markdown from '@magidoc/plugin-svelte-marked'
-  import { Container, Col, Row, Card, CardGroup, CardHeader, CardTitle, CardBody, CardText, Button } from '@sveltestrap/sveltestrap'
-  import type { PageData } from './$types';
+  import { Col, Container, Row } from '@sveltestrap/sveltestrap'
+  import type { PageData } from './$types'
 	export let data: PageData;
 </script>
+WIP, check back later.
 { JSON.stringify(data.mod) }
+<Container>
+  {@const mod = data.mod}
+  {#each mod.changelog as c}
+  <Row class="changelog">
+    <Col md="2">{ c.version }:</Col>
+    <Col md="10" class="text-left">
+      <Markdown source={ c.desc } />
+    </Col>
+  </Row>
+  {/each}
+</Container>

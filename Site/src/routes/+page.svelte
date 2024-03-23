@@ -1,7 +1,6 @@
 <script lang="ts">
-  import Markdown from '@magidoc/plugin-svelte-marked'
-  import { Container, Col, Row, Card, CardGroup, CardHeader, CardTitle, CardBody, CardText, Button } from '@sveltestrap/sveltestrap'
-  import type { PageData } from './$types';
+  import { Button, Card, CardBody, CardGroup, CardHeader, CardText, CardTitle, Container } from '@sveltestrap/sveltestrap'
+  import type { PageData } from './$types'
 	export let data: PageData;
 </script>
 <Container fluid>
@@ -20,7 +19,7 @@
             { mod.desc }
           </CardText>
 
-          <Button href={`/mod/${mod.id}`} color="primary">Details</Button>
+          <Button href={`/mods/${mod.id}`} color="primary">Details</Button>
           <Button href={mod.downloadUrl} color="success">Download</Button>
         </CardBody>
       </Card>
