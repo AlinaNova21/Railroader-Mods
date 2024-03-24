@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace AlinasMapMod
 {
-  class ObjectCache
+  public class ObjectCache
   {
     public Dictionary<string, MapFeature> MapFeatures { get; private set; } = new Dictionary<string, MapFeature>();
     public Dictionary<string, Section> Sections { get; private set; } = new Dictionary<string, Section>();

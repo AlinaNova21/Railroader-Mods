@@ -1,18 +1,22 @@
 {
-  "manifestVersion": 1,
+  "manifestVersion": 5,
   "id": "AlinaNova21.AlinasMapMod",
   "name": "Alina's Map Mod",
   "version": "$(AssemblyVersion)",
   "assemblies": [ "AlinasMapMod" ],
   "updateUrl": "https://railroader.alinanova.dev/update.json",
-  "_requires": [
+  "requires": [
     {
       "id": "Zamu.StrangeCustoms",
-      "notBefore": "1.6.24069.2251"
+      "notBefore": "1.6.24074.728"
     }
   ],
-  "requires": [
-    "Zamu.StrangeCustoms"
+  "_conflictsWith": [
+    { "id": "AlinaNova21.AndrewsInterchangeYard" },
+    { "id": "AlinaNova21.SylvaInterchangeYard" },
+    { "id": "AlinaNova21.SylvaWye" },
+    { "id": "AlinaNova21.WhittierYard" },
+    { "id": "AlinaNova21.AlarkaJctAdditional" }
   ],
   "mixintos": {
     "game-graph": "file(game-graph.json)",

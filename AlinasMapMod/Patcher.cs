@@ -5,7 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using AlinasMapMod.Definitions;
+using Game.Messages.OpsSnapshot;
 using Game.Progression;
+using JetBrains.Annotations;
 using Model.OpsNew;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -18,6 +20,21 @@ namespace AlinasMapMod
 {
   public class Patcher
   {
+    private PatchState? _initialState;
+    public PatchState InitialState {
+      get {
+        if (_initialState == null) {
+          _initialState = Dump();
+        }
+        return _initialState;
+      }
+    }
+
+    public delegate void PatchStateHandler(PatchState state);
+    public event PatchStateHandler OnPatchState;
+    protected virtual void OnPatchStateEvent(PatchState state) {
+      OnPatchState?.Invoke(state);
+    }
 
     public void Patch() {
       var cache = new ObjectCache();
@@ -32,6 +49,7 @@ namespace AlinasMapMod
         var json = JObject.Parse(File.ReadAllText(mixinto.Mixinto));
         var state = json.ToObject<PatchState>();
         if (state == null) continue;
+        OnPatchStateEvent(state);
         foreach (KeyValuePair<string, SerializedMapFeature> pair in state.MapFeatures)
         {
           var identifier = pair.Key;
@@ -77,7 +95,7 @@ namespace AlinasMapMod
         }
       }
     }
-    public void Dump()
+    public PatchState Dump(string path = "")
     {
       try
       {
@@ -88,26 +106,29 @@ namespace AlinasMapMod
           MapFeatures = UnityEngine.Object.FindObjectsByType<MapFeature>(UnityEngine.FindObjectsSortMode.None)
               .ToDictionary(mf => mf.identifier, mf => new SerializedMapFeature(mf)),
         };
-
-        var jsonSerializerSettings = new JsonSerializerSettings
+        if (path != "")
         {
-          ContractResolver = new DefaultContractResolver
+          var jsonSerializerSettings = new JsonSerializerSettings
           {
-            NamingStrategy = new CamelCaseNamingStrategy
+            ContractResolver = new DefaultContractResolver
             {
-              ProcessDictionaryKeys = false
-            }
-          },
-        };
-        var jsonSerializer = JsonSerializer.CreateDefault(jsonSerializerSettings);
-        var obj = JObject.FromObject(state, jsonSerializer);
-        File.WriteAllText("Mods/AlinasMods/AlinasMapMod/progressions-dump.json", JsonConvert.SerializeObject(obj, Formatting.Indented, jsonSerializerSettings));
+              NamingStrategy = new CamelCaseNamingStrategy
+              {
+                ProcessDictionaryKeys = false
+              }
+            },
+          };
+          var jsonSerializer = JsonSerializer.CreateDefault(jsonSerializerSettings);
+          var obj = JObject.FromObject(state, jsonSerializer);
+          File.WriteAllText(path, JsonConvert.SerializeObject(obj, Formatting.Indented, jsonSerializerSettings));
+        }
+        return state;
       }
       catch (System.Exception e)
       {
         Log.Error(e, "Failed to dump progression");
       }
-      // Process.GetCurrentProcess().Kill();
+      return new PatchState();
     }
   }
 }

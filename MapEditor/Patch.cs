@@ -1,4 +1,5 @@
 
+using System;
 using HarmonyLib;
 using Railloader;
 using Serilog;
@@ -15,6 +16,7 @@ namespace MapEditor
     {
       Log.ForContext(typeof(GraphRebuildCollections)).Debug("GraphRebuildCollections PostFix()");
       // SingletonPluginBase<AlinasMapMod>.Shared?.AttachGizmos();
+      UnityEngine.Object.FindObjectOfType<NodeHelpers>()?.Reset();
     }
   }
 }

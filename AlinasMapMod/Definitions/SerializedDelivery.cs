@@ -4,7 +4,7 @@ using Model.OpsNew;
 
 namespace AlinasMapMod.Definitions
 {
-    internal class SerializedDelivery
+    public class SerializedDelivery
     {
         public int Direction { get; set; } = 0;
         public int Count { get; set; } = 0;

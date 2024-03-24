@@ -6,7 +6,7 @@ using Game.Progression;
 
 namespace AlinasMapMod.Definitions
 {
-    internal class SerializedDeliveryPhase
+    public class SerializedDeliveryPhase
     {
 
         public IEnumerable<SerializedDelivery> Deliveries { get; set; } = new List<SerializedDelivery>();

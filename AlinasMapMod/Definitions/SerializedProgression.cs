@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace AlinasMapMod.Definitions
 {
-  class SerializedProgression
+  public class SerializedProgression
   {
     public Dictionary<string, SerializedSection> Sections { get; set; } = new Dictionary<string, SerializedSection>();
 

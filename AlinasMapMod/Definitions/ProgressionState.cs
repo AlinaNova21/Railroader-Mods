@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace AlinasMapMod.Definitions
 {
-    class PatchState
+  public class PatchState
   {
     public Dictionary<string, SerializedMapFeature> MapFeatures;
     public Dictionary<string, SerializedProgression> Progressions;

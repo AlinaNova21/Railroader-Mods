@@ -28,7 +28,7 @@ namespace MapEditor
     {
       context = _context;
       uiHelper = _uiHelper;
-      Settings = context.LoadSettingsData<Settings>("AlinaNova21.AlinasMapMod.Editor") ?? new Settings();
+      Settings = context.LoadSettingsData<Settings>("AlinaNova21.MapEditor") ?? new Settings();
     }
 
     public override void OnEnable()
@@ -47,13 +47,17 @@ namespace MapEditor
 
     private void OnMapDidLoad(MapDidLoadEvent @event)
     {
+      logger.Debug("OnMapDidLoad()");
       var editor = new GameObject("Editor");
-      editor.AddComponent<Editor>();
-      editor.SetActive(Settings.Enabled);
       var parent = GameObject.Find("World").transform;
       if (parent != null) {
+        logger.Debug("Found World object");
         editor.transform.SetParent(parent);
+      } else {
+        logger.Error("Could not find World object");
       }
+      editor.AddComponent<Editor>();
+      editor.SetActive(Settings.Enabled);
       var window = uiHelper.CreateWindow(200,200,UI.Common.Window.Position.CenterRight);
       window.Title = "Map Editor";
       uiHelper.PopulateWindow(window, builder => {
@@ -66,7 +70,6 @@ namespace MapEditor
         });
         builder.AddExpandingVerticalSpacer();
       });
-      #if DEBUG
       var tr = UnityEngine.Object.FindObjectOfType<TopRightArea>();
       if (tr != null) {
         var buttons = tr.transform.Find("Buttons");
@@ -76,7 +79,7 @@ namespace MapEditor
         button.onClick.AddListener(() => {
           window.ShowWindow();
         });
-        var rawIcon = Assembly.GetExecutingAssembly().GetManifestResourceStream("AlinasMapMod.Resources.construction-icon.png");
+        var rawIcon = Assembly.GetExecutingAssembly().GetManifestResourceStream("MapEditor.Resources.construction-icon.png");
         var iconData = new BinaryReader(rawIcon).ReadBytes((int)rawIcon.Length);
         var icon = go.AddComponent<Image>();
         var tex = new Texture2D(24,24, TextureFormat.ARGB32, false);
@@ -85,7 +88,6 @@ namespace MapEditor
         icon.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 32);
         icon.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 32);
       }
-      #endif
       var scene = SceneDescriptor.Editor.LoadAsync(LoadSceneMode.Additive);
       scene.completed += (op) => {
         GameObject.Find("Definition Editor Mode Controller")?.SetActive(false);
@@ -95,7 +97,7 @@ namespace MapEditor
     
     public void ModTabDidClose()
     {
-      context.SaveSettingsData("AlinaNova21.AlinasMapMod.Editor", Settings);
+      context.SaveSettingsData("AlinaNova21.MapEditor", Settings);
     }
 
     public void ModTabDidOpen(UIPanelBuilder builder)
@@ -111,7 +113,6 @@ namespace MapEditor
           () => Settings.ShowNodeHelpers,
           (value) => Settings.ShowNodeHelpers = value
         ));
-
       });
     }
 

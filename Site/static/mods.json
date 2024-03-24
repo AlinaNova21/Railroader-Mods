@@ -8,7 +8,7 @@
     "changelog": [
       {
         "version": "1.3.24083.2023",
-        "desc": "- Shifted Whittier yard to make room for a new telegraph poles.\n- Rebuild to fix Alarka Balloon Loop\n- Potential migration for Industry name change for pre-1.3.24073.2240 version.\n  - Requires SC 1.6.24083.1951 or later."
+        "desc": "- Shifted Whittier yard to make room for a new telegraph poles.\n- Rebuild to fix Alarka Balloon Loop\n- Potential migration for Industry name change for pre-1.3.24073.2240 version.\n  - Requires SC 1.6.24083.1951 or later.\n- Now supports Railloader Update checks"
       },
       {
         "version": "1.3.24082.33",
