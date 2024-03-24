@@ -5,6 +5,10 @@ desc: |-
   A mod that adds a new milestones to the game adding additional tracks, such as yards, wyes, and more.
 version: '1.3.24083.2023'
 changelog:
+- version: '1.3.24084.353'
+  desc: |-
+    - Refactored to remove older code, RL 1.7 will be required now.
+    - Bug fixes for various issues.
 - version: '1.3.24083.2023'
   desc: |-
     - Shifted Whittier yard to make room for a new telegraph poles.

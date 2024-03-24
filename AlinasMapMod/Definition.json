@@ -7,11 +7,15 @@
   "updateUrl": "https://railroader.alinanova.dev/update.json",
   "requires": [
     {
+      "id": "railloader",
+      "notBefore": "1.7.2"
+    },
+    {
       "id": "Zamu.StrangeCustoms",
       "notBefore": "1.6.24074.728"
     }
   ],
-  "_conflictsWith": [
+  "conflictsWith": [
     { "id": "AlinaNova21.AndrewsInterchangeYard" },
     { "id": "AlinaNova21.SylvaInterchangeYard" },
     { "id": "AlinaNova21.SylvaWye" },
