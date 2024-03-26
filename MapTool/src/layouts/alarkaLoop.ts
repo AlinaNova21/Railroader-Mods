@@ -1,6 +1,6 @@
 
 
-import { Vector3 } from 'three'
+import { Vector3, Euler } from 'three'
 import { DEG2RAD } from 'three/src/math/MathUtils.js'
 import { AlinasMapModMixin } from '../lib/AlinasMapMod.js'
 import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, TrackSpan, TrackSpanPartEnd, createNode, createSegment, createSwitch, getNode, getSegment, loadHelper } from '../lib/index.js'
@@ -60,7 +60,9 @@ export default async function alarkaLoop(graph: Graph) {
   // n6.position.y = n8.position.y
 
   const sw1 = createSwitch(n8, 40, -1, 8, groupId, false)
-  
+  sw1.node.position = new Vector3(4098.56, 645, -3319.40)
+  sw1.node.rotation = new Euler(0,321.81,0)
+
   const seg1 = createSegment(n6.id, sw1.node.id)
   seg1.groupId = groupId
 
