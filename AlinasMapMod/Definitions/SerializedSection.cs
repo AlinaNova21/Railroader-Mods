@@ -7,7 +7,7 @@ using Serilog;
 
 namespace AlinasMapMod.Definitions
 {
-    internal class SerializedSection
+    public class SerializedSection
     {
         public string DisplayName { get; set; } = "";
         public string Description { get; set; } = "";

@@ -19,182 +19,21 @@
       },
       "unlockIncludeIndustryComponents": {}
     },
-    "signals": {
-      "description": "",
-      "prerequisites": {},
-      "areasEnableOnUnlock": {},
-      "defaultEnableInSandbox": true,
-      "displayName": "",
-      "gameObjectsEnableOnUnlock": {
-        "CTC/CTC": true,
-        "World/Signs/Sign Begin CTC Andrews": true,
-        "World/Signs/Sign Begin CTC Sylva": true
-      },
-      "trackGroupsAvailableOnUnlock": {},
-      "trackGroupsEnableOnUnlock": {},
-      "unlockExcludeIndustries": {},
-      "unlockIncludeIndustries": {},
-      "unlockIncludeIndustryComponents": {}
-    },
-    "diesel-br": {
-      "description": "",
-      "prerequisites": {},
-      "areasEnableOnUnlock": {},
-      "defaultEnableInSandbox": true,
-      "displayName": "",
-      "gameObjectsEnableOnUnlock": {
-        "World/Large Scenery/Bryson/Diesel Fueling Stand/Diesel Fueling Stand": true
-      },
-      "trackGroupsAvailableOnUnlock": {},
-      "trackGroupsEnableOnUnlock": {},
-      "unlockExcludeIndustries": {},
-      "unlockIncludeIndustries": {},
-      "unlockIncludeIndustryComponents": {
-        "bryson-roundhouse-ops.diesel": true
-      }
-    },
-    "diesel-db": {
-      "description": "",
-      "prerequisites": {},
-      "areasEnableOnUnlock": {},
-      "defaultEnableInSandbox": true,
-      "displayName": "",
-      "gameObjectsEnableOnUnlock": {
-        "World/Large Scenery/Dillsboro/Dillsboro Diesel Fueling Stand/Dillsboro Diesel Fueling Stand": true
-      },
-      "trackGroupsAvailableOnUnlock": {},
-      "trackGroupsEnableOnUnlock": {},
-      "unlockExcludeIndustries": {},
-      "unlockIncludeIndustries": {},
-      "unlockIncludeIndustryComponents": {
-        "dillsboro-roundhouse-ops.diesel": true
-      }
-    },
-    "alarka": {
+    "alarka-jct-wye": {
       "description": "",
       "prerequisites": {
-        "alarka-jct-wye": true
-      },
-      "areasEnableOnUnlock": {
-        "cochran": true,
-        "alarka": true
-      },
-      "defaultEnableInSandbox": true,
-      "displayName": "",
-      "gameObjectsEnableOnUnlock": {},
-      "trackGroupsAvailableOnUnlock": {
-        "s3a": true
-      },
-      "trackGroupsEnableOnUnlock": {
-        "s3a": true
-      },
-      "unlockExcludeIndustries": {},
-      "unlockIncludeIndustries": {
-        "alarka-interchange": true
-      },
-      "unlockIncludeIndustryComponents": {}
-    },
-    "ajct-water": {
-      "description": "",
-      "prerequisites": {
-        "alarka-jct-wye": true
+        "br-fo": true
       },
       "areasEnableOnUnlock": {},
       "defaultEnableInSandbox": true,
       "displayName": "",
-      "gameObjectsEnableOnUnlock": {
-        "World/Large Scenery/Alarka Jct/Alarka Jct Water Column/Alarka Jct Water Column": true
-      },
-      "trackGroupsAvailableOnUnlock": {},
-      "trackGroupsEnableOnUnlock": {},
-      "unlockExcludeIndustries": {},
-      "unlockIncludeIndustries": {},
-      "unlockIncludeIndustryComponents": {}
-    },
-    "el-br": {
-      "description": "",
-      "prerequisites": {},
-      "areasEnableOnUnlock": {
-        "bryson-above": true,
-        "bryson": true
-      },
-      "defaultEnableInSandbox": true,
-      "displayName": "",
       "gameObjectsEnableOnUnlock": {},
       "trackGroupsAvailableOnUnlock": {
-        "ela-bridge": true,
-        "s2": true,
-        "walker": true
+        "aj-wye": true
       },
       "trackGroupsEnableOnUnlock": {
-        "ela-bridge": true
+        "aj-wye": true
       },
-      "unlockExcludeIndustries": {},
-      "unlockIncludeIndustries": {},
-      "unlockIncludeIndustryComponents": {}
-    },
-    "br-fo": {
-      "description": "",
-      "prerequisites": {},
-      "areasEnableOnUnlock": {
-        "hemingway": true,
-        "alarka-jct": true,
-        "fontana": true
-      },
-      "defaultEnableInSandbox": true,
-      "displayName": "",
-      "gameObjectsEnableOnUnlock": {},
-      "trackGroupsAvailableOnUnlock": {
-        "s3": true
-      },
-      "trackGroupsEnableOnUnlock": {
-        "s3": true
-      },
-      "unlockExcludeIndustries": {
-        "alarka-interchange": true
-      },
-      "unlockIncludeIndustries": {},
-      "unlockIncludeIndustryComponents": {}
-    },
-    "cw-wh": {
-      "description": "",
-      "prerequisites": {},
-      "areasEnableOnUnlock": {
-        "barkers": true,
-        "wilmot": true
-      },
-      "defaultEnableInSandbox": true,
-      "displayName": "",
-      "gameObjectsEnableOnUnlock": {},
-      "trackGroupsAvailableOnUnlock": {
-        "s1": true,
-        "cowee-bridge": true
-      },
-      "trackGroupsEnableOnUnlock": {},
-      "unlockExcludeIndustries": {},
-      "unlockIncludeIndustries": {
-        "sylva-paperboard": true,
-        "sylva-tannery": true
-      },
-      "unlockIncludeIndustryComponents": {}
-    },
-    "signals-na-mc": {
-      "description": "",
-      "prerequisites": {
-        "signals-bk-hw": true
-      },
-      "areasEnableOnUnlock": {},
-      "defaultEnableInSandbox": true,
-      "displayName": "",
-      "gameObjectsEnableOnUnlock": {
-        "CTC/CTC Panel Bryson/Left/Schematic/Canvas/NA-WE-MC/NA-WE-MC": true,
-        "CTC/CTC Panel Bryson/Left/Board/NA-WE-MC/NA-WE-MC": true,
-        "CTC/CTC Panel Bryson/Center/Schematic/Canvas/MC-BK/MC-BK": true,
-        "CTC/NA-WE-MC Module/NA-WE-MC Module": true,
-        "CTC/BK-MC Module/BK-MC Module": true
-      },
-      "trackGroupsAvailableOnUnlock": {},
-      "trackGroupsEnableOnUnlock": {},
       "unlockExcludeIndustries": {},
       "unlockIncludeIndustries": {},
       "unlockIncludeIndustryComponents": {}
@@ -212,66 +51,6 @@
       },
       "trackGroupsAvailableOnUnlock": {},
       "trackGroupsEnableOnUnlock": {},
-      "unlockExcludeIndustries": {},
-      "unlockIncludeIndustries": {},
-      "unlockIncludeIndustryComponents": {}
-    },
-    "signals-bk-hw": {
-      "description": "",
-      "prerequisites": {
-        "signals": true
-      },
-      "areasEnableOnUnlock": {},
-      "defaultEnableInSandbox": true,
-      "displayName": "",
-      "gameObjectsEnableOnUnlock": {
-        "CTC/CTC Panel Bryson/Center/Schematic/Canvas/BK-AJ-HW/BK-AJ-HW": true,
-        "CTC/CTC Panel Bryson/Center/Board/BK-AJ-HW/BK-AJ-HW": true,
-        "CTC/BK-AJ-HW Module/BK-AJ-HW Module": true,
-        "CTC/BR-HW Module/BR-HW Module": true
-      },
-      "trackGroupsAvailableOnUnlock": {},
-      "trackGroupsEnableOnUnlock": {},
-      "unlockExcludeIndustries": {},
-      "unlockIncludeIndustries": {},
-      "unlockIncludeIndustryComponents": {}
-    },
-    "signals-tv-db": {
-      "description": "",
-      "prerequisites": {
-        "signals": true
-      },
-      "areasEnableOnUnlock": {},
-      "defaultEnableInSandbox": true,
-      "displayName": "",
-      "gameObjectsEnableOnUnlock": {
-        "CTC/CTC Panel Bryson/Right/Schematic/Canvas/TV-BK-CW-DB/TV-BK-CW-DB": true,
-        "CTC/CTC Panel Bryson/Right/Board/Board": true,
-        "CTC/CTC Panel Bryson/Center/Schematic/Canvas/WH-TV/WH-TV": true,
-        "CTC/TV-BC-CW-DB-SY Module/TV-BC-CW-DB-SY Module": true,
-        "CTC/TV-WH Module/TV-WH Module": true
-      },
-      "trackGroupsAvailableOnUnlock": {},
-      "trackGroupsEnableOnUnlock": {},
-      "unlockExcludeIndustries": {},
-      "unlockIncludeIndustries": {},
-      "unlockIncludeIndustryComponents": {}
-    },
-    "dby-ext-2st": {
-      "description": "",
-      "prerequisites": {
-        "db-yard": true
-      },
-      "areasEnableOnUnlock": {},
-      "defaultEnableInSandbox": false,
-      "displayName": "",
-      "gameObjectsEnableOnUnlock": {},
-      "trackGroupsAvailableOnUnlock": {
-        "dby-ext-2st": true
-      },
-      "trackGroupsEnableOnUnlock": {
-        "dby-ext-2st": true
-      },
       "unlockExcludeIndustries": {},
       "unlockIncludeIndustries": {},
       "unlockIncludeIndustryComponents": {}
@@ -298,22 +77,275 @@
       "unlockIncludeIndustries": {},
       "unlockIncludeIndustryComponents": {}
     },
-    "diesel-an": {
+    "dby-ext-2st": {
+      "description": "",
+      "prerequisites": {
+        "db-yard": true
+      },
+      "areasEnableOnUnlock": {},
+      "defaultEnableInSandbox": false,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {},
+      "trackGroupsAvailableOnUnlock": {
+        "dby-ext-2st": true
+      },
+      "trackGroupsEnableOnUnlock": {
+        "dby-ext-2st": true
+      },
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {}
+    },
+    "signals-tv-db": {
+      "description": "",
+      "prerequisites": {
+        "signals": true
+      },
+      "areasEnableOnUnlock": {},
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {
+        "CTC/CTC Panel Bryson/Right/Schematic/Canvas/TV-BK-CW-DB/TV-BK-CW-DB": true,
+        "CTC/CTC Panel Bryson/Right/Board/Board": true,
+        "CTC/CTC Panel Bryson/Center/Schematic/Canvas/WH-TV/WH-TV": true,
+        "CTC/TV-BC-CW-DB-SY Module/TV-BC-CW-DB-SY Module": true,
+        "CTC/TV-WH Module/TV-WH Module": true
+      },
+      "trackGroupsAvailableOnUnlock": {},
+      "trackGroupsEnableOnUnlock": {},
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {}
+    },
+    "cw-wh": {
+      "description": "",
+      "prerequisites": {},
+      "areasEnableOnUnlock": {
+        "barkers": true,
+        "wilmot": true
+      },
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {},
+      "trackGroupsAvailableOnUnlock": {
+        "s1": true,
+        "cowee-bridge": true
+      },
+      "trackGroupsEnableOnUnlock": {},
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {
+        "sylva-paperboard": true,
+        "sylva-tannery": true
+      },
+      "unlockIncludeIndustryComponents": {}
+    },
+    "signals": {
       "description": "",
       "prerequisites": {},
       "areasEnableOnUnlock": {},
       "defaultEnableInSandbox": true,
       "displayName": "",
       "gameObjectsEnableOnUnlock": {
-        "World/Large Scenery/Andrews/Andrews Diesel Fueling Stand/Andrews Diesel Fueling Stand": true
+        "CTC/CTC": true,
+        "World/Signs/Sign Begin CTC Andrews": true,
+        "World/Signs/Sign Begin CTC Sylva": true
       },
       "trackGroupsAvailableOnUnlock": {},
       "trackGroupsEnableOnUnlock": {},
       "unlockExcludeIndustries": {},
       "unlockIncludeIndustries": {},
-      "unlockIncludeIndustryComponents": {
-        "andrews-service.diesel": true
-      }
+      "unlockIncludeIndustryComponents": {}
+    },
+    "el-br": {
+      "description": "",
+      "prerequisites": {},
+      "areasEnableOnUnlock": {
+        "bryson-above": true,
+        "bryson": true
+      },
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {
+        "World/Telegraph Pole Feature Targets/Tag 2 EL-BR/Tag 2 EL-BR": true
+      },
+      "trackGroupsAvailableOnUnlock": {
+        "ela-bridge": true,
+        "s2": true,
+        "walker": true
+      },
+      "trackGroupsEnableOnUnlock": {
+        "ela-bridge": true
+      },
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {}
+    },
+    "signals-bk-hw": {
+      "description": "",
+      "prerequisites": {
+        "signals": true
+      },
+      "areasEnableOnUnlock": {},
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {
+        "CTC/CTC Panel Bryson/Center/Schematic/Canvas/BK-AJ-HW/BK-AJ-HW": true,
+        "CTC/CTC Panel Bryson/Center/Board/BK-AJ-HW/BK-AJ-HW": true,
+        "CTC/BK-AJ-HW Module/BK-AJ-HW Module": true,
+        "CTC/BR-HW Module/BR-HW Module": true
+      },
+      "trackGroupsAvailableOnUnlock": {},
+      "trackGroupsEnableOnUnlock": {},
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {}
+    },
+    "db-sy": {
+      "description": "",
+      "prerequisites": {},
+      "areasEnableOnUnlock": {
+        "sylva": true,
+        "dillsboro": true
+      },
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {},
+      "trackGroupsAvailableOnUnlock": {
+        "sy-db": true,
+        "sylva-paperboard": true
+      },
+      "trackGroupsEnableOnUnlock": {},
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {}
+    },
+    "ajct-water": {
+      "description": "",
+      "prerequisites": {
+        "alarka-jct-wye": true
+      },
+      "areasEnableOnUnlock": {},
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {
+        "World/Large Scenery/Alarka Jct/Alarka Jct Water Column/Alarka Jct Water Column": true
+      },
+      "trackGroupsAvailableOnUnlock": {},
+      "trackGroupsEnableOnUnlock": {},
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {}
+    },
+    "alarka": {
+      "description": "",
+      "prerequisites": {
+        "alarka-jct-wye": true
+      },
+      "areasEnableOnUnlock": {
+        "cochran": true,
+        "alarka": true
+      },
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {},
+      "trackGroupsAvailableOnUnlock": {
+        "s3a": true
+      },
+      "trackGroupsEnableOnUnlock": {
+        "s3a": true
+      },
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {
+        "alarka-interchange": true
+      },
+      "unlockIncludeIndustryComponents": {}
+    },
+    "fo-na": {
+      "description": "",
+      "prerequisites": {},
+      "areasEnableOnUnlock": {
+        "almond": true,
+        "wesser": true,
+        "hewitt": true,
+        "nantahala": true
+      },
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {},
+      "trackGroupsAvailableOnUnlock": {
+        "s4": true
+      },
+      "trackGroupsEnableOnUnlock": {
+        "s4": true
+      },
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {}
+    },
+    "db-yard": {
+      "description": "",
+      "prerequisites": {
+        "db-sy": true
+      },
+      "areasEnableOnUnlock": {},
+      "defaultEnableInSandbox": false,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {},
+      "trackGroupsAvailableOnUnlock": {
+        "db-yard": true
+      },
+      "trackGroupsEnableOnUnlock": {
+        "db-yard": true
+      },
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {}
+    },
+    "br-fo": {
+      "description": "",
+      "prerequisites": {},
+      "areasEnableOnUnlock": {
+        "hemingway": true,
+        "alarka-jct": true,
+        "fontana": true
+      },
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {
+        "World/Telegraph Pole Feature Targets/Tag 3 BR-AJ/Tag 3 BR-AJ": true
+      },
+      "trackGroupsAvailableOnUnlock": {
+        "s3": true
+      },
+      "trackGroupsEnableOnUnlock": {
+        "s3": true
+      },
+      "unlockExcludeIndustries": {
+        "alarka-interchange": true
+      },
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {}
+    },
+    "signals-na-mc": {
+      "description": "",
+      "prerequisites": {
+        "signals-bk-hw": true
+      },
+      "areasEnableOnUnlock": {},
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {
+        "CTC/CTC Panel Bryson/Left/Schematic/Canvas/NA-WE-MC/NA-WE-MC": true,
+        "CTC/CTC Panel Bryson/Left/Board/NA-WE-MC/NA-WE-MC": true,
+        "CTC/CTC Panel Bryson/Center/Schematic/Canvas/MC-BK/MC-BK": true,
+        "CTC/NA-WE-MC Module/NA-WE-MC Module": true,
+        "CTC/BK-MC Module/BK-MC Module": true
+      },
+      "trackGroupsAvailableOnUnlock": {},
+      "trackGroupsEnableOnUnlock": {},
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {}
     },
     "diesel-ewh": {
       "description": "",
@@ -334,24 +366,60 @@
         "wh-e-engine.diesel": true
       }
     },
-    "wh-el": {
+    "diesel-br": {
       "description": "",
       "prerequisites": {},
-      "areasEnableOnUnlock": {
-        "whittier": true,
-        "ela": true,
-        "connelly": true
-      },
+      "areasEnableOnUnlock": {},
       "defaultEnableInSandbox": true,
       "displayName": "",
-      "gameObjectsEnableOnUnlock": {},
+      "gameObjectsEnableOnUnlock": {
+        "World/Large Scenery/Bryson/Diesel Fueling Stand/Diesel Fueling Stand": true
+      },
       "trackGroupsAvailableOnUnlock": {},
       "trackGroupsEnableOnUnlock": {},
-      "unlockExcludeIndustries": {
-        "ewh-interchange": true
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {
+        "bryson-roundhouse-ops.diesel": true
+      }
+    },
+    "signals-an-to": {
+      "description": "",
+      "prerequisites": {
+        "signals-na-mc": true
       },
+      "areasEnableOnUnlock": {},
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {
+        "CTC/CTC Panel Bryson/Left/Schematic/Canvas/AN-RH-TO/AN-RH-TO": true,
+        "CTC/CTC Panel Bryson/Left/Board/AN-RH-TO/AN-RH-TO": true,
+        "CTC/CTC Panel Bryson/Left/Schematic/Canvas/TO-NA/TO-NA": true,
+        "CTC/AN-RH-TO Module/AN-RH-TO Module": true,
+        "CTC/NA-TO Module/NA-TO Module": true
+      },
+      "trackGroupsAvailableOnUnlock": {},
+      "trackGroupsEnableOnUnlock": {},
+      "unlockExcludeIndustries": {},
       "unlockIncludeIndustries": {},
       "unlockIncludeIndustryComponents": {}
+    },
+    "diesel-an": {
+      "description": "",
+      "prerequisites": {},
+      "areasEnableOnUnlock": {},
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {
+        "World/Large Scenery/Andrews/Andrews Diesel Fueling Stand/Andrews Diesel Fueling Stand": true
+      },
+      "trackGroupsAvailableOnUnlock": {},
+      "trackGroupsEnableOnUnlock": {},
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {
+        "andrews-service.diesel": true
+      }
     },
     "db-engsvc": {
       "description": "",
@@ -378,22 +446,24 @@
       },
       "unlockIncludeIndustryComponents": {}
     },
-    "db-sy": {
+    "wh-el": {
       "description": "",
       "prerequisites": {},
       "areasEnableOnUnlock": {
-        "sylva": true,
-        "dillsboro": true
+        "whittier": true,
+        "ela": true,
+        "connelly": true
       },
       "defaultEnableInSandbox": true,
       "displayName": "",
-      "gameObjectsEnableOnUnlock": {},
-      "trackGroupsAvailableOnUnlock": {
-        "sy-db": true,
-        "sylva-paperboard": true
+      "gameObjectsEnableOnUnlock": {
+        "World/Telegraph Pole Feature Targets/Tag 1 SY-EL/Tag 1 SY-EL": true
       },
+      "trackGroupsAvailableOnUnlock": {},
       "trackGroupsEnableOnUnlock": {},
-      "unlockExcludeIndustries": {},
+      "unlockExcludeIndustries": {
+        "ewh-interchange": true
+      },
       "unlockIncludeIndustries": {},
       "unlockIncludeIndustryComponents": {}
     },
@@ -412,84 +482,22 @@
       },
       "unlockIncludeIndustryComponents": {}
     },
-    "signals-an-to": {
+    "diesel-db": {
       "description": "",
-      "prerequisites": {
-        "signals-na-mc": true
-      },
+      "prerequisites": {},
       "areasEnableOnUnlock": {},
       "defaultEnableInSandbox": true,
       "displayName": "",
       "gameObjectsEnableOnUnlock": {
-        "CTC/CTC Panel Bryson/Left/Schematic/Canvas/AN-RH-TO/AN-RH-TO": true,
-        "CTC/CTC Panel Bryson/Left/Board/AN-RH-TO/AN-RH-TO": true,
-        "CTC/CTC Panel Bryson/Left/Schematic/Canvas/TO-NA/TO-NA": true,
-        "CTC/AN-RH-TO Module/AN-RH-TO Module": true,
-        "CTC/NA-TO Module/NA-TO Module": true
+        "World/Large Scenery/Dillsboro/Dillsboro Diesel Fueling Stand/Dillsboro Diesel Fueling Stand": true
       },
       "trackGroupsAvailableOnUnlock": {},
       "trackGroupsEnableOnUnlock": {},
       "unlockExcludeIndustries": {},
       "unlockIncludeIndustries": {},
-      "unlockIncludeIndustryComponents": {}
-    },
-    "alarka-jct-wye": {
-      "description": "",
-      "prerequisites": {
-        "br-fo": true
-      },
-      "areasEnableOnUnlock": {},
-      "defaultEnableInSandbox": true,
-      "displayName": "",
-      "gameObjectsEnableOnUnlock": {},
-      "trackGroupsAvailableOnUnlock": {
-        "aj-wye": true
-      },
-      "trackGroupsEnableOnUnlock": {
-        "aj-wye": true
-      },
-      "unlockExcludeIndustries": {},
-      "unlockIncludeIndustries": {},
-      "unlockIncludeIndustryComponents": {}
-    },
-    "db-yard": {
-      "description": "",
-      "prerequisites": {
-        "db-sy": true
-      },
-      "areasEnableOnUnlock": {},
-      "defaultEnableInSandbox": false,
-      "displayName": "",
-      "gameObjectsEnableOnUnlock": {},
-      "trackGroupsAvailableOnUnlock": {
-        "db-yard": true
-      },
-      "trackGroupsEnableOnUnlock": {
-        "db-yard": true
-      },
-      "unlockExcludeIndustries": {},
-      "unlockIncludeIndustries": {},
-      "unlockIncludeIndustryComponents": {}
-    },
-    "fo-na": {
-      "description": "",
-      "prerequisites": {},
-      "areasEnableOnUnlock": {
-        "almond": true,
-        "nantahala": true
-      },
-      "defaultEnableInSandbox": true,
-      "displayName": "",
-      "gameObjectsEnableOnUnlock": {},
-      "trackGroupsAvailableOnUnlock": {
-        "s4": true
-      },
-      "trackGroupsEnableOnUnlock": {
-        "s4": true
-      },
-      "unlockExcludeIndustries": {},
-      "unlockIncludeIndustries": {},
-      "unlockIncludeIndustryComponents": {}
+      "unlockIncludeIndustryComponents": {
+        "dillsboro-roundhouse-ops.diesel": true
+      }
     }
   },
   "progressions": {

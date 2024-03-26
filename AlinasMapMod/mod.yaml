@@ -1,9 +1,30 @@
-id: AlinaNova21.AlinasMapMod
+id: alinas-map-mod
+modId: AlinaNova21.AlinasMapMod
 name: Alina's Map Mod
 desc: |-
   A mod that adds a new milestones to the game adding additional tracks, such as yards, wyes, and more.
-version: '1.3.24078.548'
+version: '1.3.24084.413'
 changelog:
+- version: '1.3.24084.413'
+  desc: |-
+    - Updated definitions.json to require RL 1.7.2 at minimum.
+- version: '1.3.24084.353'
+  desc: |-
+    - Refactored to remove older code, RL 1.7 will be required now.
+    - Bug fixes for various issues.
+- version: '1.3.24083.2023'
+  desc: |-
+    - Shifted Whittier yard to make room for a new telegraph poles.
+    - Rebuild to fix Alarka Balloon Loop
+    - Potential migration for Industry name change for pre-1.3.24073.2240 version.
+      - Requires SC 1.6.24083.1951 or later.
+    - Now supports Railloader Update checks
+- version: '1.3.24082.33'
+  desc: |-
+    - Map Editor removed.
+- version: '1.3.24080.327'
+  desc: |-
+    - Flatten Andrews Interchange and yard
 - version: '1.3.24078.548'
   desc: |-
     - Added Alarka Balloon Loop #4

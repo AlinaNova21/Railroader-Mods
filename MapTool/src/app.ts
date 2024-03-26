@@ -1,5 +1,6 @@
 import { readFile, writeFile } from "node:fs/promises"
 import { Vector3 } from 'three'
+import './generateUpdate.js'
 import alarkaJctAdditional from './layouts/alarkaJctAdditional.js'
 import alarkaLoop from "./layouts/alarkaLoop.js"
 import andrewsInterchangeYard from './layouts/andrewsInterchangeYard.js'
@@ -77,6 +78,14 @@ async function run() {
   }
   await writeFile(`../AlinasMapMod/progressions.json`, JSON.stringify(state, null, 2))
   await writeFile(`../../AlinasMapMod/progressions.json`, JSON.stringify(state, null, 2))
+
+  const migrations = { waybillDestinations: {} as Record<string, string> }
+  for(const [id, item] of Object.entries(amm.items)) {
+    if (!item.industryComponent) continue
+    migrations.waybillDestinations[`${item.identifier}.site`] = item.industryComponent
+  }
+  await writeFile(`../AlinasMapMod/game-migrations.json`, JSON.stringify(migrations, null, 2))
+  await writeFile(`../../AlinasMapMod/game-migrations.json`, JSON.stringify(migrations, null, 2))
 }
 
 run().catch(console.error)

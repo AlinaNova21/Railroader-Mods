@@ -37,6 +37,7 @@ namespace MapEditor
             var nodeHelpers = GetComponentInChildren<NodeHelpers>(true);
             if (nodeHelpers && nodeHelpers.isActiveAndEnabled != Settings.ShowNodeHelpers)
             {
+                logger.Debug("Setting NodeHelpers active: {ShowNodeHelpers}", Settings.ShowNodeHelpers);
                 nodeHelpers.gameObject.SetActive(Settings.ShowNodeHelpers);
             }
         }

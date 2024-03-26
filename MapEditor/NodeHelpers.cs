@@ -1,11 +1,6 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.Design.Serialization;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using HarmonyLib;
-using RLD;
 using Serilog;
 using Track;
 using UnityEngine;
@@ -56,8 +51,8 @@ namespace MapEditor
       LastTrackNodeCount = 0;
       while (true)
       {
-        logger.Debug("SyncGizmos() LastTrackNodeCount: {LastTrackNodeCount}");
         var trackNodes = graph.gameObject.GetComponentsInChildren<TrackNode>();
+        logger.Debug($"SyncGizmos() LastTrackNodeCount: {LastTrackNodeCount} trackNodes: {trackNodes.Length}");
         if (trackNodes.Length != LastTrackNodeCount)
         {
           LastTrackNodeCount = trackNodes.Length;
@@ -69,6 +64,7 @@ namespace MapEditor
 
     public void AttachGizmos(TrackNode[] trackNodes)
     {
+      var attached = 0;
       logger.Debug("AttachGizmos() trackNodes: {trackNodes}", trackNodes.Length);
       var sharedMesh = GameObject.CreatePrimitive(PrimitiveType.Cube).GetComponent<MeshFilter>().sharedMesh;
       foreach (var trackNode in trackNodes)
@@ -77,6 +73,7 @@ namespace MapEditor
         var test = GetComponentsInChildren<TrackNodeEditor>().Any(tne => tne.trackNode?.id == id);
         if (!test)
         {
+          attached++;
           var target = new GameObject
           {
             name = id,
@@ -84,21 +81,35 @@ namespace MapEditor
           };
           target.transform.parent = transform;
 
-          target.transform.position = trackNode.transform.position;
-          target.transform.rotation = trackNode.transform.rotation;
-          target.transform.localScale = new Vector3(0.1f, 0.1f, 0.3f);
+          target.transform.localPosition = trackNode.transform.localPosition;
+          target.transform.localRotation = trackNode.transform.localRotation;
+          target.transform.localScale = new Vector3(0.1f, 0.02f, 0.1f);
 
           target.AddComponent<MeshFilter>().sharedMesh = sharedMesh;
-          target.AddComponent<MeshRenderer>();
+          var renderer = target.AddComponent<MeshRenderer>();
+          var material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+          material.color = Color.cyan;
+          renderer.material = material;
+          var lineRenderer = target.AddComponent<LineRenderer>();
+          lineRenderer.material = material;
+          lineRenderer.startWidth = 0.05f;
+          lineRenderer.positionCount = 3;
+          lineRenderer.useWorldSpace = false;
+          lineRenderer.SetPosition(0, new Vector3(-2, 0, -2));
+          lineRenderer.SetPosition(1, new Vector3(0, 0, 3));
+          lineRenderer.SetPosition(2, new Vector3(2, 0, -2));
+
           target.AddComponent<TrackNodeEditor>().trackNode = trackNode;
           target.AddComponent<MeshCollider>().sharedMesh = sharedMesh;
         }
       }
+      logger.Debug("AttachGizmos() attached: {attached}", attached);
     }
 
     internal void Reset()
     {
-      GetComponentsInChildren<TrackNodeEditor>()
+      logger.Debug("Reset()");
+      GetComponentsInChildren<TrackNodeEditor>(true)
         .Do(tne => Destroy(tne.gameObject));
       LastTrackNodeCount = 0;
     }

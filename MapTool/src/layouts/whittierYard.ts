@@ -23,28 +23,29 @@ export default async function whittierYard(graph: Graph, originalTracks: Graph) 
   const { nid, sid, pid } = Graph.Shared.pushIdGenerator('Whittier_Yard')
 
   // const interchange1 = newNode(Id('N9m4'), new Vector3(0, 561.25, 0))
-  const interchange1 = getNode(Id('Njk9'))
-  // const interchange1 = getNode(Id('N5es')))
+  // const interchange1 = getNode(Id('Njk9'))
+  const interchange1 = getNode(Id('N5es'))
   // const interchange1 = getNode(Id('N731')))
   const interchange2 = getNode(Id('N1be'))
   // const sawmill = getNode(Id('N72a')))
   const sawmill = getNode(Id('N72a'))
   const sawmill2 = getNode(Id('Nijv'))
 
-  const start = createNode(new Vector3(13155, 561.25, 4415))
+  const start = createNode(new Vector3(13220, 561.25, 4395))
   const yard00 = createNode(new Vector3(12915, 561.25, 4564), new Euler(0, 312, 0))
   const yard01 = yard00.extend(nid(), sid(), 120, -1, 0, sawmillGroup)
   
   const inSeg = getSegment(Id("Sj4c"));
 
-  const inext1 = interchange1.extend(nid(), sid(), 50, 0, 0, extGroup)
+  const inext1 = interchange1.extend(nid(), sid(), -22, 0, 0, extGroup)
   // const inext2 = inext1.extend(nid(), sid(), 30, 0, 0, extGroup)
-  const inext3 = inext1.extend(nid(), sid(), 30, 180+5, 5, leadGroup)
+  const inext3 = interchange1.extend(nid(), sid(), 20, 180+8, 5, leadGroup)
+  // const inext3 = inext1.extend(nid(), sid(), 30, 180+5, 5, leadGroup)
 
   inext1.flipSwitchStand = true
 
   // inext1.position.y += 1
-  inSeg.endId = inext1.id
+  inSeg.startId = inext1.id
   // inext1
   //   .extend(nid(), sid(), 10, 10)
   //   .extend(nid(), sid(), 10, 10)
@@ -53,7 +54,7 @@ export default async function whittierYard(graph: Graph, originalTracks: Graph) 
   inseg2.priority = -1
   inseg2.groupId = leadGroup
 
-  start.rotation.y += 300 //+ -0.5
+  start.rotation.y += 300 + -3
 
   const y0seg = yard00.toNode(sid(), interchange2)
   const y1seg = yard01.toNode(sid(), sawmill)
@@ -73,8 +74,8 @@ export default async function whittierYard(graph: Graph, originalTracks: Graph) 
   const exitNodes: TrackNode[] = []
 
   const switchAngle = 12
-  const leadLength = 20
-  const yardLength = 250
+  const leadLength = 40
+  const yardLength = 260
 
   for (let i = 0; i < tracks; i++) {
     const trackGroup = trackGroupFn(i)
@@ -117,8 +118,18 @@ export default async function whittierYard(graph: Graph, originalTracks: Graph) 
     exitNodes.push(exit)
   }
 
-  start.position.add(new Vector3(0, 0, -0.5))
-  start.rotation.y += 3
+  start.position.add(new Vector3(20, 0, -22))
+  start.rotation.y += 8
+
+  const tn0 =  graph.getNode(Id(`N${zone}_T0_00`))
+  tn0.position.add(new Vector3(0, 0, 0))
+  tn0.offset(10)
+  tn0.rotation.y += switchAngle - 0
+  tn0.offset(-20)
+
+  start.position.y = interchange1.position.y
+  start.extend(nid(), sid(), -30, -1, -2, leadGroup)
+       .extend(nid(), sid(), -140, -11, -11, leadGroup)
 
 
   const ss1 = graph.getSegment(Id('Sj6n'))
