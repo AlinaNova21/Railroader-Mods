@@ -65,6 +65,7 @@ export default async function whittierYard(graph: Graph, originalTracks: Graph) 
 
   yard01.rotation.y += 1.6
   yard01.position.x += 4
+  yard01.position.y -= 1.25
   yard01.position.z += 1
 
   interchange1.flipSwitchStand = true
