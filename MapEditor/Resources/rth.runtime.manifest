@@ -1,0 +1,68 @@
+ManifestFileVersion: 0
+CRC: 716793699
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: d62d169d0c097a3947a5dc7b11a15965
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: ebd53032e18a9b636f44f9fd07622262
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: d62d169d0c097a3947a5dc7b11a15965
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 64
+  Script: {instanceID: 0}
+- Class: 65
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 1679919060, guid: 80c44bca967259f438ffe56d5da99a7d, type: 3}
+- Class: 114
+  Script: {fileID: 519999918, guid: 80c44bca967259f438ffe56d5da99a7d, type: 3}
+- Class: 114
+  Script: {fileID: -13987029, guid: 80c44bca967259f438ffe56d5da99a7d, type: 3}
+- Class: 114
+  Script: {fileID: 881482762, guid: 80c44bca967259f438ffe56d5da99a7d, type: 3}
+- Class: 114
+  Script: {fileID: -1053427030, guid: 80c44bca967259f438ffe56d5da99a7d, type: 3}
+- Class: 114
+  Script: {fileID: 1244624509, guid: 80c44bca967259f438ffe56d5da99a7d, type: 3}
+- Class: 114
+  Script: {fileID: 1881462209, guid: 80c44bca967259f438ffe56d5da99a7d, type: 3}
+- Class: 114
+  Script: {fileID: 1446293012, guid: 80c44bca967259f438ffe56d5da99a7d, type: 3}
+- Class: 114
+  Script: {fileID: 1617692073, guid: 80c44bca967259f438ffe56d5da99a7d, type: 3}
+- Class: 114
+  Script: {fileID: 2002139323, guid: 80c44bca967259f438ffe56d5da99a7d, type: 3}
+- Class: 114
+  Script: {fileID: 778118853, guid: 80c44bca967259f438ffe56d5da99a7d, type: 3}
+- Class: 114
+  Script: {fileID: 1298290294, guid: 80c44bca967259f438ffe56d5da99a7d, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 135
+  Script: {instanceID: 0}
+- Class: 136
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/RTH.Runtime/Prefabs/Ghost.prefab
+- Assets/RTH.Runtime/Prefabs/NativeTransformHandle.prefab
+- Assets/RTH.Runtime/Prefabs/OriginIndicator.prefab
+Dependencies: []

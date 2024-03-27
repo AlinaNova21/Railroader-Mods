@@ -1,11 +1,11 @@
 import { Euler, Vector3 } from "three"
 import { Graph, GraphPart } from "./Graph.js"
-import { Id, dirtyLogSym, isDirtySym } from "./utils.js"
+import { EulerJson, Id, Vector3Json, dirtyLogSym, eulToJSON, isDirtySym, vecToJSON } from "./utils.js"
 
 interface SceneryJson {
-  position: Vector3
-  rotation: Euler
-  scale: Vector3
+  position: Vector3Json
+  rotation: EulerJson
+  scale: Vector3Json
   modelIdentifier: string
 }
 
@@ -24,18 +24,18 @@ export class Scenery implements GraphPart<SceneryJson, Scenery>{
 
   toJson() {
     return {
-      position: this.position,
-      rotation: this.rotation,
-      scale: this.scale,
+      position: vecToJSON(this.position),
+      rotation: eulToJSON(this.rotation),
+      scale: vecToJSON(this.scale),
       modelIdentifier: this.modelIdentifier
     }
   }
   
   static fromJson(id: Id<Scenery>, data: SceneryJson) {
     const ret = new Scenery(id)
-    ret.position = data.position
-    ret.rotation = data.rotation
-    ret.scale = data.scale
+    ret.position = Object.assign(new Vector3(), data.position)
+    ret.rotation = Object.assign(new Euler(), data.rotation)
+    ret.scale = Object.assign(new Vector3(), data.scale)
     ret.modelIdentifier = data.modelIdentifier
     ret[isDirtySym] = false
     ret[dirtyLogSym] = new Set<string>()

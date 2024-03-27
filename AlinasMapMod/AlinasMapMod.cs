@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using AlinasMapMod.Definitions;
+using AlinasMapMod.Turntable;
 using GalaSoft.MvvmLight.Messaging;
 using Game.Events;
-using Game.Progression;
 using HarmonyLib;
 using Railloader;
 using Serilog;
+using SimpleGraph.Runtime;
+using TelegraphPoles;
 using Track;
 using UI.Builder;
+using UnityEngine;
 
 namespace AlinasMapMod
 {
@@ -24,9 +25,9 @@ namespace AlinasMapMod
     Serilog.ILogger logger = Log.ForContext<AlinasMapMod>();
     Settings settings;
     private ObjectCache objectCache { get; } = new ObjectCache();
-        public bool hasDumpedProgressions { get; private set; }
+    public bool hasDumpedProgressions { get; private set; }
 
-        private Patcher patcher = new Patcher();
+    private Patcher patcher = new Patcher();
 
     public AlinasMapMod(IModdingContext _moddingContext, IModDefinition self, IUIHelper _uIHelper)
     {
@@ -58,10 +59,12 @@ namespace AlinasMapMod
       harmony.PatchCategory("AlinasMapMod");
 
       Messenger.Default.Register(this, new Action<MapDidLoadEvent>(OnMapDidLoad));
-      patcher.OnPatchState += (state) => {
-        foreach(var pair in state.Progressions)
+      patcher.OnPatchState += (state) =>
+      {
+        foreach (var pair in state.Progressions)
         {
-          foreach(var sectionPair in pair.Value.Sections) {
+          foreach (var sectionPair in pair.Value.Sections)
+          {
             var section = sectionPair.Value;
             if (settings.FreeMilestones)
             {
@@ -77,14 +80,12 @@ namespace AlinasMapMod
             }
           }
         }
-        foreach(var pair in state.MapFeatures) {
-          foreach(var tg in pair.Value.TrackGroupsAvailableOnUnlock) {
-            if (tg.Value) {
-              Graph.Shared.SetGroupAvailable(tg.Key, true);
-            }
-          }
-          foreach(var tg in pair.Value.TrackGroupsEnableOnUnlock) {
-            if (tg.Value) {
+        foreach (var pair in state.MapFeatures)
+        {
+          foreach (var tg in pair.Value.TrackGroupsEnableOnUnlock)
+          {
+            if (tg.Value)
+            {
               Graph.Shared.SetGroupEnabled(tg.Key, true);
             }
           }
@@ -103,29 +104,36 @@ namespace AlinasMapMod
     private void OnMapDidLoad(MapDidLoadEvent @event)
     {
       logger.Debug("OnMapDidLoad()");
-      // try {
-      //   var groups = new HashSet<string>();
-      //   foreach(var seg in UnityEngine.Object.FindObjectsByType<TrackSegment>(UnityEngine.FindObjectsInactive.Include, UnityEngine.FindObjectsSortMode.None)) {
-      //     if (seg.groupId != null && seg.groupId.StartsWith("SAN_")) {
-      //       groups.Add(seg.groupId);
-      //     };
-      //   }
-      //   foreach(var g in groups) {
-      //     Graph.Shared.SetGroupEnabled(g, false);
-      //     Graph.Shared.SetGroupAvailable(g, false);
-      //   }
-      //   Graph.Shared.RebuildCollections();
-      // } catch (Exception e) {
-      //   logger.Error(e, "Error in OnMapDidLoad()");
-      // }
+      var tpm = UnityEngine.Object.FindObjectOfType<TelegraphPoleManager>();
+      tpm.debugDrawHeights = true;
+
+      var g = tpm.GetComponent<SimpleGraph.Runtime.SimpleGraph>();
+      Node n;
+      n = g.NodeForId(585);
+      n.position += new Vector3(0, 2, 0);
+      n = g.NodeForId(587);
+      n.position += new Vector3(0, 2, 0);
+      n = g.NodeForId(591);
+      n.position += new Vector3(0, 2, 0);
+      n = g.NodeForId(593);
+      n.position += new Vector3(0, 2, 0);
+      n = g.NodeForId(595);
+      n.position += new Vector3(0, 2, 0);
+      n = g.NodeForId(603);
+      n.position += new Vector3(0, 2, 0);
+      n = g.NodeForId(605);
+      n.position += new Vector3(0, 2, 0);
+
     }
     public void ModTabDidOpen(UIPanelBuilder builder)
     {
       CancellationTokenSource cancellationToken = new CancellationTokenSource();
-      var commitChanges = () => {
+      var commitChanges = () =>
+      {
         cancellationToken.Cancel();
         cancellationToken = new CancellationTokenSource();
-        Task.Delay(1000, cancellationToken.Token).ContinueWith((_) => {
+        Task.Delay(1000, cancellationToken.Token).ContinueWith((_) =>
+        {
           Run();
         });
       };
@@ -169,12 +177,33 @@ namespace AlinasMapMod
     internal void Run()
     {
       logger.Information($"Run()");
-      if (settings.ProgressionsDumpPath != "" && !hasDumpedProgressions) {
+      if (settings.ProgressionsDumpPath != "" && !hasDumpedProgressions)
+      {
         hasDumpedProgressions = true;
         patcher.Dump(settings.ProgressionsDumpPath);
       }
       patcher.Patch();
       objectCache.Rebuild();
+      
+      var alinasMapModGameObject = GameObject.Find("AlinasMapMod");
+      if (alinasMapModGameObject == null) {
+        alinasMapModGameObject = new GameObject("AlinasMapMod");
+        alinasMapModGameObject.transform.parent = GameObject.Find("World").transform;
+        alinasMapModGameObject.transform.localPosition = new Vector3(0, 0, 0);
+      }
+
+      // if (!GameObject.Find("AN_Turntable_Test_00")) {
+      //   var obj = TurntableGenerator.DumpTree(GameObject.Find("Roundhouse").transform);
+      //   File.WriteAllText("turntable.json", obj.ToString());
+
+      //   var tt1 = TurntableGenerator.Generate("AN_Turntable_Test_00", 31);
+      //   tt1.transform.parent = alinasMapModGameObject.transform;
+      //   tt1.transform.localPosition = new Vector3(12920, 561, 4660);
+
+      //   var tt2 = TurntableGenerator.Generate("AN_Turntable_Test_01", 1);
+      //   tt2.transform.parent = alinasMapModGameObject.transform;
+      //   tt2.transform.localPosition = new Vector3(13000, 561, 4600);
+      // }
     }
 
     IEnumerable<string> IMixintoProvider.GetMixintos(string mixintoIdentifier)

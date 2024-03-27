@@ -3,9 +3,15 @@
     <!-- Optionally, set a few things to your liking -->
     <MajorVersion>1</MajorVersion>
     <MinorVersion>0</MinorVersion>
+    <IsMod>true</IsMod>
+    <PackageMod>enable</PackageMod>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="*.json" CopyToOutputDirectory="Always" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Resources\construction-icon.png" />
+    <EmbeddedResource Include="Resources\rth.runtime" />
   </ItemGroup>
   <ItemGroup>
     <GameAssembly Include="Assembly-CSharp" />
@@ -17,9 +23,15 @@
     <GameAssembly Include="Newtonsoft.Json" />
     <GameAssembly Include="Unity.TextMeshPro" />
     <GameAssembly Include="UnityEngine.CoreModule" />
+    <GameAssembly Include="UnityEngine.AssetBundleModule" />
+    <GameAssembly Include="UnityEngine.InputLegacyModule" />
+    <GameAssembly Include="UnityEngine.InputModule" />
     <GameAssembly Include="UnityEngine.PhysicsModule" />
     <GameAssembly Include="UnityEngine.ImageConversionModule" />
     <GameAssembly Include="UnityEngine.UI" />
     <GameAssembly Include="RuntimeLevelDesign.Runtime" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TransformHandles\TransformHandles.csproj" />
   </ItemGroup>
 </Project>

@@ -5,7 +5,13 @@
     
     <!-- Copy the mod to the game directory -->
     <GameModDir Condition="'$(GameModDir)' == ''">$(GameDir)/Mods/$(AssemblyName)</GameModDir>
-    <OutDir Condition="'$(Configuration)' == 'Debug'">$(GameModDir)/</OutDir>
+    <OutDir Condition="'$(Configuration)' == 'Debug' And '$(IsMod)' == 'true'">$(GameModDir)/</OutDir>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IsMod Condition="'$(IsMod)' == ''">false</IsMod>
+    <PackageMod Condition="'$(PackageMod)' == '' Or '$(IsMod)' == 'false'">disable</PackageMod>
+    <PublishMod Condition="'$(PublishMod)' == '' Or '$(PackageMod)' == 'false'">disable</PublishMod>
   </PropertyGroup>
 
   <!-- Replace the default version if something was set for it -->
@@ -27,7 +33,8 @@
   </ItemGroup>
 
   <!-- Publish the mod as a neat zip file -->
-  <Target Name="PrepareForPublishing" AfterTargets="AfterBuild" Condition="'$(Configuration)' == 'Release'">
+  <Target Name="PackageMod" AfterTargets="AfterBuild" Condition="'$(Configuration)' == 'Release' And '$(PackageMod)' == 'enable'">
+    <Message Text="Packaging $(AssemblyName) v$(AssemblyVersion)" Importance="high" />
     <!-- Replace $(AssemblyVersion) with the actual version -->
     <Exec Command="powershell -Command &quot;(Get-Content '$(OutputPath)Definition.json') -replace '\$\(AssemblyVersion\)', '$(AssemblyVersion)' | Set-Content '$(OutputPath)Definition.json'&quot;" />
 
@@ -66,8 +73,11 @@
     
     <!-- Move them to the game directory -->
     <Copy SourceFiles="@(OutputFiles)" DestinationFolder="$(GameModDir)" />
-
-    <!-- Publish to GitHub -->
-    <Exec Command="gh release create v$(AssemblyVersion) --generate-notes $(ZipName)" />
   </Target>
+  <Target Name="PublishMod" AfterTargets="PackageMod" Condition="'$(Configuration)' == 'Release' AND '$(PublishMod)' == 'enable'">
+    <Message Text="Publishing $(AssemblyName) v$(AssemblyVersion)" Importance="high" />
+    <!-- Publish to GitHub -->
+    <!-- <Exec Command="gh release create v$(AssemblyVersion) - -generate-notes $(ZipName)" /> -->
+  </Target>
+
 </Project>

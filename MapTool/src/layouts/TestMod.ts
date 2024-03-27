@@ -1,7 +1,7 @@
 
 import { Vector3 } from 'three'
 
-import { Graph, Id, idGenerator, isDirtySym } from '../lib/index.js'
+import { Graph, Id, idGenerator } from '../lib/index.js'
 
 const UP = new Vector3(0, 1, 0)
 
@@ -19,8 +19,10 @@ export default async function testMod(graph: Graph, originalTracks: Graph) {
       return this
     }
   }
+
+  // graph.createScenery("allen-dual-shed", new Vector3(4570, 528.83, 5451), new Euler(0, 70, 0), new Vector3(1, 1, 2));
+  // graph.scenery[shed.id] = shed
   // graph.scenery[Id('cranky')] = cranky
-  graph[isDirtySym] = true
 
   // const orig = Graph.fromJSON(JSON.parse(await readFile("tracks.json", "utf8")))
   // const nodes = Object.keys(orig.nodes) as Id<TrackNode>[]

@@ -14,6 +14,8 @@ Project("{1CF8EA97-D7B9-4AD9-B08B-2A2140F897D5}") = "AlinasMapMod", "AlinasMapMo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapEditor", "MapEditor\MapEditor.csproj", "{D49B95EB-0F2B-43EB-817E-9226E8961E66}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransformHandles", "TransformHandles\TransformHandles.csproj", "{65837A87-F496-4304-A2B0-15C38D8EC5D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,10 @@ Global
 		{D49B95EB-0F2B-43EB-817E-9226E8961E66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D49B95EB-0F2B-43EB-817E-9226E8961E66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D49B95EB-0F2B-43EB-817E-9226E8961E66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65837A87-F496-4304-A2B0-15C38D8EC5D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65837A87-F496-4304-A2B0-15C38D8EC5D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65837A87-F496-4304-A2B0-15C38D8EC5D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65837A87-F496-4304-A2B0-15C38D8EC5D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

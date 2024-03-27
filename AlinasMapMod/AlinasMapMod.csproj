@@ -3,6 +3,9 @@
     <!-- Optionally, set a few things to your liking -->
     <MajorVersion>1</MajorVersion>
     <MinorVersion>3</MinorVersion>
+    <IsMod>true</IsMod>
+    <PackageMod>enable</PackageMod>
+    <PublishMod>enable</PublishMod>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="*.json" CopyToOutputDirectory="Always" />
@@ -18,11 +21,12 @@
     <GameAssembly Include="Railloader.Interchange" />
     <GameAssembly Include="Serilog" />
     <GameAssembly Include="Newtonsoft.Json" />
+    <GameAssembly Include="SimpleGraph.Runtime" />
+    <GameAssembly Include="KeyValue.Runtime" />
     <GameAssembly Include="Unity.TextMeshPro" />
     <GameAssembly Include="UnityEngine.CoreModule" />
     <GameAssembly Include="UnityEngine.PhysicsModule" />
     <GameAssembly Include="UnityEngine.ImageConversionModule" />
     <GameAssembly Include="UnityEngine.UI" />
-    <GameAssembly Include="RuntimeLevelDesign.Runtime" />
   </ItemGroup>
 </Project>
