@@ -77,7 +77,7 @@
   <Target Name="PublishMod" AfterTargets="PackageMod" Condition="'$(Configuration)' == 'Release' AND '$(PublishMod)' == 'enable'">
     <Message Text="Publishing $(AssemblyName) v$(AssemblyVersion)" Importance="high" />
     <!-- Publish to GitHub -->
-    <!-- <Exec Command="gh release create v$(AssemblyVersion) - -generate-notes $(ZipName)" /> -->
+    <Exec Command="gh release create v$(AssemblyVersion) --generate-notes $(ZipName)" />
   </Target>
 
 </Project>
