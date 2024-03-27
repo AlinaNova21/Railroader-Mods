@@ -4,8 +4,12 @@
     "modId": "AlinaNova21.AlinasMapMod",
     "name": "Alina's Map Mod",
     "desc": "A mod that adds a new milestones to the game adding additional tracks, such as yards, wyes, and more.",
-    "version": "1.3.24087.314",
+    "version": "1.3.24087.634",
     "changelog": [
+      {
+        "version": "1.3.24087.634",
+        "desc": "- Fix alarka balloon loop (For real this time!) (Thanks percivalbinglebottom!)"
+      },
       {
         "version": "1.3.24087.314",
         "desc": "- Fix alarka balloon loop (Thanks percivalbinglebottom and crew!)"
@@ -48,6 +52,6 @@
       }
     ],
     "assemblyName": "AlinasMapMod",
-    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.3.24087.314/AlinasMapMod_1.3.24087.314.zip"
+    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.3.24087.634/AlinasMapMod_1.3.24087.634.zip"
   }
 ]
