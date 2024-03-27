@@ -602,7 +602,7 @@
     "NAN_Whittier_Yard_02": {
       "position": {
         "x": 12828.434850373267,
-        "y": 561.25,
+        "y": 560,
         "z": 4643.727083478861
       },
       "rotation": {
@@ -1589,19 +1589,6 @@
     },
     "NAN_Alarka_Loop_05": {
       "position": {
-        "x": 4124.009508508151,
-        "y": 646.3399830000001,
-        "z": -3339.8669477630433
-      },
-      "rotation": {
-        "x": 0,
-        "y": 321.808289,
-        "z": 0
-      },
-      "flipSwitchStand": false
-    },
-    "NAN_Alarka_Loop_06": {
-      "position": {
         "x": 4098.56,
         "y": 645,
         "z": -3319.4
@@ -1615,9 +1602,9 @@
     },
     "AlinasMapMod": {
       "position": {
-        "x": 0.5470735948269276,
-        "y": 0.5175369539940944,
-        "z": 0.9896101901092422
+        "x": 0.8029951566067832,
+        "y": 0.3618613729171496,
+        "z": 0.06790250554629162
       },
       "rotation": {
         "x": 0,
@@ -2458,22 +2445,15 @@
     },
     "SAN_Alarka_Loop_05": {
       "style": "Standard",
-      "startId": "NAN_Alarka_Loop_04",
+      "startId": "Nt99",
       "endId": "NAN_Alarka_Loop_05",
       "priority": 0,
       "groupId": "AN_Alarka_Loop"
     },
     "SAN_Alarka_Loop_06": {
       "style": "Standard",
-      "startId": "Nt99",
-      "endId": "NAN_Alarka_Loop_06",
-      "priority": 0,
-      "groupId": "AN_Alarka_Loop"
-    },
-    "SAN_Alarka_Loop_07": {
-      "style": "Standard",
-      "startId": "NAN_Alarka_Loop_05",
-      "endId": "NAN_Alarka_Loop_06",
+      "startId": "NAN_Alarka_Loop_04",
+      "endId": "NAN_Alarka_Loop_05",
       "priority": 0,
       "groupId": "AN_Alarka_Loop"
     }
