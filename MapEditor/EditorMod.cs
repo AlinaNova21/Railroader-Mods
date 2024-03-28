@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.IO;
 using System.Reflection;
 using GalaSoft.MvvmLight.Messaging;
@@ -29,7 +30,9 @@ namespace MapEditor
       context = _context;
       uiHelper = _uiHelper;
       Settings = context.LoadSettingsData<Settings>("AlinaNova21.MapEditor") ?? new Settings();
+      
     }
+
 
     public override void OnEnable()
     {

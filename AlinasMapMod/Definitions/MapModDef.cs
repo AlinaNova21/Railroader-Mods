@@ -11,6 +11,7 @@ namespace AlinasMapMod.Definitions
     public class MapModDef
     {
         public Dictionary<string, MapModItem> Items { get; set; } = new Dictionary<string, MapModItem>();
+        public Dictionary<string, TurntableDef> Turntables { get; set; } = new Dictionary<string, TurntableDef>();
 
         public static MapModDef Parse(string file)
         {

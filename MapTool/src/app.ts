@@ -1,6 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises"
 import { Vector3 } from 'three'
 import './generateUpdate.js'
+import testMod from "./layouts/TestMod.js"
 import alarkaJctAdditional from './layouts/alarkaJctAdditional.js'
 import alarkaLoop from "./layouts/alarkaLoop.js"
 import andrewsInterchangeYard from './layouts/andrewsInterchangeYard.js'
@@ -23,7 +24,7 @@ async function run() {
     AlarkaJctAdditional: alarkaJctAdditional,
     AlarkaLoop: alarkaLoop,
     // WalkerUraniumMine: walkerUraniumMine,
-    // TestMod: testMod,
+    TestMod: testMod,
   } as Record<string, LayoutFunction>
   const allMixins = [] as Mixins[]
   for (const [id, fn] of Object.entries(layouts)) {

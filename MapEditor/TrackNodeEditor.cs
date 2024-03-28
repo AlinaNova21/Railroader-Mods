@@ -6,6 +6,7 @@ using HarmonyLib;
 using RLD;
 using Serilog;
 using Track;
+using TransformHandles;
 using UnityEngine;
 
 namespace MapEditor
@@ -16,6 +17,8 @@ namespace MapEditor
     public float MaxPickDistance => 100f;
 
     public int Priority => 1;
+
+    private Handle? handle;
 
     private Serilog.ILogger logger = Log.ForContext(typeof(TrackNodeEditor));
     public TooltipInfo TooltipInfo => new TooltipInfo($"Track Node {trackNode?.id}", this.getTooltipText());
@@ -49,6 +52,39 @@ namespace MapEditor
     {
 
       logger.Information("Set target object");
+      // if (handle == null) {
+      //   handle = TransformHandleManager.Instance.CreateHandle(trackNode.transform);
+      //   handle.OnInteractionEndEvent += e => {
+      //     logger.Information("OnInteractionEndEvent");
+      //     var nodes = new HashSet<TrackNode>();
+      //     var segments = new HashSet<TrackNode>();
+      //     if(trackNode == null) {
+      //       logger.Error("TrackNode is null");
+      //       return;
+      //     }
+
+      //     nodes.Add(trackNode);
+
+      //     // This is an attempt to invalidate nearby nodes in the hopes of forcing
+      //     // the game to recalculate the track segments and switches
+      //     for (var i = 0; i < 2; i++)
+      //     {
+      //       foreach (var node in nodes.ToArray())
+      //       {
+      //         var segs2 = Graph.Shared.SegmentsConnectedTo(node);
+      //         foreach (var seg in segs2)
+      //         {
+      //           segments.Add(node);
+      //           nodes.Add(seg.a);
+      //           nodes.Add(seg.b);
+      //         }
+      //       }
+      //     }
+      //     nodes.Do(n => Graph.Shared.OnNodeDidChange(n));
+      //   };
+      // }
+      // handle.Enable(trackNode.transform);
+      // return;
       // Gizmo.SetTargetPivotObject(this.gameObject);
       Gizmo.SetEnabled(true);
       Gizmo.Settings.SetObjectTransformable(this.gameObject, true);

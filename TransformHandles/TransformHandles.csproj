@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Assemblyversion>1.0.0</Assemblyversion>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\rth.runtime" />
+  </ItemGroup>
+  <ItemGroup>
+    <GameAssembly Include="UnityEngine.CoreModule" />
+    <GameAssembly Include="UnityEngine.AssetBundleModule" />
+    <GameAssembly Include="UnityEngine.InputLegacyModule" />
+    <GameAssembly Include="UnityEngine.PhysicsModule" />
+  </ItemGroup>
+</Project>

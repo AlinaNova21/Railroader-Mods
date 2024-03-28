@@ -1,0 +1,68 @@
+ManifestFileVersion: 0
+CRC: 3099389875
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 44dfc1ada5ba0508aa92d791879debd5
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 6bb87a6762c14abd8741b88b0c8aded0
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 44dfc1ada5ba0508aa92d791879debd5
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 64
+  Script: {instanceID: 0}
+- Class: 65
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: c1ed04d30f584d9c9f425ddaa2d85e70, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f2f3d4542ed64051a8895ca6da9049ef, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 234f15224fbe2334d87e2cb3781372b7, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 14cce517e4a141f5bb5babdb55492520, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 37d802fc6dfb4b92b00d61c937d99862, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 18e582e8ae4c46b989337d81c28fb2af, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 78585cecaf3b4f26a9bb4dbd5d044b8d, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 698432069a5b4783bcaceecfc6a1d73f, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: c966f6a18c534eee928a82c171c4a0fa, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: cac849c1f36646ad80bcbd089e8ef395, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: edb337d7b3d5441a8b6f57a118ef4ee3, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 3fa4e82ae03c49a5adbbea52b6ba6445, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 135
+  Script: {instanceID: 0}
+- Class: 136
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/RTH.Runtime/Prefabs/Ghost.prefab
+- Assets/RTH.Runtime/Prefabs/NativeTransformHandle.prefab
+- Assets/RTH.Runtime/Prefabs/OriginIndicator.prefab
+Dependencies: []

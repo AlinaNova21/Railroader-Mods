@@ -6,7 +6,7 @@
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <LangVersion>latest</LangVersion>
     <ImplicitUsings>false</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
@@ -15,7 +15,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Definition.json" CopyToOutputDirectory="Always" />
     <PackageReference Include="BUTR.Harmony.Analyzer" Version="1.0.1.50">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
