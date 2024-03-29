@@ -14,9 +14,16 @@
     <EmbeddedResource Include="Resources\rth.runtime" />
   </ItemGroup>
   <ItemGroup>
+    <!-- <ModAssembly Include="StrangeCustoms" /> -->
+    <Reference Include="StrangeCustoms">
+      <HintPath Condition="Exists('$(GameDir)\Mods\StrangeCustoms\StrangeCustoms.dll')">$(GameDir)\Mods\StrangeCustoms\StrangeCustoms.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <GameAssembly Include="Assembly-CSharp" />
     <GameAssembly Include="0Harmony" />
     <GameAssembly Include="Ops" />
+    <GameAssembly Include="Core" />
     <GameAssembly Include="Definition" />
     <GameAssembly Include="Railloader.Interchange" />
     <GameAssembly Include="Serilog" />

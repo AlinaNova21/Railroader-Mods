@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace MapEditor
 {
-    class Editor : MonoBehaviour
+    class Editor : Singleton<Editor>
     {
         private Serilog.ILogger logger = Log.ForContext<Editor>();
         private Settings Settings
@@ -38,6 +38,7 @@ namespace MapEditor
             var ghostPrefab = bundle.LoadAsset<GameObject>("Assets/RTH.Runtime/Prefabs/Ghost.prefab");
             TransformHandleManager.Instance.transformHandlePrefab = transformHandlePrefab;
             TransformHandleManager.Instance.ghostPrefab = ghostPrefab;
+            TransformHandleManager.Instance.mainCamera = CameraSelector.shared.strategyCamera.CameraContainer.GetComponent<Camera>();
         }
 
         public void OnEnable()

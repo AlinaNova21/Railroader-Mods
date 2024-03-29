@@ -1,0 +1,16 @@
+{
+  "manifestVersion": 5,
+  "id": "AlinaNova21.AlinasUtils",
+  "name": "Alina's Utilities",
+  "version": "$(AssemblyVersion)",
+  "assemblies": [ "AlinasUtils" ],
+  "updateUrl": "https://railroader.alinanova.dev/update.json",
+  "requires": [
+    {
+      "id": "railloader",
+      "notBefore": "1.7.2"
+    }
+  ],
+  "conflictsWith": [],
+  "mixintos": {}
+}

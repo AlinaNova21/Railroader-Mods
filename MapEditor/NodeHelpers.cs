@@ -7,15 +7,19 @@ using UnityEngine;
 
 namespace MapEditor
 {
-  class NodeHelpers : MonoBehaviour
+  class NodeHelpers : Singleton<NodeHelpers>
   {
 
     private readonly Serilog.ILogger logger = Log.ForContext<NodeHelpers>();
 
+    private GameObject nodeHelperPrefab { get; }
+    private GameObject segmentHelperPrefab { get; }
     private int LastTrackNodeCount = 0;
     private Coroutine? _gizmoSyncTask;
     public NodeHelpers()
     {
+      nodeHelperPrefab = CreateNodeHelperPrefab();
+      segmentHelperPrefab = CreateSegmentHelperPrefab();
     }
 
     public void OnEnable()
@@ -74,36 +78,56 @@ namespace MapEditor
         if (!test)
         {
           attached++;
-          var target = new GameObject
-          {
-            name = id,
-            layer = LayerMask.NameToLayer("Clickable"),
-          };
-          target.transform.parent = transform;
-
-          target.transform.localPosition = trackNode.transform.localPosition;
-          target.transform.localRotation = trackNode.transform.localRotation;
-          target.transform.localScale = new Vector3(0.1f, 0.02f, 0.1f);
-
-          target.AddComponent<MeshFilter>().sharedMesh = sharedMesh;
-          var renderer = target.AddComponent<MeshRenderer>();
-          var material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
-          material.color = Color.cyan;
-          renderer.material = material;
-          var lineRenderer = target.AddComponent<LineRenderer>();
-          lineRenderer.material = material;
-          lineRenderer.startWidth = 0.05f;
-          lineRenderer.positionCount = 3;
-          lineRenderer.useWorldSpace = false;
-          lineRenderer.SetPosition(0, new Vector3(-2, 0, -2));
-          lineRenderer.SetPosition(1, new Vector3(0, 0, 3));
-          lineRenderer.SetPosition(2, new Vector3(2, 0, -2));
-
-          target.AddComponent<TrackNodeEditor>().trackNode = trackNode;
-          target.AddComponent<MeshCollider>().sharedMesh = sharedMesh;
+          var helper = Instantiate(nodeHelperPrefab, trackNode.transform);
+          helper.AddComponent<TrackNodeEditor>().trackNode = trackNode;
         }
       }
       logger.Debug("AttachGizmos() attached: {attached}", attached);
+    }
+
+    private GameObject CreateNodeHelperPrefab() {
+      var target = new GameObject
+      {
+        layer = LayerMask.NameToLayer("Clickable"),
+      };
+
+      target.transform.localScale = new Vector3(0.1f, 0.02f, 0.1f);
+
+      var sharedMesh = GameObject.CreatePrimitive(PrimitiveType.Cube).GetComponent<MeshFilter>().sharedMesh;
+      target.AddComponent<MeshFilter>().sharedMesh = sharedMesh;
+      var renderer = target.AddComponent<MeshRenderer>();
+      var material = new Material(Shader.Find("Universal Render Pipeline/Lit"))
+      {
+          color = Color.cyan
+      };
+      renderer.material = material;
+      var lineRenderer = target.AddComponent<LineRenderer>();
+      lineRenderer.material = material;
+      lineRenderer.startWidth = 0.05f;
+      lineRenderer.positionCount = 3;
+      lineRenderer.useWorldSpace = false;
+      lineRenderer.SetPosition(0, new Vector3(-2, 0, -2));
+      lineRenderer.SetPosition(1, new Vector3(0, 0, 3));
+      lineRenderer.SetPosition(2, new Vector3(2, 0, -2));
+      var cc = target.AddComponent<BoxCollider>();
+      cc.size = new Vector3(4f, 4f, 4f);
+      // target.AddComponent<MeshCollider>().sharedMesh = sharedMesh;
+      return target;
+    }
+
+    private GameObject CreateSegmentHelperPrefab() {
+      var go = new GameObject();
+      var material = new Material(Shader.Find("Universal Render Pipeline/Lit"))
+      {
+        color = Color.cyan
+      };
+      var lr1 = go.AddComponent<LineRenderer>();
+      lr1.material = material;
+      lr1.startWidth = 0.05f;
+      var lr2 = go.AddComponent<LineRenderer>();
+      lr2.material = material;
+      lr2.startWidth = 0.05f;
+      return go;
     }
 
     internal void Reset()
