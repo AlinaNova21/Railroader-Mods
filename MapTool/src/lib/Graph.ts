@@ -13,11 +13,13 @@ export interface GraphPart<T,C extends _HasId> extends isDirty {
 }
 
 export interface GraphJson {
-  scenery: Record<Id<any>,any>
-  nodes: Record<Id<TrackNode>,TrackNodeJson>
-  segments: Record<Id<Segment>,SegmentJson>
+  tracks: {
+    nodes: Record<Id<TrackNode>,TrackNodeJson>
+    segments: Record<Id<Segment>,SegmentJson>
+    spans: Record<Id<TrackSpan>, TrackSpanJson>
+  }
+  scenery: Record<Id<any>, any>
   areas: Record<Id<Area>,AreaJson>
-  spans: Record<Id<TrackSpan>,TrackSpanJson>
   loads: Record<Id<Load>, Load>
 }
 
@@ -202,19 +204,20 @@ export class Graph implements isDirty {
     const g = new Graph()
     if (!Graph.instance) Graph.instance = g
     
-    g.nodes = recordImporter(data.nodes, TrackNode.fromJson)
+    data.tracks = data.tracks || { nodes: {}, segments: {}, spans: {} }
+    g.nodes = recordImporter(data.tracks.nodes, TrackNode.fromJson)
     Object.values(g.nodes).forEach(node => {
       node.graph = g
       node[isDirtySym] = false
     })
     
-    g.segments = recordImporter(data.segments, Segment.fromJson)
+    g.segments = recordImporter(data.tracks.segments, Segment.fromJson)
     Object.values(g.segments).forEach(segment => {
       segment.graph = g
       segment[isDirtySym] = false
     })
-    
-    g.spans = recordImporter(data.spans, TrackSpan.fromJson, g)
+
+    g.spans = recordImporter(data.tracks.spans, TrackSpan.fromJson, g)
     g.areas = recordImporter(data.areas, Area.fromJson, g)
     
     g.loads = recordImporter(data.loads, LoadFromJson, g)
@@ -222,30 +225,19 @@ export class Graph implements isDirty {
   }
   toJSON() {
     const ret: GraphJson = {
-      nodes: {},
-      segments: {},
+      tracks: {
+        nodes: {},
+        segments: {},
+        spans: {},
+      },
       areas: {},
-      spans: {},
       scenery: {},
       loads: {},
     }
-    ret.nodes = recordExporter(this.nodes)
-    ret.segments = recordExporter(this.segments)
-
-
-    // const exp = <T extends GraphPart<R, T>, R>(records: Record<Id<T>, T>) => {
-    //   const ret: Record<Id<T>, R> = {}
-    //   Object.values(records).forEach(r => {
-    //     console.log(r.id, r[isDirtySym])
-    //     if (!r[isDirtySym]) return
-    //     ret[r.id] = r.toJson()
-    //   })
-    //   return ret
-    // }
-
-    // ret.segments = exp(this.segments)
-
-    ret.spans = recordExporter(this.spans)
+    ret.tracks.nodes = recordExporter(this.nodes)
+    ret.tracks.segments = recordExporter(this.segments)
+    ret.tracks.spans = recordExporter(this.spans)
+    
     ret.areas = recordExporter(this.areas)
     ret.scenery = recordExporter(this.scenery)
     Object.values(this.loads).forEach(load => { 
