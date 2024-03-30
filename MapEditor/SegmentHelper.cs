@@ -4,12 +4,17 @@ using System.Text;
 using Track;
 using UnityEngine;
 
-namespace MapEditor {
-  class SegmentHelper : MonoBehaviour, IPickable {
+namespace MapEditor
+{
+  class SegmentHelper : MonoBehaviour, IPickable
+  {
     private static Material _lineMaterial;
-    private static Material LineMaterial {
-      get {
-        if (_lineMaterial == null) {
+    private static Material LineMaterial
+    {
+      get
+      {
+        if (_lineMaterial == null)
+        {
           _lineMaterial = new Material(Shader.Find("Universal Render Pipeline/Lit"))
           {
             color = Color.yellow
@@ -20,9 +25,12 @@ namespace MapEditor {
     }
 
     private TrackSegment _segment;
-    private TrackSegment Segment {
-      get {
-        if (_segment == null) {
+    private TrackSegment Segment
+    {
+      get
+      {
+        if (_segment == null)
+        {
           _segment = transform.parent.GetComponent<TrackSegment>();
         }
         return _segment;
@@ -47,11 +55,13 @@ namespace MapEditor {
       return sb.ToString();
     }
 
-    public void Start() {
+    public void Start()
+    {
       gameObject.layer = LayerMask.NameToLayer("Clickable");
-    } 
+    }
 
-    public void Rebuild() {
+    public void Rebuild()
+    {
       var lr = GetComponent<LineRenderer>() ?? gameObject.AddComponent<LineRenderer>();
       var mc = GetComponent<MeshCollider>() ?? gameObject.AddComponent<MeshCollider>();
       var mf = GetComponent<MeshFilter>() ?? gameObject.AddComponent<MeshFilter>();
@@ -65,7 +75,8 @@ namespace MapEditor {
 
       var avg = points.Aggregate(Vector3.zero, (acc, p) => acc + p) / points.Length;
       var newPointAvg = avg.x + avg.y + avg.z;
-      if ((int)(pointAvg * 100) != (int)(newPointAvg * 100)) {
+      if ((int)(pointAvg * 100) != (int)(newPointAvg * 100))
+      {
         pointAvg = newPointAvg;
         lr.useWorldSpace = false;
         var mesh = ExtrudeAlongPath(points, 0.1f);
@@ -108,7 +119,7 @@ namespace MapEditor {
       m.normals = norms.ToArray();
 
       List<int> tris = new List<int>();
-      for (int i = 0; i < m.vertices.Length-3; i++)
+      for (int i = 0; i < m.vertices.Length - 3; i++)
       {
         if (i % 2 == 0)
         {
@@ -132,8 +143,13 @@ namespace MapEditor {
       return m;
     }
 
-    public void Update() {
-      if (!EditorMod.Shared.IsEnabled) {
+    public void Update()
+    {
+      GetComponent<LineRenderer>().enabled = EditorMod.Shared.Settings.ShowHelpers;
+      GetComponent<MeshRenderer>().enabled = EditorMod.Shared.Settings.ShowHelpers;
+
+      if (!EditorMod.Shared.IsEnabled)
+      {
         Destroy(this);
       }
     }

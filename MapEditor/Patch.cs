@@ -1,22 +1,20 @@
 
-using System;
 using HarmonyLib;
-using Railloader;
-using Serilog;
 using Track;
 using UnityEngine;
 
 namespace MapEditor
 {
 
-  [HarmonyPatch(typeof(Graph), "RebuildCollections")]
-  internal static class GraphRebuildCollections
+  [HarmonyPatch(typeof(TrackNode), "Awake")]
+  internal static class TrackNodeAwake
   {
-    private static void Prefix()
+    private static void Prefix(TrackNode __instance)
     {
-      Log.ForContext(typeof(GraphRebuildCollections)).Debug("GraphRebuildCollections PostFix()");
-      // SingletonPluginBase<AlinasMapMod>.Shared?.AttachGizmos();
-      UnityEngine.Object.FindObjectOfType<NodeHelpers>()?.Reset();
+      if (!__instance.GetComponent<TrackNodeHelper>())
+      {
+        __instance.gameObject.AddComponent<TrackNodeHelper>();
+      }
     }
   }
 

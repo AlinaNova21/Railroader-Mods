@@ -1,12 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using Core;
-using Effects;
 using GalaSoft.MvvmLight.Messaging;
 using Game.Events;
 using HarmonyLib;
@@ -17,9 +11,6 @@ using StrangeCustoms.Tracks;
 using Track;
 using UI;
 using UI.Builder;
-using UI.Common;
-using UI.CompanyWindow;
-using UI.Map;
 using UI.Menu;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -41,7 +32,7 @@ namespace MapEditor
       context = _context;
       uiHelper = _uiHelper;
       Settings = context.LoadSettingsData<Settings>("AlinaNova21.MapEditor") ?? new Settings();
-      // patchEditor = new PatchEditor();
+
     }
 
     public override void OnEnable()
@@ -101,9 +92,11 @@ namespace MapEditor
         var tex = new Texture2D(24, 24, TextureFormat.ARGB32, false);
         ImageConversion.LoadImage(tex, iconData);
         icon.sprite = Sprite.Create(tex, new Rect(0, 0, 24, 24), new Vector2(0.5f, 0.5f));
+        icon.sprite = Sprite.Create(tex, new Rect(0, 0, 24, 24), new Vector2(0.5f, 0.5f));
         icon.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 32);
         icon.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 32);
       }
+
       var scene = SceneDescriptor.Editor.LoadAsync(LoadSceneMode.Additive);
       scene.completed += (op) =>
       {
@@ -114,20 +107,14 @@ namespace MapEditor
 
     public void ToolPanelDidOpen(UIPanelBuilder builder)
     {
-      builder.AddButton("Reset Node Helpers", () =>
-      {
-        var nodeHelpers = GameObject.FindObjectOfType<NodeHelpers>();
-        if (nodeHelpers != null)
-        {
-          nodeHelpers.Reset();
-        }
-      });
-      // var baseDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Mods");
       var mixintos = context.GetMixintos("game-graph");
       var outerBuilder = builder;
-      builder.AddSection("Editing", builder => {
-        if (EditorContext.Instance == null) {
-          foreach(var mixinto in mixintos) {
+      builder.AddSection("Editing", builder =>
+      {
+        if (EditorContext.Instance == null)
+        {
+          foreach (var mixinto in mixintos)
+          {
             builder.HStack(builder =>
             {
               builder.AddLabel(Path.GetFileName(Path.GetDirectoryName(mixinto.Mixinto)));
@@ -140,7 +127,9 @@ namespace MapEditor
               });
             });
           }
-        } else {
+        }
+        else
+        {
           builder.AddField("Prefix", builder.AddInputField(EditorContext.Instance?.Prefix ?? "", (value) =>
           {
             if (EditorContext.Instance != null)
@@ -152,7 +141,8 @@ namespace MapEditor
           builder.AddButtonCompact("Redo", () => EditorContext.Instance.ChangeManager.Redo());
           builder.AddButton("Save", () => EditorContext.Instance?.Save());
         }
-        builder.AddButton("Rebuild Track", () => {
+        builder.AddButton("Rebuild Track", () =>
+        {
           Graph.Shared.RebuildCollections();
           TrackObjectManager.Instance.Rebuild();
         });
@@ -180,9 +170,9 @@ namespace MapEditor
           (value) => Settings.Enabled = value
         ));
 
-        builder.AddField("Show Node Helpers", builder.AddToggle(
-          () => Settings.ShowNodeHelpers,
-          (value) => Settings.ShowNodeHelpers = value
+        builder.AddField("Show Helpers", builder.AddToggle(
+          () => Settings.ShowHelpers,
+          (value) => Settings.ShowHelpers = value
         ));
       });
     }
