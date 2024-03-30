@@ -18,6 +18,12 @@ export interface GraphJson {
     segments: Record<Id<Segment>,SegmentJson>
     spans: Record<Id<TrackSpan>, TrackSpanJson>
   }
+  /** @deprecated Use tracks.nodes instead */
+  nodes?: Record<Id<TrackNode>, TrackNodeJson>
+  /** @deprecated Use tracks.segments instead */
+  segments?: Record<Id<Segment>, SegmentJson>
+  /** @deprecated Use tracks.spans instead */
+  spans?: Record<Id<TrackSpan>, TrackSpanJson>
   scenery: Record<Id<any>, any>
   areas: Record<Id<Area>,AreaJson>
   loads: Record<Id<Load>, Load>
@@ -205,6 +211,19 @@ export class Graph implements isDirty {
     if (!Graph.instance) Graph.instance = g
     
     data.tracks = data.tracks || { nodes: {}, segments: {}, spans: {} }
+    if (data.nodes) {
+      data.tracks.nodes = data.nodes
+      delete data.nodes
+    }
+    if (data.segments) {
+      data.tracks.segments = data.segments
+      delete data.segments
+    }
+    if (data.spans) {
+      data.tracks.spans = data.spans
+      delete data.spans
+    }
+
     g.nodes = recordImporter(data.tracks.nodes, TrackNode.fromJson)
     Object.values(g.nodes).forEach(node => {
       node.graph = g
@@ -237,7 +256,7 @@ export class Graph implements isDirty {
     ret.tracks.nodes = recordExporter(this.nodes)
     ret.tracks.segments = recordExporter(this.segments)
     ret.tracks.spans = recordExporter(this.spans)
-    
+
     ret.areas = recordExporter(this.areas)
     ret.scenery = recordExporter(this.scenery)
     Object.values(this.loads).forEach(load => { 
