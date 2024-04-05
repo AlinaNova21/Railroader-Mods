@@ -10,6 +10,7 @@ import sylvaWye from './layouts/sylvaWye.js'
 import whittierYard from './layouts/whittierYard.js'
 import sylvaPaperCrossover from './layouts/sylvaPaperCrossovers.js'
 import sylvaPaxStorage from './layouts/sylvaPaxStorage.js'
+import alarkaPaxStorage from './layouts/alarkaPaxStorage.js'
 import { AlinasMapModMixin } from './lib/AlinasMapMod.js'
 import { Graph, Id, LayoutFunction, Mixins } from './lib/index.js'
 
@@ -24,6 +25,7 @@ async function run() {
     WhittierYard: whittierYard,
     AndrewsInterchangeYard: andrewsInterchangeYard,
     AlarkaJctAdditional: alarkaJctAdditional,
+    AlarkaPaxStorage: alarkaPaxStorage,
     AlarkaLoop: alarkaLoop,
     // WalkerUraniumMine: walkerUraniumMine,
     TestMod: testMod,
@@ -40,7 +42,7 @@ async function run() {
   const all = graph.toJSON()
 
   await writeFile(`../AlinasMapMod/game-graph.json`, JSON.stringify(all, null, 2))
-  await writeFile(`../../AlinasMapMod/game-graph.json`, JSON.stringify(all, null, 2))
+  //await writeFile(`../../AlinasMapMod/game-graph.json`, JSON.stringify(all, null, 2))
 
   const amm: AlinasMapModMixin = {
     items: {}
@@ -50,7 +52,7 @@ async function run() {
     amm.items = Object.fromEntries([...Object.entries(amm.items), ...Object.entries(mixin.alinasMapMod.items)])
   }
   await writeFile(`../AlinasMapMod/AlinasMapMod.json`, JSON.stringify(amm, null, 2))
-  await writeFile(`../../AlinasMapMod/AlinasMapMod.json`, JSON.stringify(amm, null, 2))
+  //await writeFile(`../../AlinasMapMod/AlinasMapMod.json`, JSON.stringify(amm, null, 2))
 
   const state = {
     progressions: {
@@ -80,7 +82,7 @@ async function run() {
     }
   }
   await writeFile(`../AlinasMapMod/progressions.json`, JSON.stringify(state, null, 2))
-  await writeFile(`../../AlinasMapMod/progressions.json`, JSON.stringify(state, null, 2))
+  //await writeFile(`../../AlinasMapMod/progressions.json`, JSON.stringify(state, null, 2))
 
   const migrations = { waybillDestinations: {} as Record<string, string> }
   for(const [id, item] of Object.entries(amm.items)) {
@@ -88,7 +90,7 @@ async function run() {
     migrations.waybillDestinations[`${item.identifier}.site`] = item.industryComponent
   }
   await writeFile(`../AlinasMapMod/game-migrations.json`, JSON.stringify(migrations, null, 2))
-  await writeFile(`../../AlinasMapMod/game-migrations.json`, JSON.stringify(migrations, null, 2))
+  //await writeFile(`../../AlinasMapMod/game-migrations.json`, JSON.stringify(migrations, null, 2))
 }
 
 run().catch(console.error)
