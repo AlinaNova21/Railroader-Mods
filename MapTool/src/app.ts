@@ -42,7 +42,7 @@ async function run() {
   const all = graph.toJSON()
 
   await writeFile(`../AlinasMapMod/game-graph.json`, JSON.stringify(all, null, 2))
-  //await writeFile(`../../AlinasMapMod/game-graph.json`, JSON.stringify(all, null, 2))
+  await writeFile(`../../AlinasMapMod/game-graph.json`, JSON.stringify(all, null, 2))
 
   const amm: AlinasMapModMixin = {
     items: {}
@@ -52,7 +52,7 @@ async function run() {
     amm.items = Object.fromEntries([...Object.entries(amm.items), ...Object.entries(mixin.alinasMapMod.items)])
   }
   await writeFile(`../AlinasMapMod/AlinasMapMod.json`, JSON.stringify(amm, null, 2))
-  //await writeFile(`../../AlinasMapMod/AlinasMapMod.json`, JSON.stringify(amm, null, 2))
+  await writeFile(`../../AlinasMapMod/AlinasMapMod.json`, JSON.stringify(amm, null, 2))
 
   const state = {
     progressions: {
@@ -82,7 +82,7 @@ async function run() {
     }
   }
   await writeFile(`../AlinasMapMod/progressions.json`, JSON.stringify(state, null, 2))
-  //await writeFile(`../../AlinasMapMod/progressions.json`, JSON.stringify(state, null, 2))
+  await writeFile(`../../AlinasMapMod/progressions.json`, JSON.stringify(state, null, 2))
 
   const migrations = { waybillDestinations: {} as Record<string, string> }
   for(const [id, item] of Object.entries(amm.items)) {
@@ -90,7 +90,7 @@ async function run() {
     migrations.waybillDestinations[`${item.identifier}.site`] = item.industryComponent
   }
   await writeFile(`../AlinasMapMod/game-migrations.json`, JSON.stringify(migrations, null, 2))
-  //await writeFile(`../../AlinasMapMod/game-migrations.json`, JSON.stringify(migrations, null, 2))
+  await writeFile(`../../AlinasMapMod/game-migrations.json`, JSON.stringify(migrations, null, 2))
 }
 
 run().catch(console.error)
