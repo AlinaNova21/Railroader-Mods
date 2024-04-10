@@ -10,6 +10,7 @@ import sylvaWye from './layouts/sylvaWye.js'
 import whittierYard from './layouts/whittierYard.js'
 import sylvaPaperCrossover from './layouts/sylvaPaperCrossovers.js'
 import sylvaPaxStorage from './layouts/sylvaPaxStorage.js'
+import alarkaPaxStorage from './layouts/alarkaPaxStorage.js'
 import { AlinasMapModMixin } from './lib/AlinasMapMod.js'
 import { Graph, Id, LayoutFunction, Mixins } from './lib/index.js'
 
@@ -24,6 +25,7 @@ async function run() {
     WhittierYard: whittierYard,
     AndrewsInterchangeYard: andrewsInterchangeYard,
     AlarkaJctAdditional: alarkaJctAdditional,
+    AlarkaPaxStorage: alarkaPaxStorage,
     AlarkaLoop: alarkaLoop,
     // WalkerUraniumMine: walkerUraniumMine,
     TestMod: testMod,
