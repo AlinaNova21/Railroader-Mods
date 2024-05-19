@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
 using System.Text;
+using Helpers;
+using Serilog;
 using Track;
 using UnityEngine;
 
@@ -45,7 +47,7 @@ namespace MapEditor
 
     public float pointAvg = 0;
 
-    public TooltipInfo TooltipInfo => new TooltipInfo($"Node {Node.id}", this.getTooltipText());
+    public TooltipInfo TooltipInfo => new TooltipInfo($"Node {Node?.id}", this.getTooltipText());
 
     private string getTooltipText()
     {
@@ -60,7 +62,9 @@ namespace MapEditor
 
     public void Start()
     {
-      gameObject.layer = LayerMask.NameToLayer("Clickable");
+      transform.localPosition = Vector3.zero;
+      transform.localEulerAngles = Vector3.zero;
+      gameObject.layer = Layers.Clickable;
       LineRenderer = gameObject.AddComponent<LineRenderer>();
       LineRenderer.material = LineMaterial;
       LineRenderer.startWidth = 0.05f;
@@ -75,6 +79,11 @@ namespace MapEditor
 
     public void Update()
     {
+      if (Node == null)
+      {
+        Destroy(this);
+        return;
+      }
       LineRenderer.enabled = EditorMod.Shared.Settings.ShowHelpers;
 
       if (!EditorMod.Shared.IsEnabled)
@@ -85,6 +94,7 @@ namespace MapEditor
 
     public void Activate()
     {
+      EditorContext.Instance?.SelectNode(Node);
     }
 
     public void Deactivate()

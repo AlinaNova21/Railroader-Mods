@@ -1,5 +1,6 @@
 
 using HarmonyLib;
+using Serilog;
 using Track;
 using UnityEngine;
 
@@ -9,11 +10,13 @@ namespace MapEditor
   [HarmonyPatch(typeof(TrackNode), "Awake")]
   internal static class TrackNodeAwake
   {
-    private static void Prefix(TrackNode __instance)
+    private static void Postfix(TrackNode __instance)
     {
-      if (!__instance.GetComponent<TrackNodeHelper>())
+      if (__instance.GetComponentInChildren<TrackNodeHelper>() == null)
       {
-        __instance.gameObject.AddComponent<TrackNodeHelper>();
+        var go = new GameObject("TrackNodeHelper");
+        go.transform.SetParent(__instance.transform);
+        go.AddComponent<TrackNodeHelper>();
       }
     }
   }
@@ -23,10 +26,11 @@ namespace MapEditor
   {
     private static void Postfix(TrackSegment __instance)
     {
-      // Log.ForContext(typeof(TrackSegmentAwake)).Debug("TrackSegmentAwake PostFix()");
-      if (!__instance.GetComponent<SegmentHelper>())
+      if (__instance.GetComponentInChildren<SegmentHelper>() == null)
       {
-        __instance.gameObject.AddComponent<SegmentHelper>();
+        var go = new GameObject("SegmentHelper");
+        go.transform.SetParent(__instance.transform);
+        go.AddComponent<SegmentHelper>();
       }
     }
   }
@@ -36,7 +40,6 @@ namespace MapEditor
   {
     private static void Postfix(TrackSegment __instance)
     {
-      // Log.ForContext(typeof(TrackSegmentAwake)).Debug("TrackSegmentAwake PostFix()");
       var sh = __instance.transform.Find("SegmentHelper")?.GetComponent<SegmentHelper>();
       if (sh == null)
       {

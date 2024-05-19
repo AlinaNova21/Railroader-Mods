@@ -9,9 +9,7 @@ using Game.Messages;
 using Game.Progression;
 using Game.State;
 using HarmonyLib;
-using JetBrains.Annotations;
 using Model.OpsNew;
-using Serilog;
 using Track;
 using UI;
 using UI.Builder;
@@ -48,7 +46,7 @@ class Toolbox
     if (tr != null)
     {
       var buttons = tr.transform.Find("Buttons");
-      var go = new GameObject("MapEditorButton");
+      var go = new GameObject("AlinasUtilsButton");
       go.transform.parent = buttons;
       var button = go.AddComponent<Button>();
       button.onClick.AddListener(() =>

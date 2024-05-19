@@ -3,76 +3,89 @@ using Core;
 using HarmonyLib;
 using MapEditor.StateTracker;
 using MapEditor.Tools;
+using Serilog;
 using StrangeCustoms.Tracks;
 using Track;
+using UnityEngine.SceneManagement;
 
 namespace MapEditor
 {
-    public class EditorContext
+  public class EditorContext
+  {
+    public static EditorContext Instance { get; private set; }
+    public PatchEditor PatchEditor { get; private set; }
+
+    public ChangeManager ChangeManager { get; private set; } = new ChangeManager();
+
+    public TrackNode SelectedNode { get; set; }
+    public TrackSegment SelectedSegment { get; set; }
+
+    public TrackNode HoveredNode { get; set; }
+    public TrackSegment HoveredSegment { get; set; }
+
+    private BaseTool activeTool;
+    public BaseTool ActiveTool => activeTool;
+
+    private string _prefix = "Custom_";
+    public string Prefix
     {
-        public static EditorContext Instance { get; private set; }
-        public PatchEditor PatchEditor { get; private set; }
-
-        public ChangeManager ChangeManager { get; private set; } = new ChangeManager();
-
-        public TrackNode SelectedNode { get; set; }
-        public TrackSegment SelectedSegment { get; set; }
-
-        public TrackNode HoveredNode { get; set; }
-        public TrackSegment HoveredSegment { get; set; }
-
-        private BaseTool activeTool;
-        public BaseTool ActiveTool => activeTool;
-
-        private string _prefix = "Custom_";
-        public string Prefix
-        {
-            get => _prefix;
-            set {
-                _prefix = value;
-                TrackNodeIdGenerator = NewIdGenerator($"N{value}", 4);
-                TrackSegmentIdGenerator = NewIdGenerator($"S{value}", 4);
-            }
-        }
-        public IdGenerator TrackNodeIdGenerator = NewIdGenerator($"NCustom_", 4);
-        public IdGenerator TrackSegmentIdGenerator = NewIdGenerator($"SCustom_", 4);
-
-        private static IdGenerator NewIdGenerator(string prefix, int digits = 4)
-        {
-            var cons = AccessTools.Constructor(typeof(IdGenerator), [typeof(string), typeof(int)]);
-            return cons.Invoke([prefix, digits]) as IdGenerator;
-        }
-
-        #region Events
-        public static event Action<EditorContext> EditorContextChanged;
-        public static event Action<TrackNode> NodeSelectedChanged;
-        public static event Action<TrackSegment> SegmentSelectedChanged;
-        #endregion
-
-        public EditorContext(string filename)
-        {
-            Instance = this;
-            // Hack since constructor is private
-            var cons = AccessTools.Constructor(typeof(PatchEditor), [typeof(string)], false);
-            PatchEditor = cons.Invoke(new object[] { filename }) as PatchEditor;
-            EditorContextChanged?.Invoke(this);
-        }
-
-        public void SetActiveTool(BaseTool tool)
-        {
-            activeTool = tool;
-            EditorContextChanged?.Invoke(this);
-        }
-
-        internal void Save()
-        {
-            PatchEditor.Save();
-        }
-
-        internal void SelectNode(TrackNode newNode)
-        {
-            SelectedNode = newNode;
-            NodeSelectedChanged?.Invoke(newNode);
-        }
+      get => _prefix;
+      set
+      {
+        _prefix = value;
+        TrackNodeIdGenerator = NewIdGenerator($"N{value}", 4);
+        TrackSegmentIdGenerator = NewIdGenerator($"S{value}", 4);
+      }
     }
+    public IdGenerator TrackNodeIdGenerator = NewIdGenerator($"NCustom_", 4);
+    public IdGenerator TrackSegmentIdGenerator = NewIdGenerator($"SCustom_", 4);
+
+    private static IdGenerator NewIdGenerator(string prefix, int digits = 4)
+    {
+      var cons = AccessTools.Constructor(typeof(IdGenerator), [typeof(string), typeof(int)]);
+      return cons.Invoke([prefix, digits]) as IdGenerator;
+    }
+
+    #region Events
+    public static event Action<EditorContext> EditorContextChanged;
+    public static event Action<TrackNode> NodeSelectedChanged;
+    public static event Action<TrackSegment> SegmentSelectedChanged;
+    #endregion
+
+    public static void Unload()
+    {
+      try
+      {
+        Instance = null;
+      }
+      catch (Exception e)
+      {
+        Log.ForContext<EditorContext>().Error(e, "Failed to unload editor context");
+      }
+    }
+
+    public EditorContext(string filename)
+    {
+      Instance = this;
+      PatchEditor = new PatchEditor(filename);
+      EditorContextChanged?.Invoke(this);
+    }
+
+    public void SetActiveTool(BaseTool tool)
+    {
+      activeTool = tool;
+      EditorContextChanged?.Invoke(this);
+    }
+
+    internal void Save()
+    {
+      PatchEditor.Save();
+    }
+
+    internal void SelectNode(TrackNode newNode)
+    {
+      SelectedNode = newNode;
+      NodeSelectedChanged?.Invoke(newNode);
+    }
+  }
 }

@@ -10,13 +10,14 @@
     <Content Include="*.json" CopyToOutputDirectory="Always" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\construction-icon.png" />
+    <EmbeddedResource Include="Resources\*.png" />
     <EmbeddedResource Include="Resources\rth.runtime" />
   </ItemGroup>
   <ItemGroup>
     <!-- <ModAssembly Include="StrangeCustoms" /> -->
     <Reference Include="StrangeCustoms">
       <HintPath Condition="Exists('$(GameDir)\Mods\StrangeCustoms\StrangeCustoms.dll')">$(GameDir)\Mods\StrangeCustoms\StrangeCustoms.dll</HintPath>
+      <Private>false</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>

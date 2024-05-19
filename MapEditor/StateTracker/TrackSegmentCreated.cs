@@ -30,6 +30,7 @@ namespace MapEditor.StateTracker
       newSegment.a = _a;
       newSegment.b = _b;
       newSegment.style = _style;
+      newSegment.groupId = _groupId;
       Graph.Shared.AddSegment(newSegment);
       _segment = newSegment;
       EditorContext.Instance.PatchEditor.AddOrUpdateSegment(_segment.id, _a.id, _b.id, 0, _groupId, 0, _style);

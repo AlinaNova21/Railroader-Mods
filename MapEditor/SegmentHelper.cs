@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Helpers;
 using Track;
 using UnityEngine;
 
@@ -57,7 +58,7 @@ namespace MapEditor
 
     public void Start()
     {
-      gameObject.layer = LayerMask.NameToLayer("Clickable");
+      gameObject.layer = Layers.Clickable;
     }
 
     public void Rebuild()
@@ -145,9 +146,13 @@ namespace MapEditor
 
     public void Update()
     {
-      GetComponent<LineRenderer>().enabled = EditorMod.Shared.Settings.ShowHelpers;
-      GetComponent<MeshRenderer>().enabled = EditorMod.Shared.Settings.ShowHelpers;
-
+      LineRenderer lr = GetComponent<LineRenderer>();
+      MeshRenderer mr = GetComponent<MeshRenderer>();
+      if (lr != null && mr != null)
+      {
+        lr.enabled = EditorMod.Shared.Settings.ShowHelpers;
+        mr.enabled = EditorMod.Shared.Settings.ShowHelpers;
+      }
       if (!EditorMod.Shared.IsEnabled)
       {
         Destroy(this);

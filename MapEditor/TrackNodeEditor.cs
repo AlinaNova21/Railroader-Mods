@@ -38,20 +38,20 @@ namespace MapEditor
       return sb.ToString();
     }
 
-    // private static ObjectTransformGizmo Gizmo
-    // {
-    //   get
-    //   {
-    //     if (_gizmo == null)
-    //     {
-    //       _gizmo = MonoSingleton<RTGizmosEngine>.Get.CreateObjectUniversalGizmo();
-    //       _gizmo.SetCanAffectScale(false);
-    //       _gizmo.SetTransformSpace(GizmoSpace.Local);
-    //     }
-    //     return _gizmo;
-    //   }
-    // }
-    // private static ObjectTransformGizmo? _gizmo;
+    private static ObjectTransformGizmo Gizmo
+    {
+      get
+      {
+        if (_gizmo == null)
+        {
+          _gizmo = MonoSingleton<RTGizmosEngine>.Get.CreateObjectUniversalGizmo();
+          _gizmo.SetCanAffectScale(false);
+          _gizmo.SetTransformSpace(GizmoSpace.Local);
+        }
+        return _gizmo;
+      }
+    }
+    private static ObjectTransformGizmo? _gizmo;
 
     public void Activate()
     {
@@ -97,16 +97,16 @@ namespace MapEditor
       // handle.ChangeHandleSpace(Space.Self);
       // handle.ChangeHandleType(HandleType.Position | HandleType.Rotation);
       // handle.Enable(trackNode.transform);
-      return;
-      // // Gizmo.SetTargetPivotObject(this.gameObject);
-      // Gizmo.SetEnabled(true);
-      // Gizmo.Settings.SetObjectTransformable(this.gameObject, true);
-      // ObjectTransformGizmo.ObjectRestrictions restrictions = new ObjectTransformGizmo.ObjectRestrictions();
-      // restrictions.SetIsAffectedByHandle(GizmoHandleId.CamXYRotation, false);
-      // restrictions.SetIsAffectedByHandle(GizmoHandleId.CamZRotation, false);
-      // Gizmo.Gizmo.SetEnabled(true);
-      // Gizmo.RegisterObjectRestrictions(this.gameObject, restrictions);
-      // Gizmo.SetTargetObject(this.gameObject);
+      // return;
+      // Gizmo.SetTargetPivotObject(this.gameObject);
+      Gizmo.SetEnabled(true);
+      Gizmo.Settings.SetObjectTransformable(this.gameObject, true);
+      ObjectTransformGizmo.ObjectRestrictions restrictions = new ObjectTransformGizmo.ObjectRestrictions();
+      restrictions.SetIsAffectedByHandle(GizmoHandleId.CamXYRotation, false);
+      restrictions.SetIsAffectedByHandle(GizmoHandleId.CamZRotation, false);
+      Gizmo.Gizmo.SetEnabled(true);
+      Gizmo.RegisterObjectRestrictions(this.gameObject, restrictions);
+      Gizmo.SetTargetObject(this.gameObject);
     }
 
     public void Deactivate()
@@ -118,14 +118,16 @@ namespace MapEditor
       return true;
     }
 
-    public void Update() {
+    public void Update()
+    {
     }
 
-    public void OnDisable() {
-      // if (_gizmo != null)
-      // {
-      //   _gizmo.Gizmo.SetEnabled(false);
-      // }
+    public void OnDisable()
+    {
+      if (_gizmo != null)
+      {
+        _gizmo.Gizmo.SetEnabled(false);
+      }
     }
 
     public void OnTransformed(Gizmo gizmo)

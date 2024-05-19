@@ -54,7 +54,7 @@ namespace MapEditor
 
     public void Update()
     {
-      TransformHandleManager.Instance.mainCamera = Camera.main;
+      // TransformHandleManager.Instance.mainCamera = Camera.main;
     }
   }
 }

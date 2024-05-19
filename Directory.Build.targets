@@ -30,8 +30,14 @@
       <HintPath Condition="Exists('$(GameManagedDir)\%(Identity).exe')">$(GameManagedDir)\%(Identity).exe</HintPath>
       <Private>false</Private>
     </Reference>
-    <Reference Include="@(ModAssembly)">
-      <HintPath Condition="Exists('$(GameDir)\Mods\%(Identity)\%(Identity).dll')">$(GameDir)\Mods\%(Identity)\%(Identity).dll</HintPath>
+    <!-- Allow referencing things like OtherMod/Mod.dll -->
+    <ModReference Include="@(ModAssembly)">
+      <AssemblyName>$([System.IO.Path]::GetFileNameWithoutExtension("%(Identity)"))</AssemblyName>
+      <FullModPath>$(GameDir)\Mods\%(Identity)</FullModPath>
+    </ModReference>
+    <Reference Include="@(ModReference->'%(AssemblyName)')">
+      <HintPath Condition="Exists('%(FullModPath)')">%(FullModPath)</HintPath>
+      <Private>false</Private>
     </Reference>
   </ItemGroup>
 

@@ -51,58 +51,65 @@ namespace MapEditor
 
     private void OnMapDidLoad(MapDidLoadEvent @event)
     {
-      logger.Debug("OnMapDidLoad()");
-      var editor = new GameObject("Editor");
-      var parent = GameObject.Find("World").transform;
-      if (parent != null)
+      try
       {
-        logger.Debug("Found World object");
-        editor.transform.SetParent(parent);
-      }
-      else
-      {
-        logger.Error("Could not find World object");
-      }
-      editor.AddComponent<Editor>();
-      editor.SetActive(Settings.Enabled);
-      var window = uiHelper.CreateWindow(500, 500, UI.Common.Window.Position.CenterRight);
-      window.Title = "Map Editor";
-      uiHelper.PopulateWindow(window, ToolPanelDidOpen);
-      window.OnShownDidChange += (shown) =>
-      {
-        if (!shown)
+        logger.Debug("OnMapDidLoad()");
+        var editor = new GameObject("Editor");
+        var parent = GameObject.Find("World").transform;
+        if (parent != null)
         {
-          ToolPanelDidClose();
+          logger.Debug("Found World object");
+          editor.transform.SetParent(parent);
         }
-      };
-      var tr = UnityEngine.Object.FindObjectOfType<TopRightArea>();
-      if (tr != null)
-      {
-        var buttons = tr.transform.Find("Buttons");
-        var go = new GameObject("MapEditorButton");
-        go.transform.parent = buttons;
-        var button = go.AddComponent<Button>();
-        button.onClick.AddListener(() =>
+        else
         {
-          window.ShowWindow();
-        });
-        var rawIcon = Assembly.GetExecutingAssembly().GetManifestResourceStream("MapEditor.Resources.construction-icon.png");
-        var iconData = new BinaryReader(rawIcon).ReadBytes((int)rawIcon.Length);
-        var icon = go.AddComponent<Image>();
-        var tex = new Texture2D(24, 24, TextureFormat.ARGB32, false);
-        ImageConversion.LoadImage(tex, iconData);
-        icon.sprite = Sprite.Create(tex, new Rect(0, 0, 24, 24), new Vector2(0.5f, 0.5f));
-        icon.sprite = Sprite.Create(tex, new Rect(0, 0, 24, 24), new Vector2(0.5f, 0.5f));
-        icon.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 32);
-        icon.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 32);
-      }
+          logger.Error("Could not find World object");
+        }
+        editor.AddComponent<Editor>();
+        editor.SetActive(Settings.Enabled);
+        var window = uiHelper.CreateWindow(500, 500, UI.Common.Window.Position.CenterRight);
+        window.Title = "Map Editor";
+        uiHelper.PopulateWindow(window, ToolPanelDidOpen);
+        window.OnShownDidChange += (shown) =>
+        {
+          if (!shown)
+          {
+            ToolPanelDidClose();
+          }
+        };
+        var tr = UnityEngine.Object.FindObjectOfType<TopRightArea>();
+        if (tr != null)
+        {
+          var buttons = tr.transform.Find("Strip");
+          var go = new GameObject("MapEditorButton");
+          go.transform.parent = buttons;
+          go.transform.SetSiblingIndex(9);
+          var button = go.AddComponent<Button>();
+          button.onClick.AddListener(() =>
+          {
+            window.ShowWindow();
+          });
+          var icon = go.AddComponent<Image>();
+          icon.sprite = Sprite.Create(Resources.Icons.ConstructionIcon, new Rect(0, 0, 24, 24), new Vector2(0.5f, 0.5f));
+          icon.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 32);
+          icon.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 32);
+          logger.Debug("Added button to TopRightArea");
+        }
 
-      var scene = SceneDescriptor.Editor.LoadAsync(LoadSceneMode.Additive);
-      scene.completed += (op) =>
+        var scene = SceneDescriptor.Editor.LoadAsync(LoadSceneMode.Additive);
+        scene.completed += (op) =>
+        {
+          GameObject.Find("Definition Editor Mode Controller")?.SetActive(false);
+        };
+        // SceneManager.LoadScene(SceneDescriptor.Editor., LoadSceneMode.Additive);
+        EditorContext.Unload(); // Unload the previous editor context if exists
+      }
+      catch (System.Exception e)
       {
-        GameObject.Find("Definition Editor Mode Controller")?.SetActive(false);
-      };
-      // SceneManager.LoadScene(SceneDescriptor.Editor., LoadSceneMode.Additive);
+
+        logger.Debug(e.Message);
+        logger.Debug(e.StackTrace);
+      }
     }
 
     public void ToolPanelDidOpen(UIPanelBuilder builder)
@@ -113,20 +120,24 @@ namespace MapEditor
       {
         if (EditorContext.Instance == null)
         {
-          foreach (var mixinto in mixintos)
+          builder.VScrollView(builder =>
           {
-            builder.HStack(builder =>
+
+            foreach (var mixinto in mixintos)
             {
-              builder.AddLabel(Path.GetFileName(Path.GetDirectoryName(mixinto.Mixinto)));
-              builder.AddButtonCompact("Edit", () =>
+              builder.HStack(builder =>
               {
-                logger.Debug("Editing {0}", mixinto.Mixinto);
-                new EditorContext(mixinto.Mixinto);
-                Tool.UIMoveTool.Activate();
-                outerBuilder.Rebuild();
+                builder.AddLabel($"{mixinto.Source} {Path.GetFileName(mixinto.Mixinto)}");
+                var btn = builder.AddButtonCompact("Edit", () =>
+                {
+                  logger.Debug("Editing {0}", mixinto.Mixinto);
+                  new EditorContext(mixinto.Mixinto);
+                  Tool.UIMoveTool.Activate();
+                  outerBuilder.Rebuild();
+                });
               });
-            });
-          }
+            }
+          });
         }
         else
         {
@@ -140,6 +151,11 @@ namespace MapEditor
           builder.AddButtonCompact("Undo", () => EditorContext.Instance.ChangeManager.Undo());
           builder.AddButtonCompact("Redo", () => EditorContext.Instance.ChangeManager.Redo());
           builder.AddButton("Save", () => EditorContext.Instance?.Save());
+          builder.AddButton("Close Context", () =>
+          {
+            EditorContext.Unload();
+            outerBuilder.Rebuild();
+          });
         }
         builder.AddButton("Rebuild Track", () =>
         {

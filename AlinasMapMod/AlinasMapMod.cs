@@ -105,8 +105,8 @@ namespace AlinasMapMod
     {
       logger.Debug("OnMapDidLoad()");
       var tpm = UnityEngine.Object.FindObjectOfType<TelegraphPoleManager>();
-      tpm.debugDrawHeights = true;
 
+      logger.Debug("Adjusting telegraph pole positions");
       var g = tpm.GetComponent<SimpleGraph.Runtime.SimpleGraph>();
       Node n;
       n = g.NodeForId(585);
@@ -124,6 +124,7 @@ namespace AlinasMapMod
       n = g.NodeForId(605);
       n.position += new Vector3(0, 2, 0);
 
+      logger.Debug("Done adjusting telegraph pole positions");
     }
     public void ModTabDidOpen(UIPanelBuilder builder)
     {
@@ -184,9 +185,10 @@ namespace AlinasMapMod
       }
       patcher.Patch();
       objectCache.Rebuild();
-      
+
       var alinasMapModGameObject = GameObject.Find("AlinasMapMod");
-      if (alinasMapModGameObject == null) {
+      if (alinasMapModGameObject == null)
+      {
         alinasMapModGameObject = new GameObject("AlinasMapMod");
         alinasMapModGameObject.transform.parent = GameObject.Find("World").transform;
         alinasMapModGameObject.transform.localPosition = new Vector3(0, 0, 0);
