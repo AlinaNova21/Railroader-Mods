@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Odbc;
 using System.Linq;
 using System.Text;
 using HarmonyLib;
@@ -7,6 +8,7 @@ using RLD;
 using Serilog;
 using Track;
 using TransformHandles;
+using UI.Common;
 using UnityEngine;
 
 namespace MapEditor
@@ -23,13 +25,16 @@ namespace MapEditor
     private Serilog.ILogger logger = Log.ForContext(typeof(TrackNodeEditor));
     public TooltipInfo TooltipInfo => new TooltipInfo($"Track Node {trackNode?.id}", this.getTooltipText());
 
+    private Window Window { get; set; }
+
     private string getTooltipText()
     {
       var sb = new StringBuilder();
       sb.AppendLine($"ID: {trackNode?.id}");
       sb.AppendLine($"Pos: {trackNode?.transform.localPosition}");
       sb.AppendLine($"Rot: {trackNode?.transform.localEulerAngles}");
-      sb.AppendLine($"Segments: {String.Join(", ", Graph.Shared.SegmentsConnectedTo(trackNode).Select(s => s.id))}");
+      var segments = Graph.Shared.SegmentsConnectedTo(trackNode).Select(s => $"{s.id} ({(s.a == trackNode ? "A" : "B")})");
+      sb.AppendLine($"Segments: {String.Join(", ", segments)}");
       return sb.ToString();
     }
 
@@ -50,7 +55,13 @@ namespace MapEditor
 
     public void Activate()
     {
-
+      logger.Information($"Activate {trackNode?.id}");
+      if (EditorContext.Instance == null)
+      {
+        logger.Error("EditorContext.Instance is null");
+        return;
+      }
+      EditorContext.Instance?.SelectNode(trackNode);
       logger.Information("Set target object");
       // if (handle == null) {
       //   handle = TransformHandleManager.Instance.CreateHandle(trackNode.transform);
@@ -83,6 +94,8 @@ namespace MapEditor
       //     nodes.Do(n => Graph.Shared.OnNodeDidChange(n));
       //   };
       // }
+      // handle.ChangeHandleSpace(Space.Self);
+      // handle.ChangeHandleType(HandleType.Position | HandleType.Rotation);
       // handle.Enable(trackNode.transform);
       // return;
       // Gizmo.SetTargetPivotObject(this.gameObject);
@@ -105,10 +118,12 @@ namespace MapEditor
       return true;
     }
 
-    public void Update() {
+    public void Update()
+    {
     }
 
-    public void OnDisable() {
+    public void OnDisable()
+    {
       if (_gizmo != null)
       {
         _gizmo.Gizmo.SetEnabled(false);

@@ -30,6 +30,15 @@
       <HintPath Condition="Exists('$(GameManagedDir)\%(Identity).exe')">$(GameManagedDir)\%(Identity).exe</HintPath>
       <Private>false</Private>
     </Reference>
+    <!-- Allow referencing things like OtherMod/Mod.dll -->
+    <ModReference Include="@(ModAssembly)">
+      <AssemblyName>$([System.IO.Path]::GetFileNameWithoutExtension("%(Identity)"))</AssemblyName>
+      <FullModPath>$(GameDir)\Mods\%(Identity)</FullModPath>
+    </ModReference>
+    <Reference Include="@(ModReference->'%(AssemblyName)')">
+      <HintPath Condition="Exists('%(FullModPath)')">%(FullModPath)</HintPath>
+      <Private>false</Private>
+    </Reference>
   </ItemGroup>
 
   <!-- Publish the mod as a neat zip file -->
