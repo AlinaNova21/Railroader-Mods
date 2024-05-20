@@ -3,8 +3,11 @@ modId: AlinaNova21.AlinasMapMod
 name: Alina's Map Mod
 desc: |-
   A mod that adds a new milestones to the game adding additional tracks, such as yards, wyes, and more.
-version: '1.3.24087.634'
+version: '1.3.24141.527'
 changelog:
+- version: '1.3.24141.527'
+  desc: |-
+    - Quick fix for missing tracks and progressions
 - version: '1.3.24141.13'
   desc: |-
     - Update to remove the requirement of sawmill connection for the yard.
