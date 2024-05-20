@@ -129,6 +129,88 @@
       ],
       "industryComponent": "AN_Sylva_Wye.wye-site"
     },
+    "AN_Sylva_Paper_Crossover": {
+      "identifier": "AN_Sylva_Paper_Crossover",
+      "name": "Sylva Paper Crossovers",
+      "groupIds": [
+        "AN_Sylva_Paper_Crossover"
+      ],
+      "description": "Adds two Crossovers at Sylva Paperboard.",
+      "area": "sylva",
+      "trackSpans": [
+        "PAN_Sylva_Paper_Crossover_00"
+      ],
+      "deliveryPhases": [
+        {
+          "cost": 1000,
+          "deliveries": [
+            {
+              "carTypeFilter": "GB*",
+              "count": 1,
+              "load": "ballast",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "GB*",
+              "count": 1,
+              "load": "ties",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "FM*",
+              "count": 1,
+              "load": "rails",
+              "direction": 0
+            }
+          ]
+        }
+      ],
+      "prerequisiteSections": [
+        "s1"
+      ],
+      "industryComponent": "AN_Sylva_Paper_Crossover.sylva-paper-crossover-site"
+    },
+    "AN_Sylva_Pax_Storage": {
+      "identifier": "AN_Sylva_Pax_Storage",
+      "name": "Sylva Pax Storage",
+      "groupIds": [
+        "AN_Sylva_Pax_Storage"
+      ],
+      "description": "Adds two storage tracks to Sylva Station.",
+      "area": "sylva",
+      "trackSpans": [
+        "PAN_Sylva_Pax_Storage_00"
+      ],
+      "deliveryPhases": [
+        {
+          "cost": 2000,
+          "deliveries": [
+            {
+              "carTypeFilter": "GB*",
+              "count": 2,
+              "load": "ballast",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "GB*",
+              "count": 2,
+              "load": "ties",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "FM*",
+              "count": 2,
+              "load": "rails",
+              "direction": 0
+            }
+          ]
+        }
+      ],
+      "prerequisiteSections": [
+        "s1"
+      ],
+      "industryComponent": "AN_Sylva_Pax_Storage.sylva-station-site"
+    },
     "AN_Whittier_Yard_Sawmill": {
       "identifier": "AN_Whittier_Yard_Sawmill",
       "name": "Whittier Sawmill Connection",
@@ -461,6 +543,47 @@
           ]
         }
       ]
+    },
+    "AN_Alarka_Pax_Storage": {
+      "identifier": "AN_Alarka_Pax_Storage",
+      "name": "Alarka Pax Storage",
+      "groupIds": [
+        "AN_Alarka_Pax_Storage"
+      ],
+      "description": "Adds two storage tracks to Alarka Station.",
+      "area": "alarka",
+      "trackSpans": [
+        "PAN_Alarka_Pax_Storage_00"
+      ],
+      "deliveryPhases": [
+        {
+          "cost": 2000,
+          "deliveries": [
+            {
+              "carTypeFilter": "GB*",
+              "count": 2,
+              "load": "ballast",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "GB*",
+              "count": 2,
+              "load": "ties",
+              "direction": 0
+            },
+            {
+              "carTypeFilter": "FM*",
+              "count": 2,
+              "load": "rails",
+              "direction": 0
+            }
+          ]
+        }
+      ],
+      "prerequisiteSections": [
+        "alarka-branch"
+      ],
+      "industryComponent": "AN_Alarka_Pax_Storage.alarka-station-site"
     },
     "AN_Alarka_Loop": {
       "identifier": "AN_Alarka_Loop",

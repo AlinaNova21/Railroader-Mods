@@ -4,13 +4,13 @@ import './generateUpdate.js'
 import testMod from "./layouts/TestMod.js"
 import alarkaJctAdditional from './layouts/alarkaJctAdditional.js'
 import alarkaLoop from "./layouts/alarkaLoop.js"
+import alarkaPaxStorage from './layouts/alarkaPaxStorage.js'
 import andrewsInterchangeYard from './layouts/andrewsInterchangeYard.js'
 import sylvaInterchangeYard from './layouts/sylvaInterchangeYard.js'
-import sylvaWye from './layouts/sylvaWye.js'
-import whittierYard from './layouts/whittierYard.js'
 import sylvaPaperCrossover from './layouts/sylvaPaperCrossovers.js'
 import sylvaPaxStorage from './layouts/sylvaPaxStorage.js'
-import alarkaPaxStorage from './layouts/alarkaPaxStorage.js'
+import sylvaWye from './layouts/sylvaWye.js'
+import whittierYard from './layouts/whittierYard.js'
 import { AlinasMapModMixin } from './lib/AlinasMapMod.js'
 import { Graph, Id, LayoutFunction, Mixins } from './lib/index.js'
 
@@ -45,7 +45,7 @@ async function run() {
   await writeFile(`../../AlinasMapMod/game-graph.json`, JSON.stringify(all, null, 2))
 
   const amm: AlinasMapModMixin = {
-    items: {}
+    items: {},
   }
   for (const mixin of allMixins) {
     if (!mixin.alinasMapMod) continue

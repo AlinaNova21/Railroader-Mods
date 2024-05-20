@@ -123,6 +123,78 @@
           },
           "description": "Adds a Wye at the Sylva Interchange, great for turning around those massive Berks."
         },
+        "AN_Sylva_Paper_Crossover": {
+          "displayName": "Sylva Paper Crossovers",
+          "deliveryPhases": [
+            {
+              "cost": 1000,
+              "deliveries": [
+                {
+                  "carTypeFilter": "GB*",
+                  "count": 1,
+                  "load": "ballast",
+                  "direction": 0
+                },
+                {
+                  "carTypeFilter": "GB*",
+                  "count": 1,
+                  "load": "ties",
+                  "direction": 0
+                },
+                {
+                  "carTypeFilter": "FM*",
+                  "count": 1,
+                  "load": "rails",
+                  "direction": 0
+                }
+              ],
+              "industryComponent": "AN_Sylva_Paper_Crossover.sylva-paper-crossover-site"
+            }
+          ],
+          "enableFeaturesOnUnlock": {
+            "AN_Sylva_Paper_Crossover": true
+          },
+          "prerequisiteSections": {
+            "s1": true
+          },
+          "description": "Adds two Crossovers at Sylva Paperboard."
+        },
+        "AN_Sylva_Pax_Storage": {
+          "displayName": "Sylva Pax Storage",
+          "deliveryPhases": [
+            {
+              "cost": 2000,
+              "deliveries": [
+                {
+                  "carTypeFilter": "GB*",
+                  "count": 2,
+                  "load": "ballast",
+                  "direction": 0
+                },
+                {
+                  "carTypeFilter": "GB*",
+                  "count": 2,
+                  "load": "ties",
+                  "direction": 0
+                },
+                {
+                  "carTypeFilter": "FM*",
+                  "count": 2,
+                  "load": "rails",
+                  "direction": 0
+                }
+              ],
+              "industryComponent": "AN_Sylva_Pax_Storage.sylva-station-site"
+            }
+          ],
+          "enableFeaturesOnUnlock": {
+            "AN_Sylva_Pax_Storage": true
+          },
+          "prerequisiteSections": {
+            "s1": true
+          },
+          "description": "Adds two storage tracks to Sylva Station."
+        },
         "AN_Whittier_Yard_Sawmill": {
           "displayName": "Whittier Sawmill Connection",
           "deliveryPhases": [
@@ -424,6 +496,42 @@
           },
           "description": "Additional tracks in Alarka Jct, currently just a bypass around the interchange."
         },
+        "AN_Alarka_Pax_Storage": {
+          "displayName": "Alarka Pax Storage",
+          "deliveryPhases": [
+            {
+              "cost": 2000,
+              "deliveries": [
+                {
+                  "carTypeFilter": "GB*",
+                  "count": 2,
+                  "load": "ballast",
+                  "direction": 0
+                },
+                {
+                  "carTypeFilter": "GB*",
+                  "count": 2,
+                  "load": "ties",
+                  "direction": 0
+                },
+                {
+                  "carTypeFilter": "FM*",
+                  "count": 2,
+                  "load": "rails",
+                  "direction": 0
+                }
+              ],
+              "industryComponent": "AN_Alarka_Pax_Storage.alarka-station-site"
+            }
+          ],
+          "enableFeaturesOnUnlock": {
+            "AN_Alarka_Pax_Storage": true
+          },
+          "prerequisiteSections": {
+            "alarka-branch": true
+          },
+          "description": "Adds two storage tracks to Alarka Station."
+        },
         "AN_Alarka_Loop": {
           "displayName": "Alarka Balloon Loop",
           "deliveryPhases": [
@@ -488,6 +596,26 @@
       },
       "trackGroupsAvailableOnUnlock": {
         "AN_Sylva_Wye": true
+      }
+    },
+    "AN_Sylva_Paper_Crossover": {
+      "displayName": "Sylva Paper Crossovers",
+      "name": "Sylva Paper Crossovers",
+      "trackGroupsEnableOnUnlock": {
+        "AN_Sylva_Paper_Crossover": true
+      },
+      "trackGroupsAvailableOnUnlock": {
+        "AN_Sylva_Paper_Crossover": true
+      }
+    },
+    "AN_Sylva_Pax_Storage": {
+      "displayName": "Sylva Pax Storage",
+      "name": "Sylva Pax Storage",
+      "trackGroupsEnableOnUnlock": {
+        "AN_Sylva_Pax_Storage": true
+      },
+      "trackGroupsAvailableOnUnlock": {
+        "AN_Sylva_Pax_Storage": true
       }
     },
     "AN_Whittier_Yard_Sawmill": {
@@ -562,6 +690,16 @@
       },
       "trackGroupsAvailableOnUnlock": {
         "AN_Alarka_Jct_Additional": true
+      }
+    },
+    "AN_Alarka_Pax_Storage": {
+      "displayName": "Alarka Pax Storage",
+      "name": "Alarka Pax Storage",
+      "trackGroupsEnableOnUnlock": {
+        "AN_Alarka_Pax_Storage": true
+      },
+      "trackGroupsAvailableOnUnlock": {
+        "AN_Alarka_Pax_Storage": true
       }
     },
     "AN_Alarka_Loop": {

@@ -1,5 +1,11 @@
 {
   "nodes": {
+    "Ngcv": {
+      "flipSwitchStand": true
+    },
+    "Nje2": {
+      "flipSwitchStand": false
+    },
     "Nugw": {
       "position": {
         "x": -30538.29,
@@ -51,6 +57,9 @@
     "N5es": {
       "flipSwitchStand": true
     },
+    "N7w9": {
+      "flipSwitchStand": true
+    },
     "N4bnk": {
       "position": {
         "x": -30851.8477,
@@ -86,6 +95,9 @@
         "y": 87.09689,
         "z": 0
       }
+    },
+    "No9a": {
+      "flipSwitchStand": true
     },
     "Nryh": {
       "position": {
@@ -569,6 +581,123 @@
       "rotation": {
         "x": 0,
         "y": 274.165329,
+        "z": 0
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Paper_Crossover_00": {
+      "position": {
+        "x": 25211.124,
+        "y": 625.6,
+        "z": -674.04724872
+      },
+      "rotation": {
+        "x": 0,
+        "y": 204.399979,
+        "z": 0
+      },
+      "flipSwitchStand": true
+    },
+    "NAN_Sylva_Paper_Crossover_01": {
+      "position": {
+        "x": 25314.748,
+        "y": 625.6,
+        "z": -445.95921764
+      },
+      "rotation": {
+        "x": 0,
+        "y": 204.416412,
+        "z": 0
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Pax_Storage_00": {
+      "position": {
+        "x": 24688.366059513675,
+        "y": 620.599,
+        "z": -945.2012339215619
+      },
+      "rotation": {
+        "x": 0,
+        "y": 94.22184,
+        "z": 0
+      },
+      "flipSwitchStand": true
+    },
+    "NAN_Sylva_Pax_Storage_01": {
+      "position": {
+        "x": 24733.24395146656,
+        "y": 620.599,
+        "z": -948.5140595833191
+      },
+      "rotation": {
+        "x": 0,
+        "y": 94.22184,
+        "z": 0
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Pax_Storage_02": {
+      "position": {
+        "x": 24827.986167811538,
+        "y": 620.599,
+        "z": -955.5078026470287
+      },
+      "rotation": {
+        "x": 0,
+        "y": 94.22184,
+        "z": 0
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Pax_Storage_03": {
+      "position": {
+        "x": 24927.98541825584,
+        "y": 620.599,
+        "z": -955.8949855209045
+      },
+      "rotation": {
+        "x": 0,
+        "y": 88.22184,
+        "z": 0
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Pax_Storage_04": {
+      "position": {
+        "x": 24732.651821103293,
+        "y": 620.599,
+        "z": -953.1869286582441
+      },
+      "rotation": {
+        "x": 0,
+        "y": 94.22184,
+        "z": 0
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Pax_Storage_05": {
+      "position": {
+        "x": 24827.39403744827,
+        "y": 620.599,
+        "z": -960.1806717219538
+      },
+      "rotation": {
+        "x": 0,
+        "y": 94.22184,
+        "z": 0
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Sylva_Pax_Storage_06": {
+      "position": {
+        "x": 24927.393287892573,
+        "y": 620.599,
+        "z": -960.5678545958295
+      },
+      "rotation": {
+        "x": 0,
+        "y": 88.22184,
         "z": 0
       },
       "flipSwitchStand": false
@@ -1522,6 +1651,123 @@
       },
       "flipSwitchStand": false
     },
+    "NAN_Alarka_Pax_Storage_00": {
+      "position": {
+        "x": 4306.98,
+        "y": 646.65,
+        "z": -3235.17
+      },
+      "rotation": {
+        "x": 359.43,
+        "y": 131.81,
+        "z": 0
+      },
+      "flipSwitchStand": true
+    },
+    "NAN_Alarka_Pax_Storage_01": {
+      "position": {
+        "x": 4326.56,
+        "y": 646.94,
+        "z": -3256.56
+      },
+      "rotation": {
+        "x": 359.43,
+        "y": 140.81,
+        "z": 0
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Alarka_Pax_Storage_02": {
+      "position": {
+        "x": 4346.707738528988,
+        "y": 646.94,
+        "z": -3278.7876546708726
+      },
+      "rotation": {
+        "x": 0,
+        "y": 132.81,
+        "z": 0
+      },
+      "flipSwitchStand": true
+    },
+    "NAN_Alarka_Pax_Storage_03": {
+      "position": {
+        "x": 4379.720245609228,
+        "y": 646.94,
+        "z": -3309.3682755978098
+      },
+      "rotation": {
+        "x": 0,
+        "y": 132.81,
+        "z": 0
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Alarka_Pax_Storage_04": {
+      "position": {
+        "x": 4376.342854330024,
+        "y": 646.94,
+        "z": -3312.651498390379
+      },
+      "rotation": {
+        "x": 0,
+        "y": 132.81,
+        "z": 0
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Alarka_Pax_Storage_05": {
+      "position": {
+        "x": 4434.741090742963,
+        "y": 646.94,
+        "z": -3360.3359771427054
+      },
+      "rotation": {
+        "x": 0,
+        "y": 132.81,
+        "z": 0
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Alarka_Pax_Storage_06": {
+      "position": {
+        "x": 4500.431151410575,
+        "y": 646.94,
+        "z": -3460.7591613657
+      },
+      "rotation": {
+        "x": 0,
+        "y": 156.81,
+        "z": 0
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Alarka_Pax_Storage_07": {
+      "position": {
+        "x": 4431.363699463759,
+        "y": 646.94,
+        "z": -3363.6191999352745
+      },
+      "rotation": {
+        "x": 0,
+        "y": 132.81,
+        "z": 0
+      },
+      "flipSwitchStand": false
+    },
+    "NAN_Alarka_Pax_Storage_08": {
+      "position": {
+        "x": 4497.053760131371,
+        "y": 646.94,
+        "z": -3464.042384158269
+      },
+      "rotation": {
+        "x": 0,
+        "y": 156.81,
+        "z": 0
+      },
+      "flipSwitchStand": false
+    },
     "NAN_Alarka_Loop_00": {
       "position": {
         "x": 4264.377,
@@ -1602,9 +1848,9 @@
     },
     "AlinasMapMod": {
       "position": {
-        "x": 0.9466910522695016,
-        "y": 0.6893728088676545,
-        "z": 0.2545212521373228
+        "x": 0.002669798905457599,
+        "y": 0.8763468148942537,
+        "z": 0.9372507404067274
       },
       "rotation": {
         "x": 0,
@@ -1618,11 +1864,20 @@
     "Sj6n": {
       "startId": "NAN_Whittier_Yard_08"
     },
+    "Szya": {
+      "endId": "NAN_Sylva_Paper_Crossover_00"
+    },
     "Sk7x": {
       "endId": "NAN_Alarka_Loop_01"
     },
+    "Skmy": {
+      "endId": "NAN_Sylva_Paper_Crossover_01"
+    },
     "Sj4c": {
       "startId": "NAN_Whittier_Yard_03"
+    },
+    "Sv2b": {
+      "endId": "NAN_Alarka_Pax_Storage_00"
     },
     "SAN_Sylva_Interchange_Yard_T0_00": {
       "style": "Standard",
@@ -1819,6 +2074,83 @@
       "endId": "NAN_Sylva_Wye_03",
       "priority": 0,
       "groupId": "AN_Sylva_Wye"
+    },
+    "SAN_Sylva_Paper_Crossover_00": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Paper_Crossover_00",
+      "endId": "N37u",
+      "priority": 0,
+      "groupId": ""
+    },
+    "SAN_Sylva_Paper_Crossover_01": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Paper_Crossover_01",
+      "endId": "Nntj",
+      "priority": 0,
+      "groupId": ""
+    },
+    "SAN_Sylva_Paper_Crossover_02": {
+      "style": "Standard",
+      "startId": "Nje2",
+      "endId": "NAN_Sylva_Paper_Crossover_00",
+      "priority": 0,
+      "groupId": "AN_Sylva_Paper_Crossover"
+    },
+    "SAN_Sylva_Paper_Crossover_03": {
+      "style": "Standard",
+      "startId": "N7w9",
+      "endId": "NAN_Sylva_Paper_Crossover_01",
+      "priority": 0,
+      "groupId": "AN_Sylva_Paper_Crossover"
+    },
+    "SAN_Sylva_Pax_Storage_00": {
+      "style": "Standard",
+      "startId": "No9a",
+      "endId": "NAN_Sylva_Pax_Storage_00",
+      "priority": 0,
+      "groupId": "AN_Sylva_Pax_Storage"
+    },
+    "SAN_Sylva_Pax_Storage_01": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Pax_Storage_00",
+      "endId": "NAN_Sylva_Pax_Storage_01",
+      "priority": 0,
+      "groupId": "AN_Sylva_Pax_Storage"
+    },
+    "SAN_Sylva_Pax_Storage_02": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Pax_Storage_01",
+      "endId": "NAN_Sylva_Pax_Storage_02",
+      "priority": 0,
+      "groupId": "AN_Sylva_Pax_Storage"
+    },
+    "SAN_Sylva_Pax_Storage_03": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Pax_Storage_02",
+      "endId": "NAN_Sylva_Pax_Storage_03",
+      "priority": 0,
+      "groupId": "AN_Sylva_Pax_Storage"
+    },
+    "SAN_Sylva_Pax_Storage_04": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Pax_Storage_00",
+      "endId": "NAN_Sylva_Pax_Storage_04",
+      "priority": 0,
+      "groupId": "AN_Sylva_Pax_Storage"
+    },
+    "SAN_Sylva_Pax_Storage_05": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Pax_Storage_04",
+      "endId": "NAN_Sylva_Pax_Storage_05",
+      "priority": 0,
+      "groupId": "AN_Sylva_Pax_Storage"
+    },
+    "SAN_Sylva_Pax_Storage_06": {
+      "style": "Standard",
+      "startId": "NAN_Sylva_Pax_Storage_05",
+      "endId": "NAN_Sylva_Pax_Storage_06",
+      "priority": 0,
+      "groupId": "AN_Sylva_Pax_Storage"
     },
     "SAN_Whittier_Yard_00": {
       "style": "Standard",
@@ -2408,6 +2740,69 @@
       "priority": 0,
       "groupId": "AN_Alarka_Jct_Additional"
     },
+    "SAN_Alarka_Pax_Storage_00": {
+      "style": "Standard",
+      "startId": "NAN_Alarka_Pax_Storage_00",
+      "endId": "NAN_Alarka_Pax_Storage_01",
+      "priority": 0,
+      "groupId": "AN_Alarka_Pax_Storage"
+    },
+    "SAN_Alarka_Pax_Storage_01": {
+      "style": "Standard",
+      "startId": "NAN_Alarka_Pax_Storage_00",
+      "endId": "Ne2z",
+      "priority": 0,
+      "groupId": ""
+    },
+    "SAN_Alarka_Pax_Storage_02": {
+      "style": "Standard",
+      "startId": "NAN_Alarka_Pax_Storage_01",
+      "endId": "NAN_Alarka_Pax_Storage_02",
+      "priority": 0,
+      "groupId": "AN_Alarka_Pax_Storage"
+    },
+    "SAN_Alarka_Pax_Storage_03": {
+      "style": "Standard",
+      "startId": "NAN_Alarka_Pax_Storage_02",
+      "endId": "NAN_Alarka_Pax_Storage_03",
+      "priority": 0,
+      "groupId": "AN_Alarka_Pax_Storage"
+    },
+    "SAN_Alarka_Pax_Storage_04": {
+      "style": "Standard",
+      "startId": "NAN_Alarka_Pax_Storage_02",
+      "endId": "NAN_Alarka_Pax_Storage_04",
+      "priority": 0,
+      "groupId": "AN_Alarka_Pax_Storage"
+    },
+    "SAN_Alarka_Pax_Storage_05": {
+      "style": "Standard",
+      "startId": "NAN_Alarka_Pax_Storage_03",
+      "endId": "NAN_Alarka_Pax_Storage_05",
+      "priority": 0,
+      "groupId": "AN_Alarka_Pax_Storage"
+    },
+    "SAN_Alarka_Pax_Storage_06": {
+      "style": "Standard",
+      "startId": "NAN_Alarka_Pax_Storage_05",
+      "endId": "NAN_Alarka_Pax_Storage_06",
+      "priority": 0,
+      "groupId": "AN_Alarka_Pax_Storage"
+    },
+    "SAN_Alarka_Pax_Storage_07": {
+      "style": "Standard",
+      "startId": "NAN_Alarka_Pax_Storage_04",
+      "endId": "NAN_Alarka_Pax_Storage_07",
+      "priority": 0,
+      "groupId": "AN_Alarka_Pax_Storage"
+    },
+    "SAN_Alarka_Pax_Storage_08": {
+      "style": "Standard",
+      "startId": "NAN_Alarka_Pax_Storage_07",
+      "endId": "NAN_Alarka_Pax_Storage_08",
+      "priority": 0,
+      "groupId": "AN_Alarka_Pax_Storage"
+    },
     "SAN_Alarka_Loop_00": {
       "style": "Standard",
       "startId": "Nhph",
@@ -2485,6 +2880,26 @@
     },
     "alarka": {
       "industries": {
+        "AN_Alarka_Pax_Storage": {
+          "name": "Alarka Expansion",
+          "localPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "usesContract": false,
+          "components": {
+            "alarka-station-site": {
+              "name": "Alarka Expansion Site",
+              "type": "Model.OpsNew.ProgressionIndustryComponent",
+              "carTypeFilter": "*",
+              "sharedStorage": true,
+              "trackSpans": [
+                "PAN_Alarka_Pax_Storage_00"
+              ]
+            }
+          }
+        },
         "AN_Alarka_Loop": {
           "name": "Alarka Expansion",
           "localPosition": {
@@ -2623,6 +3038,46 @@
               ]
             }
           }
+        },
+        "AN_Sylva_Paper_Crossover": {
+          "name": "Sylva Expansion",
+          "localPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "usesContract": false,
+          "components": {
+            "sylva-paper-crossover-site": {
+              "name": "Sylva Expansion Site",
+              "type": "Model.OpsNew.ProgressionIndustryComponent",
+              "carTypeFilter": "*",
+              "sharedStorage": true,
+              "trackSpans": [
+                "PAN_Sylva_Paper_Crossover_00"
+              ]
+            }
+          }
+        },
+        "AN_Sylva_Pax_Storage": {
+          "name": "Sylva Expansion",
+          "localPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "usesContract": false,
+          "components": {
+            "sylva-station-site": {
+              "name": "Sylva Expansion Site",
+              "type": "Model.OpsNew.ProgressionIndustryComponent",
+              "carTypeFilter": "*",
+              "sharedStorage": true,
+              "trackSpans": [
+                "PAN_Sylva_Pax_Storage_00"
+              ]
+            }
+          }
         }
       }
     }
@@ -2648,6 +3103,30 @@
       },
       "lower": {
         "segmentId": "SAN_Sylva_Interchange_Yard_T0_02",
+        "end": "End",
+        "distance": 0
+      }
+    },
+    "PAN_Sylva_Paper_Crossover_00": {
+      "upper": {
+        "segmentId": "Spiq",
+        "end": "Start",
+        "distance": 0
+      },
+      "lower": {
+        "segmentId": "Spiq",
+        "end": "End",
+        "distance": 0
+      }
+    },
+    "PAN_Sylva_Pax_Storage_00": {
+      "upper": {
+        "segmentId": "S89g",
+        "end": "Start",
+        "distance": 0
+      },
+      "lower": {
+        "segmentId": "S89g",
         "end": "End",
         "distance": 0
       }
@@ -2686,6 +3165,18 @@
         "segmentId": "S8gq9",
         "end": "End",
         "distance": 0
+      }
+    },
+    "PAN_Alarka_Pax_Storage_00": {
+      "upper": {
+        "segmentId": "S6np",
+        "end": "Start",
+        "distance": 0
+      },
+      "lower": {
+        "segmentId": "Sok6",
+        "end": "End",
+        "distance": 1
       }
     },
     "PAN_Alarka_Loop_00": {
