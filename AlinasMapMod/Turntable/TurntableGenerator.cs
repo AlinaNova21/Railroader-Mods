@@ -17,6 +17,8 @@ namespace AlinasMapMod.Turntable
     {
       var go = new GameObject(Namespace);
       go.SetActive(false);
+      go.transform.localPosition = position;
+      go.transform.localEulerAngles = rotation;
       prefabs.Clear();
       var tt = GameObject.Find("30m Turntable");
       prefabs.Add("turntable", tt);
@@ -26,20 +28,24 @@ namespace AlinasMapMod.Turntable
       prefabs.Add("floor", rh.transform.Find("Roundhouse Modular A Floor").gameObject);
       prefabs.Add("stall", rh.transform.Find("Stall").gameObject);
       go.transform.DestroyAllChildren();
-      GenerateTurntable(Namespace, RoundhouseStalls).transform.parent = go.transform;
+
+      GenerateTurntable(Namespace, RoundhouseStalls, position, rotation).transform.parent = go.transform;
       if (RoundhouseStalls > 0)
       {
-        GenerateRoundhouse(Namespace, RoundhouseStalls).transform.parent = go.transform;
+        var rhgo = GenerateRoundhouse(Namespace, RoundhouseStalls);
+        rhgo.transform.SetParent(go.transform, false);
       }
       go.SetActive(true);
       return go;
     }
 
-    private static GameObject GenerateTurntable(string Namespace, int RoundhouseStalls)
+    private static GameObject GenerateTurntable(string Namespace, int RoundhouseStalls, Vector3 position, Vector3 rotation)
     {
       var gameObject = new GameObject("Turntable");
       gameObject.SetActive(false);
       var tt = gameObject.AddComponent<Track.Turntable>();
+      tt.transform.localPosition = position;
+      tt.transform.localEulerAngles = rotation;
       tt.id = Namespace + ".turntable";
       tt.radius = 15;
       tt.subdivisions = 32;
@@ -51,19 +57,19 @@ namespace AlinasMapMod.Turntable
       for (var i = 0; i < 32; i++)
       {
         var num = tt.AngleForIndex(i);
-        Quaternion quaternion = tt.transform.rotation * Quaternion.Euler(0f, num, 0f);
+        Quaternion quaternion = Quaternion.Euler(0f, rotation.y + num, 0f);
         var go = new GameObject();
         var node = go.AddComponent<TrackNode>();
         go.transform.parent = Graph.Shared.transform;
-        node.transform.position = tt.transform.position + quaternion * Vector3.forward * tt.radius;
-        node.transform.rotation = quaternion;
+        node.transform.localPosition = position + quaternion * Vector3.forward * tt.radius;
+        node.transform.localEulerAngles = new Vector3(0, rotation.y + num, 0);
         node.id = Namespace + ".turntable.node." + i;
         node.name = node.id;
         node.turntable = tt;
         nodes.Add(node);
       }
 
-      for (var i = 0; i < RoundhouseStalls; i++)
+      for (var i = 1; i <= RoundhouseStalls; i++)
       {
         var dist = 60;
         var num = tt.AngleForIndex(i);
@@ -71,8 +77,8 @@ namespace AlinasMapMod.Turntable
         var go = new GameObject();
         var node = go.AddComponent<TrackNode>();
         go.transform.parent = Graph.Shared.transform;
-        node.transform.position = tt.transform.position + quaternion * Vector3.forward * dist;
-        node.transform.rotation = quaternion;
+        node.transform.localPosition = position + quaternion * Vector3.forward * dist;
+        node.transform.localEulerAngles = new Vector3(0, rotation.y + num, 0);
         node.id = Namespace + ".roundhouse.node." + i;
         node.name = node.id;
         var segment = go.AddComponent<TrackSegment>();
@@ -105,15 +111,15 @@ namespace AlinasMapMod.Turntable
       var stallCount = RoundhouseStalls;
 
       var side1 = GameObject.Instantiate(prefabs["side"], rh.transform);
-      side1.transform.localEulerAngles = new Vector3(0, 180, 0);
+      side1.transform.localEulerAngles = new Vector3(0, 180 + interval, 0);
       side1.transform.localScale = new Vector3(-1, 1, 1);
 
       var side2 = GameObject.Instantiate(prefabs["side"], rh.transform);
-      side2.transform.localEulerAngles = new Vector3(0, (interval * (stallCount - 1)) + 180, 0);
+      side2.transform.localEulerAngles = new Vector3(0, (interval * stallCount) + 180, 0);
 
       for (var i = 0; i < stallCount; i++)
       {
-        var angle = i * interval;
+        var angle = (i + 1) * interval;
         var stallInstance = GameObject.Instantiate(prefabs["stall"], rh.transform);
         stallInstance.transform.localEulerAngles = new Vector3(0, angle, 0);
         var kvt = stallInstance.GetComponentInChildren<KeyValuePickableToggle>();
@@ -123,7 +129,7 @@ namespace AlinasMapMod.Turntable
       }
       for (var i = 1; i < stallCount; i++)
       {
-        var angle = i * interval;
+        var angle = (i + 1) * interval;
         var betweenInstance = GameObject.Instantiate(prefabs["between"], rh.transform);
         betweenInstance.layer = rh.layer;
         betweenInstance.transform.localEulerAngles = new Vector3(270, angle + 180 - (interval / 2f), 0);

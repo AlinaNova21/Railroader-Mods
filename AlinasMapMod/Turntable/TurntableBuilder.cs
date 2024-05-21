@@ -13,7 +13,7 @@ public class TurntableBuilder : ISplineyBuilder
     var pos = new Vector3(tt.Position.x, tt.Position.y, tt.Position.z);
     var rot = new Vector3(tt.Rotation.x, tt.Rotation.y, tt.Rotation.z);
     var ttg = TurntableGenerator.Generate(id, tt.RoundhouseStalls, pos, rot);
-    ttg.transform.parent = parentTransform;
+    ttg.transform.SetParent(parentTransform, false);
     return ttg;
   }
 }
