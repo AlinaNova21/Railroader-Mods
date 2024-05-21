@@ -226,11 +226,11 @@ export default async function whittierYard(graph: Graph, originalTracks: Graph) 
         trackGroupFn(tracks - (i * 3) + 1),
         trackGroupFn(tracks - (i * 3) + 2),
       ],
-      trackSpans: [site2.id],
-      industryComponent: makeProgIndComp(`yard-site-${i}`, [site2.id]),
+      trackSpans: [site1.id],
+      industryComponent: makeProgIndComp(`yard-site-${i}`, [site1.id]),
       area: area.id,
       description: i == 1 ? 'A yard that can be useful for organizing trains and storing cars.' : 'An additional 3 tracks for the Whittier yard',
-      prerequisiteSections: [`${zone}_Sawmill`],
+      prerequisiteSections: [],
       deliveryPhases: [
         {
           cost: 2000,
@@ -265,6 +265,10 @@ export default async function whittierYard(graph: Graph, originalTracks: Graph) 
   const mixin: AlinasMapModMixin = {
     items: Object.fromEntries(items.map(i => [i.identifier, i]))
   }
+
+  graph.createSpliney(Id(`${zone}_Poles`), "AlinasMapMod.TelegraphPoleBuilder", {
+    polesToRaise: [585, 587, 591, 593, 595, 603, 605]
+  })
 
   return {
     name: 'Whittier Yard',

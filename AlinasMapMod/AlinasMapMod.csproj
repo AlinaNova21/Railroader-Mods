@@ -14,6 +14,9 @@
     <EmbeddedResource Include="Resources\factory-icon.png" />
   </ItemGroup>
   <ItemGroup>
+    <ModAssembly Include="StrangeCustoms\StrangeCustoms.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <GameAssembly Include="Assembly-CSharp" />
     <GameAssembly Include="0Harmony" />
     <GameAssembly Include="Ops" />

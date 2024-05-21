@@ -284,9 +284,7 @@
           "enableFeaturesOnUnlock": {
             "AN_Whittier_Yard_1": true
           },
-          "prerequisiteSections": {
-            "AN_Whittier_Yard_Sawmill": true
-          },
+          "prerequisiteSections": {},
           "description": "A yard that can be useful for organizing trains and storing cars."
         },
         "AN_Whittier_Yard_2": {
@@ -339,7 +337,6 @@
             "AN_Whittier_Yard_2": true
           },
           "prerequisiteSections": {
-            "AN_Whittier_Yard_Sawmill": true,
             "AN_Whittier_Yard_1": true
           },
           "description": "An additional 3 tracks for the Whittier yard"
@@ -394,7 +391,6 @@
             "AN_Whittier_Yard_3": true
           },
           "prerequisiteSections": {
-            "AN_Whittier_Yard_Sawmill": true,
             "AN_Whittier_Yard_1": true,
             "AN_Whittier_Yard_2": true
           },

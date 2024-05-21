@@ -8,11 +8,11 @@
   "requires": [
     {
       "id": "railloader",
-      "notBefore": "1.7.2"
+      "notBefore": "1.8.0"
     },
     {
       "id": "Zamu.StrangeCustoms",
-      "notBefore": "1.6.24074.728"
+      "notBefore": "1.6.24125.1439"
     }
   ],
   "conflictsWith": [
@@ -25,7 +25,6 @@
   "mixintos": {
     "game-graph": "file(game-graph.json)",
     "game-migrations": "file(game-migrations.json)",
-    "AlinasMapMod": "file(AlinasMapMod.json)",
     "progressions": "file(progressions.json)"
   }
 }

@@ -13,7 +13,7 @@ namespace AlinasMapMod.Turntable
   {
     private static Dictionary<string, GameObject> prefabs { get; set; } = new Dictionary<string, GameObject>();
 
-    public static GameObject Generate(string Namespace, int RoundhouseStalls)
+    public static GameObject Generate(string Namespace, int RoundhouseStalls, Vector3 position = new Vector3(), Vector3 rotation = new Vector3())
     {
       var go = new GameObject(Namespace);
       go.SetActive(false);
@@ -27,7 +27,8 @@ namespace AlinasMapMod.Turntable
       prefabs.Add("stall", rh.transform.Find("Stall").gameObject);
       go.transform.DestroyAllChildren();
       GenerateTurntable(Namespace, RoundhouseStalls).transform.parent = go.transform;
-      if (RoundhouseStalls > 0) {
+      if (RoundhouseStalls > 0)
+      {
         GenerateRoundhouse(Namespace, RoundhouseStalls).transform.parent = go.transform;
       }
       go.SetActive(true);
@@ -106,10 +107,10 @@ namespace AlinasMapMod.Turntable
       var side1 = GameObject.Instantiate(prefabs["side"], rh.transform);
       side1.transform.localEulerAngles = new Vector3(0, 180, 0);
       side1.transform.localScale = new Vector3(-1, 1, 1);
-      
+
       var side2 = GameObject.Instantiate(prefabs["side"], rh.transform);
       side2.transform.localEulerAngles = new Vector3(0, (interval * (stallCount - 1)) + 180, 0);
-      
+
       for (var i = 0; i < stallCount; i++)
       {
         var angle = i * interval;
@@ -133,7 +134,8 @@ namespace AlinasMapMod.Turntable
 
     public static JObject DumpTree(Transform transform)
     {
-      var ser = new Newtonsoft.Json.JsonSerializer() {
+      var ser = new Newtonsoft.Json.JsonSerializer()
+      {
         ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore,
         ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
         Formatting = Newtonsoft.Json.Formatting.Indented,

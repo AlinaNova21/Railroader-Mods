@@ -15,7 +15,7 @@ import { AlinasMapModMixin } from './lib/AlinasMapMod.js'
 import { Graph, Id, LayoutFunction, Mixins } from './lib/index.js'
 
 async function run() {
-  console.log(`Loading graph-json-dump.json...`)
+  console.log(`Loading game-graph-dump.json...`)
   const graph = Graph.fromJSON(JSON.parse(await readFile("game-graph-dump.json", "utf8")))
   const layouts = {
     SylvaInterchangeYard: sylvaInterchangeYard,
@@ -39,6 +39,7 @@ async function run() {
   }
   
   graph.newNode(Id('AlinasMapMod'), new Vector3().random()) // tracking node to trigger updates
+  console.log(`Writing game-graph.json...`)
   const all = graph.toJSON()
 
   await writeFile(`../AlinasMapMod/game-graph.json`, JSON.stringify(all, null, 2))
@@ -51,9 +52,6 @@ async function run() {
     if (!mixin.alinasMapMod) continue
     amm.items = Object.fromEntries([...Object.entries(amm.items), ...Object.entries(mixin.alinasMapMod.items)])
   }
-  await writeFile(`../AlinasMapMod/AlinasMapMod.json`, JSON.stringify(amm, null, 2))
-  await writeFile(`../../AlinasMapMod/AlinasMapMod.json`, JSON.stringify(amm, null, 2))
-
   const state = {
     progressions: {
       ewh: {
@@ -81,6 +79,7 @@ async function run() {
       description: item.description,
     }
   }
+  console.log(`Writing progressions.json...`)
   await writeFile(`../AlinasMapMod/progressions.json`, JSON.stringify(state, null, 2))
   await writeFile(`../../AlinasMapMod/progressions.json`, JSON.stringify(state, null, 2))
 
@@ -89,6 +88,7 @@ async function run() {
     if (!item.industryComponent) continue
     migrations.waybillDestinations[`${item.identifier}.site`] = item.industryComponent
   }
+  console.log(`Writing game-migrations.json...`)
   await writeFile(`../AlinasMapMod/game-migrations.json`, JSON.stringify(migrations, null, 2))
   await writeFile(`../../AlinasMapMod/game-migrations.json`, JSON.stringify(migrations, null, 2))
 }
