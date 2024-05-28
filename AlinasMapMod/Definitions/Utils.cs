@@ -1,11 +1,16 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Game.Progression;
+using Helpers;
 using Model.OpsNew;
 using Serilog;
+using UnityEngine;
 
-namespace AlinasMapMod.Definitions {
-  public class Utils {
+namespace AlinasMapMod.Definitions
+{
+  public class Utils
+  {
 
     public static string[] ApplyList(string[] vals, Dictionary<string, bool> dict)
     {
@@ -157,6 +162,35 @@ namespace AlinasMapMod.Definitions {
         }
       }
       return items.Values.ToArray();
+    }
+    public static string getPathFromGameObject(GameObject go)
+    {
+      if (go.TryGetComponent<SceneryAssetInstance>(out var sai))
+        return "scenery://" + sai.identifier;
+      return string.Join("/", "path://scene" + go.GetComponentsInParent<Transform>().Select(t => t.name).Reverse().ToArray()) + "/" + go.name;
+    }
+
+    public static GameObject gameObjectFromUri(string uriString)
+    {
+      var uri = new Uri(uriString);
+      var segments = uri.Segments.Skip(1).Select(s => s.Trim('/')).ToArray();
+      switch (uri.Scheme)
+      {
+        case "path":
+          if (uri.Host != "scene")
+            throw new ArgumentException("Invalid uri");
+          // TODO: Handle objects not found
+          var go = GameObject.Find(segments[0]);
+          for (int i = 1; i < segments.Length; i++)
+          {
+            go = go.transform.Find(segments[i]).gameObject;
+          }
+          return go;
+        case "scenery":
+          return UnityEngine.Object.FindObjectsOfType<SceneryAssetInstance>(true).First(s => s.identifier == uri.Host).gameObject;
+        default:
+          throw new ArgumentException("Invalid uri or objecct not found");
+      }
     }
   }
 }

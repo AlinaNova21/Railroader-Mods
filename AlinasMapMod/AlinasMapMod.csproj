@@ -9,6 +9,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="*.json" CopyToOutputDirectory="Always" />
+    <Content Include="docs/*" CopyToOutputDirectory="Always" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\factory-icon.png" />

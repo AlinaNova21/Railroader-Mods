@@ -104,25 +104,25 @@ namespace AlinasMapMod
     private void OnMapDidLoad(MapDidLoadEvent @event)
     {
       logger.Debug("OnMapDidLoad()");
-      var tpm = UnityEngine.Object.FindObjectOfType<TelegraphPoleManager>();
 
+      var tpm = UnityEngine.Object.FindObjectOfType<TelegraphPoleManager>();
       logger.Debug("Adjusting telegraph pole positions");
       var g = tpm.GetComponent<SimpleGraph.Runtime.SimpleGraph>();
       Node n;
-      n = g.NodeForId(585);
-      n.position += new Vector3(0, 2, 0);
-      n = g.NodeForId(587);
-      n.position += new Vector3(0, 2, 0);
-      n = g.NodeForId(591);
-      n.position += new Vector3(0, 2, 0);
-      n = g.NodeForId(593);
-      n.position += new Vector3(0, 2, 0);
-      n = g.NodeForId(595);
-      n.position += new Vector3(0, 2, 0);
-      n = g.NodeForId(603);
-      n.position += new Vector3(0, 2, 0);
-      n = g.NodeForId(605);
-      n.position += new Vector3(0, 2, 0);
+      // n = g.NodeForId(585);
+      // n.position += new Vector3(0, 2, 0);
+      // n = g.NodeForId(587);
+      // n.position += new Vector3(0, 2, 0);
+      // n = g.NodeForId(591);
+      // n.position += new Vector3(0, 2, 0);
+      // n = g.NodeForId(593);
+      // n.position += new Vector3(0, 2, 0);
+      // n = g.NodeForId(595);
+      // n.position += new Vector3(0, 2, 0);
+      // n = g.NodeForId(603);
+      // n.position += new Vector3(0, 2, 0);
+      // n = g.NodeForId(605);
+      // n.position += new Vector3(0, 2, 0);
 
       logger.Debug("Done adjusting telegraph pole positions");
     }
