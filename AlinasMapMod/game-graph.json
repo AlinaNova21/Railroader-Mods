@@ -1,20 +1,44 @@
 {
   "tracks": {
     "nodes": {
-      "Nd65": {
+      "Nalfc": {
         "position": {
-          "x": -31144.9,
+          "x": -31095.5039,
           "y": 528,
-          "z": -20516.72
+          "z": -20516.1484
         },
         "rotation": {
           "x": 0,
-          "y": 257.83725,
+          "y": 257.077942,
           "z": 0
         }
       },
-      "N1be": {
+      "N5es": {
         "flipSwitchStand": true
+      },
+      "Nugw": {
+        "position": {
+          "x": -30538.29,
+          "y": 532.102234,
+          "z": -20375.36
+        },
+        "rotation": {
+          "x": 1.2412790660000002,
+          "y": 242.678009,
+          "z": -1.33413309e-7
+        }
+      },
+      "Nomqv": {
+        "position": {
+          "x": -30768.4824,
+          "y": 528,
+          "z": -20439.416
+        },
+        "rotation": {
+          "x": 0,
+          "y": 257.078,
+          "z": 0
+        }
       },
       "Nfq6": {
         "position": {
@@ -28,29 +52,44 @@
           "z": 0
         }
       },
-      "Nal7s": {
+      "N9nx": {
         "position": {
-          "x": -30799.2,
+          "x": -30870.5977,
           "y": 528,
-          "z": -20448.8
+          "z": -20456.9219
         },
         "rotation": {
           "x": 0,
-          "y": 248.99794,
+          "y": 257.83725,
           "z": 0
         }
       },
-      "pqs0s7": {
+      "Nd65": {
         "position": {
-          "x": -31166.752,
+          "x": -31144.9,
           "y": 528,
-          "z": -20526.4941
+          "z": -20516.72
         },
         "rotation": {
           "x": 0,
-          "y": 257.838,
+          "y": 257.83725,
           "z": 0
         }
+      },
+      "N8rmr": {
+        "position": {
+          "x": -31128.7539,
+          "y": 528,
+          "z": -20521.1836
+        },
+        "rotation": {
+          "x": 0,
+          "y": 87.09736,
+          "z": 0
+        }
+      },
+      "N7w9": {
+        "flipSwitchStand": true
       },
       "Nl1i9": {
         "position": {
@@ -76,27 +115,27 @@
           "z": 0
         }
       },
-      "N9nx": {
+      "Nrgu": {
         "position": {
-          "x": -30870.5977,
-          "y": 528,
-          "z": -20456.9219
+          "x": -30663.2,
+          "y": 529.5,
+          "z": -20415.3
         },
         "rotation": {
-          "x": 0,
-          "y": 257.83725,
-          "z": 0
+          "x": 1.000002849,
+          "y": 257.078,
+          "z": -2.66824181e-8
         }
       },
-      "N4bnk": {
+      "Nal7s": {
         "position": {
-          "x": -30851.8477,
+          "x": -30799.2,
           "y": 528,
-          "z": -20467.8555
+          "z": -20448.8
         },
         "rotation": {
           "x": 0,
-          "y": 257.077942,
+          "y": 248.99794,
           "z": 0
         }
       },
@@ -112,59 +151,11 @@
           "z": 0
         }
       },
-      "N7w9": {
+      "Nje2": {
+        "flipSwitchStand": false
+      },
+      "Ngcv": {
         "flipSwitchStand": true
-      },
-      "Nugw": {
-        "position": {
-          "x": -30538.29,
-          "y": 532.102234,
-          "z": -20375.36
-        },
-        "rotation": {
-          "x": 1.2412790660000002,
-          "y": 242.678009,
-          "z": -1.33413309e-7
-        }
-      },
-      "N5es": {
-        "flipSwitchStand": true
-      },
-      "N8rmr": {
-        "position": {
-          "x": -31128.7539,
-          "y": 528,
-          "z": -20521.1836
-        },
-        "rotation": {
-          "x": 0,
-          "y": 87.09736,
-          "z": 0
-        }
-      },
-      "Nomqv": {
-        "position": {
-          "x": -30768.4824,
-          "y": 528,
-          "z": -20439.416
-        },
-        "rotation": {
-          "x": 0,
-          "y": 257.078,
-          "z": 0
-        }
-      },
-      "Nalfc": {
-        "position": {
-          "x": -31095.5039,
-          "y": 528,
-          "z": -20516.1484
-        },
-        "rotation": {
-          "x": 0,
-          "y": 257.077942,
-          "z": 0
-        }
       },
       "N2dng": {
         "position": {
@@ -175,6 +166,33 @@
         "rotation": {
           "x": 0,
           "y": 257.077942,
+          "z": 0
+        }
+      },
+      "Nryh": {
+        "position": {
+          "x": -31200.83,
+          "y": 528,
+          "z": -20533.83
+        },
+        "rotation": {
+          "x": 0,
+          "y": 257.837,
+          "z": 0
+        }
+      },
+      "No9a": {
+        "flipSwitchStand": true
+      },
+      "pqs0s7": {
+        "position": {
+          "x": -31166.752,
+          "y": 528,
+          "z": -20526.4941
+        },
+        "rotation": {
+          "x": 0,
+          "y": 257.838,
           "z": 0
         }
       },
@@ -190,35 +208,8 @@
           "z": 0
         }
       },
-      "Ngcv": {
+      "N1be": {
         "flipSwitchStand": true
-      },
-      "Nrgu": {
-        "position": {
-          "x": -30663.2,
-          "y": 529.5,
-          "z": -20415.3
-        },
-        "rotation": {
-          "x": 1.000002849,
-          "y": 257.078,
-          "z": -2.66824181e-8
-        }
-      },
-      "Nje2": {
-        "flipSwitchStand": false
-      },
-      "Nryh": {
-        "position": {
-          "x": -31200.83,
-          "y": 528,
-          "z": -20533.83
-        },
-        "rotation": {
-          "x": 0,
-          "y": 257.837,
-          "z": 0
-        }
       },
       "Napj": {
         "position": {
@@ -232,8 +223,17 @@
           "z": 0
         }
       },
-      "No9a": {
-        "flipSwitchStand": true
+      "N4bnk": {
+        "position": {
+          "x": -30851.8477,
+          "y": 528,
+          "z": -20467.8555
+        },
+        "rotation": {
+          "x": 0,
+          "y": 257.077942,
+          "z": 0
+        }
       },
       "NAN_Sylva_Interchange_Yard_T0_00": {
         "position": {
@@ -1849,9 +1849,9 @@
       },
       "AlinasMapMod": {
         "position": {
-          "x": 0.03570813436118114,
-          "y": 0.9246575488635134,
-          "z": 0.5033212179763087
+          "x": 0.47462979340662415,
+          "y": 0.7469148951021858,
+          "z": 0.10762785245898132
         },
         "rotation": {
           "x": 0,
@@ -1865,8 +1865,8 @@
       "Skmy": {
         "endId": "NAN_Sylva_Paper_Crossover_01"
       },
-      "Sj6n": {
-        "startId": "NAN_Whittier_Yard_08"
+      "Sj4c": {
+        "startId": "NAN_Whittier_Yard_03"
       },
       "Szya": {
         "endId": "NAN_Sylva_Paper_Crossover_00"
@@ -1874,8 +1874,8 @@
       "Sv2b": {
         "endId": "NAN_Alarka_Pax_Storage_00"
       },
-      "Sj4c": {
-        "startId": "NAN_Whittier_Yard_03"
+      "Sj6n": {
+        "startId": "NAN_Whittier_Yard_08"
       },
       "Sk7x": {
         "endId": "NAN_Alarka_Loop_01"
@@ -2966,6 +2966,57 @@
     }
   },
   "areas": {
+    "whittier": {
+      "industries": {
+        "AN_Whittier_Yard": {
+          "name": "East Whittier Expansion",
+          "localPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "usesContract": false,
+          "components": {
+            "sawmill-site": {
+              "name": "East Whittier Expansion Site",
+              "type": "Model.OpsNew.ProgressionIndustryComponent",
+              "carTypeFilter": "*",
+              "sharedStorage": true,
+              "trackSpans": [
+                "PAN_Whittier_Yard_00"
+              ]
+            },
+            "yard-site-1": {
+              "name": "East Whittier Expansion Site",
+              "type": "Model.OpsNew.ProgressionIndustryComponent",
+              "carTypeFilter": "*",
+              "sharedStorage": true,
+              "trackSpans": [
+                "PAN_Whittier_Yard_00"
+              ]
+            },
+            "yard-site-2": {
+              "name": "East Whittier Expansion Site",
+              "type": "Model.OpsNew.ProgressionIndustryComponent",
+              "carTypeFilter": "*",
+              "sharedStorage": true,
+              "trackSpans": [
+                "PAN_Whittier_Yard_00"
+              ]
+            },
+            "yard-site-3": {
+              "name": "East Whittier Expansion Site",
+              "type": "Model.OpsNew.ProgressionIndustryComponent",
+              "carTypeFilter": "*",
+              "sharedStorage": true,
+              "trackSpans": [
+                "PAN_Whittier_Yard_00"
+              ]
+            }
+          }
+        }
+      }
+    },
     "alarka": {
       "industries": {
         "AN_Alarka_Pax_Storage": {
@@ -3004,6 +3055,30 @@
               "sharedStorage": true,
               "trackSpans": [
                 "PAN_Alarka_Loop_00"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "andrews": {
+      "industries": {
+        "AN_Andrews_Interchange_Yard": {
+          "name": "Andrews Expansion",
+          "localPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "usesContract": false,
+          "components": {
+            "interchange-yard-site": {
+              "name": "Andrews Expansion Site",
+              "type": "Model.OpsNew.ProgressionIndustryComponent",
+              "carTypeFilter": "*",
+              "sharedStorage": true,
+              "trackSpans": [
+                "PAN_Andrews_Interchange_Yard_00"
               ]
             }
           }
@@ -3117,81 +3192,6 @@
           }
         }
       }
-    },
-    "andrews": {
-      "industries": {
-        "AN_Andrews_Interchange_Yard": {
-          "name": "Andrews Expansion",
-          "localPosition": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "usesContract": false,
-          "components": {
-            "interchange-yard-site": {
-              "name": "Andrews Expansion Site",
-              "type": "Model.OpsNew.ProgressionIndustryComponent",
-              "carTypeFilter": "*",
-              "sharedStorage": true,
-              "trackSpans": [
-                "PAN_Andrews_Interchange_Yard_00"
-              ]
-            }
-          }
-        }
-      }
-    },
-    "whittier": {
-      "industries": {
-        "AN_Whittier_Yard": {
-          "name": "East Whittier Expansion",
-          "localPosition": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "usesContract": false,
-          "components": {
-            "sawmill-site": {
-              "name": "East Whittier Expansion Site",
-              "type": "Model.OpsNew.ProgressionIndustryComponent",
-              "carTypeFilter": "*",
-              "sharedStorage": true,
-              "trackSpans": [
-                "PAN_Whittier_Yard_00"
-              ]
-            },
-            "yard-site-1": {
-              "name": "East Whittier Expansion Site",
-              "type": "Model.OpsNew.ProgressionIndustryComponent",
-              "carTypeFilter": "*",
-              "sharedStorage": true,
-              "trackSpans": [
-                "PAN_Whittier_Yard_00"
-              ]
-            },
-            "yard-site-2": {
-              "name": "East Whittier Expansion Site",
-              "type": "Model.OpsNew.ProgressionIndustryComponent",
-              "carTypeFilter": "*",
-              "sharedStorage": true,
-              "trackSpans": [
-                "PAN_Whittier_Yard_00"
-              ]
-            },
-            "yard-site-3": {
-              "name": "East Whittier Expansion Site",
-              "type": "Model.OpsNew.ProgressionIndustryComponent",
-              "carTypeFilter": "*",
-              "sharedStorage": true,
-              "trackSpans": [
-                "PAN_Whittier_Yard_00"
-              ]
-            }
-          }
-        }
-      }
     }
   },
   "scenery": {},
@@ -3208,34 +3208,6 @@
         603,
         605
       ]
-    },
-    "TestTurntable1": {
-      "handler": "AlinasMapMod.Turntable.TurntableBuilder",
-      "position": {
-        "x": 12920,
-        "y": 561,
-        "z": 4660
-      },
-      "rotation": {
-        "x": 0,
-        "y": 0,
-        "z": 0
-      },
-      "roundhouseStalls": 31
-    },
-    "TestTurntable2": {
-      "handler": "AlinasMapMod.Turntable.TurntableBuilder",
-      "position": {
-        "x": 13000,
-        "y": 561,
-        "z": 4600
-      },
-      "rotation": {
-        "x": 0,
-        "y": 90,
-        "z": 0
-      },
-      "roundhouseStalls": 1
     }
   }
 }

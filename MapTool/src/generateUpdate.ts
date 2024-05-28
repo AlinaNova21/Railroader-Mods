@@ -27,7 +27,13 @@ interface Mod {
 
 async function run() {
   const mods = await glob('../*/mod.yaml').then(files => Promise.all(files.map(async f => YAML.parse(await readFile(f, 'utf8')) as Mod)))
-  for(const mod of mods) {
+  for (const mod of mods) {
+    console.log(``)
+    console.log(`# ${mod.name} v${mod.version}`)
+    console.log(`https://railroader.alinanova.dev`)
+    console.log(``)
+    console.log(mod.changelog[0].desc)
+    console.log(``)
     mod.assemblyName = mod.assemblyName || mod.modId.split('.')[1]
     mod.downloadUrl = `https://github.com/AlinaNova21/Railroader-Mods/releases/download/v${mod.version}/${mod.assemblyName}_${mod.version}.zip`
   } 
