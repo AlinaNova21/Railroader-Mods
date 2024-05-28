@@ -4,8 +4,12 @@
     "modId": "AlinaNova21.AlinasMapMod",
     "name": "Alina's Map Mod",
     "desc": "A mod that adds a new milestones to the game adding additional tracks, such as yards, wyes, and more.",
-    "version": "1.3.24142.1848",
+    "version": "1.3.24149.726",
     "changelog": [
+      {
+        "version": "1.3.24149.726",
+        "desc": "- Merge PR from C-L-B-11 for telegraph pole movement\n- Add some basic docs"
+      },
       {
         "version": "1.3.24142.1848",
         "desc": "- Fix turntable/roundhouse positioning."
@@ -68,6 +72,6 @@
       }
     ],
     "assemblyName": "AlinasMapMod",
-    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.3.24142.1848/AlinasMapMod_1.3.24142.1848.zip"
+    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.3.24149.726/AlinasMapMod_1.3.24149.726.zip"
   }
 ]
