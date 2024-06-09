@@ -84,6 +84,8 @@ namespace MapEditor
         Destroy(this);
         return;
       }
+
+      LineRenderer.material.color = EditorContext.Instance?.SelectedNode == Node ? Color.magenta : Color.cyan;
       LineRenderer.enabled = EditorMod.Shared.Settings.ShowHelpers;
 
       if (!EditorMod.Shared.IsEnabled)

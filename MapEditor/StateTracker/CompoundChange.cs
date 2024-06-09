@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MapEditor.StateTracker
@@ -9,6 +10,11 @@ namespace MapEditor.StateTracker
         public CompoundChange(params IUndoable[] changes)
         {
             _changes = changes;
+        }
+
+        public CompoundChange(IEnumerable<IUndoable> changes)
+          : this(changes.ToArray())
+        {
         }
 
         public void Apply()

@@ -1,11 +1,13 @@
-using System.Runtime.Remoting.Contexts;
+using System;
 using Track;
 using UnityEngine;
 
 namespace MapEditor.StateTracker
 {
+  [Obsolete("Replaced by as ChangeTrackNode")]
   public class TrackNodeChanged : IUndoable
   {
+
     private readonly TrackNode _node;
     private readonly Vector3 _oldPosition;
     private readonly Vector3 _newPosition;
@@ -42,5 +44,6 @@ namespace MapEditor.StateTracker
       EditorContext.Instance.PatchEditor.AddOrUpdateNode(_node.id, _oldPosition, _oldRotation, _oldFlipSwitchStand);
       Graph.Shared.OnNodeDidChange(_node);
     }
+
   }
 }

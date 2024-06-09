@@ -40,6 +40,7 @@ namespace MapEditor
       var harmony = new Harmony("AlinaNova21.AlinasMapMod.Editor");
       harmony.PatchAll();
       Messenger.Default.Register(this, new Action<MapDidLoadEvent>(OnMapDidLoad));
+      Messenger.Default.Register(this, new Action<MapDidUnloadEvent>(OnMapDidUnload));
     }
 
     public override void OnDisable()
@@ -110,6 +111,13 @@ namespace MapEditor
         logger.Debug(e.Message);
         logger.Debug(e.StackTrace);
       }
+    }
+
+    private void OnMapDidUnload(MapDidUnloadEvent @event)
+    {
+      var editor = UnityEngine.Object.FindObjectOfType<Editor>(true);
+      editor.gameObject.SetActive(false);
+      EditorContext.Unload(); 
     }
 
     public void ToolPanelDidOpen(UIPanelBuilder builder)

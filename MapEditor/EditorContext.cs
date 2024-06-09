@@ -10,6 +10,9 @@ using UnityEngine.SceneManagement;
 
 namespace MapEditor
 {
+  using MapEditor.Managers;
+
+  // note: this one do not know if it wants to be singleton or static class ... (static class makes more sense to me)
   public class EditorContext
   {
     public static EditorContext Instance { get; private set; }
@@ -86,6 +89,12 @@ namespace MapEditor
     {
       SelectedNode = newNode;
       NodeSelectedChanged?.Invoke(newNode);
+
+      if (newNode == null) {
+        KeyboardManager.Deactivate();
+      } else {
+        KeyboardManager.Activate();
+      }
     }
   }
 }

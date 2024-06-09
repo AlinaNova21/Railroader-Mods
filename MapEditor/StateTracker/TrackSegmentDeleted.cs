@@ -1,11 +1,12 @@
-using Helpers;
+using System;
 using Track;
-using UnityEngine;
 
 namespace MapEditor.StateTracker
 {
+  [Obsolete("Replaced by as DeleteTrackSegment")]
   public class TrackSegmentDeleted : TrackSegmentCreated
   {
+
     public TrackSegmentDeleted(string id, TrackNode a, TrackNode b, TrackSegment.Style style = TrackSegment.Style.Standard, string groupId = "") : base(id, a, b, style, groupId)
     {
     }
@@ -19,5 +20,6 @@ namespace MapEditor.StateTracker
     {
       base.Apply();
     }
+
   }
 }

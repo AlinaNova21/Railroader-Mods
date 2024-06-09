@@ -1,17 +1,19 @@
-using Helpers;
+using System;
 using Track;
 using UnityEngine;
 
 namespace MapEditor.StateTracker
 {
+  [Obsolete("Replaced by as CreateTrackSegment")]
   public class TrackSegmentCreated : IUndoable
   {
+
     private TrackSegment _segment;
-    private string _id;
-    private TrackNode _a;
-    private TrackNode _b;
-    private TrackSegment.Style _style;
-    private string _groupId;
+    private readonly string _id;
+    private readonly TrackNode _a;
+    private readonly TrackNode _b;
+    private readonly TrackSegment.Style _style;
+    private readonly string _groupId;
 
     public TrackSegmentCreated(string id, TrackNode a, TrackNode b, TrackSegment.Style style = TrackSegment.Style.Standard, string groupId = "")
     {
@@ -42,5 +44,6 @@ namespace MapEditor.StateTracker
       Graph.Shared.RebuildCollections();
       EditorContext.Instance.PatchEditor.RemoveSegment(_id);
     }
+
   }
 }

@@ -1,16 +1,17 @@
-using System.Runtime.Remoting.Contexts;
-using Helpers;
+using System;
 using Track;
 using UnityEngine;
 
 namespace MapEditor.StateTracker
 {
+  [Obsolete("Replaced by as CreateTrackNode")]
   public class TrackNodeCreated : IUndoable
   {
+
     private TrackNode _node;
-    private string _id;
-    private Vector3 _position;
-    private Vector3 _rotation;
+    private readonly string _id;
+    private readonly Vector3 _position;
+    private readonly Vector3 _rotation;
     private bool _flipSwitchStand;
 
     public TrackNodeCreated(string id, Vector3 position, Vector3 rotation, bool flipSwitchStand = false)
@@ -31,7 +32,7 @@ namespace MapEditor.StateTracker
       newNode.flipSwitchStand = false;
       Graph.Shared.AddNode(newNode);
       _node = newNode;
-      EditorContext.Instance.PatchEditor.AddOrUpdateNode(_node.id, _position, _rotation, false);
+      EditorContext.Instance.PatchEditor.AddOrUpdateNode(_node.id, _position, _rotation);
     }
 
     public void Revert()
@@ -40,5 +41,6 @@ namespace MapEditor.StateTracker
       Graph.Shared.RebuildCollections();
       EditorContext.Instance.PatchEditor.RemoveNode(_id);
     }
+
   }
 }
