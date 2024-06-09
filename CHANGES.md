@@ -15,11 +15,10 @@
 - added 'Split' action to node editor
     - this will remove selected node and replace it with multiple nodes roughly at the same location with track segments connections from old node 'other' nodes
 - added 'Remove' action to node editor
-    - this will remove node and its segmetnts
+    - this will remove node and its segments
     - alt mode for simple rail: removing 'noce B' from (node A --- node B --- node C) will result in (node A --- node C)
-
-
-
+- added 'Copy rotation' and 'Paste rotation' actions to node editor
+    - first one will store node rotation and second one will create ChangeTrackNode action that will apply that rotation  
 
 issues:
 - when I quit to main menu with editor open and start new game editor is still active and also start throwing exception, because some game objects where destryoed
@@ -28,3 +27,6 @@ issues:
   - i 'fixed' that by not removing event handler in OnDeactivating
 - game sometimes do not redraw rails correctly ('Rebuild Track' usually fixes that)
   - i think that rebuild is not calling something / its timing issue
+- any reason behind `end_of_line = lf` in .editorconfig?
+  - git can handle converting those quite nicely
+  - on windows is really annoing to deal with 'Incostintent Line Endings' dialog every time i open or edit file
