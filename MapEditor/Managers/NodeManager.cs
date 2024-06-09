@@ -1,19 +1,19 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using MapEditor.StateTracker;
 using MapEditor.StateTracker.Node;
 using MapEditor.StateTracker.Segment;
-using MapEditor.Tools;
+using Serilog;
 using Track;
-using UI.Common;
 using UnityEngine;
 
 namespace MapEditor.Managers
 {
   public static class NodeManager
   {
+
+    private static Serilog.ILogger _logger = Log.ForContext(typeof(NodeManager))!;
 
     private static EditorContext Context => EditorContext.Instance;
 
@@ -37,7 +37,7 @@ namespace MapEditor.Managers
           _                  => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
         };
 
-      Context.ChangeManager.AddChange(new ChangeTrackNode(node, node.transform.localPosition + vector, node.transform.localEulerAngles, node.flipSwitchStand));
+      Context.ChangeManager.AddChange(new ChangeTrackNode(node).Move(node.transform.localPosition + vector));
     }
 
     public static void Rotate(Vector3 offset)
@@ -48,7 +48,7 @@ namespace MapEditor.Managers
         return;
       }
 
-      Context.ChangeManager.AddChange(new ChangeTrackNode(node, node.transform.localPosition, node.transform.localEulerAngles + offset * Scaling, node.flipSwitchStand));
+      Context.ChangeManager.AddChange(new ChangeTrackNode(node).Rotate(node.transform.localEulerAngles + offset * Scaling));
     }
 
     public static void FlipSwitchStand()
@@ -59,13 +59,13 @@ namespace MapEditor.Managers
         return;
       }
 
-      Context.ChangeManager.AddChange(new ChangeTrackNode(node, node.transform.localPosition, node.transform.localEulerAngles, !node.flipSwitchStand));
+      Context.ChangeManager.AddChange(new ChangeTrackNode(node).FlipSwitchStand());
     }
 
     #region Scaling
 
     public static float Scaling { get; private set; } = 1.0f;
-    public static float ScalingDelta { get; private set; } = 1.0f;
+    public static float ScalingDelta { get; set; } = 1.0f;
 
     public static void IncrementScaling()
     {
@@ -79,7 +79,7 @@ namespace MapEditor.Managers
 
     public static void DecrementScaling()
     {
-      Scaling -= ScalingDelta;
+      Scaling = Math.Max(0, Scaling - ScalingDelta);
     }
 
     public static void MultiplyScalingDelta()
@@ -226,6 +226,22 @@ namespace MapEditor.Managers
       // not sure why this is not working, but calling same method from 'Rebuild Track' button works ...
       Graph.Shared.RebuildCollections();
       TrackObjectManager.Instance.Rebuild();
+    }
+
+    private static Vector3 _savedRotation = Vector3.forward;
+
+    public static void CopyNodeRotation()
+    {
+      var node = Context.SelectedNode;
+      _savedRotation = node.transform.localEulerAngles;
+    }
+
+    public static void PasteNodeRotation()
+    {
+      var node = Context.SelectedNode;
+      Context.ChangeManager.AddChange(new ChangeTrackNode(node).Rotate(_savedRotation));
+
+      Rebuild();
     }
 
   }

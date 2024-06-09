@@ -20,8 +20,8 @@ namespace MapEditor
 
     public ChangeManager ChangeManager { get; private set; } = new ChangeManager();
 
-    public TrackNode SelectedNode { get; set; }
-    public TrackSegment SelectedSegment { get; set; }
+    public TrackNode? SelectedNode { get; set; }
+    public TrackSegment? SelectedSegment { get; set; }
 
     public TrackNode HoveredNode { get; set; }
     public TrackSegment HoveredSegment { get; set; }

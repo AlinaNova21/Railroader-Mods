@@ -1,25 +1,31 @@
-namespace MapEditor.StateTracker.Segment {
-  using Track;
+using Track;
 
-  public sealed class DeleteTrackSegment : IUndoable {
+namespace MapEditor.StateTracker.Segment
+{
+  public sealed class DeleteTrackSegment : IUndoable
+  {
 
     private readonly string _id;
     private TrackSegmentGhost? _ghost;
 
-    public DeleteTrackSegment(TrackSegment trackSegment) {
+    public DeleteTrackSegment(TrackSegment trackSegment)
+    {
       _id = trackSegment.id!;
     }
 
-    public void Apply() {
+    public void Apply()
+    {
       _ghost = new TrackSegmentGhost(_id);
       _ghost.DestroySegment();
     }
 
-    public void Revert() {
+    public void Revert()
+    {
       _ghost!.CreateSegment();
     }
 
-    public override string ToString() {
+    public override string ToString()
+    {
       return "DeleteTrackNode: " + _id;
     }
 

@@ -1,28 +1,71 @@
-namespace MapEditor.StateTracker.Node {
-  using JetBrains.Annotations;
-  using MapEditor.Extensions;
-  using Track;
-  using UnityEngine;
+using System;
+using MapEditor.Extensions;
+using Track;
+using UnityEngine;
 
-  public sealed class ChangeTrackNode : IUndoable {
+namespace MapEditor.StateTracker.Node
+{
+  public sealed class ChangeTrackNode : IUndoable
+  {
 
     private readonly TrackNode _node;
     private readonly TrackNodeGhost _old;
     private readonly TrackNodeGhost _new;
+    private bool _isEditable;
 
-    public ChangeTrackNode(TrackNode node, Vector3 newPosition, Vector3 newRotation, bool flipSwitchStand) {
+    public ChangeTrackNode(TrackNode node)
+    {
       _node = node;
       _old = new TrackNodeGhost(node.id!);
-      _new = new TrackNodeGhost(node.id, newPosition, newRotation, flipSwitchStand);
+      _new = new TrackNodeGhost(node.id);
+      _new.UpdateGhost(node);
+      _isEditable = true;
     }
 
-    public void Apply() {
+    public ChangeTrackNode Move(Vector3 newPosition)
+    {
+      if (!_isEditable)
+      {
+        throw new InvalidOperationException();
+      }
+
+      _new._position = newPosition;
+      return this;
+    }
+
+    public ChangeTrackNode Rotate(Vector3 newRotation)
+    {
+      if (!_isEditable)
+      {
+        throw new InvalidOperationException();
+      }
+
+      _new._rotation = newRotation;
+      return this;
+    }
+
+    public ChangeTrackNode FlipSwitchStand()
+    {
+      if (!_isEditable)
+      {
+        throw new InvalidOperationException();
+      }
+
+      _new._flipSwitchStand = !_new._flipSwitchStand;
+      return this;
+    }
+
+    public void Apply()
+    {
+      _isEditable = false;
+      _old.UpdateGhost(_node);
       _new.UpdateNode(_node);
       EditorContext.Instance.PatchEditor.AddOrUpdateNode(_node);
       Graph.Shared.OnNodeDidChange(_node);
     }
 
-    public void Revert() {
+    public void Revert()
+    {
       _old.UpdateNode(_node);
       EditorContext.Instance.PatchEditor.AddOrUpdateNode(_node);
       Graph.Shared.OnNodeDidChange(_node);

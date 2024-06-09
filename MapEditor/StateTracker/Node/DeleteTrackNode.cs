@@ -1,26 +1,31 @@
-namespace MapEditor.StateTracker.Node {
-  using JetBrains.Annotations;
-  using Track;
+using Track;
 
-  public sealed class DeleteTrackNode : IUndoable {
+namespace MapEditor.StateTracker.Node
+{
+  public sealed class DeleteTrackNode : IUndoable
+  {
 
     private readonly string _id;
     private TrackNodeGhost _ghost;
 
-    public DeleteTrackNode(TrackNode trackNode) {
+    public DeleteTrackNode(TrackNode trackNode)
+    {
       _id = trackNode.id!;
     }
 
-    public void Apply() {
+    public void Apply()
+    {
       _ghost = new TrackNodeGhost(_id);
       _ghost.DestroyNode();
     }
 
-    public void Revert() {
+    public void Revert()
+    {
       _ghost!.CreateNode();
     }
 
-    public override string ToString() {
+    public override string ToString()
+    {
       return "DeleteTrackNode: " + _id;
     }
 

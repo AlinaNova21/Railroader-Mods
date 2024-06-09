@@ -1,3 +1,8 @@
+using System;
+using System.Collections.Generic;
+using TMPro;
+using UI.CompanyWindow;
+
 namespace MapEditor.Tools {
   using MapEditor.Extensions;
   using MapEditor.Managers;
@@ -39,8 +44,7 @@ namespace MapEditor.Tools {
         stack.AddSection("Rotation", BuildRotationEditor);
       });
       builder.AddSection("Scaling", BuildScalingEditor);
-
-      builder.HStack(BuildNodeEditor);
+      builder.AddSection("Nodes", BuildNodeEditor);
     }
 
     private void BuildPositionEditor(UIPanelBuilder builder) {
@@ -81,21 +85,47 @@ namespace MapEditor.Tools {
 
     private void BuildScalingEditor(UIPanelBuilder builder) {
       builder.HStack(stack => {
-        stack.AddButtonCompact(() => $"+{NodeManager.Scaling:0.##}", NodeManager.IncrementScaling);
+        stack.AddButtonCompact(() => $"+{NodeManager.ScalingDelta:0.##}", NodeManager.IncrementScaling);
         stack.AddButtonCompact(() => "0", NodeManager.ResetScaling);
-        stack.AddButtonCompact(() => $"-{NodeManager.Scaling:0.##}", NodeManager.DecrementScaling);
+        stack.AddButtonCompact(() => $"-{NodeManager.ScalingDelta:0.##}", NodeManager.DecrementScaling);
         stack.Spacer();
-        stack.AddButtonCompact(() => "*10", NodeManager.MultiplyScalingDelta);
-        stack.AddLabel(() => $"{NodeManager.ScalingDelta:0.##}", UIPanelBuilder.Frequency.Periodic);
-        stack.AddButtonCompact(() => "/10", NodeManager.DivideScalingDelta);
+        stack.AddButtonCompact(() => "0.01", () => NodeManager.ScalingDelta = 0.01f);
+        stack.AddButtonCompact(() => "0.1", () => NodeManager.ScalingDelta = 0.1f);
+        stack.AddButtonCompact(() => "1", () => NodeManager.ScalingDelta = 1f);
+        stack.AddButtonCompact(() => "10", () => NodeManager.ScalingDelta = 10f);
       });
     }
 
-    private void BuildNodeEditor(UIPanelBuilder builder) {
-      builder.AddButtonCompact("Flip", NodeManager.FlipSwitchStand);
-      builder.AddButtonCompact("Add", NodeManager.AddNode);
-      builder.AddButtonCompact("Split", NodeManager.SplitNode);
-      builder.AddButtonCompact("Remove", () => NodeManager.RemoveNode(Input.GetKey(KeyCode.LeftShift)));
+    private static readonly List<string> NodeMenu = [
+      "More ...",
+      "Copy rotation",
+      "Paste rotation",
+    ];
+
+    private static readonly Action[] NodeMenuActions = [
+      () => {}, 
+      NodeManager.CopyNodeRotation,
+      NodeManager.PasteNodeRotation,
+    ];
+
+    private void BuildNodeEditor(UIPanelBuilder builder)
+    {
+      builder.HStack(stack => {
+        stack.AddButtonCompact("Flip", NodeManager.FlipSwitchStand);
+        stack.AddButtonCompact("Add", NodeManager.AddNode);
+        stack.AddButtonCompact("Split", NodeManager.SplitNode);
+        stack.AddButtonCompact("Remove", () => NodeManager.RemoveNode(Input.GetKey(KeyCode.LeftShift)));
+
+        TMP_Dropdown dd = null!;
+        dd = stack.AddDropdown(NodeMenu, 0, o =>
+          {
+            NodeMenuActions[o]();
+            dd.value = 0;
+          })
+          .FlexibleWidth()
+          .GetComponent<TMP_Dropdown>();
+        dd.MultiSelect = false;
+      });
     }
 
     private void SelectedNodeChanged(TrackNode? node) {

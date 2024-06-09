@@ -1,27 +1,30 @@
-namespace MapEditor.StateTracker.Segment {
-  using JetBrains.Annotations;
-  using MapEditor.Extensions;
-  using Track;
-  using UnityEngine;
+using MapEditor.Extensions;
+using Track;
+using UnityEngine;
 
-  public sealed class TrackSegmentGhost {
+namespace MapEditor.StateTracker.Segment
+{
+  public sealed class TrackSegmentGhost
+  {
 
     private readonly string _id;
-    
+
     private string _a;
     private string _b;
-    private int _priority;
-    private int _speedLimit;
-    private string _groupId;
-    private TrackSegment.Style _style;
-    private TrackClass _trackClass;
+    internal int _priority;
+    internal int _speedLimit;
+    internal string _groupId;
+    internal TrackSegment.Style _style;
+    internal TrackClass _trackClass;
 
-    public TrackSegmentGhost(string id) {
+    public TrackSegmentGhost(string id)
+    {
       _id = id;
     }
 
     public TrackSegmentGhost(string id, string a, string b, int priority = 0, int speedLimit = 0, string groupId = "", TrackSegment.Style style = TrackSegment.Style.Standard, TrackClass trackClass = TrackClass.Mainline)
-      : this(id) {
+      : this(id)
+    {
       _a = a;
       _b = b;
       _priority = priority;
@@ -31,7 +34,8 @@ namespace MapEditor.StateTracker.Segment {
       _trackClass = trackClass;
     }
 
-    public void UpdateGhost(TrackSegment segment) {
+    public void UpdateGhost(TrackSegment segment)
+    {
       _a = segment.a.id;
       _b = segment.b.id;
       _priority = segment.priority;
@@ -41,7 +45,8 @@ namespace MapEditor.StateTracker.Segment {
       _trackClass = segment.trackClass;
     }
 
-    public void UpdateSegment(TrackSegment segment) {
+    public void UpdateSegment(TrackSegment segment)
+    {
       segment.a = Graph.Shared.GetNode(_a);
       segment.b = Graph.Shared.GetNode(_b);
       segment.priority = _priority;
@@ -51,7 +56,8 @@ namespace MapEditor.StateTracker.Segment {
       segment.trackClass = _trackClass;
     }
 
-    public void CreateSegment() {
+    public void CreateSegment()
+    {
       var segment = new GameObject($"Segment {_id}").AddComponent<TrackSegment>();
       segment.id = _id;
       segment.transform.SetParent(Graph.Shared.transform);
@@ -60,7 +66,8 @@ namespace MapEditor.StateTracker.Segment {
       EditorContext.Instance.PatchEditor.AddOrUpdateSegment(segment);
     }
 
-    public void DestroySegment() {
+    public void DestroySegment()
+    {
       var segment = Graph.Shared.GetSegment(_id);
       UpdateGhost(segment);
       Object.Destroy(segment.gameObject);
