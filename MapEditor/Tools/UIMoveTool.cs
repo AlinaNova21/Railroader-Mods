@@ -45,6 +45,7 @@ namespace MapEditor.Tools {
       });
       builder.AddSection("Scaling", BuildScalingEditor);
       builder.AddSection("Nodes", BuildNodeEditor);
+      builder.AddSection("Segments", BuildSegmentEditor);
     }
 
     private void BuildPositionEditor(UIPanelBuilder builder) {
@@ -95,11 +96,7 @@ namespace MapEditor.Tools {
         stack.AddButtonCompact(() => "10", () => NodeManager.ScalingDelta = 10f);
       });
     }
-
-    private static readonly List<PopupMenuItem> NodeMenuItems = [
     
-    ];
-
     private void BuildNodeEditor(UIPanelBuilder builder)
     {
       builder.HStack(stack => {
@@ -115,6 +112,28 @@ namespace MapEditor.Tools {
         );
       });
     }
+
+    private void BuildSegmentEditor(UIPanelBuilder builder)
+    {
+      EditorContext.NodeSelectedChanged += _ =>  builder.Rebuild();
+
+      var node = Context?.SelectedNode;
+      if (node == null)
+      {
+        return;
+      }
+
+      var segments = Graph.Shared.SegmentsAffectedByNodes(new HashSet<TrackNode> { node });
+
+      builder.HStack(stack =>
+      {
+        foreach (var segment in segments)
+        {
+          stack.AddButtonCompact(segment.id, () => Context.SelectSegment(segment));
+        }
+      });
+    }
+
 
     private void SelectedNodeChanged(TrackNode? node) {
       if (node == null) {

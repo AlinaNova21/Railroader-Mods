@@ -59,6 +59,9 @@ namespace MapEditor
     public void Start()
     {
       gameObject.layer = Layers.Clickable;
+
+      var cc = gameObject.AddComponent<BoxCollider>();
+      cc.size = new Vector3(0.4f, 0.4f, 0.8f);
     }
 
     public void Rebuild()

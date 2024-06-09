@@ -82,5 +82,10 @@ namespace MapEditor.StateTracker.Node
       Graph.Shared.OnNodeDidChange(_node);
     }
 
+    public override string ToString()
+    {
+      return "ChangeTrackNode: " + _node.id;
+    }
+
   }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using HarmonyLib;
 using Serilog;
 using TMPro;
+using Track;
 using UI.Builder;
 using UnityEngine;
 using UnityEngine.UI;
@@ -57,6 +58,20 @@ namespace MapEditor.Extensions
       dd = rect.GetComponent<TMP_Dropdown>();
       dd.MultiSelect = false;
       return rect;
+    }
+
+    private static readonly List<string> _trackStyles = Enum.GetValues(typeof(TrackSegment.Style)).Cast<TrackSegment.Style>().Select(o => o.ToString()).ToList();
+
+    public static RectTransform AddTrackStylesDropdown(this UIPanelBuilder builder, TrackSegment.Style current, Action<TrackSegment.Style> onSelected)
+    {
+      return builder.AddDropdown(_trackStyles, _trackStyles.IndexOf(current.ToString()), o => onSelected((TrackSegment.Style)o))!;
+    }
+
+    private static readonly List<string> _trackClasses = Enum.GetValues(typeof(TrackClass)).Cast<TrackClass>().Select(o => o.ToString()).ToList();
+
+    public static RectTransform AddTrackClassDropdown(this UIPanelBuilder builder, TrackClass current, Action<TrackClass> onSelected)
+    {
+      return builder.AddDropdown(_trackClasses, _trackClasses.IndexOf(current.ToString()), o => onSelected((TrackClass)o))!;
     }
 
   }

@@ -10,7 +10,7 @@ namespace MapEditor.StateTracker.Segment
     private readonly TrackSegment _segment;
     private readonly TrackSegmentGhost _old;
     private readonly TrackSegmentGhost _new;
-    private bool _isEditable;
+    private bool _isEditable = true;
 
     public ChangeTrackSegment(TrackSegment segment)
     {

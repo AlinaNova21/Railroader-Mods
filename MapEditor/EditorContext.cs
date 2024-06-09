@@ -55,6 +55,9 @@ namespace MapEditor
     public static event Action<TrackSegment> SegmentSelectedChanged;
     #endregion
 
+
+    private static ILogger log = Log.ForContext<EditorContext>();
+
     public static void Unload()
     {
       try
@@ -63,7 +66,8 @@ namespace MapEditor
       }
       catch (Exception e)
       {
-        Log.ForContext<EditorContext>().Error(e, "Failed to unload editor context");
+        
+        log.Error(e, "Failed to unload editor context");
       }
     }
 
@@ -87,6 +91,7 @@ namespace MapEditor
 
     internal void SelectNode(TrackNode newNode)
     {
+      log.Information("SelectNode: " + newNode?.id);
       SelectedNode = newNode;
       NodeSelectedChanged?.Invoke(newNode);
 
@@ -95,6 +100,13 @@ namespace MapEditor
       } else {
         KeyboardManager.Activate();
       }
+    }
+
+    internal void SelectSegment(TrackSegment newNode)
+    {
+      log.Information("SelectSegment: " + newNode?.id);
+      SelectedSegment = newNode;
+      SegmentSelectedChanged?.Invoke(newNode);
     }
   }
 }

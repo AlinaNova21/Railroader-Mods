@@ -141,6 +141,7 @@ namespace MapEditor
                   logger.Debug("Editing {0}", mixinto.Mixinto);
                   new EditorContext(mixinto.Mixinto);
                   Tool.UIMoveTool.Activate();
+                  Tool.UISegmentTool.Activate();
                   outerBuilder.Rebuild();
                 });
               });
