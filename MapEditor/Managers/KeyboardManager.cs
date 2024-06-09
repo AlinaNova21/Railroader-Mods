@@ -55,7 +55,7 @@ namespace MapEditor.Managers {
         if (Rotate) {
           NodeManager.Rotate(Vector3.back);
         } else {
-          NodeManager.Move(Direction.up);
+          NodeManager.Move(Direction.down);
         }
       }
 
@@ -71,7 +71,7 @@ namespace MapEditor.Managers {
         if (Rotate) {
           NodeManager.Rotate(Vector3.forward);
         } else {
-          NodeManager.Move(Direction.down);
+          NodeManager.Move(Direction.up);
         }
       }
 

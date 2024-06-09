@@ -96,16 +96,8 @@ namespace MapEditor.Tools {
       });
     }
 
-    private static readonly List<string> NodeMenu = [
-      "More ...",
-      "Copy rotation",
-      "Paste rotation",
-    ];
-
-    private static readonly Action[] NodeMenuActions = [
-      () => {}, 
-      NodeManager.CopyNodeRotation,
-      NodeManager.PasteNodeRotation,
+    private static readonly List<PopupMenuItem> NodeMenuItems = [
+    
     ];
 
     private void BuildNodeEditor(UIPanelBuilder builder)
@@ -115,16 +107,12 @@ namespace MapEditor.Tools {
         stack.AddButtonCompact("Add", NodeManager.AddNode);
         stack.AddButtonCompact("Split", NodeManager.SplitNode);
         stack.AddButtonCompact("Remove", () => NodeManager.RemoveNode(Input.GetKey(KeyCode.LeftShift)));
-
-        TMP_Dropdown dd = null!;
-        dd = stack.AddDropdown(NodeMenu, 0, o =>
-          {
-            NodeMenuActions[o]();
-            dd.value = 0;
-          })
-          .FlexibleWidth()
-          .GetComponent<TMP_Dropdown>();
-        dd.MultiSelect = false;
+        stack.AddPopupMenu(
+          new PopupMenuItem("Copy rotation", NodeManager.CopyNodeRotation),
+          new PopupMenuItem("Paste rotation", NodeManager.PasteNodeRotation),
+          new PopupMenuItem("Copy elevation", NodeManager.CopyNodeElevation),
+          new PopupMenuItem("Paste elevation", NodeManager.PasteNodeElevation)
+        );
       });
     }
 

@@ -33,6 +33,17 @@ namespace MapEditor.StateTracker.Node
       return this;
     }
 
+    public ChangeTrackNode Move(float? x = null, float? y = null, float? z = null)
+    {
+      if (!_isEditable)
+      {
+        throw new InvalidOperationException();
+      }
+
+      _new._position = new Vector3(x ?? _new._position.x, y ?? _new._position.y, z ?? _new._position.z);
+      return this;
+    }
+
     public ChangeTrackNode Rotate(Vector3 newRotation)
     {
       if (!_isEditable)

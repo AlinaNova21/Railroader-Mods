@@ -221,6 +221,43 @@ namespace MapEditor.Managers
       Rebuild();
     }
 
+   
+    #region Rotation
+
+    private static Vector3 _savedRotation = Vector3.forward;
+
+    public static void CopyNodeRotation() {
+      var node = Context.SelectedNode;
+      _savedRotation = node.transform.localEulerAngles;
+    }
+
+    public static void PasteNodeRotation() {
+      var node = Context.SelectedNode;
+      Context.ChangeManager.AddChange(new ChangeTrackNode(node).Rotate(_savedRotation));
+
+      Rebuild();
+    }
+
+    #endregion
+
+    #region Elevation
+
+    private static float _savedElevation = 0;
+
+    public static void CopyNodeElevation() {
+      var node = Context.SelectedNode;
+      _savedElevation = node.transform.localPosition.y;
+    }
+
+    public static void PasteNodeElevation() {
+      var node = Context.SelectedNode;
+      Context.ChangeManager.AddChange(new ChangeTrackNode(node).Move(y: _savedElevation));
+
+      Rebuild();
+    }
+
+    #endregion
+
     private static void Rebuild()
     {
       // not sure why this is not working, but calling same method from 'Rebuild Track' button works ...
@@ -228,21 +265,6 @@ namespace MapEditor.Managers
       TrackObjectManager.Instance.Rebuild();
     }
 
-    private static Vector3 _savedRotation = Vector3.forward;
-
-    public static void CopyNodeRotation()
-    {
-      var node = Context.SelectedNode;
-      _savedRotation = node.transform.localEulerAngles;
-    }
-
-    public static void PasteNodeRotation()
-    {
-      var node = Context.SelectedNode;
-      Context.ChangeManager.AddChange(new ChangeTrackNode(node).Rotate(_savedRotation));
-
-      Rebuild();
-    }
 
   }
 }

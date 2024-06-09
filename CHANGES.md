@@ -19,6 +19,7 @@
     - alt mode for simple rail: removing 'noce B' from (node A --- node B --- node C) will result in (node A --- node C)
 - added 'Copy rotation' and 'Paste rotation' actions to node editor
     - first one will store node rotation and second one will create ChangeTrackNode action that will apply that rotation  
+- added 'Copy elevation' and 'Paste elevation' actions to node editor
 
 issues:
 - when I quit to main menu with editor open and start new game editor is still active and also start throwing exception, because some game objects where destryoed
