@@ -1,24 +1,15 @@
 using System.Collections;
 using System.Reflection;
-using Network;
-using Railloader;
 using Serilog;
 using TransformHandles;
 using UnityEngine;
 
 namespace MapEditor
 {
-  class Editor : Singleton<Editor>
+  internal class Editor : Singleton<Editor>
   {
-    private Serilog.ILogger logger = Log.ForContext<Editor>();
-    private Settings Settings
-    {
-      get => SingletonPluginBase<EditorMod>.Shared?.Settings ?? new Settings();
-    }
 
-    public Editor()
-    {
-    }
+    private readonly Serilog.ILogger logger = Log.ForContext<Editor>();
 
     public void Start()
     {
@@ -31,8 +22,8 @@ namespace MapEditor
       var rth = Assembly.GetExecutingAssembly().GetManifestResourceStream("MapEditor.Resources.rth.runtime");
       var ms = new System.IO.MemoryStream();
       rth.CopyTo(ms);
-      byte[] bytes = ms.ToArray();
-      AssetBundleCreateRequest createRequest = AssetBundle.LoadFromMemoryAsync(bytes);
+      var bytes = ms.ToArray();
+      var createRequest = AssetBundle.LoadFromMemoryAsync(bytes);
       yield return createRequest;
       var bundle = createRequest.assetBundle;
       var transformHandlePrefab = bundle.LoadAsset<GameObject>("Assets/RTH.Runtime/Prefabs/NativeTransformHandle.prefab");
@@ -56,5 +47,6 @@ namespace MapEditor
     {
       // TransformHandleManager.Instance.mainCamera = Camera.main;
     }
+
   }
 }

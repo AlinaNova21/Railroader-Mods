@@ -8,29 +8,29 @@ namespace MapEditor.Managers
 
     public static void UpdatePriority(int priority)
     {
-      EditorContext.Instance.ChangeManager.AddChange(new ChangeTrackSegment(EditorContext.Instance.SelectedSegment!).Priority(priority));
+      EditorContext.ChangeManager.AddChange(new ChangeTrackSegment(EditorContext.SelectedSegment!).Priority(priority));
     }
 
     public static void UpdateSpeedLimit(int speedLimit)
     {
-      EditorContext.Instance.ChangeManager.AddChange(new ChangeTrackSegment(EditorContext.Instance.SelectedSegment!).SpeedLimit(speedLimit));
+      EditorContext.ChangeManager.AddChange(new ChangeTrackSegment(EditorContext.SelectedSegment!).SpeedLimit(speedLimit));
     }
 
     public static void UpdateGroup(string groupId)
     {
-      EditorContext.Instance.ChangeManager.AddChange(new ChangeTrackSegment(EditorContext.Instance.SelectedSegment!).GroupId(groupId));
+      EditorContext.ChangeManager.AddChange(new ChangeTrackSegment(EditorContext.SelectedSegment!).GroupId(groupId));
     }
 
     public static void UpdateStyle(TrackSegment.Style style)
     {
-      EditorContext.Instance.ChangeManager.AddChange(new ChangeTrackSegment(EditorContext.Instance.SelectedSegment!).Style(style));
+      EditorContext.ChangeManager.AddChange(new ChangeTrackSegment(EditorContext.SelectedSegment!).Style(style));
       Rebuild();
     }
 
 
     public static void UpdateTrackClass(TrackClass trackClass)
     {
-      EditorContext.Instance.ChangeManager.AddChange(new ChangeTrackSegment(EditorContext.Instance.SelectedSegment!).TrackClass(trackClass));
+      EditorContext.ChangeManager.AddChange(new ChangeTrackSegment(EditorContext.SelectedSegment!).TrackClass(trackClass));
     }
 
     private static void Rebuild()

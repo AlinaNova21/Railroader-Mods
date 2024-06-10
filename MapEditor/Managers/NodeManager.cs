@@ -15,11 +15,10 @@ namespace MapEditor.Managers
 
     private static Serilog.ILogger _logger = Log.ForContext(typeof(NodeManager))!;
 
-    private static EditorContext Context => EditorContext.Instance;
 
     public static void Move(Direction direction)
     {
-      var node = Context.SelectedNode;
+      var node = EditorContext.SelectedNode;
       if (node == null)
       {
         return;
@@ -37,29 +36,29 @@ namespace MapEditor.Managers
           _                  => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
         };
 
-      Context.ChangeManager.AddChange(new ChangeTrackNode(node).Move(node.transform.localPosition + vector));
+      EditorContext.ChangeManager.AddChange(new ChangeTrackNode(node).Move(node.transform.localPosition + vector));
     }
 
     public static void Rotate(Vector3 offset)
     {
-      var node = Context.SelectedNode;
+      var node = EditorContext.SelectedNode;
       if (node == null)
       {
         return;
       }
 
-      Context.ChangeManager.AddChange(new ChangeTrackNode(node).Rotate(node.transform.localEulerAngles + offset * Scaling));
+      EditorContext.ChangeManager.AddChange(new ChangeTrackNode(node).Rotate(node.transform.localEulerAngles + offset * Scaling));
     }
 
     public static void FlipSwitchStand()
     {
-      var node = Context.SelectedNode;
+      var node = EditorContext.SelectedNode;
       if (node == null)
       {
         return;
       }
 
-      Context.ChangeManager.AddChange(new ChangeTrackNode(node).FlipSwitchStand());
+      EditorContext.ChangeManager.AddChange(new ChangeTrackNode(node).FlipSwitchStand());
     }
 
     #region Scaling
@@ -99,24 +98,24 @@ namespace MapEditor.Managers
 
     public static void AddNode()
     {
-      var node = Context.SelectedNode;
-      var nid = Context.TrackNodeIdGenerator.Next();
-      var sid = Context.TrackSegmentIdGenerator.Next();
-      Context.ChangeManager.AddChange(new CompoundChange(
+      var node = EditorContext.SelectedNode;
+      var nid = EditorContext.TrackNodeIdGenerator.Next();
+      var sid = EditorContext.TrackSegmentIdGenerator.Next();
+      EditorContext.ChangeManager.AddChange(new CompoundChange(
         new CreateTrackNode(nid, node.transform.localPosition + node.transform.forward * Scaling, node.transform.localEulerAngles),
         new CreateTrackSegment(sid, node.id, nid)
       ));
       var newNode = Graph.Shared.GetNode(nid);
-      Context.SelectNode(newNode);
+      EditorContext.SelectedNode = newNode;
 
       Rebuild();
     }
 
     public static void ConnectNodes(string previousNodeId)
     {
-      var sid = Context.TrackSegmentIdGenerator.Next();
-      var segmentCreated = new CreateTrackSegment(sid, previousNodeId, Context.SelectedNode.id);
-      Context.ChangeManager.AddChange(segmentCreated);
+      var sid = EditorContext.TrackSegmentIdGenerator.Next();
+      var segmentCreated = new CreateTrackSegment(sid, previousNodeId, EditorContext.SelectedNode.id);
+      EditorContext.ChangeManager.AddChange(segmentCreated);
 
       Rebuild();
     }
@@ -137,8 +136,8 @@ namespace MapEditor.Managers
       // NODE_A --- NEW_NODE_1
       // NODE_B --- NEW_NODE_2
       //            NEW_NODE_3 --- NODE_C
-      var node = Context.SelectedNode;
-      Context.SelectNode(null);
+      var node = EditorContext.SelectedNode;
+      EditorContext.SelectedNode = null;
 
       var actions = new List<IUndoable>();
 
@@ -157,13 +156,13 @@ namespace MapEditor.Managers
         // move new node in direction of 'other' node (result should be then nodes not on top of each other with buffer stops on each end)
         var offset = (other.transform.localPosition - node.transform.localPosition).normalized * 1.5f;
 
-        var nid = Context.TrackNodeIdGenerator.Next();
-        var sid = Context.TrackSegmentIdGenerator.Next();
+        var nid = EditorContext.TrackNodeIdGenerator.Next();
+        var sid = EditorContext.TrackSegmentIdGenerator.Next();
         actions.Add(new CreateTrackNode(nid, node.transform.localPosition + offset, node.transform.localEulerAngles));
         actions.Add(new CreateTrackSegment(sid, other.id, nid));
       }
 
-      Context.ChangeManager.AddChange(new CompoundChange(actions));
+      EditorContext.ChangeManager.AddChange(new CompoundChange(actions));
 
       Rebuild();
     }
@@ -192,8 +191,8 @@ namespace MapEditor.Managers
       //               NODE_C
       // NODE_B 
 
-      var node = Context.SelectedNode;
-      Context.SelectNode(null);
+      var node = EditorContext.SelectedNode;
+      EditorContext.SelectedNode = null;
 
       var actions = new List<IUndoable>();
 
@@ -212,28 +211,30 @@ namespace MapEditor.Managers
         var firstNode = firstSegment.GetOtherNode(node);
         var lastNode = segments.Last().GetOtherNode(node);
 
-        var sid = Context.TrackSegmentIdGenerator.Next();
+        var sid = EditorContext.TrackSegmentIdGenerator.Next();
         actions.Add(new CreateTrackSegment(sid, firstNode.id, lastNode.id, firstSegment.priority, firstSegment.speedLimit, firstSegment.groupId, firstSegment.style, firstSegment.trackClass));
       }
 
-      Context.ChangeManager.AddChange(new CompoundChange(actions));
+      EditorContext.ChangeManager.AddChange(new CompoundChange(actions));
 
       Rebuild();
     }
 
-   
+
     #region Rotation
 
     private static Vector3 _savedRotation = Vector3.forward;
 
-    public static void CopyNodeRotation() {
-      var node = Context.SelectedNode;
+    public static void CopyNodeRotation()
+    {
+      var node = EditorContext.SelectedNode;
       _savedRotation = node.transform.localEulerAngles;
     }
 
-    public static void PasteNodeRotation() {
-      var node = Context.SelectedNode;
-      Context.ChangeManager.AddChange(new ChangeTrackNode(node).Rotate(_savedRotation));
+    public static void PasteNodeRotation()
+    {
+      var node = EditorContext.SelectedNode;
+      EditorContext.ChangeManager.AddChange(new ChangeTrackNode(node).Rotate(_savedRotation));
 
       Rebuild();
     }
@@ -242,16 +243,18 @@ namespace MapEditor.Managers
 
     #region Elevation
 
-    private static float _savedElevation = 0;
+    private static float _savedElevation;
 
-    public static void CopyNodeElevation() {
-      var node = Context.SelectedNode;
+    public static void CopyNodeElevation()
+    {
+      var node = EditorContext.SelectedNode;
       _savedElevation = node.transform.localPosition.y;
     }
 
-    public static void PasteNodeElevation() {
-      var node = Context.SelectedNode;
-      Context.ChangeManager.AddChange(new ChangeTrackNode(node).Move(y: _savedElevation));
+    public static void PasteNodeElevation()
+    {
+      var node = EditorContext.SelectedNode;
+      EditorContext.ChangeManager.AddChange(new ChangeTrackNode(node).Move(y: _savedElevation));
 
       Rebuild();
     }
@@ -264,7 +267,6 @@ namespace MapEditor.Managers
       Graph.Shared.RebuildCollections();
       TrackObjectManager.Instance.Rebuild();
     }
-
 
   }
 }

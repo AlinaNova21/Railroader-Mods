@@ -1,13 +1,17 @@
-namespace MapEditor.Managers {
-  using JetBrains.Annotations;
-  using UnityEngine;
+using JetBrains.Annotations;
+using UnityEngine;
 
-  public sealed class KeyboardManager : MonoBehaviour {
+namespace MapEditor.Managers
+{
+  public sealed class KeyboardManager : MonoBehaviour
+  {
 
     private static GameObject? _gameObject;
 
-    public static void Activate() {
-      if (_gameObject == null) {
+    public static void Activate()
+    {
+      if (_gameObject == null)
+      {
         _gameObject = new GameObject("KeyboardManager");
         _gameObject.AddComponent<KeyboardManager>();
       }
@@ -15,83 +19,115 @@ namespace MapEditor.Managers {
       _gameObject.SetActive(true);
     }
 
-    public static void Deactivate() {
+    public static void Deactivate()
+    {
       _gameObject!.SetActive(false);
     }
 
     public static bool Rotate { get; private set; }
 
     [UsedImplicitly]
-    public void Update() {
-      if (Input.GetKeyDown(KeyCode.KeypadEnter)) {
+    public void Update()
+    {
+      if (Input.GetKeyDown(KeyCode.KeypadEnter))
+      {
         Rotate = !Rotate;
       }
 
-      if (Input.GetKeyDown(KeyCode.Keypad4)) {
-        if (Rotate) {
+      if (Input.GetKeyDown(KeyCode.Keypad4))
+      {
+        if (Rotate)
+        {
           NodeManager.Rotate(Vector3.down);
-        } else {
+        }
+        else
+        {
           NodeManager.Move(Direction.left);
         }
       }
 
-      if (Input.GetKeyDown(KeyCode.Keypad5)) {
-        if (Rotate) {
+      if (Input.GetKeyDown(KeyCode.Keypad5))
+      {
+        if (Rotate)
+        {
           NodeManager.Rotate(Vector3.left);
-        } else {
+        }
+        else
+        {
           NodeManager.Move(Direction.backward);
         }
       }
 
-      if (Input.GetKeyDown(KeyCode.Keypad6)) {
-        if (Rotate) {
+      if (Input.GetKeyDown(KeyCode.Keypad6))
+      {
+        if (Rotate)
+        {
           NodeManager.Rotate(Vector3.up);
-        } else {
+        }
+        else
+        {
           NodeManager.Move(Direction.right);
         }
       }
 
-      if (Input.GetKeyDown(KeyCode.Keypad7)) {
-        if (Rotate) {
+      if (Input.GetKeyDown(KeyCode.Keypad7))
+      {
+        if (Rotate)
+        {
           NodeManager.Rotate(Vector3.back);
-        } else {
+        }
+        else
+        {
           NodeManager.Move(Direction.down);
         }
       }
 
-      if (Input.GetKeyDown(KeyCode.Keypad8)) {
-        if (Rotate) {
+      if (Input.GetKeyDown(KeyCode.Keypad8))
+      {
+        if (Rotate)
+        {
           NodeManager.Rotate(Vector3.right);
-        } else {
+        }
+        else
+        {
           NodeManager.Move(Direction.forward);
         }
       }
 
-      if (Input.GetKeyDown(KeyCode.Keypad9)) {
-        if (Rotate) {
+      if (Input.GetKeyDown(KeyCode.Keypad9))
+      {
+        if (Rotate)
+        {
           NodeManager.Rotate(Vector3.forward);
-        } else {
+        }
+        else
+        {
           NodeManager.Move(Direction.up);
         }
       }
 
-      if (Input.GetKeyDown(KeyCode.KeypadPlus)) {
+      if (Input.GetKeyDown(KeyCode.KeypadPlus))
+      {
         NodeManager.IncrementScaling();
       }
 
-      if (Input.GetKeyDown(KeyCode.KeypadMinus)) {
+      if (Input.GetKeyDown(KeyCode.KeypadMinus))
+      {
         NodeManager.DecrementScaling();
       }
 
-      if (Input.GetKeyDown(KeyCode.KeypadMultiply)) {
+      if (Input.GetKeyDown(KeyCode.KeypadMultiply))
+      {
         NodeManager.MultiplyScalingDelta();
       }
 
-      if (Input.GetKeyDown(KeyCode.KeypadDivide)) {
+      if (Input.GetKeyDown(KeyCode.KeypadDivide))
+      {
         NodeManager.DivideScalingDelta();
       }
 
-      if (Input.GetKeyDown(KeyCode.Keypad0)) {
+      if (Input.GetKeyDown(KeyCode.Keypad0))
+      {
         NodeManager.ResetScaling();
       }
     }

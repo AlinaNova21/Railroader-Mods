@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Data.Odbc;
-using System.Linq;
 using System.Text;
-using HarmonyLib;
 using RLD;
 using Serilog;
 using Track;
@@ -13,8 +8,9 @@ using UnityEngine;
 
 namespace MapEditor
 {
-  class TrackSegmentEditor : MonoBehaviour, IPickable
+  internal class TrackSegmentEditor : MonoBehaviour, IPickable
   {
+
     public TrackSegment? trackNode;
     public float MaxPickDistance => 100f;
 
@@ -22,8 +18,8 @@ namespace MapEditor
 
     private Handle? handle;
 
-    private Serilog.ILogger logger = Log.ForContext(typeof(TrackSegmentEditor));
-    public TooltipInfo TooltipInfo => new TooltipInfo($"Track Segment {trackNode?.id}", this.getTooltipText());
+    private readonly Serilog.ILogger logger = Log.ForContext(typeof(TrackSegmentEditor));
+    public TooltipInfo TooltipInfo => new TooltipInfo($"Track Segment {trackNode?.id}", getTooltipText());
 
     private Window Window { get; set; }
 
@@ -47,20 +43,17 @@ namespace MapEditor
           _gizmo.SetCanAffectScale(false);
           _gizmo.SetTransformSpace(GizmoSpace.Local);
         }
+
         return _gizmo;
       }
     }
+
     private static ObjectTransformGizmo? _gizmo;
 
     public void Activate()
     {
       logger.Information($"Activate {trackNode?.id}");
-      if (EditorContext.Instance == null)
-      {
-        logger.Error("EditorContext.Instance is null");
-        return;
-      }
-      EditorContext.Instance?.SelectSegment(trackNode);
+      EditorContext.SelectedSegment = trackNode;
       logger.Information("Set target object");
       // if (handle == null) {
       //   handle = TransformHandleManager.Instance.CreateHandle(trackNode.transform);
@@ -99,13 +92,13 @@ namespace MapEditor
       // return;
       // Gizmo.SetTargetPivotObject(this.gameObject);
       Gizmo.SetEnabled(true);
-      Gizmo.Settings.SetObjectTransformable(this.gameObject, true);
-      ObjectTransformGizmo.ObjectRestrictions restrictions = new ObjectTransformGizmo.ObjectRestrictions();
+      Gizmo.Settings.SetObjectTransformable(gameObject, true);
+      var restrictions = new ObjectTransformGizmo.ObjectRestrictions();
       restrictions.SetIsAffectedByHandle(GizmoHandleId.CamXYRotation, false);
       restrictions.SetIsAffectedByHandle(GizmoHandleId.CamZRotation, false);
       Gizmo.Gizmo.SetEnabled(true);
-      Gizmo.RegisterObjectRestrictions(this.gameObject, restrictions);
-      Gizmo.SetTargetObject(this.gameObject);
+      Gizmo.RegisterObjectRestrictions(gameObject, restrictions);
+      Gizmo.SetTargetObject(gameObject);
     }
 
     public void Deactivate()

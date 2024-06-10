@@ -47,7 +47,7 @@ namespace MapEditor.StateTracker.Node
       node.transform.SetParent(Graph.Shared.transform);
       UpdateNode(node);
       Graph.Shared.AddNode(node);
-      EditorContext.Instance.PatchEditor.AddOrUpdateNode(node);
+      EditorContext.PatchEditor.AddOrUpdateNode(node);
     }
 
     public void DestroyNode()
@@ -56,7 +56,7 @@ namespace MapEditor.StateTracker.Node
       UpdateGhost(node);
       Object.Destroy(node.gameObject);
       Graph.Shared.RebuildCollections();
-      EditorContext.Instance.PatchEditor.RemoveNode(_id);
+      EditorContext.PatchEditor.RemoveNode(_id);
     }
 
   }

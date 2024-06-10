@@ -79,13 +79,13 @@ namespace MapEditor.StateTracker.Segment
       _isEditable = false;
       _old.UpdateGhost(_segment);
       _new.UpdateSegment(_segment);
-      EditorContext.Instance.PatchEditor.AddOrUpdateSegment(_segment);
+      EditorContext.PatchEditor.AddOrUpdateSegment(_segment);
     }
 
     public void Revert()
     {
       _old.UpdateSegment(_segment);
-      EditorContext.Instance.PatchEditor.AddOrUpdateSegment(_segment);
+      EditorContext.PatchEditor.AddOrUpdateSegment(_segment);
     }
 
     public ChangeTrackSegment SetGroupId(string value)

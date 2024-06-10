@@ -4,7 +4,6 @@ using System.Linq;
 using HarmonyLib;
 using Serilog;
 using TMPro;
-using Track;
 using UI.Builder;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,7 +15,7 @@ namespace MapEditor.Extensions
 
     public static RectTransform AddIconButton(this UIPanelBuilder builder, Sprite icon, Action action)
     {
-      var builderAssets = AccessTools.Field(typeof(UIPanelBuilder), "_assets").GetValue(builder) as UIBuilderAssets;
+      //var builderAssets = AccessTools.Field(typeof(UIPanelBuilder), "_assets").GetValue(builder) as UIBuilderAssets;
       var container = AccessTools.Field(typeof(UIPanelBuilder), "_container").GetValue(builder) as RectTransform;
       // var button = UnityEngine.Object.Instantiate(builderAssets.button, container, false);
       var button = new GameObject("Button").AddComponent<Button>();
@@ -53,26 +52,46 @@ namespace MapEditor.Extensions
 
         items[o - 1].OnSelected();
         dd.value = 0;
-      });
+      })!;
+
       rect.FlexibleWidth();
-      dd = rect.GetComponent<TMP_Dropdown>();
+      dd = rect.GetComponent<TMP_Dropdown>()!;
       dd.MultiSelect = false;
       return rect;
     }
 
-    private static readonly List<string> _trackStyles = Enum.GetValues(typeof(TrackSegment.Style)).Cast<TrackSegment.Style>().Select(o => o.ToString()).ToList();
+    #region AddEnumDropdown
 
-    public static RectTransform AddTrackStylesDropdown(this UIPanelBuilder builder, TrackSegment.Style current, Action<TrackSegment.Style> onSelected)
+    private static readonly Dictionary<Type, List<string>> _EnumValues = new Dictionary<Type, List<string>>();
+
+    private static List<string> GetEnumValues<T>()
     {
-      return builder.AddDropdown(_trackStyles, _trackStyles.IndexOf(current.ToString()), o => onSelected((TrackSegment.Style)o))!;
+      var type = typeof(T);
+      if (!_EnumValues.TryGetValue(type, out var values))
+      {
+        values = new List<string>();
+        foreach (var value in Enum.GetValues(type))
+        {
+          values.Add(value.ToString());
+        }
+
+        _EnumValues.Add(type, values);
+      }
+
+      return values!;
     }
 
-    private static readonly List<string> _trackClasses = Enum.GetValues(typeof(TrackClass)).Cast<TrackClass>().Select(o => o.ToString()).ToList();
-
-    public static RectTransform AddTrackClassDropdown(this UIPanelBuilder builder, TrackClass current, Action<TrackClass> onSelected)
+    public static RectTransform AddEnumDropdown<T>(this UIPanelBuilder builder, T current, Action<T> onSelected) where T : Enum
     {
-      return builder.AddDropdown(_trackClasses, _trackClasses.IndexOf(current.ToString()), o => onSelected((TrackClass)o))!;
+      var values = GetEnumValues<T>();
+      var currentSelectedIndex = values.IndexOf(current.ToString());
+      var rect = builder.AddDropdown(values, currentSelectedIndex, o => onSelected((T)Enum.Parse(typeof(T), values[o]!)))!;
+      var tmpDropdown = rect.GetComponent<TMP_Dropdown>()!;
+      tmpDropdown.MultiSelect = false;
+      return rect;
     }
+
+    #endregion
 
   }
 

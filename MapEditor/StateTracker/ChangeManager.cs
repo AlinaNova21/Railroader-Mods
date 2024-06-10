@@ -42,5 +42,11 @@ namespace MapEditor.StateTracker
       _undoStack.Push(change);
     }
 
+    public void Clear()
+    {
+      _undoStack.Clear();
+      _redoStack.Clear();
+    }
+
   }
 }

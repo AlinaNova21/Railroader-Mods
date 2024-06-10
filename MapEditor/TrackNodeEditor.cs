@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Data.Odbc;
 using System.Linq;
 using System.Text;
 using HarmonyLib;
@@ -13,8 +11,9 @@ using UnityEngine;
 
 namespace MapEditor
 {
-  class TrackNodeEditor : MonoBehaviour, IPickable, IRTTransformGizmoListener
+  internal class TrackNodeEditor : MonoBehaviour, IPickable, IRTTransformGizmoListener
   {
+
     public TrackNode? trackNode;
     public float MaxPickDistance => 100f;
 
@@ -22,8 +21,8 @@ namespace MapEditor
 
     private Handle? handle;
 
-    private Serilog.ILogger logger = Log.ForContext(typeof(TrackNodeEditor));
-    public TooltipInfo TooltipInfo => new TooltipInfo($"Track Node {trackNode?.id}", this.getTooltipText());
+    private readonly Serilog.ILogger logger = Log.ForContext(typeof(TrackNodeEditor));
+    public TooltipInfo TooltipInfo => new TooltipInfo($"Track Node {trackNode?.id}", getTooltipText());
 
     private Window Window { get; set; }
 
@@ -34,7 +33,7 @@ namespace MapEditor
       sb.AppendLine($"Pos: {trackNode?.transform.localPosition}");
       sb.AppendLine($"Rot: {trackNode?.transform.localEulerAngles}");
       var segments = Graph.Shared.SegmentsConnectedTo(trackNode).Select(s => $"{s.id} ({(s.a == trackNode ? "A" : "B")})");
-      sb.AppendLine($"Segments: {String.Join(", ", segments)}");
+      sb.AppendLine($"Segments: {string.Join(", ", segments)}");
       return sb.ToString();
     }
 
@@ -48,20 +47,17 @@ namespace MapEditor
           _gizmo.SetCanAffectScale(false);
           _gizmo.SetTransformSpace(GizmoSpace.Local);
         }
+
         return _gizmo;
       }
     }
+
     private static ObjectTransformGizmo? _gizmo;
 
     public void Activate()
     {
       logger.Information($"Activate {trackNode?.id}");
-      if (EditorContext.Instance == null)
-      {
-        logger.Error("EditorContext.Instance is null");
-        return;
-      }
-      EditorContext.Instance?.SelectNode(trackNode);
+      EditorContext.SelectedNode = trackNode;
       logger.Information("Set target object");
       // if (handle == null) {
       //   handle = TransformHandleManager.Instance.CreateHandle(trackNode.transform);
@@ -100,13 +96,13 @@ namespace MapEditor
       // return;
       // Gizmo.SetTargetPivotObject(this.gameObject);
       Gizmo.SetEnabled(true);
-      Gizmo.Settings.SetObjectTransformable(this.gameObject, true);
-      ObjectTransformGizmo.ObjectRestrictions restrictions = new ObjectTransformGizmo.ObjectRestrictions();
+      Gizmo.Settings.SetObjectTransformable(gameObject, true);
+      var restrictions = new ObjectTransformGizmo.ObjectRestrictions();
       restrictions.SetIsAffectedByHandle(GizmoHandleId.CamXYRotation, false);
       restrictions.SetIsAffectedByHandle(GizmoHandleId.CamZRotation, false);
       Gizmo.Gizmo.SetEnabled(true);
-      Gizmo.RegisterObjectRestrictions(this.gameObject, restrictions);
-      Gizmo.SetTargetObject(this.gameObject);
+      Gizmo.RegisterObjectRestrictions(gameObject, restrictions);
+      Gizmo.SetTargetObject(gameObject);
     }
 
     public void Deactivate()
@@ -137,6 +133,7 @@ namespace MapEditor
         logger.Error("TrackNode is null");
         return;
       }
+
       logger.Information($"Transformed {trackNode.id} {gizmo.Transform.Position3D} {gizmo.Transform.Rotation3D}");
 
       trackNode.transform.position = gizmo.Transform.Position3D;
@@ -165,7 +162,9 @@ namespace MapEditor
           }
         }
       }
+
       nodes.Do(n => Graph.Shared.OnNodeDidChange(n));
     }
+
   }
 }

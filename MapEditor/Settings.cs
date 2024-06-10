@@ -1,12 +1,10 @@
-using System;
-
 namespace MapEditor
 {
-  class Settings
+  public sealed class Settings
   {
-    public bool Enabled { get; set; } = false;
-    public bool ShowHelpers { get; set; } = false;
-    [Obsolete("Use ShowHelpers instead")]
-    public bool ShowNodeHelpers { get => ShowHelpers; set => ShowHelpers = value; }
+
+    public bool Enabled { get; set; }
+    public bool ShowHelpers { get; set; }
+
   }
 }

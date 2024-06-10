@@ -1,24 +1,28 @@
-namespace MapEditor.StateTracker.Transform {
-  using JetBrains.Annotations;
-  using UnityEngine;
+using UnityEngine;
 
-  public sealed class RotateTransform : IUndoable {
+namespace MapEditor.StateTracker.Transform
+{
+  public sealed class RotateTransform : IUndoable
+  {
 
-    private readonly Transform _transform;
+    private readonly UnityEngine.Transform _transform;
     private readonly Quaternion _oldRotation;
     private readonly Quaternion _newRotation;
 
-    public RotateTransform(Transform transform, Quaternion newRotation) {
+    public RotateTransform(UnityEngine.Transform transform, Quaternion newRotation)
+    {
       _transform = transform;
       _oldRotation = transform.localRotation;
       _newRotation = newRotation;
     }
 
-    public void Apply() {
+    public void Apply()
+    {
       _transform.localRotation = _newRotation;
     }
 
-    public void Revert() {
+    public void Revert()
+    {
       _transform.localRotation = _oldRotation;
     }
 

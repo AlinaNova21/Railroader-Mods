@@ -71,14 +71,14 @@ namespace MapEditor.StateTracker.Node
       _isEditable = false;
       _old.UpdateGhost(_node);
       _new.UpdateNode(_node);
-      EditorContext.Instance.PatchEditor.AddOrUpdateNode(_node);
+      EditorContext.PatchEditor.AddOrUpdateNode(_node);
       Graph.Shared.OnNodeDidChange(_node);
     }
 
     public void Revert()
     {
       _old.UpdateNode(_node);
-      EditorContext.Instance.PatchEditor.AddOrUpdateNode(_node);
+      EditorContext.PatchEditor.AddOrUpdateNode(_node);
       Graph.Shared.OnNodeDidChange(_node);
     }
 

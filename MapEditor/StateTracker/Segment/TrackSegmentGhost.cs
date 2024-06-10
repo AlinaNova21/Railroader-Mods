@@ -63,7 +63,7 @@ namespace MapEditor.StateTracker.Segment
       segment.transform.SetParent(Graph.Shared.transform);
       UpdateSegment(segment);
       Graph.Shared.AddSegment(segment);
-      EditorContext.Instance.PatchEditor.AddOrUpdateSegment(segment);
+      EditorContext.PatchEditor.AddOrUpdateSegment(segment);
     }
 
     public void DestroySegment()
@@ -72,7 +72,7 @@ namespace MapEditor.StateTracker.Segment
       UpdateGhost(segment);
       Object.Destroy(segment.gameObject);
       Graph.Shared.RebuildCollections();
-      EditorContext.Instance.PatchEditor.RemoveSegment(_id);
+      EditorContext.PatchEditor.RemoveSegment(_id);
     }
 
   }

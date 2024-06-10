@@ -5,11 +5,13 @@ using Helpers;
 using Track;
 using UnityEngine;
 
-namespace MapEditor
+namespace MapEditor.Helpers
 {
-  class SegmentHelper : MonoBehaviour, IPickable
+  public sealed class TrackSegmentHelper : MonoBehaviour, IPickable
   {
+
     private static Material _lineMaterial;
+
     private static Material LineMaterial
     {
       get
@@ -21,11 +23,13 @@ namespace MapEditor
             color = Color.yellow
           };
         }
+
         return _lineMaterial;
       }
     }
 
     private TrackSegment _segment;
+
     private TrackSegment Segment
     {
       get
@@ -34,6 +38,7 @@ namespace MapEditor
         {
           _segment = transform.parent.GetComponent<TrackSegment>();
         }
+
         return _segment;
       }
     }
@@ -42,9 +47,9 @@ namespace MapEditor
 
     public int Priority => 1;
 
-    public float pointAvg = 0;
+    public float pointAvg;
 
-    public TooltipInfo TooltipInfo => new TooltipInfo($"Segment {Segment.id}", this.getTooltipText());
+    public TooltipInfo TooltipInfo => new TooltipInfo($"Segment {Segment.id}", getTooltipText());
 
     private string getTooltipText()
     {
@@ -95,16 +100,19 @@ namespace MapEditor
     private static Mesh ExtrudeAlongPath(Vector3[] points, float width)
     {
       if (points.Length < 2)
+      {
         return null;
-      Mesh m = new Mesh();
-      List<Vector3> verts = new List<Vector3>();
-      List<Vector3> norms = new List<Vector3>();
+      }
 
-      for (int i = 0; i < points.Length; i++)
+      var m = new Mesh();
+      var verts = new List<Vector3>();
+      var norms = new List<Vector3>();
+
+      for (var i = 0; i < points.Length; i++)
       {
         if (i != points.Length - 1)
         {
-          Vector3 perpendicularDirection = new Vector3(-(points[i + 1].z - points[i].z), 0, points[i + 1].x - points[i].x).normalized;
+          var perpendicularDirection = new Vector3(-(points[i + 1].z - points[i].z), 0, points[i + 1].x - points[i].x).normalized;
           verts.Add(points[i] + perpendicularDirection * width);
           norms.Add(Vector3.up);
           verts.Add(points[i] + perpendicularDirection * -width);
@@ -112,18 +120,19 @@ namespace MapEditor
         }
         else
         {
-          Vector3 perpendicularDirection = new Vector3(-(points[i].z - points[i - 1].z), 0, points[i].x - points[i - 1].x).normalized;
+          var perpendicularDirection = new Vector3(-(points[i].z - points[i - 1].z), 0, points[i].x - points[i - 1].x).normalized;
           verts.Add(points[i] + perpendicularDirection * -width);
           norms.Add(Vector3.up);
           verts.Add(points[i] + perpendicularDirection * width);
           norms.Add(Vector3.up);
         }
       }
+
       m.vertices = verts.ToArray();
       m.normals = norms.ToArray();
 
-      List<int> tris = new List<int>();
-      for (int i = 0; i < m.vertices.Length - 3; i++)
+      var tris = new List<int>();
+      for (var i = 0; i < m.vertices.Length - 3; i++)
       {
         if (i % 2 == 0)
         {
@@ -138,6 +147,7 @@ namespace MapEditor
           tris.Add(i + 2);
         }
       }
+
       m.triangles = tris.ToArray();
 
       m.name = "pathMesh";
@@ -149,13 +159,14 @@ namespace MapEditor
 
     public void Update()
     {
-      LineRenderer lr = GetComponent<LineRenderer>();
-      MeshRenderer mr = GetComponent<MeshRenderer>();
+      var lr = GetComponent<LineRenderer>();
+      var mr = GetComponent<MeshRenderer>();
       if (lr != null && mr != null)
       {
-        lr.enabled = EditorMod.Shared.Settings.ShowHelpers;
-        mr.enabled = EditorMod.Shared.Settings.ShowHelpers;
+        lr.enabled = EditorContext.Settings.ShowHelpers;
+        mr.enabled = EditorContext.Settings.ShowHelpers;
       }
+
       if (!EditorMod.Shared.IsEnabled)
       {
         Destroy(this);
@@ -169,5 +180,6 @@ namespace MapEditor
     public void Deactivate()
     {
     }
+
   }
 }

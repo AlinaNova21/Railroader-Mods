@@ -35,14 +35,14 @@ namespace MapEditor.StateTracker
       newSegment.groupId = _groupId;
       Graph.Shared.AddSegment(newSegment);
       _segment = newSegment;
-      EditorContext.Instance.PatchEditor.AddOrUpdateSegment(_segment.id, _a.id, _b.id, 0, _groupId, 0, _style);
+      EditorContext.PatchEditor.AddOrUpdateSegment(_segment.id, _a.id, _b.id, 0, _groupId, 0, _style);
     }
 
     public void Revert()
     {
       UnityEngine.Object.Destroy(_segment.gameObject);
       Graph.Shared.RebuildCollections();
-      EditorContext.Instance.PatchEditor.RemoveSegment(_id);
+      EditorContext.PatchEditor.RemoveSegment(_id);
     }
 
   }

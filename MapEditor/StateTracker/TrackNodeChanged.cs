@@ -32,7 +32,7 @@ namespace MapEditor.StateTracker
       _node.transform.localPosition = _newPosition;
       _node.transform.localEulerAngles = _newRotation;
       _node.flipSwitchStand = _newFlipSwitchStand;
-      EditorContext.Instance.PatchEditor.AddOrUpdateNode(_node.id, _newPosition, _newRotation, _newFlipSwitchStand);
+      EditorContext.PatchEditor.AddOrUpdateNode(_node.id, _newPosition, _newRotation, _newFlipSwitchStand);
       Graph.Shared.OnNodeDidChange(_node);
     }
 
@@ -41,7 +41,7 @@ namespace MapEditor.StateTracker
       _node.transform.localPosition = _oldPosition;
       _node.transform.localEulerAngles = _oldRotation;
       _node.flipSwitchStand = _oldFlipSwitchStand;
-      EditorContext.Instance.PatchEditor.AddOrUpdateNode(_node.id, _oldPosition, _oldRotation, _oldFlipSwitchStand);
+      EditorContext.PatchEditor.AddOrUpdateNode(_node.id, _oldPosition, _oldRotation, _oldFlipSwitchStand);
       Graph.Shared.OnNodeDidChange(_node);
     }
 

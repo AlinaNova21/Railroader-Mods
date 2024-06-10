@@ -32,14 +32,14 @@ namespace MapEditor.StateTracker
       newNode.flipSwitchStand = false;
       Graph.Shared.AddNode(newNode);
       _node = newNode;
-      EditorContext.Instance.PatchEditor.AddOrUpdateNode(_node.id, _position, _rotation);
+      EditorContext.PatchEditor.AddOrUpdateNode(_node.id, _position, _rotation);
     }
 
     public void Revert()
     {
       UnityEngine.Object.Destroy(_node.gameObject);
       Graph.Shared.RebuildCollections();
-      EditorContext.Instance.PatchEditor.RemoveNode(_id);
+      EditorContext.PatchEditor.RemoveNode(_id);
     }
 
   }

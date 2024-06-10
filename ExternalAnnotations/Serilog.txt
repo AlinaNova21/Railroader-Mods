@@ -1,0 +1,1 @@
+M:Serilog.Log.ForContext``1

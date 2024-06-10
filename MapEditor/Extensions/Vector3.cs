@@ -10,6 +10,5 @@ namespace MapEditor.Extensions
       return new Vector3(vector.x, vector.y, vector.z);
     }
 
-
   }
 }
