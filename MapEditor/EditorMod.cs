@@ -1,12 +1,16 @@
 using System;
+using System.Linq;
 using GalaSoft.MvvmLight.Messaging;
 using Game.Events;
 using HarmonyLib;
 using Railloader;
+using RLD;
 using Serilog;
 using UI;
 using UI.Builder;
+using UI.Common;
 using UI.Menu;
+using UI.Tutorial;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -97,8 +101,6 @@ namespace MapEditor
       image.sprite = Sprite.Create(Resources.Icons.ConstructionIcon, new Rect(0, 0, 24, 24), new Vector2(0.5f, 0.5f));
       image.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 32);
       image.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 32);
-
-      _logger.Debug("Added button to TopRightArea");
     }
 
     public void Update()

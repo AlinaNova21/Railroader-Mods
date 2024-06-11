@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Railloader;
 using Track;
@@ -10,7 +11,7 @@ namespace MapEditor.Dialogs
   public sealed class MapEditorDialog : DialogBase
   {
 
-    public MapEditorDialog() : base("Map Editor", 500, 500, Window.Position.CenterRight)
+    public MapEditorDialog() : base("Map Editor", 400, 300, Window.Position.UpperLeft)
     {
       _ModMixintoList = EditorContext.ModdingContext.GetMixintos("game-graph").ToList();
       _Names = _ModMixintoList.Select(o => o.Source.ToString()).ToList();
@@ -34,8 +35,13 @@ namespace MapEditor.Dialogs
         EditorContext.OpenMixinto(_ModMixintoList[_SelectedModMixintoIndex - 1].Mixinto);
 
         builder.AddField("Prefix", builder.AddInputField(EditorContext.Prefix ?? "", value => EditorContext.Prefix = value, "Prefix")!);
-        builder.AddButtonCompact("Undo", EditorContext.ChangeManager.Undo);
-        builder.AddButtonCompact("Redo", EditorContext.ChangeManager.Redo);
+        builder.HStack(stack =>
+        {
+          stack.AddButtonCompact("Undo", EditorContext.ChangeManager.Undo);
+          stack.AddButtonCompact("Redo", EditorContext.ChangeManager.Redo);
+          stack.Spacer();
+        });
+
         builder.AddButton("Save", EditorContext.Save);
         builder.AddButton("Rebuild Track", () =>
         {

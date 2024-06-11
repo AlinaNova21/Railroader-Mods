@@ -1,7 +1,7 @@
+using JetBrains.Annotations;
 using MapEditor.Extensions;
 using MapEditor.Managers;
 using Track;
-using TriangleNet.Geometry;
 using UI.Builder;
 using UI.Common;
 
@@ -14,55 +14,72 @@ namespace MapEditor.Dialogs
     {
     }
 
-    private UIPanelBuilder _builder;
+    private UIPanelBuilder? _builder;
     private float? _SpeedLimit;
 
     protected override void BuildWindow(UIPanelBuilder builder)
     {
       _builder = builder;
       _SpeedLimit = EditorContext.SelectedSegment?.speedLimit / 9 ?? 0;
-      builder.AddField("Priority", builder.AddInputFieldValidated($"{EditorContext.SelectedSegment?.priority}", value => SegmentManager.UpdatePriority(int.Parse(value)), "\\d+")!);
-      builder.AddField("Speed Limit", () => $"{_SpeedLimit * 5}", UIPanelBuilder.Frequency.Periodic);
-      builder.AddSlider(() => _SpeedLimit ?? EditorContext.SelectedSegment?.speedLimit ?? 0, () => $"{_SpeedLimit * 5}", o => _SpeedLimit = o, 0, 9, true, o => SegmentManager.UpdateSpeedLimit((int)o * 5));
-      builder.AddField("Group ID", builder.AddInputField(EditorContext.SelectedSegment?.groupId ?? "", SegmentManager.UpdateGroup, "groupId")!);
-      builder.AddField("Track style", builder.AddEnumDropdown(EditorContext.SelectedSegment?.style ?? TrackSegment.Style.Standard, SegmentManager.UpdateStyle));
-      builder.AddField("Track class", builder.AddEnumDropdown(EditorContext.SelectedSegment?.trackClass ?? TrackClass.Mainline, SegmentManager.UpdateTrackClass));
+      builder.AddSection("Properties", section => {
+        section.AddField("Priority", builder.AddInputFieldValidated($"{EditorContext.SelectedSegment?.priority}", value => SegmentManager.UpdatePriority(int.Parse(value)), "\\d+")!);
+        section.AddField("Speed Limit", () => $"{_SpeedLimit * 5}", UIPanelBuilder.Frequency.Periodic);
+        section.AddSlider(() => _SpeedLimit ?? EditorContext.SelectedSegment?.speedLimit ?? 0, () => $"{_SpeedLimit * 5}", o => _SpeedLimit = o, 0, 9, true, o => SegmentManager.UpdateSpeedLimit((int)o * 5));
+        section.AddField("Group ID", builder.AddInputField(EditorContext.SelectedSegment?.groupId ?? "", SegmentManager.UpdateGroup, "groupId")!);
+        section.AddField("Track style", builder.AddEnumDropdown(EditorContext.SelectedSegment?.style ?? TrackSegment.Style.Standard, SegmentManager.UpdateStyle));
+        section.AddField("Track class", builder.AddEnumDropdown(EditorContext.SelectedSegment?.trackClass ?? TrackClass.Mainline, SegmentManager.UpdateTrackClass));
+      });
+      builder.Spacer();
+      builder.AddSection("Position", BuildPositionEditor);
+      builder.AddSection("Scaling", Utility.BuildScalingEditor);
+      builder.Spacer();
       builder.AddField("Nodes", builder.HStack(stack =>
       {
-        stack.AddButtonCompact(EditorContext.SelectedSegment?.a?.id ?? "", () => EditorContext.SelectedNode = EditorContext.SelectedSegment!.a);
-        stack.AddButtonCompact(EditorContext.SelectedSegment?.b?.id ?? "", () => EditorContext.SelectedNode = EditorContext.SelectedSegment!.b);
+        stack.AddButtonCompact(EditorContext.SelectedSegment?.a?.id ?? "", () =>
+        {
+          var node = EditorContext.SelectedSegment!.a;
+          EditorContext.SelectedSegment = null;
+          EditorContext.SelectedNode = node;
+        });
+        stack.AddButtonCompact(EditorContext.SelectedSegment?.b?.id ?? "", () =>
+        {
+          var node = EditorContext.SelectedSegment!.b;
+          EditorContext.SelectedSegment = null;
+          EditorContext.SelectedNode = node;
+        });
       })!);
+    }
+
+    private static void BuildPositionEditor(UIPanelBuilder builder)
+    {
+      builder.HStack(stack =>
+      {
+        stack.AddButtonCompact(() => $"- {NodeManager.Scaling:F2}", () => SegmentManager.Move(Direction.down));
+        stack.AddButtonCompact(() => $"+ {NodeManager.Scaling:F2}", () => SegmentManager.Move(Direction.up));
+      });
+    }
+
+    protected override void BeforeWindowShown()
+    {
+      _builder?.Rebuild();
+      base.BeforeWindowShown();
     }
 
     protected override void AfterWindowClosed()
     {
       base.AfterWindowClosed();
-      EditorContext.SelectedSegmentChanged -= SelectedSegmentChanged;
       EditorContext.SelectedSegment = null;
     }
 
+    [UsedImplicitly]
     public void Activate()
     {
-      EditorContext.SelectedSegmentChanged += SelectedSegmentChanged;
     }
 
+    [UsedImplicitly]
     public void Deactivate()
     {
       CloseWindow();
-    }
-
-    private void SelectedSegmentChanged(TrackSegment? trackSegment)
-    {
-      if (trackSegment == null)
-      {
-        CloseWindow();
-        return;
-      }
-
-      Title = $"Segment Editor - {trackSegment.id}";
-      ShowWindow();
-
-      _builder.Rebuild();
     }
 
   }

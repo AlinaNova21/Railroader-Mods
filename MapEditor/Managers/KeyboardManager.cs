@@ -29,6 +29,19 @@ namespace MapEditor.Managers
     [UsedImplicitly]
     public void Update()
     {
+      if (EditorContext.SelectedNode != null)
+      {
+        UpdateNode();
+      }
+
+      if (EditorContext.SelectedSegment != null)
+      {
+        UpdateSegment();
+      }
+    }
+
+    private static void UpdateNode()
+    {
       if (Input.GetKeyDown(KeyCode.KeypadEnter))
       {
         Rotate = !Rotate;
@@ -129,6 +142,23 @@ namespace MapEditor.Managers
       if (Input.GetKeyDown(KeyCode.Keypad0))
       {
         NodeManager.ResetScaling();
+      }
+    }
+
+    private static void UpdateSegment()
+    {
+      var segment = EditorContext.SelectedSegment!;
+
+      if (Input.GetKeyDown(KeyCode.Keypad7))
+      {
+        NodeManager.Move(Direction.down, segment.a);
+        NodeManager.Move(Direction.down, segment.b);
+      }
+
+      if (Input.GetKeyDown(KeyCode.Keypad9))
+      {
+        NodeManager.Move(Direction.up, segment.a);
+        NodeManager.Move(Direction.up, segment.b);
       }
     }
 

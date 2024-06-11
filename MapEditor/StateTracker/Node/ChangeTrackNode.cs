@@ -55,14 +55,14 @@ namespace MapEditor.StateTracker.Node
       return this;
     }
 
-    public ChangeTrackNode FlipSwitchStand()
+    public ChangeTrackNode FlipSwitchStand(bool value)
     {
       if (!_isEditable)
       {
         throw new InvalidOperationException();
       }
 
-      _new._flipSwitchStand = !_new._flipSwitchStand;
+      _new._flipSwitchStand = value;
       return this;
     }
 

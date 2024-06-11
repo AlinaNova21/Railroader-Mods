@@ -6,6 +6,12 @@ namespace MapEditor.Managers
   public static class SegmentManager
   {
 
+    public static void Move(Direction direction)
+    {
+      NodeManager.Move(direction, EditorContext.SelectedSegment!.a);
+      NodeManager.Move(direction, EditorContext.SelectedSegment.b);
+    }
+
     public static void UpdatePriority(int priority)
     {
       EditorContext.ChangeManager.AddChange(new ChangeTrackSegment(EditorContext.SelectedSegment!).Priority(priority));

@@ -93,20 +93,19 @@ namespace MapEditor
       }
     }
 
-    public static event Action<TrackSegment?>? SelectedSegmentChanged;
-
     private static void OnSelectedSegmentChanged(TrackSegment? trackSegment)
     {
       _logger.Information("SelectedSegmentChanged: " + (trackSegment?.id ?? "<null>"));
-      SelectedSegmentChanged?.Invoke(trackSegment);
 
       if (trackSegment == null)
       {
         TrackSegmentDialog.CloseWindow();
+        KeyboardManager.Deactivate();
       }
       else
       {
         TrackSegmentDialog.ShowWindow($"Segment Editor - {trackSegment.id}");
+        KeyboardManager.Activate();
       }
     }
 
@@ -201,6 +200,12 @@ namespace MapEditor
     public static TrackSegmentDialog TrackSegmentDialog => _TrackSegmentDialog ??= new TrackSegmentDialog();
 
     #endregion
+
+    public static void MoveCameraToSelectedNode()
+    {
+      CameraSelector.shared.ZoomToPoint(SelectedNode.transform.localPosition);
+      
+    }
 
   }
 }

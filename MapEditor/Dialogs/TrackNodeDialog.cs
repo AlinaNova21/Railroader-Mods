@@ -13,7 +13,7 @@ namespace MapEditor.Dialogs
   public sealed class TrackNodeDialog : DialogBase
   {
 
-    public TrackNodeDialog() : base("Node editor", 400, 300, Window.Position.CenterRight)
+    public TrackNodeDialog() : base("Node editor", 400, 350, Window.Position.CenterRight)
     {
     }
 
@@ -29,7 +29,7 @@ namespace MapEditor.Dialogs
         stack.Spacer();
         stack.AddSection("Rotation", BuildRotationEditor);
       });
-      builder.AddSection("Scaling", BuildScalingEditor);
+      builder.AddSection("Scaling", Utility.BuildScalingEditor);
       builder.AddSection("Nodes", BuildNodeEditor);
       builder.AddSection("Segments", BuildSegmentEditor);
       builder.AddExpandingVerticalSpacer();
@@ -77,29 +77,16 @@ namespace MapEditor.Dialogs
       });
     }
 
-    private static void BuildScalingEditor(UIPanelBuilder builder)
-    {
-      builder.HStack(stack =>
-      {
-        stack.AddButtonCompact(() => $"+{NodeManager.ScalingDelta:0.##}", NodeManager.IncrementScaling);
-        stack.AddButtonCompact(() => "0", NodeManager.ResetScaling);
-        stack.AddButtonCompact(() => $"-{NodeManager.ScalingDelta:0.##}", NodeManager.DecrementScaling);
-        stack.Spacer();
-        stack.AddButtonCompact(() => "0.01", () => NodeManager.ScalingDelta = 0.01f);
-        stack.AddButtonCompact(() => "0.1", () => NodeManager.ScalingDelta = 0.1f);
-        stack.AddButtonCompact(() => "1", () => NodeManager.ScalingDelta = 1f);
-        stack.AddButtonCompact(() => "10", () => NodeManager.ScalingDelta = 10f);
-      });
-    }
-
+  
     private static void BuildNodeEditor(UIPanelBuilder builder)
     {
+      builder.AddField("Flip Switch Stand", builder.AddToggle(NodeManager.GetFlipSwitchStand, NodeManager.FlipSwitchStand)!);
       builder.HStack(stack =>
       {
-        stack.AddButtonCompact("Flip", NodeManager.FlipSwitchStand);
         stack.AddButtonCompact("Add", NodeManager.AddNode);
         stack.AddButtonCompact("Split", NodeManager.SplitNode);
         stack.AddButtonCompact("Remove", () => NodeManager.RemoveNode(Input.GetKey(KeyCode.LeftShift)));
+        stack.AddButtonCompact("Show", EditorContext.MoveCameraToSelectedNode);
         stack.AddPopupMenu(
           new PopupMenuItem("Copy rotation", NodeManager.CopyNodeRotation),
           new PopupMenuItem("Paste rotation", NodeManager.PasteNodeRotation),
@@ -127,7 +114,11 @@ namespace MapEditor.Dialogs
       {
         foreach (var segment in segments)
         {
-          stack.AddButtonCompact(segment.id, () => EditorContext.SelectedSegment = segment);
+          stack.AddButtonCompact(segment.id, () =>
+          {
+            EditorContext.SelectedNode = null;
+            EditorContext.SelectedSegment = segment;
+          });
         }
       });
     }

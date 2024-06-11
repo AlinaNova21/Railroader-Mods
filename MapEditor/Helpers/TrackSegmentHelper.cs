@@ -9,6 +9,7 @@ namespace MapEditor.Helpers
   public sealed class TrackSegmentHelper : MonoBehaviour
   {
 
+    private static readonly Color _Yellow = new Color(1, 1, 0);
     private static readonly Material _LineMaterial = new Material(Shader.Find("Universal Render Pipeline/Lit"));
 
     private LineRenderer? _LineRenderer;
@@ -53,7 +54,7 @@ namespace MapEditor.Helpers
         Destroy(this);
       }
 
-      _LineRenderer!.material.color = EditorContext.SelectedSegment == segment ? Color.green : Color.yellow;
+      _LineRenderer!.material.color = EditorContext.SelectedSegment == segment ? Color.green : _Yellow;
       _LineRenderer.enabled = EditorContext.Settings.ShowHelpers;
     }
 

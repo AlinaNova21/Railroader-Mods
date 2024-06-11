@@ -4,7 +4,6 @@ using System.Linq;
 using MapEditor.StateTracker;
 using MapEditor.StateTracker.Node;
 using MapEditor.StateTracker.Segment;
-using Serilog;
 using Track;
 using UnityEngine;
 
@@ -13,12 +12,9 @@ namespace MapEditor.Managers
   public static class NodeManager
   {
 
-    private static Serilog.ILogger _logger = Log.ForContext(typeof(NodeManager))!;
-
-
-    public static void Move(Direction direction)
+    public static void Move(Direction direction, TrackNode? node = null)
     {
-      var node = EditorContext.SelectedNode;
+      node ??= EditorContext.SelectedNode;
       if (node == null)
       {
         return;
@@ -50,15 +46,21 @@ namespace MapEditor.Managers
       EditorContext.ChangeManager.AddChange(new ChangeTrackNode(node).Rotate(node.transform.localEulerAngles + offset * Scaling));
     }
 
-    public static void FlipSwitchStand()
+    public static bool GetFlipSwitchStand()
     {
       var node = EditorContext.SelectedNode;
-      if (node == null)
+      return node != null && node.flipSwitchStand;
+    }
+
+    public static void FlipSwitchStand(bool value)
+    {
+      var node = EditorContext.SelectedNode;
+      if (node == null || node.flipSwitchStand == value)
       {
         return;
       }
 
-      EditorContext.ChangeManager.AddChange(new ChangeTrackNode(node).FlipSwitchStand());
+      EditorContext.ChangeManager.AddChange(new ChangeTrackNode(node).FlipSwitchStand(value));
     }
 
     #region Scaling
@@ -219,7 +221,6 @@ namespace MapEditor.Managers
 
       Rebuild();
     }
-
 
     #region Rotation
 
