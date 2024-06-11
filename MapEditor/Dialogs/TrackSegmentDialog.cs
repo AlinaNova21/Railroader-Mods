@@ -1,6 +1,7 @@
-﻿using MapEditor.Extensions;
+using MapEditor.Extensions;
 using MapEditor.Managers;
 using Track;
+using TriangleNet.Geometry;
 using UI.Builder;
 using UI.Common;
 
@@ -26,13 +27,18 @@ namespace MapEditor.Dialogs
       builder.AddField("Group ID", builder.AddInputField(EditorContext.SelectedSegment?.groupId ?? "", SegmentManager.UpdateGroup, "groupId")!);
       builder.AddField("Track style", builder.AddEnumDropdown(EditorContext.SelectedSegment?.style ?? TrackSegment.Style.Standard, SegmentManager.UpdateStyle));
       builder.AddField("Track class", builder.AddEnumDropdown(EditorContext.SelectedSegment?.trackClass ?? TrackClass.Mainline, SegmentManager.UpdateTrackClass));
+      builder.AddField("Nodes", builder.HStack(stack =>
+      {
+        stack.AddButtonCompact(EditorContext.SelectedSegment?.a?.id ?? "", () => EditorContext.SelectedNode = EditorContext.SelectedSegment!.a);
+        stack.AddButtonCompact(EditorContext.SelectedSegment?.b?.id ?? "", () => EditorContext.SelectedNode = EditorContext.SelectedSegment!.b);
+      })!);
     }
 
-    protected override void OnWindowClosed()
+    protected override void AfterWindowClosed()
     {
-      base.OnWindowClosed();
+      base.AfterWindowClosed();
       EditorContext.SelectedSegmentChanged -= SelectedSegmentChanged;
-      EditorContext.SelectedNode = null;
+      EditorContext.SelectedSegment = null;
     }
 
     public void Activate()

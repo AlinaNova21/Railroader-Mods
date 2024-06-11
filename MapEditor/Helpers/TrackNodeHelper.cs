@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Text;
 using Helpers;
+using JetBrains.Annotations;
 using Track;
 using UnityEngine;
 
@@ -11,29 +12,33 @@ namespace MapEditor.Helpers
 
     private static readonly Material _LineMaterial = new Material(Shader.Find("Universal Render Pipeline/Lit"));
 
-    private TrackNode? _node;
-
-    private TrackNode? Node => _node ??= transform.parent.GetComponent<TrackNode>();
-
     private LineRenderer? _LineRenderer;
 
     public float MaxPickDistance => 200f;
 
     public int Priority => 1;
 
-    public TooltipInfo TooltipInfo => new TooltipInfo($"Node {Node?.id}", getTooltipText());
+    public TooltipInfo TooltipInfo => BuildTooltipInfo();
 
-    private string getTooltipText()
+    private TooltipInfo BuildTooltipInfo()
     {
+      var node = transform.parent.GetComponent<TrackNode>();
+      if (node == null || !EditorContext.Settings.ShowHelpers)
+      {
+        return TooltipInfo.Empty;
+      }
+
       var sb = new StringBuilder();
-      sb.AppendLine($"ID: {Node.id}");
-      sb.AppendLine($"Pos: {Node.transform.localPosition}");
-      sb.AppendLine($"Rot: {Node.transform.localEulerAngles}");
-      var segments = Graph.Shared.SegmentsConnectedTo(Node).Select(s => $"{s.id} ({(s.a == Node ? "A" : "B")})");
+      sb.AppendLine($"ID: {node.id}");
+      sb.AppendLine($"Pos: {node.transform.localPosition}");
+      sb.AppendLine($"Rot: {node.transform.localEulerAngles}");
+      var segments = Graph.Shared.SegmentsConnectedTo(node).Select(s => $"{s.id} ({(s.a == node ? "A" : "B")})");
       sb.AppendLine($"Segments: {string.Join(", ", segments)}");
-      return sb.ToString();
+
+      return new TooltipInfo($"Node {node.id}", sb.ToString());
     }
 
+    [UsedImplicitly]
     public void Start()
     {
       transform.localPosition = Vector3.zero;
@@ -51,26 +56,23 @@ namespace MapEditor.Helpers
       cc.size = new Vector3(0.4f, 0.4f, 0.8f);
     }
 
+    [UsedImplicitly]
     public void Update()
     {
-      if (Node == null)
+      var node = transform.parent.GetComponent<TrackNode>();
+      if (EditorMod.Shared?.IsEnabled != true || node == null)
       {
         Destroy(this);
         return;
       }
 
-      _LineRenderer.material.color = EditorContext.SelectedNode == Node ? Color.magenta : Color.cyan;
+      _LineRenderer!.material.color = EditorContext.SelectedNode == node ? Color.magenta : Color.cyan;
       _LineRenderer.enabled = EditorContext.Settings.ShowHelpers;
-
-      if (!EditorMod.Shared.IsEnabled)
-      {
-        Destroy(this);
-      }
     }
 
     public void Activate()
     {
-      EditorContext.SelectedNode = Node;
+      EditorContext.SelectedNode = transform.parent.GetComponent<TrackNode>();
     }
 
     public void Deactivate()

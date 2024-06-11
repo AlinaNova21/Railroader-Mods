@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using MapEditor.StateTracker;
 using Serilog;
 
-namespace MapEditor.StateTracker
+namespace MapEditor.Managers
 {
-  public class ChangeManager
+  public sealed class ChangeManager
   {
 
     private readonly ILogger _logger = Log.ForContext(typeof(ChangeManager))!;
@@ -25,7 +26,7 @@ namespace MapEditor.StateTracker
         return;
       }
 
-      var change = _undoStack.Pop();
+      var change = _undoStack.Pop()!;
       change.Revert();
       _redoStack.Push(change);
     }
@@ -37,7 +38,7 @@ namespace MapEditor.StateTracker
         return;
       }
 
-      var change = _redoStack.Pop();
+      var change = _redoStack.Pop()!;
       change.Apply();
       _undoStack.Push(change);
     }

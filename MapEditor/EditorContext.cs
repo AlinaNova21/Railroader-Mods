@@ -4,11 +4,12 @@ using Core;
 using HarmonyLib;
 using MapEditor.Dialogs;
 using MapEditor.Managers;
-using MapEditor.StateTracker;
 using Railloader;
 using Serilog;
 using StrangeCustoms.Tracks;
 using Track;
+using UnityEngine;
+using ILogger = Serilog.ILogger;
 
 namespace MapEditor
 {
@@ -48,20 +49,28 @@ namespace MapEditor
       }
     }
 
-    public static event Action<TrackNode?>? SelectedNodeChanged;
+    private static TrackNode? _PreviousNode;
 
     private static void OnSelectedNodeChanged(TrackNode? trackNode)
     {
       _logger.Information("SelectedNodeChanged: " + (trackNode?.id ?? "<null>"));
-      SelectedNodeChanged?.Invoke(trackNode);
 
       if (trackNode == null)
       {
         KeyboardManager.Deactivate();
+        TrackNodeDialog.CloseWindow();
       }
       else
       {
         KeyboardManager.Activate();
+        TrackNodeDialog.ShowWindow($"Node Editor - {trackNode.id}");
+
+        if (Input.GetKey(KeyCode.LeftShift) && _PreviousNode != null)
+        {
+          NodeManager.ConnectNodes(_PreviousNode.id!);
+        }
+
+        _PreviousNode = trackNode;
       }
     }
 
@@ -90,6 +99,15 @@ namespace MapEditor
     {
       _logger.Information("SelectedSegmentChanged: " + (trackSegment?.id ?? "<null>"));
       SelectedSegmentChanged?.Invoke(trackSegment);
+
+      if (trackSegment == null)
+      {
+        TrackSegmentDialog.CloseWindow();
+      }
+      else
+      {
+        TrackSegmentDialog.ShowWindow($"Segment Editor - {trackSegment.id}");
+      }
     }
 
     #endregion
@@ -143,7 +161,6 @@ namespace MapEditor
     {
       _logger.Information("Opening patch: {fileName}", fileName);
       PatchEditor = new PatchEditor(fileName);
-      TrackNodeDialog.Activate();
       TrackSegmentDialog.Activate();
     }
 
@@ -152,8 +169,10 @@ namespace MapEditor
       _logger.Information("Closing patch");
       PatchEditor = null!;
       ChangeManager.Clear();
-      TrackNodeDialog.Deactivate();
-      TrackSegmentDialog.Deactivate();
+      TrackNodeDialog.CloseWindow();
+      TrackSegmentDialog.CloseWindow();
+      SelectedNode = null;
+      SelectedSegment = null;
     }
 
     public static void Save()

@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using MapEditor.Extensions;
 using MapEditor.Managers;
+using Serilog;
 using Track;
 using UI.Builder;
 using UI.Common;
 using UnityEngine;
+using ILogger = Serilog.ILogger;
 
 namespace MapEditor.Dialogs
 {
@@ -107,11 +109,12 @@ namespace MapEditor.Dialogs
       });
     }
 
-    private UIPanelBuilder _SegmentEditorBuilder;
+    private UIPanelBuilder? _SegmentEditorBuilder;
 
     private void BuildSegmentEditor(UIPanelBuilder builder)
     {
       _SegmentEditorBuilder = builder;
+
       var node = EditorContext.SelectedNode;
       if (node == null)
       {
@@ -129,45 +132,20 @@ namespace MapEditor.Dialogs
       });
     }
 
-
-    protected override void OnWindowClosed()
+    protected override void BeforeWindowShown()
     {
-      base.OnWindowClosed();
-      EditorContext.SelectedNodeChanged -= SelectedNodeChanged;
+      base.BeforeWindowShown();
+      _SegmentEditorBuilder?.Rebuild();
+    }
+
+    protected override void AfterWindowClosed()
+    {
+      _logger.Information("AfterWindowClosed");
+      base.AfterWindowClosed();
       EditorContext.SelectedNode = null;
     }
 
-    public void Activate()
-    {
-      EditorContext.SelectedNodeChanged += SelectedNodeChanged;
-    }
-
-    public void Deactivate()
-    {
-      CloseWindow();
-    }
-
-    private TrackNode? _PreviousNode;
-
-    private void SelectedNodeChanged(TrackNode? trackNode)
-    {
-      if (trackNode == null)
-      {
-        CloseWindow();
-        return;
-      }
-
-      Title = $"Node Editor - {trackNode.id}";
-      ShowWindow();
-
-      if (Input.GetKey(KeyCode.LeftShift) && _PreviousNode != null)
-      {
-        NodeManager.ConnectNodes(_PreviousNode.id!);
-      }
-
-      _PreviousNode = trackNode;
-      _SegmentEditorBuilder.Rebuild();
-    }
+    private static readonly ILogger _logger = Log.ForContext(typeof(TrackNodeDialog));
 
   }
 }

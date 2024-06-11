@@ -16,14 +16,24 @@ namespace MapEditor.Dialogs
 
       _Window.OnShownDidChange += shown =>
       {
-        if (!shown)
+        if (shown)
         {
-          OnWindowClosed();
+          AfterWindowOpen();
+        }
+        else
+        {
+          AfterWindowClosed();
         }
       };
     }
 
     protected abstract void BuildWindow(UIPanelBuilder builder);
+
+    public void ShowWindow(string title)
+    {
+      _Window.Title = title;
+      ShowWindow();
+    }
 
     public void ShowWindow()
     {
@@ -32,6 +42,8 @@ namespace MapEditor.Dialogs
         EditorContext.UIHelper.PopulateWindow(_Window, BuildWindow);
         _Populated = true;
       }
+
+      BeforeWindowShown();
 
       if (!_Window.IsShown)
       {
@@ -44,7 +56,15 @@ namespace MapEditor.Dialogs
       _Window.CloseWindow();
     }
 
-    protected virtual void OnWindowClosed()
+    protected virtual void BeforeWindowShown()
+    {
+    }
+
+    protected virtual void AfterWindowOpen()
+    {
+    }
+
+    protected virtual void AfterWindowClosed()
     {
     }
 

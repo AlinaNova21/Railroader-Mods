@@ -61,7 +61,7 @@ namespace MapEditor.Dialogs
       });
     }
 
-    protected override void OnWindowClosed()
+    protected override void AfterWindowClosed()
     {
       EditorContext.SaveSettings();
     }

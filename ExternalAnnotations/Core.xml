@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<assembly name="Core">
+  <member name="M:Core.BezierCurve.Approximate(System.Single,System.Single,System.Int32,System.Single)">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
+</assembly>

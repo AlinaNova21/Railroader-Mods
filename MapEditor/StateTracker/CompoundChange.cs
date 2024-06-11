@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace MapEditor.StateTracker
 {
-  public class CompoundChange : IUndoable
+  public sealed class CompoundChange : IUndoable
   {
 
     private readonly IUndoable[] _changes;

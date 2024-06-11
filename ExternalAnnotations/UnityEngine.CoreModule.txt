@@ -3,4 +3,5 @@ M:UnityEngine.Shader.Find(System.String)
 P:UnityEngine.Component.gameObject
 P:UnityEngine.Component.transform
 P:UnityEngine.GameObject.transform
+P:UnityEngine.Renderer.material
 P:UnityEngine.Transform.parent
