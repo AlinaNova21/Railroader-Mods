@@ -1,1 +1,0 @@
-- when disabling editor selected note window will not close
