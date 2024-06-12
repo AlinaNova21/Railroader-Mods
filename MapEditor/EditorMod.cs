@@ -1,24 +1,21 @@
 using System;
-using System.Linq;
 using GalaSoft.MvvmLight.Messaging;
 using Game.Events;
 using HarmonyLib;
-using MapEditor.Extensions;
+using JetBrains.Annotations;
 using Railloader;
-using RLD;
 using Serilog;
 using UI;
 using UI.Builder;
-using UI.Common;
 using UI.Menu;
-using UI.Tutorial;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace MapEditor
 {
-  internal class EditorMod : SingletonPluginBase<EditorMod>, IModTabHandler
+  [UsedImplicitly]
+  internal sealed class EditorMod : SingletonPluginBase<EditorMod>, IModTabHandler
   {
 
     private readonly Serilog.ILogger _logger = Log.ForContext<EditorMod>();
@@ -51,11 +48,11 @@ namespace MapEditor
       {
         _logger.Debug("OnMapDidLoad()");
         var editor = new GameObject("Editor");
-        var parent = GameObject.Find("World").transform;
+        var parent = GameObject.Find("World");
         if (parent != null)
         {
           _logger.Debug("Found World object");
-          editor.transform.SetParent(parent);
+          editor.transform.SetParent(parent.transform);
         }
         else
         {
@@ -68,15 +65,15 @@ namespace MapEditor
         AddButtonToTopRightArea();
 
         var scene = SceneDescriptor.Editor.LoadAsync(LoadSceneMode.Additive);
-        scene.completed += _ =>
+        if (scene != null)
         {
-          GameObject.Find("Definition Editor Mode Controller")?.SetActive(false);
-        };
+          scene.completed += _ => GameObject.Find("Definition Editor Mode Controller")?.SetActive(false);
+        }
       }
       catch (Exception e)
       {
-        _logger.Debug(e.Message);
-        _logger.Debug(e.StackTrace);
+        _logger.Debug(e.Message!);
+        _logger.Debug(e.StackTrace!);
       }
     }
 
@@ -94,16 +91,23 @@ namespace MapEditor
       }
 
       var strip = topRightArea.transform.Find("Strip");
-      var gameObject = new GameObject("MapEditorButton");
-      gameObject.transform.parent = strip;
+      if (strip == null)
+      {
+        return;
+      }
+
+      var gameObject = new GameObject("MapEditorButton")
+      {
+        transform = { parent = strip }
+      };
       gameObject.transform.SetSiblingIndex(9);
 
       var button = gameObject.AddComponent<Button>();
       button.onClick.AddListener(EditorContext.MapEditorDialog.ShowWindow);
 
       var image = gameObject.AddComponent<Image>();
-      image.sprite = Sprite.Create(Resources.Icons.ConstructionIcon, new Rect(0, 0, 24, 24), new Vector2(0.5f, 0.5f));
-      image.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 32);
+      image.sprite = Sprite.Create(Resources.Icons.ConstructionIcon, new Rect(0, 0, 24, 24), new Vector2(0.5f, 0.5f))!;
+      image.rectTransform!.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 32);
       image.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 32);
     }
 

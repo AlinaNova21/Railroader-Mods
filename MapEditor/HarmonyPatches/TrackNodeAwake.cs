@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace MapEditor.HarmonyPatches
 {
-  [UsedImplicitly]
+  [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
   [HarmonyPatch(typeof(TrackNode), "Awake")]
   internal static class TrackNodeAwake
   {

@@ -1,52 +1,58 @@
 using System.Collections.Generic;
 using MapEditor.StateTracker;
-using Serilog;
 
 namespace MapEditor.Managers
 {
   public sealed class ChangeManager
   {
 
-    private readonly ILogger _logger = Log.ForContext(typeof(ChangeManager))!;
-    private readonly Stack<IUndoable> _undoStack = new Stack<IUndoable>();
-    private readonly Stack<IUndoable> _redoStack = new Stack<IUndoable>();
+    private readonly Stack<IUndoable> _UndoStack = new Stack<IUndoable>();
+    private readonly Stack<IUndoable> _RedoStack = new Stack<IUndoable>();
 
     public void AddChange(IUndoable change)
     {
-      _logger.Information("Change: " + change);
       change.Apply();
-      _undoStack.Push(change);
-      _redoStack.Clear();
+      _UndoStack.Push(change);
+      _RedoStack.Clear();
     }
 
     public void Undo()
     {
-      if (_undoStack.Count == 0)
+      if (_UndoStack.Count == 0)
       {
         return;
       }
 
-      var change = _undoStack.Pop()!;
+      var change = _UndoStack.Pop()!;
       change.Revert();
-      _redoStack.Push(change);
+      _RedoStack.Push(change);
     }
 
     public void Redo()
     {
-      if (_redoStack.Count == 0)
+      if (_RedoStack.Count == 0)
       {
         return;
       }
 
-      var change = _redoStack.Pop()!;
+      var change = _RedoStack.Pop()!;
       change.Apply();
-      _undoStack.Push(change);
+      _UndoStack.Push(change);
     }
 
     public void Clear()
     {
-      _undoStack.Clear();
-      _redoStack.Clear();
+      _UndoStack.Clear();
+      _RedoStack.Clear();
+    }
+
+    public void UndoAll()
+    {
+      while (_UndoStack.Count > 0)
+      {
+        var change = _UndoStack.Pop()!;
+        change.Revert();
+      }
     }
 
   }

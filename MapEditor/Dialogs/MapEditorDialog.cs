@@ -42,7 +42,7 @@ namespace MapEditor.Dialogs
           stack.AddButton("Rebuild Track", () =>
           {
             Graph.Shared.RebuildCollections();
-            TrackObjectManager.Instance!.Rebuild();
+            TrackObjectManager.Instance.Rebuild();
           });
         });
       }

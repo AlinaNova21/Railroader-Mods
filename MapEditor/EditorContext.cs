@@ -2,7 +2,6 @@ using System.Linq.Expressions;
 using Core;
 using HarmonyLib;
 using MapEditor.Dialogs;
-using MapEditor.Extensions;
 using MapEditor.Managers;
 using Railloader;
 using Serilog;
@@ -63,7 +62,7 @@ namespace MapEditor
 
         if (Input.GetKey(KeyCode.LeftShift) && _PreviousNode != null)
         {
-          NodeManager.ConnectNodes(_PreviousNode.id!);
+          NodeManager.ConnectNodes(_PreviousNode.id);
         }
 
         _PreviousNode = trackNode;
@@ -156,8 +155,11 @@ namespace MapEditor
 
     private static readonly ILogger _logger = Log.ForContext(typeof(EditorContext));
 
+    private static string? _MixintoFile;
+
     public static void OpenMixinto(string fileName)
     {
+      _MixintoFile = fileName;
       _logger.Information("Opening patch: {fileName}", fileName);
       PatchEditor = new PatchEditor(fileName);
       TrackSegmentDialog.Activate();
@@ -166,13 +168,16 @@ namespace MapEditor
     public static void CloseMixinto()
     {
       _logger.Information("Closing patch");
-      PatchEditor?.UndoAll();
+      ChangeManager.UndoAll();
       PatchEditor = null!;
       ChangeManager.Clear();
       TrackNodeDialog.CloseWindow();
       TrackSegmentDialog.CloseWindow();
       SelectedNode = null;
       SelectedSegment = null;
+
+      Graph.Shared.RebuildCollections();
+      TrackObjectManager.Instance.Rebuild();
     }
 
     public static void Save()
@@ -181,7 +186,8 @@ namespace MapEditor
       {
         _logger.Information("Saving patch");
         PatchEditor.Save();
-        PatchEditor.Clear();
+        PatchEditor = new PatchEditor(_MixintoFile!);
+        ChangeManager.UndoAll();
       }
     }
 
@@ -215,7 +221,10 @@ namespace MapEditor
 
     public static void MoveCameraToSelectedNode()
     {
-      CameraSelector.shared.ZoomToPoint(SelectedNode.transform.localPosition);
+      if (SelectedNode != null)
+      {
+        CameraSelector.shared.ZoomToPoint(SelectedNode.transform.localPosition);
+      }
     }
 
   }

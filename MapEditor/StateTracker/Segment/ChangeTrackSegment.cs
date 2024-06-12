@@ -4,99 +4,85 @@ using Track;
 
 namespace MapEditor.StateTracker.Segment
 {
-  public sealed class ChangeTrackSegment : IUndoable
+  public sealed class ChangeTrackSegment(TrackSegment segment) : IUndoable
   {
 
-    private readonly TrackSegment _segment;
-    private readonly TrackSegmentGhost _old;
-    private readonly TrackSegmentGhost _new;
-    private bool _isEditable = true;
-
-    public ChangeTrackSegment(TrackSegment segment)
-    {
-      _segment = segment;
-      _old = new TrackSegmentGhost(segment.id!);
-      _new = new TrackSegmentGhost(segment.id, segment.a.id, segment.b.id);
-    }
+    private readonly TrackSegmentGhost _Old = new TrackSegmentGhost(segment.id);
+    private readonly TrackSegmentGhost _New = new TrackSegmentGhost(segment.id, segment.a.id, segment.b.id);
+    private bool _IsEditable = true;
 
     public ChangeTrackSegment Priority(int priority)
     {
-      if (!_isEditable)
+      if (!_IsEditable)
       {
         throw new InvalidOperationException();
       }
 
-      _new._priority = priority;
+      _New._priority = priority;
       return this;
     }
 
     public ChangeTrackSegment SpeedLimit(int speedLimit)
     {
-      if (!_isEditable)
+      if (!_IsEditable)
       {
         throw new InvalidOperationException();
       }
 
-      _new._speedLimit = speedLimit;
+      _New._speedLimit = speedLimit;
       return this;
     }
 
     public ChangeTrackSegment GroupId(string GroupId)
     {
-      if (!_isEditable)
+      if (!_IsEditable)
       {
         throw new InvalidOperationException();
       }
 
-      _new._groupId = GroupId;
+      _New._groupId = GroupId;
       return this;
     }
 
     public ChangeTrackSegment Style(TrackSegment.Style style)
     {
-      if (!_isEditable)
+      if (!_IsEditable)
       {
         throw new InvalidOperationException();
       }
 
-      _new._style = style;
+      _New._style = style;
       return this;
     }
 
     public ChangeTrackSegment TrackClass(TrackClass trackClass)
     {
-      if (!_isEditable)
+      if (!_IsEditable)
       {
         throw new InvalidOperationException();
       }
 
-      _new._trackClass = trackClass;
+      _New._trackClass = trackClass;
       return this;
     }
 
     public void Apply()
     {
-      _isEditable = false;
-      _old.UpdateGhost(_segment);
-      _new.UpdateSegment(_segment);
-      EditorContext.PatchEditor.AddOrUpdateSegment(_segment);
+      _IsEditable = false;
+      _Old.UpdateGhost(segment);
+      _New.UpdateSegment(segment);
+      EditorContext.PatchEditor!.AddOrUpdateSegment(segment);
     }
 
     public void Revert()
     {
-      _old.UpdateSegment(_segment);
-      EditorContext.PatchEditor.AddOrUpdateSegment(_segment);
+      _Old.UpdateSegment(segment);
+      EditorContext.PatchEditor!.AddOrUpdateSegment(segment);
     }
-
-    public ChangeTrackSegment SetGroupId(string value)
-    {
-      _new._groupId = value;
-      return this;
-    }
-
+    
     public override string ToString()
     {
-      return "ChangeTrackSegment: " + _segment.id;
+      return "ChangeTrackSegment: " + segment.id;
     }
 
   }

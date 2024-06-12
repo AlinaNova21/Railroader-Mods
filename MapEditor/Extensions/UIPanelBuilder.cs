@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
-using Serilog;
+using JetBrains.Annotations;
 using TMPro;
 using UI.Builder;
 using UnityEngine;
@@ -10,26 +10,21 @@ using UnityEngine.UI;
 
 namespace MapEditor.Extensions
 {
+  [PublicAPI]
   public static class UIPanelBuilderExtensions
   {
 
     public static RectTransform AddIconButton(this UIPanelBuilder builder, Sprite icon, Action action)
     {
-      //var builderAssets = AccessTools.Field(typeof(UIPanelBuilder), "_assets").GetValue(builder) as UIBuilderAssets;
-      var container = AccessTools.Field(typeof(UIPanelBuilder), "_container").GetValue(builder) as RectTransform;
-      // var button = UnityEngine.Object.Instantiate(builderAssets.button, container, false);
+      var container = (RectTransform)AccessTools.Field(typeof(UIPanelBuilder), "_container")!.GetValue(builder)!;
       var button = new GameObject("Button").AddComponent<Button>();
       var rect = button.gameObject.AddComponent<RectTransform>();
       button.transform.SetParent(container, false);
       button.onClick.AddListener(action.Invoke);
-      foreach (var c in button.GetComponents<Component>())
-      {
-        Log.Debug("Component: {0}", c.GetType().Name);
-      }
 
       var img = button.gameObject.AddComponent<Image>();
       img.sprite = icon;
-      img.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 48);
+      img.rectTransform!.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 48);
       img.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 48);
       rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 48);
       rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 48);
@@ -42,7 +37,7 @@ namespace MapEditor.Extensions
     {
       List<string> values = [title, .. items.Select(o => o.DisplayName)];
 
-      TMP_Dropdown dd = null!;
+      TMP_Dropdown dropdown = null!;
       var rect = builder.AddDropdown(values, 0, o =>
       {
         if (o == 0)
@@ -51,12 +46,13 @@ namespace MapEditor.Extensions
         }
 
         items[o - 1].OnSelected();
-        dd.value = 0;
+        // ReSharper disable once AccessToModifiedClosure
+        dropdown.value = 0;
       })!;
 
       rect.FlexibleWidth();
-      dd = rect.GetComponent<TMP_Dropdown>()!;
-      dd.MultiSelect = false;
+      dropdown = rect.GetComponent<TMP_Dropdown>()!;
+      dropdown.MultiSelect = false;
       return rect;
     }
 
@@ -95,17 +91,11 @@ namespace MapEditor.Extensions
 
   }
 
-  public class PopupMenuItem
+  public class PopupMenuItem(string displayName, Action onSelected)
   {
 
-    public PopupMenuItem(string displayName, Action onSelected)
-    {
-      DisplayName = displayName;
-      OnSelected = onSelected;
-    }
-
-    public string DisplayName { get; set; }
-    public Action OnSelected { get; set; }
+    public string DisplayName { get; } = displayName;
+    public Action OnSelected { get; } = onSelected;
 
   }
 }

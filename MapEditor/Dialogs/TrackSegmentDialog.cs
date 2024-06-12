@@ -7,12 +7,8 @@ using UI.Common;
 
 namespace MapEditor.Dialogs
 {
-  public class TrackSegmentDialog : DialogBase
+  public class TrackSegmentDialog() : DialogBase("Segment editor", 400, 300, Window.Position.CenterRight)
   {
-
-    public TrackSegmentDialog() : base("Segment editor", 400, 300, Window.Position.CenterRight)
-    {
-    }
 
     private UIPanelBuilder? _builder;
     private float? _SpeedLimit;
@@ -35,13 +31,13 @@ namespace MapEditor.Dialogs
       builder.Spacer();
       builder.AddField("Nodes", builder.HStack(stack =>
       {
-        stack.AddButtonCompact(EditorContext.SelectedSegment?.a?.id ?? "", () =>
+        stack.AddButtonCompact(EditorContext.SelectedSegment?.a.id ?? "", () =>
         {
           var node = EditorContext.SelectedSegment!.a;
           EditorContext.SelectedSegment = null;
           EditorContext.SelectedNode = node;
         });
-        stack.AddButtonCompact(EditorContext.SelectedSegment?.b?.id ?? "", () =>
+        stack.AddButtonCompact(EditorContext.SelectedSegment?.b.id ?? "", () =>
         {
           var node = EditorContext.SelectedSegment!.b;
           EditorContext.SelectedSegment = null;

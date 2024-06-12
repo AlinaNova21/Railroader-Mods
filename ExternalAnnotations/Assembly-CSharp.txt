@@ -1,2 +1,11 @@
+F:CameraSelector.strategyCamera
+F:Track.TrackNode.id
+F:Track.TrackSegment.a
+F:Track.TrackSegment.b
+F:Track.TrackSegment.id
 M:Track.Graph.SegmentsConnectedTo(Track.TrackNode)
+P:Cameras.StrategyCameraController.CameraContainer
+P:CameraSelector.shared
+P:GalaSoft.MvvmLight.Messaging.Messenger.Default
 P:Track.Graph.Shared
+P:Track.TrackObjectManager.Instance

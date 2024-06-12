@@ -1,21 +1,14 @@
-using System.Collections.Generic;
 using MapEditor.Extensions;
 using MapEditor.Managers;
-using Serilog;
 using Track;
 using UI.Builder;
 using UI.Common;
 using UnityEngine;
-using ILogger = Serilog.ILogger;
 
 namespace MapEditor.Dialogs
 {
-  public sealed class TrackNodeDialog : DialogBase
+  public sealed class TrackNodeDialog() : DialogBase("Node editor", 400, 350, Window.Position.CenterRight)
   {
-
-    public TrackNodeDialog() : base("Node editor", 400, 350, Window.Position.CenterRight)
-    {
-    }
 
     protected override void BuildWindow(UIPanelBuilder builder)
     {
@@ -57,27 +50,27 @@ namespace MapEditor.Dialogs
 
     private static void BuildRotationEditor(UIPanelBuilder builder)
     {
-      var xpos = Sprite.Create(Resources.Icons.RotateAxisX, new Rect(0, 256, 256, -256), new Vector2(0.5f, 0.5f))!;
-      var xneg = Sprite.Create(Resources.Icons.RotateAxisX, new Rect(0, 0, 256, 256), new Vector2(0.5f, 0.5f))!;
-      var ypos = Sprite.Create(Resources.Icons.RotateAxisY, new Rect(256, 0, -256, 256), new Vector2(0.5f, 0.5f))!;
-      var yneg = Sprite.Create(Resources.Icons.RotateAxisY, new Rect(0, 0, 256, 256), new Vector2(0.5f, 0.5f))!;
-      var zpos = Sprite.Create(Resources.Icons.RotateAxisZ, new Rect(256, 0, -256, 256), new Vector2(0.5f, 0.5f))!;
-      var zneg = Sprite.Create(Resources.Icons.RotateAxisZ, new Rect(0, 0, 256, 256), new Vector2(0.5f, 0.5f))!;
+      var xPos = Sprite.Create(Resources.Icons.RotateAxisX, new Rect(0, 256, 256, -256), new Vector2(0.5f, 0.5f))!;
+      var xNeg = Sprite.Create(Resources.Icons.RotateAxisX, new Rect(0, 0, 256, 256), new Vector2(0.5f, 0.5f))!;
+      var yPos = Sprite.Create(Resources.Icons.RotateAxisY, new Rect(256, 0, -256, 256), new Vector2(0.5f, 0.5f))!;
+      var yNeg = Sprite.Create(Resources.Icons.RotateAxisY, new Rect(0, 0, 256, 256), new Vector2(0.5f, 0.5f))!;
+      var zPos = Sprite.Create(Resources.Icons.RotateAxisZ, new Rect(256, 0, -256, 256), new Vector2(0.5f, 0.5f))!;
+      var zNeg = Sprite.Create(Resources.Icons.RotateAxisZ, new Rect(0, 0, 256, 256), new Vector2(0.5f, 0.5f))!;
       builder.HStack(stack =>
       {
-        stack.AddIconButton(zneg, () => NodeManager.Rotate(Vector3.back));
-        stack.AddIconButton(xpos, () => NodeManager.Rotate(Vector3.right));
-        stack.AddIconButton(zpos, () => NodeManager.Rotate(Vector3.forward));
+        stack.AddIconButton(zNeg, () => NodeManager.Rotate(Vector3.back));
+        stack.AddIconButton(xPos, () => NodeManager.Rotate(Vector3.right));
+        stack.AddIconButton(zPos, () => NodeManager.Rotate(Vector3.forward));
       });
       builder.HStack(stack =>
       {
-        stack.AddIconButton(yneg, () => NodeManager.Rotate(Vector3.down));
-        stack.AddIconButton(xneg, () => NodeManager.Rotate(Vector3.left));
-        stack.AddIconButton(ypos, () => NodeManager.Rotate(Vector3.up));
+        stack.AddIconButton(yNeg, () => NodeManager.Rotate(Vector3.down));
+        stack.AddIconButton(xNeg, () => NodeManager.Rotate(Vector3.left));
+        stack.AddIconButton(yPos, () => NodeManager.Rotate(Vector3.up));
       });
     }
 
-  
+
     private static void BuildNodeEditor(UIPanelBuilder builder)
     {
       builder.AddField("Flip Switch Stand", builder.AddToggle(NodeManager.GetFlipSwitchStand, NodeManager.FlipSwitchStand)!);
@@ -108,7 +101,7 @@ namespace MapEditor.Dialogs
         return;
       }
 
-      var segments = Graph.Shared.SegmentsAffectedByNodes(new HashSet<TrackNode> { node });
+      var segments = Graph.Shared.SegmentsAffectedByNodes([node])!;
 
       builder.HStack(stack =>
       {
@@ -116,7 +109,6 @@ namespace MapEditor.Dialogs
         {
           stack.AddButtonCompact(segment.id, () =>
           {
-            EditorContext.SelectedNode = null;
             EditorContext.SelectedSegment = segment;
           });
         }
@@ -131,12 +123,9 @@ namespace MapEditor.Dialogs
 
     protected override void AfterWindowClosed()
     {
-      _logger.Information("AfterWindowClosed");
       base.AfterWindowClosed();
       EditorContext.SelectedNode = null;
     }
-
-    private static readonly ILogger _logger = Log.ForContext(typeof(TrackNodeDialog));
 
   }
 }

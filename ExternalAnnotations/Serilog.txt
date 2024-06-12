@@ -1,1 +1,2 @@
+M:Serilog.Log.ForContext(System.Type)
 M:Serilog.Log.ForContext``1

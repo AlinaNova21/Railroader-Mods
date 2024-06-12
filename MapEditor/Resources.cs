@@ -10,24 +10,24 @@ namespace MapEditor
     public static class Icons
     {
 
-      public static Texture2D ConstructionIcon = LoadTexture2D("construction-icon.png", 24, 24);
-      public static Texture2D RotateAxisX = LoadTexture2D("rotate-axis-x.png", 256, 256);
-      public static Texture2D RotateAxisY = LoadTexture2D("rotate-axis-y.png", 256, 256);
-      public static Texture2D RotateAxisZ = LoadTexture2D("rotate-axis-z.png", 256, 256);
-      public static Texture2D ArrowUp = LoadTexture2D("arrow-up.png", 256, 256);
+      public static readonly Texture2D ConstructionIcon = LoadTexture2D("construction-icon.png", 24, 24);
+      public static readonly Texture2D RotateAxisX = LoadTexture2D("rotate-axis-x.png", 256, 256);
+      public static readonly Texture2D RotateAxisY = LoadTexture2D("rotate-axis-y.png", 256, 256);
+      public static readonly Texture2D RotateAxisZ = LoadTexture2D("rotate-axis-z.png", 256, 256);
+      public static readonly Texture2D ArrowUp = LoadTexture2D("arrow-up.png", 256, 256);
 
     }
 
-    public static byte[] GetBytes(string path)
+    private static byte[] GetBytes(string path)
     {
       var assembly = Assembly.GetExecutingAssembly();
-      var stream = assembly.GetManifestResourceStream(path);
-      var ms = new System.IO.MemoryStream();
+      using var stream = assembly.GetManifestResourceStream(path)!;
+      using var ms = new System.IO.MemoryStream();
       stream.CopyTo(ms);
       return ms.ToArray();
     }
 
-    public static Texture2D LoadTexture2D(string path, int width, int height)
+    private static Texture2D LoadTexture2D(string path, int width, int height)
     {
       try
       {
@@ -38,10 +38,10 @@ namespace MapEditor
       }
       catch (System.Exception e)
       {
-        Log.Error(e, "Failed to load texture {path}");
+        Log.Error(e, "Failed to load texture {0}", path);
       }
 
-      return null;
+      return null!;
     }
 
   }

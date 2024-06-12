@@ -9,12 +9,8 @@ using UnityEngine;
 
 namespace MapEditor.Dialogs
 {
-  public sealed class KeyboardSettingsDialog : DialogBase
+  public sealed class KeyboardSettingsDialog() : DialogBase("Keyboard bindings", 400, 500, Window.Position.Center)
   {
-
-    public KeyboardSettingsDialog() : base("Keyboard bindings", 400, 500, Window.Position.Center)
-    {
-    }
 
     private readonly Dictionary<string, TMP_Text> _Labels = new Dictionary<string, TMP_Text>();
     private readonly Dictionary<string, KeyCode> _Bindings = new Dictionary<string, KeyCode>();
@@ -38,8 +34,8 @@ namespace MapEditor.Dialogs
       var duplicateBindings = _Bindings
         .Where(o => o.Value != KeyCode.None)
         .GroupBy(o => o.Value)
-        .Where(g => g.Count() > 1)
-        .SelectMany(g => g, (g, o) => o.Key)
+        .Where(o => o.Count() > 1)
+        .SelectMany(o => o, (_, o) => o.Key)
         .ToList();
 
       foreach (var label in _Labels)
@@ -62,11 +58,8 @@ namespace MapEditor.Dialogs
       BuildField(builder, "Move Right", EditorContext.Settings.MoveRight, value => EditorContext.Settings.MoveRight = value);
       BuildField(builder, "Move Up", EditorContext.Settings.MoveUp, value => EditorContext.Settings.MoveUp = value);
       BuildField(builder, "Move Down", EditorContext.Settings.MoveDown, value => EditorContext.Settings.MoveDown = value);
-      BuildField(builder, "Increment Scaling", EditorContext.Settings.IncrementScaling, value => EditorContext.Settings.IncrementScaling = value);
-      BuildField(builder, "Decrement Scaling", EditorContext.Settings.DecrementScaling, value => EditorContext.Settings.DecrementScaling = value);
-      BuildField(builder, "Multiply Scaling Delta", EditorContext.Settings.MultiplyScalingDelta, value => EditorContext.Settings.MultiplyScalingDelta = value);
-      BuildField(builder, "Divide Scaling Delta", EditorContext.Settings.DivideScalingDelta, value => EditorContext.Settings.DivideScalingDelta = value);
-      BuildField(builder, "Reset Scaling", EditorContext.Settings.ResetScaling, value => EditorContext.Settings.ResetScaling = value);
+      BuildField(builder, "Multiply Scaling", EditorContext.Settings.MultiplyScaling, value => EditorContext.Settings.MultiplyScaling = value);
+      BuildField(builder, "Divide Scaling", EditorContext.Settings.DivideScaling, value => EditorContext.Settings.DivideScaling = value);
     }
 
     protected override void AfterWindowClosed()

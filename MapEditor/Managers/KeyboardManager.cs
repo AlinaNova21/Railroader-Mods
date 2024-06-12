@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Serilog;
 using UnityEngine;
 
 namespace MapEditor.Managers
 {
   public sealed class KeyboardManager : MonoBehaviour
   {
+
+    private static readonly Serilog.ILogger _Logger = Log.ForContext(typeof(KeyboardManager));
 
     private static GameObject? _gameObject;
 
@@ -79,29 +82,14 @@ namespace MapEditor.Managers
         _NodeActions.Add(EditorContext.Settings.ToggleMode, NodeToggle);
       }
 
-      if (EditorContext.Settings.IncrementScaling != KeyCode.None)
+      if (EditorContext.Settings.MultiplyScaling != KeyCode.None)
       {
-        _CommonActions.Add(EditorContext.Settings.IncrementScaling, NodeManager.IncrementScaling);
+        _CommonActions.Add(EditorContext.Settings.MultiplyScaling, NodeManager.MultiplyScaling);
       }
 
-      if (EditorContext.Settings.DecrementScaling != KeyCode.None)
+      if (EditorContext.Settings.DivideScaling != KeyCode.None)
       {
-        _CommonActions.Add(EditorContext.Settings.DecrementScaling, NodeManager.DecrementScaling);
-      }
-
-      if (EditorContext.Settings.MultiplyScalingDelta != KeyCode.None)
-      {
-        _CommonActions.Add(EditorContext.Settings.MultiplyScalingDelta, NodeManager.MultiplyScalingDelta);
-      }
-
-      if (EditorContext.Settings.DivideScalingDelta != KeyCode.None)
-      {
-        _CommonActions.Add(EditorContext.Settings.DivideScalingDelta, NodeManager.DivideScalingDelta);
-      }
-
-      if (EditorContext.Settings.ResetScaling != KeyCode.None)
-      {
-        _CommonActions.Add(EditorContext.Settings.ResetScaling, NodeManager.ResetScaling);
+        _CommonActions.Add(EditorContext.Settings.DivideScaling, NodeManager.DivideScaling);
       }
     }
 
@@ -130,6 +118,7 @@ namespace MapEditor.Managers
       {
         if (Input.GetKeyDown(pair.Key))
         {
+          _Logger.Information("KeyDown: " + pair.Key);
           pair.Value!();
         }
       }
@@ -214,16 +203,12 @@ namespace MapEditor.Managers
 
     private static void SegmentUp()
     {
-      var segment = EditorContext.SelectedSegment!;
-      NodeManager.Move(Direction.up, segment.a);
-      NodeManager.Move(Direction.up, segment.b);
+      SegmentManager.Move(Direction.up);
     }
 
     private static void SegmentDown()
     {
-      var segment = EditorContext.SelectedSegment!;
-      NodeManager.Move(Direction.down, segment.a);
-      NodeManager.Move(Direction.down, segment.b);
+      SegmentManager.Move(Direction.down);
     }
 
   }

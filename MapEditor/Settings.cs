@@ -11,11 +11,7 @@ namespace MapEditor
     public KeyCode MoveUp { get; set; } = KeyCode.Keypad9;
     public KeyCode MoveDown { get; set; } = KeyCode.Keypad7;
     public KeyCode ToggleMode { get; set; } = KeyCode.KeypadEnter;
-    public KeyCode IncrementScaling { get; set; } = KeyCode.KeypadPlus;
-    public KeyCode DecrementScaling { get; set; } = KeyCode.KeypadMinus;
-    public KeyCode MultiplyScalingDelta { get; set; } = KeyCode.KeypadMultiply;
-    public KeyCode DivideScalingDelta { get; set; } = KeyCode.KeypadDivide;
-    public KeyCode ResetScaling { get; set; } = KeyCode.Keypad0;
-
+    public KeyCode MultiplyScaling { get; set; } = KeyCode.KeypadMultiply;
+    public KeyCode DivideScaling { get; set; } = KeyCode.KeypadDivide;
   }
 }

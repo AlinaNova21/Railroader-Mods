@@ -9,18 +9,14 @@ namespace MapEditor.Dialogs
     private bool _Populated;
     private readonly Window _Window;
 
-    public DialogBase(string title, int width, int height, Window.Position position)
+    protected DialogBase(string title, int width, int height, Window.Position position)
     {
       _Window = EditorContext.UIHelper.CreateWindow(width, height, position);
       _Window.Title = title;
 
       _Window.OnShownDidChange += shown =>
       {
-        if (shown)
-        {
-          AfterWindowOpen();
-        }
-        else
+        if (!shown)
         {
           AfterWindowClosed();
         }
@@ -60,18 +56,8 @@ namespace MapEditor.Dialogs
     {
     }
 
-    protected virtual void AfterWindowOpen()
-    {
-    }
-
     protected virtual void AfterWindowClosed()
     {
-    }
-
-    public string Title
-    {
-      get => _Window.Title;
-      set => _Window.Title = value;
     }
 
   }

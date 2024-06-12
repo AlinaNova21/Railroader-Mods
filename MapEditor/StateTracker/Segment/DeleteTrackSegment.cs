@@ -2,31 +2,26 @@ using Track;
 
 namespace MapEditor.StateTracker.Segment
 {
-  public sealed class DeleteTrackSegment : IUndoable
+  public sealed class DeleteTrackSegment(TrackSegment trackSegment) : IUndoable
   {
 
-    private readonly string _id;
-    private TrackSegmentGhost? _ghost;
-
-    public DeleteTrackSegment(TrackSegment trackSegment)
-    {
-      _id = trackSegment.id!;
-    }
+    private readonly string _Id = trackSegment.id;
+    private TrackSegmentGhost? _Ghost;
 
     public void Apply()
     {
-      _ghost = new TrackSegmentGhost(_id);
-      _ghost.DestroySegment();
+      _Ghost = new TrackSegmentGhost(_Id);
+      _Ghost.DestroySegment();
     }
 
     public void Revert()
     {
-      _ghost!.CreateSegment();
+      _Ghost!.CreateSegment();
     }
 
     public override string ToString()
     {
-      return "DeleteTrackNode: " + _id;
+      return "DeleteTrackNode: " + _Id;
     }
 
   }

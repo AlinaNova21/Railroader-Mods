@@ -8,8 +8,16 @@ namespace MapEditor.Managers
 
     public static void Move(Direction direction)
     {
-      NodeManager.Move(direction, EditorContext.SelectedSegment!.a);
-      NodeManager.Move(direction, EditorContext.SelectedSegment.b);
+      // SelectedNode is already moved by NodeManager
+      if (EditorContext.SelectedSegment!.a.id != EditorContext.SelectedNode?.id)
+      {
+        NodeManager.Move(direction, EditorContext.SelectedSegment.a);
+      }
+
+      if (EditorContext.SelectedSegment.b.id != EditorContext.SelectedNode?.id)
+      {
+        NodeManager.Move(direction, EditorContext.SelectedSegment.b);
+      }
     }
 
     public static void UpdatePriority(int priority)

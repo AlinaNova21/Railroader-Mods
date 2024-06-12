@@ -8,83 +8,83 @@ namespace MapEditor.StateTracker.Node
   public sealed class ChangeTrackNode : IUndoable
   {
 
-    private readonly TrackNode _node;
-    private readonly TrackNodeGhost _old;
-    private readonly TrackNodeGhost _new;
-    private bool _isEditable;
+    private readonly TrackNode _Node;
+    private readonly TrackNodeGhost _Old;
+    private readonly TrackNodeGhost _New;
+    private bool _IsEditable;
 
     public ChangeTrackNode(TrackNode node)
     {
-      _node = node;
-      _old = new TrackNodeGhost(node.id!);
-      _new = new TrackNodeGhost(node.id);
-      _new.UpdateGhost(node);
-      _isEditable = true;
+      _Node = node;
+      _Old = new TrackNodeGhost(node.id);
+      _New = new TrackNodeGhost(node.id);
+      _New.UpdateGhost(node);
+      _IsEditable = true;
     }
 
     public ChangeTrackNode Move(Vector3 newPosition)
     {
-      if (!_isEditable)
+      if (!_IsEditable)
       {
         throw new InvalidOperationException();
       }
 
-      _new._position = newPosition;
+      _New._Position = newPosition;
       return this;
     }
 
     public ChangeTrackNode Move(float? x = null, float? y = null, float? z = null)
     {
-      if (!_isEditable)
+      if (!_IsEditable)
       {
         throw new InvalidOperationException();
       }
 
-      _new._position = new Vector3(x ?? _new._position.x, y ?? _new._position.y, z ?? _new._position.z);
+      _New._Position = new Vector3(x ?? _New._Position.x, y ?? _New._Position.y, z ?? _New._Position.z);
       return this;
     }
 
     public ChangeTrackNode Rotate(Vector3 newRotation)
     {
-      if (!_isEditable)
+      if (!_IsEditable)
       {
         throw new InvalidOperationException();
       }
 
-      _new._rotation = newRotation;
+      _New._Rotation = newRotation;
       return this;
     }
 
     public ChangeTrackNode FlipSwitchStand(bool value)
     {
-      if (!_isEditable)
+      if (!_IsEditable)
       {
         throw new InvalidOperationException();
       }
 
-      _new._flipSwitchStand = value;
+      _New._FlipSwitchStand = value;
       return this;
     }
 
     public void Apply()
     {
-      _isEditable = false;
-      _old.UpdateGhost(_node);
-      _new.UpdateNode(_node);
-      EditorContext.PatchEditor.AddOrUpdateNode(_node);
-      Graph.Shared.OnNodeDidChange(_node);
+      _IsEditable = false;
+      _Old.UpdateGhost(_Node);
+      _New.UpdateNode(_Node);
+      EditorContext.PatchEditor!.AddOrUpdateNode(_Node);
+      Graph.Shared.OnNodeDidChange(_Node);
     }
 
     public void Revert()
     {
-      _old.UpdateNode(_node);
-      EditorContext.PatchEditor.AddOrUpdateNode(_node);
-      Graph.Shared.OnNodeDidChange(_node);
+      _Old.UpdateNode(_Node);
+      EditorContext.PatchEditor!.AddOrUpdateNode(_Node);
+      Graph.Shared.OnNodeDidChange(_Node);
     }
 
     public override string ToString()
     {
-      return "ChangeTrackNode: " + _node.id;
+      return "ChangeTrackNode: " + _Node.id;
     }
 
   }
