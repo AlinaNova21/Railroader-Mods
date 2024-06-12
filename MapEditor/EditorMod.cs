@@ -3,6 +3,7 @@ using System.Linq;
 using GalaSoft.MvvmLight.Messaging;
 using Game.Events;
 using HarmonyLib;
+using MapEditor.Extensions;
 using Railloader;
 using RLD;
 using Serilog;
@@ -17,7 +18,7 @@ using UnityEngine.UI;
 
 namespace MapEditor
 {
-  internal class EditorMod : SingletonPluginBase<EditorMod>, IUpdateHandler, IModTabHandler
+  internal class EditorMod : SingletonPluginBase<EditorMod>, IModTabHandler
   {
 
     private readonly Serilog.ILogger _logger = Log.ForContext<EditorMod>();
@@ -62,12 +63,15 @@ namespace MapEditor
         }
 
         editor.AddComponent<Editor>();
-        editor.SetActive(EditorContext.Settings.Enabled);
+        editor.SetActive(true);
 
         AddButtonToTopRightArea();
 
         var scene = SceneDescriptor.Editor.LoadAsync(LoadSceneMode.Additive);
-        scene.completed += _ => GameObject.Find("Definition Editor Mode Controller")?.SetActive(false);
+        scene.completed += _ =>
+        {
+          GameObject.Find("Definition Editor Mode Controller")?.SetActive(false);
+        };
       }
       catch (Exception e)
       {
@@ -101,15 +105,6 @@ namespace MapEditor
       image.sprite = Sprite.Create(Resources.Icons.ConstructionIcon, new Rect(0, 0, 24, 24), new Vector2(0.5f, 0.5f));
       image.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 32);
       image.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 32);
-    }
-
-    public void Update()
-    {
-      var editor = UnityEngine.Object.FindObjectOfType<Editor>(true);
-      if (editor != null && EditorContext.Settings.Enabled != editor.isActiveAndEnabled)
-      {
-        editor.gameObject.SetActive(EditorContext.Settings.Enabled);
-      }
     }
 
     public void ModTabDidOpen(UIPanelBuilder builder)

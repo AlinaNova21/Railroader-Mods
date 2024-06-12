@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Railloader;
@@ -34,22 +33,20 @@ namespace MapEditor.Dialogs
       {
         EditorContext.OpenMixinto(_ModMixintoList[_SelectedModMixintoIndex - 1].Mixinto);
 
-        builder.AddField("Prefix", builder.AddInputField(EditorContext.Prefix ?? "", value => EditorContext.Prefix = value, "Prefix")!);
+        builder.AddField("Prefix", builder.AddInputField(EditorContext.Prefix, value => EditorContext.Prefix = value, "Prefix")!);
         builder.HStack(stack =>
         {
           stack.AddButtonCompact("Undo", EditorContext.ChangeManager.Undo);
           stack.AddButtonCompact("Redo", EditorContext.ChangeManager.Redo);
-          stack.Spacer();
-        });
-
-        builder.AddButton("Save", EditorContext.Save);
-        builder.AddButton("Rebuild Track", () =>
-        {
-          Graph.Shared.RebuildCollections();
-          TrackObjectManager.Instance.Rebuild();
+          stack.AddButtonCompact("Save", EditorContext.Save);
+          stack.AddButton("Rebuild Track", () =>
+          {
+            Graph.Shared.RebuildCollections();
+            TrackObjectManager.Instance!.Rebuild();
+          });
         });
       }
-      else
+      else if (EditorContext.PatchEditor != null)
       {
         EditorContext.CloseMixinto();
       }
@@ -60,11 +57,7 @@ namespace MapEditor.Dialogs
 
     public void BuildSettings(UIPanelBuilder builder)
     {
-      builder.AddSection("Map Editor", section =>
-      {
-        section.AddField("Enabled", section.AddToggle(() => EditorContext.Settings.Enabled, value => EditorContext.Settings.Enabled = value)!);
-        section.AddField("Show Helpers", section.AddToggle(() => EditorContext.Settings.ShowHelpers, value => EditorContext.Settings.ShowHelpers = value)!);
-      });
+      builder.AddButton("Keyboard bindings", () => EditorContext.KeyboardSettingsDialog.ShowWindow());
     }
 
     protected override void AfterWindowClosed()

@@ -38,9 +38,9 @@ namespace MapEditor.Extensions
       return rect;
     }
 
-    public static RectTransform AddPopupMenu(this UIPanelBuilder builder, params PopupMenuItem[] items)
+    public static RectTransform AddPopupMenu(this UIPanelBuilder builder, string title, params PopupMenuItem[] items)
     {
-      List<string> values = ["More ...", .. items.Select(o => o.DisplayName)];
+      List<string> values = [title, .. items.Select(o => o.DisplayName)];
 
       TMP_Dropdown dd = null!;
       var rect = builder.AddDropdown(values, 0, o =>

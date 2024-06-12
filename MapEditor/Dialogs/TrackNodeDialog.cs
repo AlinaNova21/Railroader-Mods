@@ -87,7 +87,7 @@ namespace MapEditor.Dialogs
         stack.AddButtonCompact("Split", NodeManager.SplitNode);
         stack.AddButtonCompact("Remove", () => NodeManager.RemoveNode(Input.GetKey(KeyCode.LeftShift)));
         stack.AddButtonCompact("Show", EditorContext.MoveCameraToSelectedNode);
-        stack.AddPopupMenu(
+        stack.AddPopupMenu("More ...",
           new PopupMenuItem("Copy rotation", NodeManager.CopyNodeRotation),
           new PopupMenuItem("Paste rotation", NodeManager.PasteNodeRotation),
           new PopupMenuItem("Copy elevation", NodeManager.CopyNodeElevation),

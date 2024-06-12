@@ -23,7 +23,7 @@ namespace MapEditor.Helpers
     private TooltipInfo BuildTooltipInfo()
     {
       var node = transform.parent.GetComponent<TrackNode>();
-      if (node == null || !EditorContext.Settings.ShowHelpers)
+      if (node == null || EditorContext.PatchEditor == null)
       {
         return TooltipInfo.Empty;
       }
@@ -43,7 +43,9 @@ namespace MapEditor.Helpers
     {
       transform.localPosition = Vector3.zero;
       transform.localEulerAngles = Vector3.zero;
+
       gameObject.layer = Layers.Clickable;
+
       _LineRenderer = gameObject.AddComponent<LineRenderer>();
       _LineRenderer.material = _LineMaterial;
       _LineRenderer.startWidth = 0.05f;
@@ -52,8 +54,9 @@ namespace MapEditor.Helpers
       _LineRenderer.SetPosition(0, new Vector3(-0.2f, 0, -0.4f));
       _LineRenderer.SetPosition(1, new Vector3(0, 0, 0.6f));
       _LineRenderer.SetPosition(2, new Vector3(0.2f, 0, -0.4f));
-      var cc = gameObject.AddComponent<BoxCollider>();
-      cc.size = new Vector3(0.4f, 0.4f, 0.8f);
+
+      var boxCollider = gameObject.AddComponent<BoxCollider>();
+      boxCollider.size = new Vector3(0.4f, 0.4f, 0.8f);
     }
 
     [UsedImplicitly]
@@ -67,7 +70,7 @@ namespace MapEditor.Helpers
       }
 
       _LineRenderer!.material.color = EditorContext.SelectedNode == node ? Color.magenta : Color.cyan;
-      _LineRenderer.enabled = EditorContext.Settings.ShowHelpers;
+      _LineRenderer.enabled = EditorContext.PatchEditor != null;
     }
 
     public void Activate()

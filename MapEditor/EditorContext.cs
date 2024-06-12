@@ -1,8 +1,8 @@
-using System;
 using System.Linq.Expressions;
 using Core;
 using HarmonyLib;
 using MapEditor.Dialogs;
+using MapEditor.Extensions;
 using MapEditor.Managers;
 using Railloader;
 using Serilog;
@@ -15,10 +15,6 @@ namespace MapEditor
 {
   public static class EditorContext
   {
-
-    public static IModdingContext ModdingContext { get; set; } = null!;
-
-    public static IUIHelper UIHelper { get; set; } = null!;
 
     #region Settings
 
@@ -150,6 +146,10 @@ namespace MapEditor
 
     #endregion
 
+    public static IModdingContext ModdingContext { get; set; } = null!;
+
+    public static IUIHelper UIHelper { get; set; } = null!;
+
     public static PatchEditor? PatchEditor { get; private set; }
 
     public static ChangeManager ChangeManager { get; } = new ChangeManager();
@@ -166,6 +166,7 @@ namespace MapEditor
     public static void CloseMixinto()
     {
       _logger.Information("Closing patch");
+      PatchEditor?.UndoAll();
       PatchEditor = null!;
       ChangeManager.Clear();
       TrackNodeDialog.CloseWindow();
@@ -176,14 +177,25 @@ namespace MapEditor
 
     public static void Save()
     {
-      _logger.Information("Saving patch");
-      PatchEditor?.Save();
+      if (PatchEditor != null)
+      {
+        _logger.Information("Saving patch");
+        PatchEditor.Save();
+        PatchEditor.Clear();
+      }
     }
 
     #region MapEditorDialog
 
     private static MapEditorDialog? _EditorDialog;
     public static MapEditorDialog MapEditorDialog => _EditorDialog ??= new MapEditorDialog();
+
+    #endregion
+
+    #region MapEditorDialog
+
+    private static KeyboardSettingsDialog? _KeyboardSettingsDialog;
+    public static KeyboardSettingsDialog KeyboardSettingsDialog => _KeyboardSettingsDialog ??= new KeyboardSettingsDialog();
 
     #endregion
 
@@ -204,7 +216,6 @@ namespace MapEditor
     public static void MoveCameraToSelectedNode()
     {
       CameraSelector.shared.ZoomToPoint(SelectedNode.transform.localPosition);
-      
     }
 
   }
