@@ -29,6 +29,10 @@ namespace MapEditor.Dialogs
       builder.AddSection("Position", BuildPositionEditor);
       builder.AddSection("Scaling", Utility.BuildScalingEditor);
       builder.Spacer();
+      builder.HStack(stack =>
+      {
+        stack.AddButtonCompact("Remove", SegmentManager.RemoveSegment);
+      });
       builder.AddField("Nodes", builder.HStack(stack =>
       {
         stack.AddButtonCompact(EditorContext.SelectedSegment?.a.id ?? "", () =>

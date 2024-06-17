@@ -48,7 +48,7 @@ namespace MapEditor
 
     private static void OnSelectedNodeChanged(TrackNode? trackNode)
     {
-      _logger.Information("SelectedNodeChanged: " + (trackNode?.id ?? "<null>"));
+      _Logger.Information("SelectedNodeChanged: " + (trackNode?.id ?? "<null>"));
 
       if (trackNode == null)
       {
@@ -90,7 +90,7 @@ namespace MapEditor
 
     private static void OnSelectedSegmentChanged(TrackSegment? trackSegment)
     {
-      _logger.Information("SelectedSegmentChanged: " + (trackSegment?.id ?? "<null>"));
+      _Logger.Information("SelectedSegmentChanged: " + (trackSegment?.id ?? "<null>"));
 
       if (trackSegment == null)
       {
@@ -115,7 +115,7 @@ namespace MapEditor
       get => _Prefix;
       set
       {
-        _logger.Information("PrefixChanged: " + value);
+        _Logger.Information("PrefixChanged: " + value);
         _Prefix = value;
         _TrackNodeIdGenerator = null;
         _TrackSegmentIdGenerator = null;
@@ -153,24 +153,26 @@ namespace MapEditor
 
     public static ChangeManager ChangeManager { get; } = new ChangeManager();
 
-    private static readonly ILogger _logger = Log.ForContext(typeof(EditorContext));
+    private static readonly ILogger _Logger = Log.ForContext(typeof(EditorContext));
 
     private static string? _MixintoFile;
 
     public static void OpenMixinto(string fileName)
     {
       _MixintoFile = fileName;
-      _logger.Information("Opening patch: {fileName}", fileName);
+      _Logger.Information("Opening patch: {fileName}", fileName);
       PatchEditor = new PatchEditor(fileName);
+      ChangeManager.Clear();
       TrackSegmentDialog.Activate();
     }
 
     public static void CloseMixinto()
     {
-      _logger.Information("Closing patch");
+      _Logger.Information("Closing patch");
+      _Logger.Information("Removing unsaved (" + ChangeManager.Count + ") changes");
+
       ChangeManager.UndoAll();
       PatchEditor = null!;
-      ChangeManager.Clear();
       TrackNodeDialog.CloseWindow();
       TrackSegmentDialog.CloseWindow();
       SelectedNode = null;
@@ -184,10 +186,11 @@ namespace MapEditor
     {
       if (PatchEditor != null)
       {
-        _logger.Information("Saving patch");
+        _Logger.Information("Saving patch");
         PatchEditor.Save();
+
         PatchEditor = new PatchEditor(_MixintoFile!);
-        ChangeManager.UndoAll();
+        ChangeManager.Clear();
       }
     }
 

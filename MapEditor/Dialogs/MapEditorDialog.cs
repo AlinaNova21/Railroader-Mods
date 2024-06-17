@@ -10,7 +10,7 @@ namespace MapEditor.Dialogs
   public sealed class MapEditorDialog : DialogBase
   {
 
-    public MapEditorDialog() : base("Map Editor", 400, 300, Window.Position.UpperLeft)
+    public MapEditorDialog() : base("Map Editor", 400, 350, Window.Position.UpperLeft)
     {
       _ModMixintoList = EditorContext.ModdingContext.GetMixintos("game-graph").ToList();
       _Names = _ModMixintoList.Select(o => o.Source.ToString()).ToList();
@@ -39,17 +39,19 @@ namespace MapEditor.Dialogs
           stack.AddButtonCompact("Undo", EditorContext.ChangeManager.Undo);
           stack.AddButtonCompact("Redo", EditorContext.ChangeManager.Redo);
           stack.AddButtonCompact("Save", EditorContext.Save);
-          stack.AddButton("Rebuild Track", () =>
-          {
-            Graph.Shared.RebuildCollections();
-            TrackObjectManager.Instance.Rebuild();
-          });
+          
         });
       }
       else if (EditorContext.PatchEditor != null)
       {
         EditorContext.CloseMixinto();
       }
+
+      builder.AddButton("Rebuild Track", () =>
+      {
+        Graph.Shared.RebuildCollections();
+        TrackObjectManager.Instance.Rebuild();
+      });
 
       builder.AddSection("Settings", BuildSettings);
       builder.AddExpandingVerticalSpacer();

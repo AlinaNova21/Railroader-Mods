@@ -9,6 +9,8 @@ namespace MapEditor.Managers
     private readonly Stack<IUndoable> _UndoStack = new Stack<IUndoable>();
     private readonly Stack<IUndoable> _RedoStack = new Stack<IUndoable>();
 
+    public int Count => _UndoStack.Count;
+
     public void AddChange(IUndoable change)
     {
       change.Apply();

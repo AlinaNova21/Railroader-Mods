@@ -47,6 +47,12 @@ namespace MapEditor.Managers
       EditorContext.ChangeManager.AddChange(new ChangeTrackSegment(EditorContext.SelectedSegment!).TrackClass(trackClass));
     }
 
+    public static void RemoveSegment()
+    {
+      EditorContext.ChangeManager.AddChange(new DeleteTrackSegment(EditorContext.SelectedSegment!));
+      Rebuild();
+    }
+
     private static void Rebuild()
     {
       // not sure why this is not working, but calling same method from 'Rebuild Track' button works ...
