@@ -2,9 +2,12 @@ id: alinas-map-mod
 modId: AlinaNova21.AlinasMapMod
 name: Alina's Map Mod
 desc: |-
-  A mod that adds a new milestones to the game adding additional tracks, such as yards, wyes, and more.
-version: '1.3.24149.1337'
+  A mod that adds utilities for other mods to add milestones and other features to the game.
+version: '1.4.24171.1853'
 changelog:
+- version: '1.4.24171.1853'
+  desc: |-
+    - BREAKING CHANGE: All track additions removed. They are now available in seperate mods.
 - version: '1.3.24149.1337'
   desc: |-
     - Quick fix to 1.3.24149.726 to remove testing turntables
