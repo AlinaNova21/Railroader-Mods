@@ -1,7 +1,9 @@
 {
+  "version": "1.1.0",
   "type": "module",
   "scripts": {
     "dev": "nodemon",
+    "build": "ts-node ./src/app.ts --project ./tsconfig.json",
     "generateUpdate": "ts-node ./src/generateUpdate.ts --project ./tsconfig.json"
   },
   "nodemonConfig": {

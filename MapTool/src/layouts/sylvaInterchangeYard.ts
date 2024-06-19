@@ -126,7 +126,10 @@ export default async function sylvaInterchangeYard(graph: Graph, originalTracks:
     name: mixin.items[zone].name,
     mixins: {
       alinasMapMod: mixin
-    }
+    },
+    conflicts: [
+      { id: 'AlinaNova21.SylvaInterchangeYard' },
+    ]
   }
   // graph.newSegment(`N${area}_L0`, in1, inNodes[0])
   // graph.newSegment(`N${area}_L1`, in2, outNodes[0])

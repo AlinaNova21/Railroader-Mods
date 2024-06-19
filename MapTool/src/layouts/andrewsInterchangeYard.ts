@@ -168,6 +168,9 @@ export default async function andrewsInterchangeYard(graph: Graph, originalTrack
     name: mixin.items[zone].name,
     mixins: {
       alinasMapMod: mixin
-    }
+    },
+    conflicts: [
+      { id: 'AlinaNova21.AndrewsInterchangeYard' },
+    ]
   }
 }

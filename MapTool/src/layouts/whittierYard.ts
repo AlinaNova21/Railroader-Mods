@@ -22,54 +22,27 @@ export default async function whittierYard(graph: Graph, originalTracks: Graph) 
 
   const { nid, sid, pid } = Graph.Shared.pushIdGenerator('Whittier_Yard')
 
-  // const interchange1 = newNode(Id('N9m4'), new Vector3(0, 561.25, 0))
-  // const interchange1 = getNode(Id('Njk9'))
   const interchange1 = getNode(Id('N5es'))
-  // const interchange1 = getNode(Id('N731')))
-  const interchange2 = getNode(Id('N1be'))
-  // const sawmill = getNode(Id('N72a')))
-  const sawmill = getNode(Id('N72a'))
   const sawmill2 = getNode(Id('Nijv'))
 
   const start = createNode(new Vector3(13220, 561.25, 4395))
-  const yard00 = createNode(new Vector3(12915, 561.25, 4564), new Euler(0, 312, 0))
-  const yard01 = yard00.extend(nid(), sid(), 120, -1, 0, sawmillGroup)
   
   const inSeg = getSegment(Id("Sj4c"));
 
   const inext1 = interchange1.extend(nid(), sid(), -22, 0, 0, extGroup)
-  // const inext2 = inext1.extend(nid(), sid(), 30, 0, 0, extGroup)
   const inext3 = interchange1.extend(nid(), sid(), 20, 180+8, 5, leadGroup)
-  // const inext3 = inext1.extend(nid(), sid(), 30, 180+5, 5, leadGroup)
 
   inext1.flipSwitchStand = true
 
-  // inext1.position.y += 1
   inSeg.startId = inext1.id
-  // inext1
-  //   .extend(nid(), sid(), 10, 10)
-  //   .extend(nid(), sid(), 10, 10)
-  //   .extend(nid(), sid(), 10, 10)
+
   const inseg2 = start.toNode(sid(), inext3)
   inseg2.priority = -1
   inseg2.groupId = leadGroup
 
   start.rotation.y += 300 + -3
 
-  const y0seg = yard00.toNode(sid(), interchange2)
-  const y1seg = yard01.toNode(sid(), sawmill)
-
-  y0seg.priority = -1
-  y0seg.groupId = sawmillGroup
-  y1seg.groupId = sawmillGroup
-
-  yard01.rotation.y += 1.6
-  yard01.position.x += 4
-  yard01.position.y -= 1.25
-  yard01.position.z += 1
-
   interchange1.flipSwitchStand = true
-  interchange2.flipSwitchStand = true
 
   const entryNodes: TrackNode[] = []
   const exitNodes: TrackNode[] = []
@@ -98,8 +71,6 @@ export default async function whittierYard(graph: Graph, originalTracks: Graph) 
     const trackPos2 = forwardPos.clone().add(dir.clone().multiplyScalar(leadLength + yardLength))
     const exitPos = forwardPos.clone().add(dir.clone().multiplyScalar(leadLength + yardLength + leadLength))
     exitPos.add(offset)
-    // trackPos2.y -= 0.5
-    // exitPos.y -= 0.5
 
     const trackNode1 = graph.newNode(Id(`N${zone}_T${i}_01`), trackPos1, new Euler(0, switchAngle + entry.rotation.y, 0))
     const trackNode2 = graph.newNode(Id(`N${zone}_T${i}_02`), trackPos2, new Euler(0, switchAngle + entry.rotation.y, 0))
@@ -153,7 +124,6 @@ export default async function whittierYard(graph: Graph, originalTracks: Graph) 
     if(!id.startsWith(`S${zone}`) || noGroupSids.includes(Id(id))) return
     if(segment.groupId == "") console.log(`Warning: Segment ${id} has no groupId!`)
     if(segment.groupId === extGroup) segment.groupId = ""
-    //   segment.groupId = area
   })
 
   const site1 = graph.newSpan(pid(), {
@@ -163,16 +133,6 @@ export default async function whittierYard(graph: Graph, originalTracks: Graph) 
   }, {
     segmentId: Id("S6if"),
     end: TrackSpanPartEnd.End,
-    distance: 0,
-  })
-
-  const site2 = graph.newSpan(pid(), {
-    segmentId: ssId,
-    end: TrackSpanPartEnd.Start,
-    distance: 0,
-  }, {
-    segmentId: y0seg.id,
-    end: TrackSpanPartEnd.Start,
     distance: 0,
   })
 
@@ -193,27 +153,6 @@ export default async function whittierYard(graph: Graph, originalTracks: Graph) 
     })
     return `${zone}.${id}`
   }
-
-  items.push({
-    identifier: `${zone}_Sawmill`,
-    name: `Whittier Sawmill Connection`,
-    groupIds: [sawmillGroup],
-    description: 'Extend the sawmill track over to the interchange',
-    trackSpans: [site1.id],
-    area: area.id,
-    industryComponent: makeProgIndComp('sawmill-site', [site1.id]),
-    deliveryPhases: [
-      { 
-        cost: 2000,
-        deliveries: [
-          loadHelper('ballast', 4, 'GB*'),
-          loadHelper('gravel', 2, 'GB*'),
-          loadHelper('ties', 2, 'GB*'),
-          loadHelper('rails', 1, 'FM*'),
-        ],
-      }
-    ],
-  })
 
   for(let i = 1; i <= tracks / 3; i++) {
     const id = `${zone}_${i}`
@@ -256,11 +195,6 @@ export default async function whittierYard(graph: Graph, originalTracks: Graph) 
       }
     }
   }
-  
-  for (const item of items) {
-    // makeProgIndComp(item.identifier, [site1.id])
-    // item.industryComponent = item.identifier
-  }
 
   const mixin: AlinasMapModMixin = {
     items: Object.fromEntries(items.map(i => [i.identifier, i]))
@@ -274,6 +208,9 @@ export default async function whittierYard(graph: Graph, originalTracks: Graph) 
     name: 'Whittier Yard',
     mixins: {
       alinasMapMod: mixin
-    }
+    },
+    conflicts: [
+      { id: 'AlinaNova21.WhittierYard' }
+    ]
   }
 }

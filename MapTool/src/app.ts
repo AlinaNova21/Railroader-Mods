@@ -1,7 +1,7 @@
-import { readFile, writeFile } from "node:fs/promises"
-import { Vector3 } from 'three'
-import './generateUpdate.js'
-import testMod from "./layouts/TestMod.js"
+import JSZip from "jszip"
+import { createWriteStream } from "node:fs"
+import { mkdir, readFile, readdir, unlink, writeFile } from "node:fs/promises"
+import { generateUpdate } from "./generateUpdate.js"
 import alarkaJctAdditional from './layouts/alarkaJctAdditional.js'
 import alarkaLoop from "./layouts/alarkaLoop.js"
 import alarkaPaxStorage from './layouts/alarkaPaxStorage.js'
@@ -10,48 +10,126 @@ import sylvaInterchangeYard from './layouts/sylvaInterchangeYard.js'
 import sylvaPaperCrossover from './layouts/sylvaPaperCrossovers.js'
 import sylvaPaxStorage from './layouts/sylvaPaxStorage.js'
 import sylvaWye from './layouts/sylvaWye.js'
+import whittierSawmillConnection from "./layouts/whittierSawmillConnection.js"
 import whittierYard from './layouts/whittierYard.js'
 import { AlinasMapModMixin } from './lib/AlinasMapMod.js'
-import { Graph, Id, LayoutFunction, Mixins } from './lib/index.js'
+import { Mod } from "./lib/Mods.js"
+import { Graph, LayoutFunction, Mixins, ModReference } from './lib/index.js'
 
 async function run() {
+  const baseRequires: ModReference[] = [
+    {
+      id: 'railloader',
+      notBefore: '1.8.0'
+    },
+    {
+      id: 'Zamu.StrangeCustoms',
+      notBefore: '1.6.24125.1439'
+    },
+    {
+      id: 'AlinaNova21.AlinasMapMod',
+      notBefore: '1.4.0'
+    }
+  ]
+  const baseConflicts: ModReference[] = [
+    {
+      id: 'AlinaNova21.AlinasMapMod',
+      notAfter: '1.3.24149.1337',
+    }
+  ]
   console.log(`Loading game-graph-dump.json...`)
-  const graph = Graph.fromJSON(JSON.parse(await readFile("game-graph-dump.json", "utf8")))
+  const dumpJson = JSON.parse(await readFile("game-graph-dump.json", "utf8"))
+  const graph = Graph.fromJSON(dumpJson)
   const layouts = {
+    AlarkaJctAdditional: alarkaJctAdditional,
+    AlarkaLoop: alarkaLoop,
+    AlarkaPaxStorage: alarkaPaxStorage,
+    AndrewsInterchangeYard: andrewsInterchangeYard,
     SylvaInterchangeYard: sylvaInterchangeYard,
-    SylvaWye: sylvaWye,
     SylvaPaperCrossover: sylvaPaperCrossover,
     SylvaPaxStorage: sylvaPaxStorage,
+    SylvaWye: sylvaWye,
+    WhittierSawmillConnection: whittierSawmillConnection,
     WhittierYard: whittierYard,
-    AndrewsInterchangeYard: andrewsInterchangeYard,
-    AlarkaJctAdditional: alarkaJctAdditional,
-    AlarkaPaxStorage: alarkaPaxStorage,
-    AlarkaLoop: alarkaLoop,
     // WalkerUraniumMine: walkerUraniumMine,
-    TestMod: testMod,
+    // TestMod: testMod,
   } as Record<string, LayoutFunction>
   const allMixins = [] as Mixins[]
+  const { version: toolVersion } = JSON.parse(await readFile('package.json', 'utf8'))
+  const binDir = await readdir(`../bin`)
+  for(const file of binDir) {
+    if (file.startsWith('AMM_')) {
+      await unlink(`../bin/${file}`)
+    }
+  }
+  const mods: Mod[] = []
   for (const [id, fn] of Object.entries(layouts)) {
+    const modPath1 = `dist/AMM_${id}`
+    const modPath2 = `../../AMM_${id}`
+    // const modPath = `../../AMM_${id}`
     console.log(`Processing ${id}...`)
-    graph.resetIdGenerator()
-    const { mixins = {} } = await fn(graph, graph)
-    allMixins.push(mixins)
-  }
-  
-  graph.newNode(Id('AlinasMapMod'), new Vector3().random()) // tracking node to trigger updates
-  console.log(`Writing game-graph.json...`)
-  const all = graph.toJSON()
+    const graph = Graph.fromJSON(dumpJson)
+    graph.activate()
+    const { 
+      name,
+      desc = '',
+      version = toolVersion,
+      changelog = [],
+      mixins = {},
+      conflicts = [],
+      requires = []
+    } = await fn(graph, graph)
+    // requires.push(...ammDefinition.requires)
+    requires.unshift(...baseRequires)
+    conflicts.unshift(...baseConflicts)
+    mixins['game-graph'] = graph.toJSON()
+    if (mixins.alinasMapMod) {
+      console.warn(`WARNING: Layout ${id} is using old mixin. Update to using progressions.`)
+      const newMixins = convertLegacyAMMMixin(mixins.alinasMapMod)
+      delete mixins.alinasMapMod
+      Object.assign(mixins, newMixins)
+    }
+    const zipPath = `../bin/AMM_${id}_${version}.zip`
+    const zip = new JSZip()
+    await mkdir(`${modPath1}`, { recursive: true })
+    await mkdir(`${modPath2}`, { recursive: true })
+    const write = async (file: string, data: string) => {
+      zip.file(`mods/AMM_${id}/${file}`, data)
+      await writeFile(`${modPath1}/${file}`, data)
+      await writeFile(`${modPath2}/${file}`, data)
+    }
 
-  await writeFile(`../AlinasMapMod/game-graph.json`, JSON.stringify(all, null, 2))
-  await writeFile(`../../AlinasMapMod/game-graph.json`, JSON.stringify(all, null, 2))
+    const mixintos: { [key: string]: string } = {}
+    for(const [id, mixin] of Object.entries(mixins)) {
+      write(`${id}.json`, JSON.stringify(mixin, null, 2))
+      mixintos[id] = `file(${id}.json)`
+    }
+    const definition = {
+      manifestVersion: 5,
+      id: `AlinaNova21.AMM_${id}`,
+      name,
+      version,
+      requires,
+      mixintos,
+      conflictsWith: conflicts,
+      updateUrl: 'https://railroader.alinanova.dev/update.json',
+    }
+    write('Definition.json', JSON.stringify(definition, null, 2))
+    zip.generateNodeStream().pipe(createWriteStream(zipPath))
+    const snakeId = `amm${id.replace(/[A-Z]/g, l => `-${l.toLowerCase()}`)}`
+    mods.push({
+      id: snakeId,
+      modId: `AlinaNova21.AMM_${id}`,
+      name,
+      desc,
+      version,
+      changelog,
+    })
+  }
+  generateUpdate(mods)
+}  
 
-  const amm: AlinasMapModMixin = {
-    items: {},
-  }
-  for (const mixin of allMixins) {
-    if (!mixin.alinasMapMod) continue
-    amm.items = Object.fromEntries([...Object.entries(amm.items), ...Object.entries(mixin.alinasMapMod.items)])
-  }
+function convertLegacyAMMMixin(amm: AlinasMapModMixin) {
   const state = {
     progressions: {
       ewh: {
@@ -61,7 +139,7 @@ async function run() {
     mapFeatures: {} as any,
   }
   const mapToBool = (list: string[] = []) => Object.fromEntries(list.map(x => [x, true]))
-  for(const [id, item] of Object.entries(amm.items)) {
+  for (const [id, item] of Object.entries(amm.items)) {
     item.deliveryPhases.forEach(dp => {
       dp.industryComponent = item.industryComponent
     })
@@ -79,18 +157,9 @@ async function run() {
       description: item.description,
     }
   }
-  console.log(`Writing progressions.json...`)
-  await writeFile(`../AlinasMapMod/progressions.json`, JSON.stringify(state, null, 2))
-  await writeFile(`../../AlinasMapMod/progressions.json`, JSON.stringify(state, null, 2))
-
-  const migrations = { waybillDestinations: {} as Record<string, string> }
-  for(const [id, item] of Object.entries(amm.items)) {
-    if (!item.industryComponent) continue
-    migrations.waybillDestinations[`${item.identifier}.site`] = item.industryComponent
+  return {
+    progressions: state
   }
-  console.log(`Writing game-migrations.json...`)
-  await writeFile(`../AlinasMapMod/game-migrations.json`, JSON.stringify(migrations, null, 2))
-  await writeFile(`../../AlinasMapMod/game-migrations.json`, JSON.stringify(migrations, null, 2))
 }
 
 run().catch(console.error)

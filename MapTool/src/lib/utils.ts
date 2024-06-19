@@ -1,10 +1,12 @@
 import { Euler, Vector3 } from "three"
-import { AlinasMapModMixin, AlinasMapModMixinItem, DeliveryDirection } from "./AlinasMapMod.js"
+import { AlinasMapModMixin, AlinasMapModMixinItem } from "./AlinasMapMod.js"
 import { Area } from "./Area.js"
 import { Graph, GraphJson, GraphPart } from "./Graph.js"
 import { Industry } from "./Industry.js"
 import { IndustryComponentType } from "./IndustryComponent.js"
 import { Load } from "./Load.js"
+import { ChangeLogEntry } from "./Mods.js"
+import { Delivery, DeliveryDirection } from "./Progressions.js"
 import { Scenery } from "./Scenery.js"
 import { Segment } from "./Segment.js"
 import { TrackNode } from "./TrackNode.js"
@@ -145,9 +147,20 @@ export interface Mixins {
   [key: string]: any
 }
 
+export interface ModReference {
+  id: string
+  notBefore?: string
+  notAfter?: string
+}
+
 export interface LayoutFunctionResult {
-  name?: string
+  name: string
+  desc?: string
+  version?: string
+  changelog?: ChangeLogEntry[]
   mixins?: Mixins
+  conflicts?: ModReference[]
+  requires?: ModReference[]
 }
 
 export const loadHelper = (load: string, count: number, carTypeFilter: string, direction = DeliveryDirection.LoadToIndustry) => ({
@@ -155,7 +168,7 @@ export const loadHelper = (load: string, count: number, carTypeFilter: string, d
   count,
   load,
   direction,
-})
+} as Delivery)
 
 export const generateIndustryForMilestones = (graph: Graph, id: Id<Industry>, mixin: AlinasMapModMixinItem) => {
   const area = graph.areas[Id<Area>(mixin.area || '')]
