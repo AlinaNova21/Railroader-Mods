@@ -94,7 +94,7 @@ async function run() {
     await mkdir(`${modPath1}`, { recursive: true })
     await mkdir(`${modPath2}`, { recursive: true })
     const write = async (file: string, data: string) => {
-      zip.file(`mods/AMM_${id}/${file}`, data)
+      zip.file(`Mods/AMM_${id}/${file}`, data)
       await writeFile(`${modPath1}/${file}`, data)
       await writeFile(`${modPath2}/${file}`, data)
     }

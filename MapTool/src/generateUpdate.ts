@@ -28,5 +28,6 @@ export async function generateUpdate(layouts: Mod[]) {
     mod.downloadUrl = `https://github.com/AlinaNova21/Railroader-Mods/releases/download/v${amm.version}/${mod.assemblyName}_${mod.version}.zip`
     mods.push(mod)
   }
+  mods.forEach(mod => console.log(mod.modId))
   await writeFile('../Site/static/mods.json', JSON.stringify(mods, null, 2))
 }
