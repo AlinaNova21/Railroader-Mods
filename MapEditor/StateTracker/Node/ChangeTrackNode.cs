@@ -17,7 +17,7 @@ namespace MapEditor.StateTracker.Node
     {
       _Node = node;
       _Old = new TrackNodeGhost(node.id);
-      _New = new TrackNodeGhost(node.id);
+      _New = new TrackNodeGhost(node.id, node.transform.localPosition, node.transform.localEulerAngles, node.flipSwitchStand);
       _New.UpdateGhost(node);
       _IsEditable = true;
     }

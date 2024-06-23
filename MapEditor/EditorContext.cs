@@ -50,6 +50,12 @@ namespace MapEditor
     {
       _Logger.Information("SelectedNodeChanged: " + (trackNode?.id ?? "<null>"));
 
+      if (PatchEditor == null)
+      {
+        _Logger.Information("PatchEditor NULL");
+        return;
+      }
+
       if (trackNode == null)
       {
         KeyboardManager.Deactivate();
@@ -91,6 +97,12 @@ namespace MapEditor
     private static void OnSelectedSegmentChanged(TrackSegment? trackSegment)
     {
       _Logger.Information("SelectedSegmentChanged: " + (trackSegment?.id ?? "<null>"));
+
+      if (PatchEditor == null)
+      {
+        _Logger.Information("PatchEditor NULL");
+        return;
+      }
 
       if (trackSegment == null)
       {
@@ -161,6 +173,9 @@ namespace MapEditor
     {
       _MixintoFile = fileName;
       _Logger.Information("Opening patch: {fileName}", fileName);
+
+      SelectedNode = null;
+      SelectedSegment = null;
       PatchEditor = new PatchEditor(fileName);
       ChangeManager.Clear();
       TrackSegmentDialog.Activate();
@@ -201,7 +216,7 @@ namespace MapEditor
 
     #endregion
 
-    #region MapEditorDialog
+    #region KeyboardSettingsDialog
 
     private static KeyboardSettingsDialog? _KeyboardSettingsDialog;
     public static KeyboardSettingsDialog KeyboardSettingsDialog => _KeyboardSettingsDialog ??= new KeyboardSettingsDialog();
@@ -215,7 +230,7 @@ namespace MapEditor
 
     #endregion
 
-    #region TrackNodeDialog
+    #region TrackSegmentDialog
 
     private static TrackSegmentDialog? _TrackSegmentDialog;
     public static TrackSegmentDialog TrackSegmentDialog => _TrackSegmentDialog ??= new TrackSegmentDialog();

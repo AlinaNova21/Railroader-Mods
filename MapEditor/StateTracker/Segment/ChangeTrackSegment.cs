@@ -1,14 +1,15 @@
 using System;
 using MapEditor.Extensions;
+using MapEditor.Managers;
+using Serilog;
 using Track;
 
 namespace MapEditor.StateTracker.Segment
 {
   public sealed class ChangeTrackSegment(TrackSegment segment) : IUndoable
   {
-
     private readonly TrackSegmentGhost _Old = new TrackSegmentGhost(segment.id);
-    private readonly TrackSegmentGhost _New = new TrackSegmentGhost(segment.id, segment.a.id, segment.b.id);
+    private readonly TrackSegmentGhost _New = new TrackSegmentGhost(segment.id, segment.a.id, segment.b.id, segment.priority, segment.speedLimit, segment.groupId!, segment.style, segment.trackClass);
     private bool _IsEditable = true;
 
     public ChangeTrackSegment Priority(int priority)
@@ -33,14 +34,14 @@ namespace MapEditor.StateTracker.Segment
       return this;
     }
 
-    public ChangeTrackSegment GroupId(string GroupId)
+    public ChangeTrackSegment GroupId(string groupId)
     {
       if (!_IsEditable)
       {
         throw new InvalidOperationException();
       }
 
-      _New._groupId = GroupId;
+      _New._groupId = groupId;
       return this;
     }
 

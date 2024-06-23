@@ -1,29 +1,41 @@
+using System;
 using JetBrains.Annotations;
 using MapEditor.Extensions;
 using MapEditor.Managers;
+using MapEditor.StateTracker.Segment;
+using Serilog;
 using Track;
 using UI.Builder;
 using UI.Common;
+using UnityEngine;
 
 namespace MapEditor.Dialogs
 {
-  public class TrackSegmentDialog() : DialogBase("Segment editor", 400, 300, Window.Position.CenterRight)
+  public class TrackSegmentDialog() : DialogBase("Segment editor", 400, 350, Window.Position.LowerRight)
   {
 
-    private UIPanelBuilder? _builder;
-    private float? _SpeedLimit;
+    private UIPanelBuilder? _Builder;
+    private float _SpeedLimit;
 
     protected override void BuildWindow(UIPanelBuilder builder)
     {
-      _builder = builder;
-      _SpeedLimit = EditorContext.SelectedSegment?.speedLimit / 9 ?? 0;
+      var segment = EditorContext.SelectedSegment;
+      if (segment == null)
+      {
+        return;
+      }
+
+      _Builder = builder;
+      _SpeedLimit = Mathf.Floor(segment.speedLimit / 5f);
+
+
       builder.AddSection("Properties", section => {
-        section.AddField("Priority", builder.AddInputFieldValidated($"{EditorContext.SelectedSegment?.priority}", value => SegmentManager.UpdatePriority(int.Parse(value)), "\\d+")!);
+        section.AddField("Priority", builder.AddInputFieldValidated($"{segment.priority}", value => SegmentManager.UpdatePriority(int.Parse(value)), "\\d+")!);
         section.AddField("Speed Limit", () => $"{_SpeedLimit * 5}", UIPanelBuilder.Frequency.Periodic);
-        section.AddSlider(() => _SpeedLimit ?? EditorContext.SelectedSegment?.speedLimit ?? 0, () => $"{_SpeedLimit * 5}", o => _SpeedLimit = o, 0, 9, true, o => SegmentManager.UpdateSpeedLimit((int)o * 5));
-        section.AddField("Group ID", builder.AddInputField(EditorContext.SelectedSegment?.groupId ?? "", SegmentManager.UpdateGroup, "groupId")!);
-        section.AddField("Track style", builder.AddEnumDropdown(EditorContext.SelectedSegment?.style ?? TrackSegment.Style.Standard, SegmentManager.UpdateStyle));
-        section.AddField("Track class", builder.AddEnumDropdown(EditorContext.SelectedSegment?.trackClass ?? TrackClass.Mainline, SegmentManager.UpdateTrackClass));
+        section.AddSlider(() => _SpeedLimit, () => $"{_SpeedLimit * 5}", o => _SpeedLimit = o, 0, 9, true, o => SegmentManager.UpdateSpeedLimit((int)o * 5));
+        section.AddField("Group ID", builder.AddInputField(segment.groupId ?? "", SegmentManager.UpdateGroup, "groupId")!);
+        section.AddField("Track style", builder.AddEnumDropdown(segment.style, SegmentManager.UpdateStyle));
+        section.AddField("Track class", builder.AddEnumDropdown(segment.trackClass, SegmentManager.UpdateTrackClass));
       });
       builder.Spacer();
       builder.AddSection("Position", BuildPositionEditor);
@@ -35,15 +47,15 @@ namespace MapEditor.Dialogs
       });
       builder.AddField("Nodes", builder.HStack(stack =>
       {
-        stack.AddButtonCompact(EditorContext.SelectedSegment?.a.id ?? "", () =>
+        stack.AddButtonCompact(segment?.a.id ?? "", () =>
         {
-          var node = EditorContext.SelectedSegment!.a;
+          var node = segment!.a;
           EditorContext.SelectedSegment = null;
           EditorContext.SelectedNode = node;
         });
-        stack.AddButtonCompact(EditorContext.SelectedSegment?.b.id ?? "", () =>
+        stack.AddButtonCompact(segment?.b.id ?? "", () =>
         {
-          var node = EditorContext.SelectedSegment!.b;
+          var node = segment!.b;
           EditorContext.SelectedSegment = null;
           EditorContext.SelectedNode = node;
         });
@@ -61,7 +73,7 @@ namespace MapEditor.Dialogs
 
     protected override void BeforeWindowShown()
     {
-      _builder?.Rebuild();
+      _Builder?.Rebuild();
       base.BeforeWindowShown();
     }
 
