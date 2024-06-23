@@ -1,91 +1,249 @@
-using System;
+using System.Linq.Expressions;
 using Core;
 using HarmonyLib;
-using MapEditor.StateTracker;
-using MapEditor.Tools;
+using MapEditor.Dialogs;
+using MapEditor.Managers;
+using Railloader;
 using Serilog;
 using StrangeCustoms.Tracks;
 using Track;
-using UnityEngine.SceneManagement;
+using UnityEngine;
+using ILogger = Serilog.ILogger;
 
 namespace MapEditor
 {
-  public class EditorContext
+  public static class EditorContext
   {
-    public static EditorContext Instance { get; private set; }
-    public PatchEditor PatchEditor { get; private set; }
 
-    public ChangeManager ChangeManager { get; private set; } = new ChangeManager();
+    #region Settings
 
-    public TrackNode SelectedNode { get; set; }
-    public TrackSegment SelectedSegment { get; set; }
+    private static Settings? _Settings;
+    public static Settings Settings => _Settings ??= ModdingContext.LoadSettingsData<Settings>("AlinaNova21.MapEditor") ?? new Settings();
 
-    public TrackNode HoveredNode { get; set; }
-    public TrackSegment HoveredSegment { get; set; }
-
-    private BaseTool activeTool;
-    public BaseTool ActiveTool => activeTool;
-
-    private string _prefix = "Custom_";
-    public string Prefix
+    public static void SaveSettings()
     {
-      get => _prefix;
-      set
-      {
-        _prefix = value;
-        TrackNodeIdGenerator = NewIdGenerator($"N{value}", 4);
-        TrackSegmentIdGenerator = NewIdGenerator($"S{value}", 4);
-      }
-    }
-    public IdGenerator TrackNodeIdGenerator = NewIdGenerator($"NCustom_", 4);
-    public IdGenerator TrackSegmentIdGenerator = NewIdGenerator($"SCustom_", 4);
-
-    private static IdGenerator NewIdGenerator(string prefix, int digits = 4)
-    {
-      var cons = AccessTools.Constructor(typeof(IdGenerator), [typeof(string), typeof(int)]);
-      return cons.Invoke([prefix, digits]) as IdGenerator;
+      ModdingContext.SaveSettingsData("AlinaNova21.MapEditor", Settings);
     }
 
-    #region Events
-    public static event Action<EditorContext> EditorContextChanged;
-    public static event Action<TrackNode> NodeSelectedChanged;
-    public static event Action<TrackSegment> SegmentSelectedChanged;
     #endregion
 
-    public static void Unload()
+    #region SelectedNode
+
+    private static TrackNode? _SelectedNode;
+
+    public static TrackNode? SelectedNode
     {
-      try
+      get => _SelectedNode;
+      set
       {
-        Instance = null;
+        if (_SelectedNode != value)
+        {
+          _SelectedNode = value;
+          OnSelectedNodeChanged(value);
+        }
       }
-      catch (Exception e)
+    }
+
+    private static TrackNode? _PreviousNode;
+
+    private static void OnSelectedNodeChanged(TrackNode? trackNode)
+    {
+      _Logger.Information("SelectedNodeChanged: " + (trackNode?.id ?? "<null>"));
+
+      if (PatchEditor == null)
       {
-        Log.ForContext<EditorContext>().Error(e, "Failed to unload editor context");
+        _Logger.Information("PatchEditor NULL");
+        return;
+      }
+
+      if (trackNode == null)
+      {
+        KeyboardManager.Deactivate();
+        TrackNodeDialog.CloseWindow();
+      }
+      else
+      {
+        KeyboardManager.Activate();
+        TrackNodeDialog.ShowWindow($"Node Editor - {trackNode.id}");
+
+        if (Input.GetKey(KeyCode.LeftShift) && _PreviousNode != null)
+        {
+          NodeManager.ConnectNodes(_PreviousNode.id);
+        }
+
+        _PreviousNode = trackNode;
       }
     }
 
-    public EditorContext(string filename)
+    #endregion
+
+    #region SelectedSegment
+
+    private static TrackSegment? _SelectedSegment;
+
+    public static TrackSegment? SelectedSegment
     {
-      Instance = this;
-      PatchEditor = new PatchEditor(filename);
-      EditorContextChanged?.Invoke(this);
+      get => _SelectedSegment;
+      set
+      {
+        if (_SelectedSegment != value)
+        {
+          _SelectedSegment = value;
+          OnSelectedSegmentChanged(value);
+        }
+      }
     }
 
-    public void SetActiveTool(BaseTool tool)
+    private static void OnSelectedSegmentChanged(TrackSegment? trackSegment)
     {
-      activeTool = tool;
-      EditorContextChanged?.Invoke(this);
+      _Logger.Information("SelectedSegmentChanged: " + (trackSegment?.id ?? "<null>"));
+
+      if (PatchEditor == null)
+      {
+        _Logger.Information("PatchEditor NULL");
+        return;
+      }
+
+      if (trackSegment == null)
+      {
+        TrackSegmentDialog.CloseWindow();
+        KeyboardManager.Deactivate();
+      }
+      else
+      {
+        TrackSegmentDialog.ShowWindow($"Segment Editor - {trackSegment.id}");
+        KeyboardManager.Activate();
+      }
     }
 
-    internal void Save()
+    #endregion
+
+    #region ID Generators
+
+    private static string _Prefix = "Custom_";
+
+    public static string Prefix
     {
-      PatchEditor.Save();
+      get => _Prefix;
+      set
+      {
+        _Logger.Information("PrefixChanged: " + value);
+        _Prefix = value;
+        _TrackNodeIdGenerator = null;
+        _TrackSegmentIdGenerator = null;
+      }
     }
 
-    internal void SelectNode(TrackNode newNode)
+    private static IdGenerator? _TrackNodeIdGenerator;
+    public static IdGenerator TrackNodeIdGenerator => _TrackNodeIdGenerator ??= _IdGeneratorFactory("N" + _Prefix, 4);
+
+    private static IdGenerator? _TrackSegmentIdGenerator;
+    public static IdGenerator TrackSegmentIdGenerator => _TrackSegmentIdGenerator ??= _IdGeneratorFactory("S" + _Prefix, 4);
+
+    private delegate IdGenerator IdGeneratorFactoryDelegate(string prefix, int digits);
+
+    private static readonly IdGeneratorFactoryDelegate _IdGeneratorFactory = BuildIdGeneratorFactory();
+
+    private static IdGeneratorFactoryDelegate BuildIdGeneratorFactory()
     {
-      SelectedNode = newNode;
-      NodeSelectedChanged?.Invoke(newNode);
+      var constructor = AccessTools.Constructor(typeof(IdGenerator), [typeof(string), typeof(int)])!;
+      var prefix = Expression.Parameter(typeof(string), "prefix");
+      var digits = Expression.Parameter(typeof(int), "digits");
+      var instance = Expression.New(constructor, prefix, digits);
+      var result = Expression.Convert(instance, typeof(IdGenerator));
+      var lambda = Expression.Lambda<IdGeneratorFactoryDelegate>(result, prefix, digits);
+      return lambda.Compile();
     }
+
+    #endregion
+
+    public static IModdingContext ModdingContext { get; set; } = null!;
+
+    public static IUIHelper UIHelper { get; set; } = null!;
+
+    public static PatchEditor? PatchEditor { get; private set; }
+
+    public static ChangeManager ChangeManager { get; } = new ChangeManager();
+
+    private static readonly ILogger _Logger = Log.ForContext(typeof(EditorContext));
+
+    private static string? _MixintoFile;
+
+    public static void OpenMixinto(string fileName)
+    {
+      _MixintoFile = fileName;
+      _Logger.Information("Opening patch: {fileName}", fileName);
+
+      SelectedNode = null;
+      SelectedSegment = null;
+      PatchEditor = new PatchEditor(fileName);
+      ChangeManager.Clear();
+      TrackSegmentDialog.Activate();
+    }
+
+    public static void CloseMixinto()
+    {
+      _Logger.Information("Closing patch");
+      _Logger.Information("Removing unsaved (" + ChangeManager.Count + ") changes");
+
+      ChangeManager.UndoAll();
+      PatchEditor = null!;
+      TrackNodeDialog.CloseWindow();
+      TrackSegmentDialog.CloseWindow();
+      SelectedNode = null;
+      SelectedSegment = null;
+
+      Graph.Shared.RebuildCollections();
+      TrackObjectManager.Instance.Rebuild();
+    }
+
+    public static void Save()
+    {
+      if (PatchEditor != null)
+      {
+        _Logger.Information("Saving patch");
+        PatchEditor.Save();
+
+        PatchEditor = new PatchEditor(_MixintoFile!);
+        ChangeManager.Clear();
+      }
+    }
+
+    #region MapEditorDialog
+
+    private static MapEditorDialog? _EditorDialog;
+    public static MapEditorDialog MapEditorDialog => _EditorDialog ??= new MapEditorDialog();
+
+    #endregion
+
+    #region KeyboardSettingsDialog
+
+    private static KeyboardSettingsDialog? _KeyboardSettingsDialog;
+    public static KeyboardSettingsDialog KeyboardSettingsDialog => _KeyboardSettingsDialog ??= new KeyboardSettingsDialog();
+
+    #endregion
+
+    #region TrackNodeDialog
+
+    private static TrackNodeDialog? _TrackNodeDialog;
+    public static TrackNodeDialog TrackNodeDialog => _TrackNodeDialog ??= new TrackNodeDialog();
+
+    #endregion
+
+    #region TrackSegmentDialog
+
+    private static TrackSegmentDialog? _TrackSegmentDialog;
+    public static TrackSegmentDialog TrackSegmentDialog => _TrackSegmentDialog ??= new TrackSegmentDialog();
+
+    #endregion
+
+    public static void MoveCameraToSelectedNode()
+    {
+      if (SelectedNode != null)
+      {
+        CameraSelector.shared.ZoomToPoint(SelectedNode.transform.localPosition);
+      }
+    }
+
   }
 }

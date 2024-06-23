@@ -5,18 +5,20 @@ VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{452A23A6-81C8-49C6-A7EE-95FD9377F896}"
 	ProjectSection(SolutionItems) = preProject
+		CHANGES.md = CHANGES.md
 		Directory.Build.props = Directory.Build.props
 		Directory.Build.targets = Directory.Build.targets
 		Paths.user = Paths.user
+		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{1CF8EA97-D7B9-4AD9-B08B-2A2140F897D5}") = "AlinasMapMod", "AlinasMapMod\AlinasMapMod.csproj", "{5A3A18BA-6DB3-41B5-BD90-CCA58B8C83B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlinasMapMod", "AlinasMapMod\AlinasMapMod.csproj", "{5A3A18BA-6DB3-41B5-BD90-CCA58B8C83B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapEditor", "MapEditor\MapEditor.csproj", "{D49B95EB-0F2B-43EB-817E-9226E8961E66}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MapEditor", "MapEditor\MapEditor.csproj", "{D49B95EB-0F2B-43EB-817E-9226E8961E66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransformHandles", "TransformHandles\TransformHandles.csproj", "{65837A87-F496-4304-A2B0-15C38D8EC5D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransformHandles", "TransformHandles\TransformHandles.csproj", "{65837A87-F496-4304-A2B0-15C38D8EC5D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlinasUtils", "AlinasUtils\AlinasUtils.csproj", "{427DE3F5-4F3D-497E-909A-0E50AB372F61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlinasUtils", "AlinasUtils\AlinasUtils.csproj", "{427DE3F5-4F3D-497E-909A-0E50AB372F61}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
