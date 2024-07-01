@@ -31,6 +31,9 @@ export class Graph implements isDirty {
     if(!Graph.instance) Graph.instance = new Graph()
     return Graph.instance
   }
+  public activate() {
+    Graph.instance = this
+  }
   public nodes:Record<Id<TrackNode>, TrackNode> = {}
   public segments:Record<Id<Segment>, Segment> = {}
   public areas:Record<Id<Area>, Area> = {}

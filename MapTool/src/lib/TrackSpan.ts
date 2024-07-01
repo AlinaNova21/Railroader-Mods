@@ -18,7 +18,7 @@ export interface TrackSpanPart {
   end: TrackSpanPartEnd
 }
 
-const createTrackSpan = (upper: TrackSpanPart, lower: TrackSpanPart) => Graph.Shared.createSpan(upper, lower)
+export const createTrackSpan = (upper: TrackSpanPart, lower: TrackSpanPart) => Graph.Shared.createSpan(upper, lower)
 
 export class TrackSpan implements GraphPart<TrackSpanJson, TrackSpan> {
   public [isDirtySym] = false

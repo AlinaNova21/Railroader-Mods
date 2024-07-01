@@ -86,6 +86,9 @@ export default async function alarkaJctAdditional(graph: Graph, originalTracks: 
     name: mixinName,
     mixins: {
       alinasMapMod: mixin
-    }
+    },
+    conflicts: [
+      { id: 'AlinaNova21.AlarkaJctAdditional' }
+    ]
   }
 }

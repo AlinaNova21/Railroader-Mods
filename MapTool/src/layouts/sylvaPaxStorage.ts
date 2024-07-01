@@ -1,8 +1,8 @@
 
 import { Vector3 } from 'three'
 
-import { AlinasMapModMixin, DeliveryDirection } from '../lib/AlinasMapMod.js'
-import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, TrackSpan, TrackSpanPartEnd, getNode, idGenerator, loadHelper } from '../lib/index.js'
+import { AlinasMapModMixin } from '../lib/AlinasMapMod.js'
+import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, TrackSpan, TrackSpanPartEnd, getNode, loadHelper } from '../lib/index.js'
 
 const UP = new Vector3(0, 1, 0)
 

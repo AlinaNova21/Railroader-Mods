@@ -14,17 +14,5 @@
       "id": "Zamu.StrangeCustoms",
       "notBefore": "1.6.24125.1439"
     }
-  ],
-  "conflictsWith": [
-    { "id": "AlinaNova21.AndrewsInterchangeYard" },
-    { "id": "AlinaNova21.SylvaInterchangeYard" },
-    { "id": "AlinaNova21.SylvaWye" },
-    { "id": "AlinaNova21.WhittierYard" },
-    { "id": "AlinaNova21.AlarkaJctAdditional" }
-  ],
-  "mixintos": {
-    "game-graph": "file(game-graph.json)",
-    "game-migrations": "file(game-migrations.json)",
-    "progressions": "file(progressions.json)"
-  }
+  ]
 }

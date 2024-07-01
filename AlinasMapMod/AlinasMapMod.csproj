@@ -2,7 +2,7 @@
   <PropertyGroup>
     <!-- Optionally, set a few things to your liking -->
     <MajorVersion>1</MajorVersion>
-    <MinorVersion>3</MinorVersion>
+    <MinorVersion>4</MinorVersion>
     <IsMod>true</IsMod>
     <PackageMod>enable</PackageMod>
     <PublishMod>enable</PublishMod>
@@ -32,5 +32,8 @@
     <GameAssembly Include="UnityEngine.PhysicsModule" />
     <GameAssembly Include="UnityEngine.ImageConversionModule" />
     <GameAssembly Include="UnityEngine.UI" />
+  </ItemGroup>
+  <ItemGroup>
+    <ExtraZips Include="../bin/AMM_*.zip" />
   </ItemGroup>
 </Project>

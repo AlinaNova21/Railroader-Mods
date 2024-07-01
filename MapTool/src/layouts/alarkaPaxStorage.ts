@@ -1,10 +1,8 @@
 
-import { Euler,Vector3 } from 'three'
+import { Euler, Vector3 } from 'three'
 
-import { AlinasMapModMixin, DeliveryDirection } from '../lib/AlinasMapMod.js'
-import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, TrackNode, TrackSpan, TrackSpanPartEnd, getNode, getSegment, idGenerator, loadHelper } from '../lib/index.js'
-import { create } from 'node:domain'
-import { createNode } from 'yaml/util'
+import { AlinasMapModMixin } from '../lib/AlinasMapMod.js'
+import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, TrackSpan, TrackSpanPartEnd, getNode, getSegment, loadHelper } from '../lib/index.js'
 
 const UP = new Vector3(0, 1, 0)
 
