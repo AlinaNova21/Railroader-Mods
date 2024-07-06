@@ -2,7 +2,7 @@
 import { Euler, MathUtils, Vector3 } from 'three'
 
 import { AlinasMapModMixin, AlinasMapModMixinItem } from '../lib/AlinasMapMod.js'
-import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, Segment, TrackNode, TrackSpan, TrackSpanPartEnd, createNode, getNode, getSegment, loadHelper } from '../lib/index.js'
+import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, LayoutFunctionResult, Segment, TrackNode, TrackSpan, TrackSpanPartEnd, createNode, getNode, getSegment, loadHelper } from '../lib/index.js'
 
 const UP = new Vector3(0, 1, 0)
 
@@ -201,7 +201,7 @@ export default async function whittierYard(graph: Graph, originalTracks: Graph) 
   }
 
   graph.createSpliney(Id(`${zone}_Poles`), "AlinasMapMod.TelegraphPoleBuilder", {
-    polesToRaise: [585, 587, 591, 593, 595, 603, 605]
+    polesToRaise: [591, 593, 595, 603, 605]
   })
 
   return {
@@ -211,6 +211,10 @@ export default async function whittierYard(graph: Graph, originalTracks: Graph) 
     },
     conflicts: [
       { id: 'AlinaNova21.WhittierYard' }
+    ],
+    version: '1.1.2',
+    changelog: [
+      { version: '1.1.2', desc: 'Updated poles to remove extras' }
     ]
-  }
+  } as LayoutFunctionResult
 }

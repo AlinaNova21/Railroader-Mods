@@ -1,7 +1,7 @@
 
 import { Euler, Vector3 } from 'three'
 
-import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, ProgressionsJson, TrackSpan, TrackSpanPartEnd, createNode, createTrackSpan, getNode, loadHelper, mapToBool } from '../lib/index.js'
+import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, LayoutFunctionResult, ProgressionsJson, TrackSpan, TrackSpanPartEnd, createNode, createTrackSpan, getNode, loadHelper, mapToBool } from '../lib/index.js'
 
 /** @param {Graph} graph */
 export default async function whittierSawmillConnection(graph: Graph, originalTracks: Graph) {
@@ -91,8 +91,8 @@ export default async function whittierSawmillConnection(graph: Graph, originalTr
     }
   }
 
-  graph.createSpliney(Id(`${zone}_Poles`), "AlinasMapMod.TelegraphPoleBuilder", {
-    polesToRaise: [585, 587, 591, 593, 595, 603, 605]
+  graph.createSpliney(Id(`${zone}_Sawmill_Poles`), "AlinasMapMod.TelegraphPoleBuilder", {
+    polesToRaise: [585, 587]
   })
 
   return {
@@ -102,6 +102,10 @@ export default async function whittierSawmillConnection(graph: Graph, originalTr
     },
     conflicts: [
       { id: 'AlinaNova21.WhittierYard' }
+    ],
+    version: '1.1.2',
+    changelog: [
+      { version: '1.1.2', desc: 'Updated poles to remove extras' }
     ]
-  }
+  } as LayoutFunctionResult
 }
