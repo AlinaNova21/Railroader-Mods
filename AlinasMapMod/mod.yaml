@@ -3,9 +3,9 @@ modId: AlinaNova21.AlinasMapMod
 name: Alina's Map Mod
 desc: |-
   A mod that adds utilities for other mods to add milestones and other features to the game.
-version: '1.4.24171.1853'
+version: '1.4.24188.2255'
 changelog:
-- version: '1.4.X.X'
+- version: '1.4.24188.2255'
   desc: |- 
     - Quick fix to correct telegraph pole placement on reload.
 - version: '1.4.24171.1853'
