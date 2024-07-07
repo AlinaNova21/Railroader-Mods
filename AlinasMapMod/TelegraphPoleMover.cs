@@ -15,7 +15,7 @@ public class TelegraphPoleMover : ISplineyBuilder
 {
   public static Serilog.ILogger logger = Log.ForContext<TelegraphPoleMover>();
   private static HashSet<int> movedPoles = new();
-  TelegraphPoleMover()
+  public TelegraphPoleMover()
   {
     logger.Debug("TelegraphPoleMover loaded");
     Messenger.Default.Register(this, new System.Action<MapDidUnloadEvent>(HandleMapUnloaded));
