@@ -5,6 +5,7 @@
     <MinorVersion>0</MinorVersion>
     <IsMod>true</IsMod>
     <PackageMod>enable</PackageMod>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="*.json" CopyToOutputDirectory="Always" />
