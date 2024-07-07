@@ -81,6 +81,7 @@ export default async function sylvaPaxStorage(graph: Graph, originalTracks: Grap
   
     return {
       name: mixin.items[zone].name,
+      desc: 'Adds two storage tracks to Sylva Station.',
       mixins: {
         alinasMapMod: mixin
       }

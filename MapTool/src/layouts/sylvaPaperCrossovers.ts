@@ -105,6 +105,7 @@ export default async function sylvaPaperCrossover(graph: Graph, originalTracks: 
 
   return {
     name: mixin.items[zone].name,
+    desc: 'Adds two Crossovers at Sylva Paperboard.',
     mixins: {
       alinasMapMod: mixin
     }

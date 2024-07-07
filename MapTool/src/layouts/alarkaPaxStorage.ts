@@ -100,6 +100,7 @@ export default async function alarkaPaxStorage(graph: Graph, originalTracks: Gra
   
     return {
       name: mixin.items[zone].name,
+      desc: 'Adds two storage tracks to Alarka Station.',
       mixins: {
         alinasMapMod: mixin
       }

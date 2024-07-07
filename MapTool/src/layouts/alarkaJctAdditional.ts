@@ -84,11 +84,12 @@ export default async function alarkaJctAdditional(graph: Graph, originalTracks: 
 
   return {
     name: mixinName,
+    desc: 'Additional tracks in Alarka Jct, currently just a bypass around the interchange.',
     mixins: {
       alinasMapMod: mixin
     },
     conflicts: [
       { id: 'AlinaNova21.AlarkaJctAdditional' }
     ]
-  }
+  } as LayoutFunctionResult
 }

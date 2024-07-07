@@ -206,6 +206,7 @@ export default async function whittierYard(graph: Graph, originalTracks: Graph) 
 
   return {
     name: 'Whittier Yard',
+    desc: 'A yard that can be useful for organizing trains and storing cars.',
     mixins: {
       alinasMapMod: mixin
     },

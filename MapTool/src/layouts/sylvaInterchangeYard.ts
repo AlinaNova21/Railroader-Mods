@@ -124,6 +124,7 @@ export default async function sylvaInterchangeYard(graph: Graph, originalTracks:
 
   return {
     name: mixin.items[zone].name,
+    desc: 'A yard that can be useful for organizing west bound trains and storing cars if the Interchange is filled to capacity.',
     mixins: {
       alinasMapMod: mixin
     },

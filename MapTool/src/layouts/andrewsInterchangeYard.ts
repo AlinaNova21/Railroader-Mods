@@ -166,6 +166,7 @@ export default async function andrewsInterchangeYard(graph: Graph, originalTrack
 
   return {
     name: mixin.items[zone].name,
+    desc: 'A yard that can be useful for organizing east bound trains and storing cars if the Interchange is filled to capacity.',
     mixins: {
       alinasMapMod: mixin
     },

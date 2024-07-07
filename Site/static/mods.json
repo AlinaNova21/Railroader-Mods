@@ -4,15 +4,15 @@
     "modId": "AlinaNova21.MapEditor",
     "name": "Map Editor",
     "desc": "A Map Editor for manipulating track mods.\nWARNING: Extremely WIP. I will not be providing support. Use at your own risk.",
-    "version": "1.4.24189.538",
+    "version": "1.1.24189.538",
     "changelog": [
       {
-        "version": "1.4.24189.538",
+        "version": "1.1.24189.538",
         "desc": "- Merged rewrite PR\n- Released on site."
       }
     ],
     "assemblyName": "MapEditor",
-    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.24189.538/MapEditor_1.4.24189.538.zip"
+    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.1.24189.538/MapEditor_1.1.24189.538.zip"
   },
   {
     "id": "alinas-map-mod",
@@ -109,7 +109,7 @@
     "id": "amm-alarka-jct-additional",
     "modId": "AlinaNova21.AMM_AlarkaJctAdditional",
     "name": "Alarka Jct Additional Tracks",
-    "desc": "",
+    "desc": "Additional tracks in Alarka Jct, currently just a bypass around the interchange.",
     "version": "1.1.1",
     "changelog": [],
     "assemblyName": "AMM_AlarkaJctAdditional",
@@ -119,7 +119,7 @@
     "id": "amm-alarka-loop",
     "modId": "AlinaNova21.AMM_AlarkaLoop",
     "name": "Alarka Loop",
-    "desc": "",
+    "desc": "Balloon loop in Alarka, no more fighting with a Wye.",
     "version": "1.1.1",
     "changelog": [],
     "assemblyName": "AMM_AlarkaLoop",
@@ -129,7 +129,7 @@
     "id": "amm-alarka-pax-storage",
     "modId": "AlinaNova21.AMM_AlarkaPaxStorage",
     "name": "Alarka Pax Storage",
-    "desc": "",
+    "desc": "Adds two storage tracks to Alarka Station.",
     "version": "1.1.1",
     "changelog": [],
     "assemblyName": "AMM_AlarkaPaxStorage",
@@ -139,7 +139,7 @@
     "id": "amm-andrews-interchange-yard",
     "modId": "AlinaNova21.AMM_AndrewsInterchangeYard",
     "name": "Andrews Interchange Yard",
-    "desc": "",
+    "desc": "A yard that can be useful for organizing east bound trains and storing cars if the Interchange is filled to capacity.",
     "version": "1.1.1",
     "changelog": [],
     "assemblyName": "AMM_AndrewsInterchangeYard",
@@ -149,7 +149,7 @@
     "id": "amm-sylva-interchange-yard",
     "modId": "AlinaNova21.AMM_SylvaInterchangeYard",
     "name": "Sylva Interchange Yard",
-    "desc": "",
+    "desc": "A yard that can be useful for organizing west bound trains and storing cars if the Interchange is filled to capacity.",
     "version": "1.1.1",
     "changelog": [],
     "assemblyName": "AMM_SylvaInterchangeYard",
@@ -159,7 +159,7 @@
     "id": "amm-sylva-paper-crossover",
     "modId": "AlinaNova21.AMM_SylvaPaperCrossover",
     "name": "Sylva Paper Crossovers",
-    "desc": "",
+    "desc": "Adds two Crossovers at Sylva Paperboard.",
     "version": "1.1.1",
     "changelog": [],
     "assemblyName": "AMM_SylvaPaperCrossover",
@@ -169,7 +169,7 @@
     "id": "amm-sylva-pax-storage",
     "modId": "AlinaNova21.AMM_SylvaPaxStorage",
     "name": "Sylva Pax Storage",
-    "desc": "",
+    "desc": "Adds two storage tracks to Sylva Station.",
     "version": "1.1.1",
     "changelog": [],
     "assemblyName": "AMM_SylvaPaxStorage",
@@ -179,7 +179,7 @@
     "id": "amm-sylva-wye",
     "modId": "AlinaNova21.AMM_SylvaWye",
     "name": "Sylva Wye",
-    "desc": "",
+    "desc": "Adds a Wye at the Sylva Interchange, great for turning around those massive Berks.",
     "version": "1.1.1",
     "changelog": [],
     "assemblyName": "AMM_SylvaWye",
@@ -189,7 +189,7 @@
     "id": "amm-whittier-sawmill-connection",
     "modId": "AlinaNova21.AMM_WhittierSawmillConnection",
     "name": "Whittier Sawmill Connection",
-    "desc": "",
+    "desc": "Extend the sawmill track over to the interchange",
     "version": "1.1.2",
     "changelog": [
       {
@@ -204,7 +204,7 @@
     "id": "amm-whittier-yard",
     "modId": "AlinaNova21.AMM_WhittierYard",
     "name": "Whittier Yard",
-    "desc": "",
+    "desc": "A yard that can be useful for organizing trains and storing cars.",
     "version": "1.1.2",
     "changelog": [
       {

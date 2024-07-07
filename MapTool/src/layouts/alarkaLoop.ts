@@ -1,6 +1,6 @@
 
 
-import { Vector3, Euler } from 'three'
+import { Euler, Vector3 } from 'three'
 import { DEG2RAD } from 'three/src/math/MathUtils.js'
 import { AlinasMapModMixin } from '../lib/AlinasMapMod.js'
 import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, TrackSpan, TrackSpanPartEnd, createNode, createSegment, createSwitch, getNode, getSegment, loadHelper } from '../lib/index.js'
@@ -128,6 +128,7 @@ export default async function alarkaLoop(graph: Graph) {
   }
   return {
     name: 'Alarka Loop',
+    desc: 'Balloon loop in Alarka, no more fighting with a Wye.',
     mixins: {
       alinasMapMod: mixin
       // whistles: [

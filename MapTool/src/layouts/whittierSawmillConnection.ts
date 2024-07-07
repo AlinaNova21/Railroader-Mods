@@ -97,6 +97,7 @@ export default async function whittierSawmillConnection(graph: Graph, originalTr
 
   return {
     name: 'Whittier Sawmill Connection',
+    desc: 'Extend the sawmill track over to the interchange',
     mixins: {
       progressions,
     },
