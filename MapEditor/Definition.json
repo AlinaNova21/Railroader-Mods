@@ -4,12 +4,6 @@
   "name": "Map Editor",
   "version": "$(AssemblyVersion)",
   "assemblies": [ "MapEditor" ],
-  "_requires": [
-    {
-      "id": "Zamu.StrangeCustoms",
-      "notBefore": "1.6.24089.2145"
-    }
-  ],
   "requires": [
     "Zamu.StrangeCustoms"
   ],

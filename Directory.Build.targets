@@ -86,9 +86,6 @@
   </Target>
   <Target Name="PublishMod" AfterTargets="PackageMod" Condition="'$(Configuration)' == 'Release' AND '$(PublishMod)' == 'enable'">
     <Message Text="Publishing $(AssemblyName) v$(AssemblyVersion)" Importance="high" />
-    <ItemGroup>
-      <AllZips Include="$(PublishPath)/*.zip" />
-    </ItemGroup>
     <!-- Publish to GitHub -->
     <Exec Command="gh release create v$(AssemblyVersion) --generate-notes $(ZipName) @(ExtraZips, ' ')" />
     
