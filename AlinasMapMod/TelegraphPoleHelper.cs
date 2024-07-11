@@ -14,6 +14,8 @@ namespace AlinasMapMod
 
     public TooltipInfo TooltipInfo => new TooltipInfo($"Telegraph Pole {id}", $"This is a telegraph pole. :D\n{transform.localPosition}");
 
+    public PickableActivationFilter ActivationFilter { get; }
+
     private Serilog.ILogger logger = Log.ForContext<TelegraphPoleHelper>();
     public void OnEnable()
     {
@@ -29,9 +31,9 @@ namespace AlinasMapMod
       }
     }
 
-    public void Activate()
+    public void Activate(PickableActivateEvent evt)
     {
-
+      throw new System.NotImplementedException();
     }
 
     public void Deactivate()
