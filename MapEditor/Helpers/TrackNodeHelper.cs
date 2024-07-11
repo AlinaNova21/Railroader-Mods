@@ -2,6 +2,7 @@ using System.Linq;
 using System.Text;
 using Helpers;
 using JetBrains.Annotations;
+using Serilog;
 using Track;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace MapEditor.Helpers
 {
   public sealed class TrackNodeHelper : MonoBehaviour, IPickable
   {
+    private readonly Serilog.ILogger logger = Log.ForContext<Editor>();
 
     private static readonly Material _LineMaterial = new Material(Shader.Find("Universal Render Pipeline/Lit"));
 
@@ -19,6 +21,7 @@ namespace MapEditor.Helpers
     public int Priority => 1;
 
     public TooltipInfo TooltipInfo => BuildTooltipInfo();
+    public PickableActivationFilter ActivationFilter { get; }
 
     private TooltipInfo BuildTooltipInfo()
     {
@@ -73,7 +76,7 @@ namespace MapEditor.Helpers
       _LineRenderer.enabled = EditorContext.PatchEditor != null;
     }
 
-    public void Activate()
+    public void Activate(PickableActivateEvent evt)
     {
       EditorContext.SelectedNode = transform.parent.GetComponent<TrackNode>();
     }
