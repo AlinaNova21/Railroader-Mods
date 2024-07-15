@@ -8,7 +8,7 @@ jobs:
       - name: Setup .NET 4.8
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '4.8'
+          dotnet-version: '4.8.x'
       - name: Setup SteamCMD
         uses: Lordfirespeed/setup-steamcmd@v2
       - name: Populate SteamCMD profile config
