@@ -1,0 +1,17 @@
+name: Build
+on: workflow_dispatch
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - id: steamcmd
+        name: Setup SteamCMD
+        uses: CyberAndrii/setup-steamcmd@v1
+      
+      - name: Update app
+        working-directory: ./gamedir
+        run: steamcmd +login anonymous \
+          +app_update 1683150 validate +quit
+      - name: debug
+        run: ls -lah ./gamedir
