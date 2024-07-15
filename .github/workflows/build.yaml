@@ -8,7 +8,9 @@ jobs:
       - id: steamcmd
         name: Setup SteamCMD
         uses: CyberAndrii/setup-steamcmd@v1
-      
+      - name: Create ./gamedir
+        run: mkdir -p ./gamedir
+        
       - name: Update app
         working-directory: ./gamedir
         run: steamcmd +login anonymous \
