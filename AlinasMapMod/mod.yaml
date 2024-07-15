@@ -3,8 +3,11 @@ modId: AlinaNova21.AlinasMapMod
 name: Alina's Map Mod
 desc: |-
   A mod that adds utilities for other mods to add milestones and other features to the game.
-version: '1.4.24189.149'
+version: '1.4.24193.2211'
 changelog:
+- version: '1.4.24193.2211'
+  desc: |-
+    - Update for 2024.5
 - version: '1.4.24189.149'
   desc: |- 
     - Quick fix to correct constructors.
