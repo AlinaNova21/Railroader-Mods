@@ -5,10 +5,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Setup .NET 4.8
+      - name: Setup .NET Core 8.0
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '4.8.x'
+          dotnet-version: '8.0'
       - name: Setup SteamCMD
         uses: Lordfirespeed/setup-steamcmd@v2
       - name: Populate SteamCMD profile config
