@@ -125,6 +125,8 @@ public sealed class TrackSegmentHelper : MonoBehaviour, IPickable
     sb.AppendLine($"GroupId: {segment.groupId}");
     sb.AppendLine($"Style: {segment.style}");
     sb.AppendLine($"Class: {segment.trackClass}");
+    sb.AppendLine($"Length: {segment.Curve.CalculateLength()}m");
+    
 
     return new TooltipInfo($"Segment {segment.id}", sb.ToString());
   }
