@@ -16,11 +16,10 @@ jobs:
         with:
           steam_config_vdf: ${{ secrets.STEAM_CONFIG_VDF }}
           steam_username: ${{ secrets.STEAM_USERNAME }}
-      - name: Create ./gamedir
-        run: mkdir -p ./gamedir
       - name: Update app
         working-directory: ./gamedir
         run: steamcmd +login ${{ secrets.STEAM_USERNAME }} \
+          force_install_dir ./gamedir \
           +app_update 1683151 validate +quit
       - name: debug
         run: ls -lah ./gamedir
