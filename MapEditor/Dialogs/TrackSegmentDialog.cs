@@ -43,6 +43,7 @@ namespace MapEditor.Dialogs
       builder.Spacer();
       builder.HStack(stack =>
       {
+        stack.AddButtonCompact("Inject node", NodeManager.InjectNode);
         stack.AddButtonCompact("Remove", SegmentManager.RemoveSegment);
       });
       builder.AddField("Nodes", builder.HStack(stack =>

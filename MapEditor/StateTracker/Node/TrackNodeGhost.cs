@@ -35,10 +35,13 @@ namespace MapEditor.StateTracker.Node
 
     public void CreateNode()
     {
-      var node = new GameObject($"Node {id}").AddComponent<TrackNode>();
+      var gameObject = new GameObject($"Node {id}");
+      gameObject.SetActive(false);
+      var node = gameObject.AddComponent<TrackNode>();
       node.id = id;
       node.transform.SetParent(Graph.Shared.transform);
       UpdateNode(node);
+      gameObject.SetActive(true);
       Graph.Shared.AddNode(node);
       EditorContext.PatchEditor!.AddOrUpdateNode(node);
     }
