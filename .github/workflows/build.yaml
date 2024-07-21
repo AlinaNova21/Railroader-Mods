@@ -5,15 +5,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - id: steamcmd
-        name: Setup SteamCMD
-        uses: CyberAndrii/setup-steamcmd@v1
-      - name: Create ./gamedir
-        run: mkdir -p ./gamedir
-        
+      - name: Setup .NET Core 8.0
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0'
+      - name: Setup SteamCMD
+        uses: Lordfirespeed/setup-steamcmd@v2
+      - name: Populate SteamCMD profile config
+        uses: Lordfirespeed/auth-steamcmd@v1
+        with:
+          steam_config_vdf: ${{ secrets.STEAM_CONFIG_VDF }}
+          steam_username: ${{ secrets.STEAM_USERNAME }}
       - name: Update app
-        working-directory: ./gamedir
-        run: steamcmd +login anonymous \
-          +app_update 1683150 validate +quit
+        run: steamcmd +login ${{ secrets.STEAM_USERNAME }} \
+          +force_install_dir ./gamedir \
+          +app_update 1683151 validate +quit
       - name: debug
         run: ls -lah ./gamedir
+      - name: Build
+        run: dotnet build -r win-x64 -p:GameDir=$(pwd)/gamedir
+      - name: Save Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: bin
