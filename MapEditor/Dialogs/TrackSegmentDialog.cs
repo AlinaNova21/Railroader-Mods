@@ -1,10 +1,6 @@
-using System;
 using JetBrains.Annotations;
 using MapEditor.Extensions;
 using MapEditor.Managers;
-using MapEditor.StateTracker.Segment;
-using Serilog;
-using Track;
 using UI.Builder;
 using UI.Common;
 using UnityEngine;
@@ -44,23 +40,13 @@ namespace MapEditor.Dialogs
       builder.HStack(stack =>
       {
         stack.AddButtonCompact("Inject node", NodeManager.InjectNode);
-        stack.AddButtonCompact("Remove", SegmentManager.RemoveSegment);
+        stack.AddButtonCompact("Remove segment", SegmentManager.RemoveSegment);
       });
-      builder.AddField("Nodes", builder.HStack(stack =>
+      builder.HStack(stack =>
       {
-        stack.AddButtonCompact(segment?.a.id ?? "", () =>
-        {
-          var node = segment!.a;
-          EditorContext.SelectedSegment = null;
-          EditorContext.SelectedNode = node;
-        });
-        stack.AddButtonCompact(segment?.b.id ?? "", () =>
-        {
-          var node = segment!.b;
-          EditorContext.SelectedSegment = null;
-          EditorContext.SelectedNode = node;
-        });
-      })!);
+        stack.AddButtonCompact(segment.a.id, () => EditorContext.SelectedNode = segment.a);
+        stack.AddButtonCompact(segment.b.id, () => EditorContext.SelectedNode = segment.b);
+      });
     }
 
     private static void BuildPositionEditor(UIPanelBuilder builder)

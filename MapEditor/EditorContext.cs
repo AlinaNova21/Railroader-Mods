@@ -2,6 +2,7 @@ using System.Linq.Expressions;
 using Core;
 using HarmonyLib;
 using MapEditor.Dialogs;
+using MapEditor.Helpers;
 using MapEditor.Managers;
 using Railloader;
 using Serilog;
@@ -179,6 +180,8 @@ namespace MapEditor
       PatchEditor = new PatchEditor(fileName);
       ChangeManager.Clear();
       TrackSegmentDialog.Activate();
+
+      CreateUiHelpers();
     }
 
     public static void CloseMixinto()
@@ -195,6 +198,8 @@ namespace MapEditor
 
       Graph.Shared.RebuildCollections();
       TrackObjectManager.Instance.Rebuild();
+
+      DestroyUiHelpers();
     }
 
     public static void Save()
@@ -244,6 +249,48 @@ namespace MapEditor
         CameraSelector.shared.ZoomToPoint(SelectedNode.transform.localPosition);
       }
     }
+
+    #region UI helpers
+
+    private static void CreateUiHelpers()
+    {
+      foreach (var trackNode in Graph.Shared.Nodes!)
+      {
+        var gameObject = new GameObject("TrackNodeHelper");
+        gameObject.transform.SetParent(trackNode.transform);
+        gameObject.AddComponent<TrackNodeHelper>();
+      }
+
+      foreach (var trackSegment in Graph.Shared.Segments!)
+      {
+        var gameObject = new GameObject("TrackSegmentHelper");
+        gameObject.transform.SetParent(trackSegment.transform);
+        gameObject.AddComponent<TrackSegmentHelper>();
+      }
+    }
+
+    private static void DestroyUiHelpers()
+    {
+      foreach (var trackNode in Graph.Shared.Nodes!)
+      {
+        var helper = trackNode.transform.Find("TrackNodeHelper");
+        if (helper != null)
+        {
+          Object.Destroy(helper.gameObject);
+        }
+      }
+
+      foreach (var trackSegment in Graph.Shared.Segments!)
+      {
+        var helper = trackSegment.transform.Find("TrackSegmentHelper");
+        if (helper != null)
+        {
+          Object.Destroy(helper.gameObject);
+        }
+      }
+
+    }
+    #endregion
 
   }
 }
