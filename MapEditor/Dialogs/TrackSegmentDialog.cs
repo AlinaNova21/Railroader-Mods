@@ -25,13 +25,14 @@ namespace MapEditor.Dialogs
       _SpeedLimit = Mathf.Floor(segment.speedLimit / 5f);
 
 
-      builder.AddSection("Properties", section => {
+      builder.AddSection("Properties", section =>
+      {
         section.AddField("Priority", builder.AddInputFieldValidated($"{segment.priority}", value => SegmentManager.UpdatePriority(int.Parse(value)), "\\d+")!);
         section.AddField("Speed Limit", () => $"{_SpeedLimit * 5}", UIPanelBuilder.Frequency.Periodic);
         section.AddSlider(() => _SpeedLimit, () => $"{_SpeedLimit * 5}", o => _SpeedLimit = o, 0, 9, true, o => SegmentManager.UpdateSpeedLimit((int)o * 5));
-        section.AddField("Group ID", builder.AddInputField(segment.groupId ?? "", SegmentManager.UpdateGroup, "groupId")!);
-        section.AddField("Track style", builder.AddEnumDropdown(segment.style, SegmentManager.UpdateStyle));
-        section.AddField("Track class", builder.AddEnumDropdown(segment.trackClass, SegmentManager.UpdateTrackClass));
+        section.AddField("Group ID", builder.AddInputField(segment.groupId ?? "", (group) => SegmentManager.UpdateGroup(group), "groupId")!);
+        section.AddField("Track style", builder.AddEnumDropdown(segment.style, (style) => SegmentManager.UpdateStyle(style)));
+        section.AddField("Track class", builder.AddEnumDropdown(segment.trackClass, (trackClass) => SegmentManager.UpdateTrackClass(trackClass)));
       });
       builder.Spacer();
       builder.AddSection("Position", BuildPositionEditor);
@@ -39,8 +40,8 @@ namespace MapEditor.Dialogs
       builder.Spacer();
       builder.HStack(stack =>
       {
-        stack.AddButtonCompact("Inject node", NodeManager.InjectNode);
-        stack.AddButtonCompact("Remove segment", SegmentManager.RemoveSegment);
+        stack.AddButtonCompact("Inject node", () => NodeManager.InjectNode());
+        stack.AddButtonCompact("Remove segment", () => SegmentManager.RemoveSegment());
       });
       builder.HStack(stack =>
       {

@@ -23,21 +23,21 @@ namespace MapEditor.Managers
       var vector =
         direction switch
         {
-          Direction.up       => node.transform.up * Scaling,
-          Direction.down     => node.transform.up * -Scaling,
-          Direction.left     => node.transform.right * -Scaling,
-          Direction.right    => node.transform.right * Scaling,
-          Direction.forward  => node.transform.forward * Scaling,
+          Direction.up => node.transform.up * Scaling,
+          Direction.down => node.transform.up * -Scaling,
+          Direction.left => node.transform.right * -Scaling,
+          Direction.right => node.transform.right * Scaling,
+          Direction.forward => node.transform.forward * Scaling,
           Direction.backward => node.transform.forward * -Scaling,
-          _                  => throw new ArgumentOutOfRangeException(nameof(direction), direction, null!)
+          _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null!)
         };
 
       EditorContext.ChangeManager.AddChange(new ChangeTrackNode(node).Move(node.transform.localPosition + vector));
     }
 
-    public static void Rotate(Vector3 offset)
+    public static void Rotate(Vector3 offset, TrackNode? node = null)
     {
-      var node = EditorContext.SelectedNode;
+      node ??= EditorContext.SelectedNode;
       if (node == null)
       {
         return;
@@ -46,20 +46,19 @@ namespace MapEditor.Managers
       EditorContext.ChangeManager.AddChange(new ChangeTrackNode(node).Rotate(node.transform.localEulerAngles + offset * Scaling));
     }
 
-    public static bool GetFlipSwitchStand()
+    public static bool GetFlipSwitchStand(TrackNode? node = null)
     {
-      var node = EditorContext.SelectedNode;
+      node ??= EditorContext.SelectedNode;
       return node != null && node.flipSwitchStand;
     }
 
-    public static void FlipSwitchStand(bool value)
+    public static void FlipSwitchStand(bool value, TrackNode? node = null)
     {
-      var node = EditorContext.SelectedNode;
+      node ??= EditorContext.SelectedNode;
       if (node == null || node.flipSwitchStand == value)
       {
         return;
       }
-
       EditorContext.ChangeManager.AddChange(new ChangeTrackNode(node).FlipSwitchStand(value));
     }
 
@@ -109,8 +108,9 @@ namespace MapEditor.Managers
       Rebuild();
     }
 
-    public static void SplitNode()
+    public static void SplitNode(TrackNode? node = null)
     {
+      node ??= EditorContext.SelectedNode;
       // simple track node split:
       // NODE_A --- NODE --- NODE_B
       // result:
@@ -125,7 +125,6 @@ namespace MapEditor.Managers
       // NODE_A --- NODE
       // NODE_B --- NEW_NODE_1
       //            NEW_NODE_2 --- NODE_C
-      var node = EditorContext.SelectedNode!;
 
       var actions = new List<IUndoable>();
 
@@ -159,8 +158,9 @@ namespace MapEditor.Managers
       Rebuild();
     }
 
-    public static void RemoveNode(bool altMode)
+    public static void RemoveNode(bool altMode, TrackNode? node = null)
     {
+      node ??= EditorContext.SelectedNode;
       // end track node remove:
       // NODE_A --- NODE
       // result
@@ -179,11 +179,10 @@ namespace MapEditor.Managers
       //            >- NODE --- NODE_C
       // NODE_B ---/
       // result:
-      // NODE_A     
+      // NODE_A
       //               NODE_C
-      // NODE_B 
+      // NODE_B
 
-      var node = EditorContext.SelectedNode!;
       EditorContext.SelectedNode = null;
 
       var actions = new List<IUndoable>();
@@ -212,14 +211,14 @@ namespace MapEditor.Managers
       Rebuild();
     }
 
-    public static void InjectNode()
+    public static void InjectNode(TrackSegment trackSegment = null)
     {
       // inject node in center of segment:
       // NODE_A  --- NODE_B
       // result:
       // NODE_A  --- NODE --- NODE_B
 
-      var trackSegment = EditorContext.SelectedSegment;
+      trackSegment ??= EditorContext.SelectedSegment;
       if (trackSegment == null)
       {
         return;

@@ -1,9 +1,13 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Helpers;
 using JetBrains.Annotations;
+using MapEditor.Managers;
 using Track;
+using UI;
+using UI.ContextMenu;
 using UnityEngine;
 
 namespace MapEditor.Helpers;
@@ -56,9 +60,50 @@ public sealed class TrackSegmentHelper : MonoBehaviour, IPickable
     UpdateChevrons();
   }
 
+
   public void Activate(PickableActivateEvent evt)
   {
+    if (evt.Activation == PickableActivation.Secondary)
+    {
+      ShowContextMenu();
+      return;
+    }
     EditorContext.SelectedSegment = _Segment;
+  }
+
+  private void ShowContextMenu()
+  {
+    var sprite = Sprite.Create(Texture2D.whiteTexture, new Rect(0, 0, 1, 1), Vector2.zero);
+    var shared = UI.ContextMenu.ContextMenu.Shared;
+    if (UI.ContextMenu.ContextMenu.IsShown)
+    {
+      shared.Hide();
+    }
+    shared.Clear();
+    shared.AddButton(ContextMenuQuadrant.General, (EditorContext.SelectedSegment == _Segment) ? "Deselect" : "Select", SpriteName.Select, () => EditorContext.SelectedSegment = (EditorContext.SelectedSegment == _Segment) ? null : _Segment);
+    shared.AddButton(ContextMenuQuadrant.Brakes, "Delete", sprite, () => SegmentManager.RemoveSegment(_Segment));
+    shared.AddButton(ContextMenuQuadrant.Unused1, "Inject Node", sprite, () => NodeManager.InjectNode(_Segment));
+    shared.AddButton(ContextMenuQuadrant.Unused2, "Track Style", sprite, () => StartCoroutine(ShowTrackStyleContextMenu()));
+
+    shared.Show($"Segment {_Segment.id}");
+  }
+
+  private IEnumerator ShowTrackStyleContextMenu()
+  {
+    yield return new WaitForSeconds(0.1f);
+    var sprite = Sprite.Create(Texture2D.whiteTexture, new Rect(0, 0, 1, 1), Vector2.zero);
+    var shared = UI.ContextMenu.ContextMenu.Shared;
+    if (UI.ContextMenu.ContextMenu.IsShown)
+    {
+      shared.Hide();
+    }
+    shared.Clear();
+
+    shared.AddButton(ContextMenuQuadrant.General, "Standard", sprite, () => SegmentManager.UpdateStyle(TrackSegment.Style.Standard, _Segment));
+    shared.AddButton(ContextMenuQuadrant.Brakes, "Yard", sprite, () => SegmentManager.UpdateStyle(TrackSegment.Style.Yard, _Segment));
+    shared.AddButton(ContextMenuQuadrant.Unused1, "Tunnel", sprite, () => SegmentManager.UpdateStyle(TrackSegment.Style.Tunnel, _Segment));
+    shared.AddButton(ContextMenuQuadrant.Unused2, "Bridge", sprite, () => SegmentManager.UpdateStyle(TrackSegment.Style.Bridge, _Segment));
+    shared.Show($"Segment {_Segment.id}\nTrack Style");
   }
 
   public void Deactivate()
@@ -101,7 +146,7 @@ public sealed class TrackSegmentHelper : MonoBehaviour, IPickable
       lineRenderer.material.color = EditorContext.SelectedSegment == _Segment ? Color.green : _Yellow;
     }
   }
-  
+
   private void ReBuildChevrons()
   {
     foreach (var chevron in _Chevrons)
@@ -114,7 +159,7 @@ public sealed class TrackSegmentHelper : MonoBehaviour, IPickable
     const float carLength = 12.2f;
 
     var length = _Segment.GetLength();
- 
+
     var chevronCount = Mathf.Floor(length / carLength);
 
     if (chevronCount == 0)

@@ -20,36 +20,42 @@ namespace MapEditor.Managers
       }
     }
 
-    public static void UpdatePriority(int priority)
+    public static void UpdatePriority(int priority, TrackSegment? segment = null)
     {
-      EditorContext.ChangeManager.AddChange(new ChangeTrackSegment(EditorContext.SelectedSegment!).Priority(priority));
+      segment ??= EditorContext.SelectedSegment;
+      EditorContext.ChangeManager.AddChange(new ChangeTrackSegment(segment!).Priority(priority));
     }
 
-    public static void UpdateSpeedLimit(int speedLimit)
+    public static void UpdateSpeedLimit(int speedLimit, TrackSegment? segment = null)
     {
-      EditorContext.ChangeManager.AddChange(new ChangeTrackSegment(EditorContext.SelectedSegment!).SpeedLimit(speedLimit));
+      segment ??= EditorContext.SelectedSegment;
+      EditorContext.ChangeManager.AddChange(new ChangeTrackSegment(segment!).SpeedLimit(speedLimit));
     }
 
-    public static void UpdateGroup(string groupId)
+    public static void UpdateGroup(string groupId, TrackSegment? segment = null)
     {
-      EditorContext.ChangeManager.AddChange(new ChangeTrackSegment(EditorContext.SelectedSegment!).GroupId(groupId));
+      segment ??= EditorContext.SelectedSegment;
+      EditorContext.ChangeManager.AddChange(new ChangeTrackSegment(segment!).GroupId(groupId));
     }
 
-    public static void UpdateStyle(TrackSegment.Style style)
+    public static void UpdateStyle(TrackSegment.Style style, TrackSegment? segment = null)
     {
-      EditorContext.ChangeManager.AddChange(new ChangeTrackSegment(EditorContext.SelectedSegment!).Style(style));
+      segment ??= EditorContext.SelectedSegment;
+      EditorContext.ChangeManager.AddChange(new ChangeTrackSegment(segment!).Style(style));
       Rebuild();
     }
 
 
-    public static void UpdateTrackClass(TrackClass trackClass)
+    public static void UpdateTrackClass(TrackClass trackClass, TrackSegment? segment = null)
     {
-      EditorContext.ChangeManager.AddChange(new ChangeTrackSegment(EditorContext.SelectedSegment!).TrackClass(trackClass));
+      segment ??= EditorContext.SelectedSegment;
+      EditorContext.ChangeManager.AddChange(new ChangeTrackSegment(segment!).TrackClass(trackClass));
     }
 
-    public static void RemoveSegment()
+    public static void RemoveSegment(TrackSegment? segment = null)
     {
-      EditorContext.ChangeManager.AddChange(new DeleteTrackSegment(EditorContext.SelectedSegment!));
+      segment ??= EditorContext.SelectedSegment;
+      EditorContext.ChangeManager.AddChange(new DeleteTrackSegment(segment!));
       Rebuild();
     }
 

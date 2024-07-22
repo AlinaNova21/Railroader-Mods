@@ -1,0 +1,15 @@
+id: map-editor
+modId: AlinaNova21.MapEditor
+name: Map Editor
+desc: |-
+  A Map Editor for manipulating track mods.
+  WARNING: Extremely WIP. I will not be providing support. Use at your own risk.
+version: '1.1.24193.2211'
+changelog:
+- version: '1.1.24193.2211'
+  desc: |-
+    - Update for 2024.5
+- version: '1.1.24189.538'
+  desc: |-
+    - Merged rewrite PR
+    - Released on site.

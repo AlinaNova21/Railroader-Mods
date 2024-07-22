@@ -1,4 +1,5 @@
 using MapEditor.Extensions;
+using MapEditor.Helpers;
 using Track;
 using UnityEngine;
 
@@ -59,6 +60,11 @@ namespace MapEditor.StateTracker.Segment
       UpdateSegment(segment);
       gameObject.SetActive(false);
       Graph.Shared.AddSegment(segment);
+      // var helper = new GameObject("TrackSegmentHelper");
+      // helper.transform.SetParent(segment.transform);
+      // var sh = helper.AddComponent<TrackSegmentHelper>();
+      // sh.Rebuild();
+
       EditorContext.PatchEditor!.AddOrUpdateSegment(segment);
     }
 

@@ -73,11 +73,11 @@ namespace MapEditor.Dialogs
 
     private static void BuildNodeEditor(UIPanelBuilder builder)
     {
-      builder.AddField("Flip Switch Stand", builder.AddToggle(NodeManager.GetFlipSwitchStand, NodeManager.FlipSwitchStand)!);
+      builder.AddField("Flip Switch Stand", builder.AddToggle(() => NodeManager.GetFlipSwitchStand(), val => NodeManager.FlipSwitchStand(val))!);
       builder.HStack(stack =>
       {
         stack.AddButtonCompact("Add", NodeManager.AddNode);
-        stack.AddButtonCompact("Split", NodeManager.SplitNode);
+        stack.AddButtonCompact("Split", () => NodeManager.SplitNode());
         stack.AddButtonCompact("Remove", () => NodeManager.RemoveNode(Input.GetKey(KeyCode.LeftShift)));
         stack.AddButtonCompact("Show", EditorContext.MoveCameraToSelectedNode);
         stack.AddPopupMenu("More ...",

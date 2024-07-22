@@ -2,7 +2,12 @@ using System.Linq;
 using System.Text;
 using Helpers;
 using JetBrains.Annotations;
+using MapEditor.Dialogs;
+using MapEditor.Managers;
+using Serilog;
 using Track;
+using UI;
+using UI.ContextMenu;
 using UnityEngine;
 
 namespace MapEditor.Helpers
@@ -66,7 +71,30 @@ namespace MapEditor.Helpers
 
     public void Activate(PickableActivateEvent evt)
     {
+      if (evt.Activation == PickableActivation.Secondary)
+      {
+        ShowContextMenu();
+        return;
+      }
       EditorContext.SelectedNode = _TrackNode;
+    }
+
+    public void ShowContextMenu()
+    {
+      var node = transform.parent.GetComponent<TrackNode>();
+      var sprite = Sprite.Create(Texture2D.whiteTexture, new Rect(0, 0, 1, 1), Vector2.zero);
+      var shared = UI.ContextMenu.ContextMenu.Shared;
+      if (UI.ContextMenu.ContextMenu.IsShown)
+      {
+        shared.Hide();
+      }
+      shared.Clear();
+      shared.AddButton(ContextMenuQuadrant.General, (EditorContext.SelectedNode == node) ? "Deselect" : "Select", SpriteName.Select, () => EditorContext.SelectedNode = (EditorContext.SelectedNode == node) ? null : node);
+      shared.AddButton(ContextMenuQuadrant.Brakes, "Delete", sprite, () => NodeManager.RemoveNode(node));
+      shared.AddButton(ContextMenuQuadrant.Unused1, "Flip Switch Stand", sprite, () => NodeManager.FlipSwitchStand(!node.flipSwitchStand, node));
+      shared.AddButton(ContextMenuQuadrant.Unused2, "Split", sprite, () => NodeManager.SplitNode(node));
+
+      shared.Show($"Node {node.id}");
     }
 
     public void Deactivate()
