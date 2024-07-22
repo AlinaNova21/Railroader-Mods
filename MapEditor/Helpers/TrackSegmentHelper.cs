@@ -1,59 +1,170 @@
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using Helpers;
 using JetBrains.Annotations;
 using Track;
 using UnityEngine;
 
-namespace MapEditor.Helpers
+namespace MapEditor.Helpers;
+
+public sealed class TrackSegmentHelper : MonoBehaviour, IPickable
 {
-  public sealed class TrackSegmentHelper : MonoBehaviour
+
+  private static readonly Color _Yellow = new(1, 1, 0);
+  private static readonly Material _LineMaterial = new(Shader.Find("Universal Render Pipeline/Lit"));
+  private LineRenderer _LineRenderer = null!;
+  private TrackSegment _Segment = null!;
+
+  [UsedImplicitly]
+  public void Start()
   {
+    _Segment = transform.parent.GetComponent<TrackSegment>()!;
+    transform.localPosition = Vector3.zero;
+    transform.localEulerAngles = Vector3.zero;
 
-    private static readonly Color _Yellow = new Color(1, 1, 0);
-    private static readonly Material _LineMaterial = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+    _LineRenderer = GetComponent<LineRenderer>() ?? gameObject.AddComponent<LineRenderer>();
+    _LineRenderer.material = _LineMaterial;
+    _LineRenderer.startWidth = 0.05f;
+    _LineRenderer.endWidth = 0.05f;
+    _LineRenderer.useWorldSpace = false;
 
-    private LineRenderer? _LineRenderer;
-
-    [UsedImplicitly]
-    public void Start()
-    {
-      transform.localPosition = Vector3.zero;
-      transform.localEulerAngles = Vector3.zero;
-
-      Rebuild();
-    }
-
-    public void Rebuild()
-    {
-      var segment = transform.parent.GetComponent<TrackSegment>();
-      if (segment == null)
-      {
-        return;
-      }
-
-      var approx = segment.Curve.Approximate();
-      var points = approx.Select(p => p.point + new Vector3(0, 0.02f, 0)).ToArray();
-
-      _LineRenderer = GetComponent<LineRenderer>() ?? gameObject.AddComponent<LineRenderer>();
-      _LineRenderer.material = _LineMaterial;
-      _LineRenderer.startWidth = 0.05f;
-      _LineRenderer.endWidth = 0.05f;
-      _LineRenderer.useWorldSpace = false;
-      _LineRenderer.positionCount = points.Length;
-      _LineRenderer.SetPositions(points);
-    }
-
-    [UsedImplicitly]
-    public void Update()
-    {
-      var segment = transform.parent.GetComponent<TrackSegment>();
-      if (EditorMod.Shared?.IsEnabled != true || segment == null)
-      {
-        Destroy(this);
-      }
-
-      _LineRenderer!.material.color = EditorContext.SelectedSegment == segment ? Color.green : _Yellow;
-      _LineRenderer.enabled = EditorContext.PatchEditor != null;
-    }
-
+    Rebuild();
   }
+
+  public void Rebuild()
+  {
+    if (_Segment == null!)
+    {
+      return;
+    }
+
+    var points = _Segment.Curve.Approximate().Select(p => p.point + new Vector3(0, 0.02f, 0)).ToArray();
+
+    _LineRenderer.positionCount = points.Length;
+    _LineRenderer.SetPositions(points);
+
+    ReBuildChevrons();
+  }
+
+  [UsedImplicitly]
+  public void Update()
+  {
+    _LineRenderer.material.color = EditorContext.SelectedSegment == _Segment ? Color.green : _Yellow;
+    _LineRenderer.enabled = EditorContext.PatchEditor != null;
+
+    UpdateChevrons();
+  }
+
+  public void Activate(PickableActivateEvent evt)
+  {
+    EditorContext.SelectedSegment = _Segment;
+  }
+
+  public void Deactivate()
+  {
+  }
+
+  public float MaxPickDistance => 200;
+
+  public int Priority => -1;
+
+  public TooltipInfo TooltipInfo => BuildTooltipInfo();
+
+  public PickableActivationFilter ActivationFilter => PickableActivationFilter.Any;
+
+  private TooltipInfo BuildTooltipInfo()
+  {
+    var sb = new StringBuilder();
+    sb.AppendLine($"ID: {_Segment.id}");
+    sb.AppendLine($"A: {_Segment.a.id}");
+    sb.AppendLine($"B: {_Segment.b.id}");
+    sb.AppendLine($"Priority: {_Segment.priority}");
+    sb.AppendLine($"Speed: {_Segment.speedLimit}");
+    sb.AppendLine($"GroupId: {_Segment.groupId}");
+    sb.AppendLine($"Style: {_Segment.style}");
+    sb.AppendLine($"Class: {_Segment.trackClass}");
+    sb.AppendLine($"Length: {_Segment.Curve.CalculateLength()}m");
+
+
+    return new TooltipInfo($"Segment {_Segment.id}", sb.ToString());
+  }
+
+  #region Chevrons
+
+  private readonly List<LineRenderer> _Chevrons = new();
+
+  private void UpdateChevrons()
+  {
+    foreach (var lineRenderer in _Chevrons)
+    {
+      lineRenderer.material.color = EditorContext.SelectedSegment == _Segment ? Color.green : _Yellow;
+    }
+  }
+  
+  private void ReBuildChevrons()
+  {
+    foreach (var chevron in _Chevrons)
+    {
+      Destroy(chevron.gameObject);
+    }
+
+    _Chevrons.Clear();
+
+    const float carLength = 12.2f;
+
+    var length = _Segment.GetLength();
+ 
+    var chevronCount = Mathf.Floor(length / carLength);
+
+    if (chevronCount == 0)
+    {
+      // segment too short - render single chevron in center
+      _Chevrons.Add(CreateChevron(0.5f));
+    }
+    else
+    {
+      // render chevrons centered on segment
+      var firstOffset = (length - chevronCount * carLength) * 0.5f / length;
+      if (firstOffset < carLength / 2)
+      {
+        // gap between first chevron and node is too small
+        --chevronCount;
+        firstOffset = (length - chevronCount * carLength) * 0.5f / length;
+      }
+
+      var deltaT = carLength / length;
+      for (var t = firstOffset; t < 1; t += deltaT)
+      {
+        _Chevrons.Add(CreateChevron(t));
+      }
+    }
+  }
+
+  private LineRenderer CreateChevron(float t)
+  {
+    var chevron = new GameObject("TrackSegmentHelper_Chevron");
+    chevron.transform.parent = transform;
+    chevron.transform.localPosition = _Segment.Curve.GetPoint(t) + new Vector3(0, 0.025f, 0);
+    chevron.transform.localEulerAngles = _Segment.Curve.GetRotation(t).eulerAngles;
+    chevron.layer = Layers.Clickable;
+
+    var lineRenderer = chevron.AddComponent<LineRenderer>();
+    lineRenderer.material = _LineMaterial;
+    lineRenderer.startWidth = 0.05f;
+    lineRenderer.positionCount = 3;
+    lineRenderer.useWorldSpace = false;
+    lineRenderer.SetPosition(0, new Vector3(-0.15f, 0, -0.3f));
+    lineRenderer.SetPosition(1, new Vector3(0, 0, 0.45f));
+    lineRenderer.SetPosition(2, new Vector3(0.15f, 0, -0.3f));
+    _Chevrons.Add(lineRenderer);
+
+    var boxCollider = chevron.AddComponent<BoxCollider>();
+    boxCollider.size = new Vector3(0.4f, 0.4f, 0.8f);
+
+    return lineRenderer;
+  }
+
+  #endregion
+
 }

@@ -212,6 +212,45 @@ namespace MapEditor.Managers
       Rebuild();
     }
 
+    public static void InjectNode()
+    {
+      // inject node in center of segment:
+      // NODE_A  --- NODE_B
+      // result:
+      // NODE_A  --- NODE --- NODE_B
+
+      var trackSegment = EditorContext.SelectedSegment;
+      if (trackSegment == null)
+      {
+        return;
+      }
+
+      var nodeA = trackSegment.a.id;
+      var nodeB = trackSegment.b.id;
+
+      var position = trackSegment.Curve.GetPoint(0.5f);
+      var eulerAngles = trackSegment.Curve.GetRotation(0.5f).eulerAngles;
+
+      EditorContext.SelectedSegment = null;
+
+      var nid = EditorContext.TrackNodeIdGenerator.Next()!;
+      var sid1 = EditorContext.TrackSegmentIdGenerator.Next()!;
+      var sid2 = EditorContext.TrackSegmentIdGenerator.Next()!;
+
+      var actions = new List<IUndoable>
+      {
+        new DeleteTrackSegment(trackSegment),
+        new CreateTrackNode(nid, position, eulerAngles),
+        new CreateTrackSegment(sid1, nodeA, nid),
+        new CreateTrackSegment(sid2, nid, nodeB),
+      };
+
+      EditorContext.ChangeManager.AddChange(new CompoundChange(actions));
+      EditorContext.SelectedNode = Graph.Shared.GetNode(nid);
+      EditorContext.MoveCameraToSelectedNode();
+      Rebuild();
+    }
+
     #region Rotation
 
     private static Vector3 _savedRotation = Vector3.forward;

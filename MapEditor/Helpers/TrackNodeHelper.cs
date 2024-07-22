@@ -2,7 +2,6 @@ using System.Linq;
 using System.Text;
 using Helpers;
 using JetBrains.Annotations;
-using Serilog;
 using Track;
 using UnityEngine;
 
@@ -10,9 +9,9 @@ namespace MapEditor.Helpers
 {
   public sealed class TrackNodeHelper : MonoBehaviour, IPickable
   {
-    private readonly Serilog.ILogger logger = Log.ForContext<Editor>();
+    private static readonly Material _LineMaterial = new(Shader.Find("Universal Render Pipeline/Lit"));
 
-    private static readonly Material _LineMaterial = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+    private TrackNode _TrackNode = null!;
 
     private LineRenderer? _LineRenderer;
 
@@ -21,29 +20,25 @@ namespace MapEditor.Helpers
     public int Priority => 1;
 
     public TooltipInfo TooltipInfo => BuildTooltipInfo();
-    public PickableActivationFilter ActivationFilter { get; }
+    public PickableActivationFilter ActivationFilter => PickableActivationFilter.Any;
 
     private TooltipInfo BuildTooltipInfo()
     {
-      var node = transform.parent.GetComponent<TrackNode>();
-      if (node == null || EditorContext.PatchEditor == null)
-      {
-        return TooltipInfo.Empty;
-      }
-
       var sb = new StringBuilder();
-      sb.AppendLine($"ID: {node.id}");
-      sb.AppendLine($"Pos: {node.transform.localPosition}");
-      sb.AppendLine($"Rot: {node.transform.localEulerAngles}");
-      var segments = Graph.Shared.SegmentsConnectedTo(node).Select(s => $"{s.id} ({(s.a == node ? "A" : "B")})");
+      sb.AppendLine($"ID: {_TrackNode.id}");
+      sb.AppendLine($"Pos: {_TrackNode.transform.localPosition}");
+      sb.AppendLine($"Rot: {_TrackNode.transform.localEulerAngles}");
+      var segments = Graph.Shared.SegmentsConnectedTo(_TrackNode).Select(s => $"{s.id} ({(s.a == _TrackNode ? "A" : "B")})");
       sb.AppendLine($"Segments: {string.Join(", ", segments)}");
 
-      return new TooltipInfo($"Node {node.id}", sb.ToString());
+      return new TooltipInfo($"Node {_TrackNode.id}", sb.ToString());
     }
 
     [UsedImplicitly]
     public void Start()
     {
+      _TrackNode = transform.parent.GetComponent<TrackNode>()!;
+
       transform.localPosition = Vector3.zero;
       transform.localEulerAngles = Vector3.zero;
 
@@ -65,20 +60,13 @@ namespace MapEditor.Helpers
     [UsedImplicitly]
     public void Update()
     {
-      var node = transform.parent.GetComponent<TrackNode>();
-      if (EditorMod.Shared?.IsEnabled != true || node == null)
-      {
-        Destroy(this);
-        return;
-      }
-
-      _LineRenderer!.material.color = EditorContext.SelectedNode == node ? Color.magenta : Color.cyan;
+      _LineRenderer!.material.color = EditorContext.SelectedNode == _TrackNode ? Color.magenta : Color.cyan;
       _LineRenderer.enabled = EditorContext.PatchEditor != null;
     }
 
     public void Activate(PickableActivateEvent evt)
     {
-      EditorContext.SelectedNode = transform.parent.GetComponent<TrackNode>();
+      EditorContext.SelectedNode = _TrackNode;
     }
 
     public void Deactivate()
