@@ -4,6 +4,7 @@
     "modId": "AlinaNova21.MapEditor",
     "name": "Map Editor",
     "desc": "A Map Editor for manipulating track mods.\nWARNING: Extremely WIP. I will not be providing support. Use at your own risk.",
+    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.24204.650/MapEditor_1.1.24204.650.zip",
     "version": "1.1.24204.650",
     "changelog": [
       {
@@ -19,8 +20,7 @@
         "desc": "- Merged rewrite PR\n- Released on site."
       }
     ],
-    "assemblyName": "MapEditor",
-    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.24193.2211/MapEditor_1.1.24204.650.zip"
+    "assemblyName": "MapEditor"
   },
   {
     "id": "alinas-map-mod",
