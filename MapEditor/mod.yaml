@@ -4,8 +4,12 @@ name: Map Editor
 desc: |-
   A Map Editor for manipulating track mods.
   WARNING: Extremely WIP. I will not be providing support. Use at your own risk.
-version: '1.1.24193.2211'
+version: '1.1.24204.650'
 changelog:
+- version: '1.1.24204.650'
+  desc: |-
+    - Merged more changes from @CzBuCHi
+    - Added custom context menus to node and segment helpers
 - version: '1.1.24193.2211'
   desc: |-
     - Update for 2024.5
