@@ -53,19 +53,15 @@ namespace MapEditor.StateTracker.Segment
     public void CreateSegment()
     {
       var gameObject = new GameObject($"Segment {id}");
-      gameObject.SetActive(true);
+      gameObject.SetActive(false);
       var segment = gameObject.AddComponent<TrackSegment>();
       segment.id = id;
       segment.transform.SetParent(Graph.Shared.transform);
       UpdateSegment(segment);
-      gameObject.SetActive(false);
+      gameObject.SetActive(true);
       Graph.Shared.AddSegment(segment);
-      // var helper = new GameObject("TrackSegmentHelper");
-      // helper.transform.SetParent(segment.transform);
-      // var sh = helper.AddComponent<TrackSegmentHelper>();
-      // sh.Rebuild();
-
       EditorContext.PatchEditor!.AddOrUpdateSegment(segment);
+      EditorContext.AttachUiHelper(segment);
     }
 
     public void DestroySegment()

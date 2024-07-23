@@ -44,6 +44,7 @@ namespace MapEditor.StateTracker.Node
       gameObject.SetActive(true);
       Graph.Shared.AddNode(node);
       EditorContext.PatchEditor!.AddOrUpdateNode(node);
+      EditorContext.AttachUiHelper(node);
     }
 
     public void DestroyNode()

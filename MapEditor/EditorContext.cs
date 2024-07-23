@@ -250,22 +250,23 @@ namespace MapEditor
       }
     }
 
+    public static void UpdateUiHelpers()
+    {
+      CreateUiHelpers();
+    }
+
     #region UI helpers
 
     private static void CreateUiHelpers()
     {
       foreach (var trackNode in Graph.Shared.Nodes!)
       {
-        var gameObject = new GameObject("TrackNodeHelper");
-        gameObject.transform.SetParent(trackNode.transform);
-        gameObject.AddComponent<TrackNodeHelper>();
+        AttachUiHelper(trackNode);
       }
 
       foreach (var trackSegment in Graph.Shared.Segments!)
       {
-        var gameObject = new GameObject("TrackSegmentHelper");
-        gameObject.transform.SetParent(trackSegment.transform);
-        gameObject.AddComponent<TrackSegmentHelper>();
+        AttachUiHelper(trackSegment);
       }
     }
 
@@ -289,6 +290,28 @@ namespace MapEditor
         }
       }
 
+    }
+
+    internal static void AttachUiHelper(TrackNode node)
+    {
+      if (node.transform.Find("TrackNodeHelper") != null)
+      {
+        return;
+      }
+      var gameObject = new GameObject("TrackNodeHelper");
+      gameObject.transform.SetParent(node.transform);
+      gameObject.AddComponent<TrackNodeHelper>();
+    }
+
+    internal static void AttachUiHelper(TrackSegment segment)
+    {
+      if (segment.transform.Find("TrackSegmentHelper") != null)
+      {
+        return;
+      }
+      var gameObject = new GameObject("TrackSegmentHelper");
+      gameObject.transform.SetParent(segment.transform);
+      gameObject.AddComponent<TrackSegmentHelper>();
     }
     #endregion
 

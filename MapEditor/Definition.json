@@ -4,6 +4,7 @@
   "name": "Map Editor",
   "version": "$(AssemblyVersion)",
   "assemblies": [ "MapEditor" ],
+  "updateUrl": "https://railroader.alinanova.dev/update.json",
   "requires": [
     "Zamu.StrangeCustoms"
   ],

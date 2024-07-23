@@ -76,7 +76,7 @@ namespace MapEditor.Dialogs
       builder.AddField("Flip Switch Stand", builder.AddToggle(() => NodeManager.GetFlipSwitchStand(), val => NodeManager.FlipSwitchStand(val))!);
       builder.HStack(stack =>
       {
-        stack.AddButtonCompact("Add", NodeManager.AddNode);
+        stack.AddButtonCompact("Add", () => NodeManager.AddNode());
         stack.AddButtonCompact("Split", () => NodeManager.SplitNode());
         stack.AddButtonCompact("Remove", () => NodeManager.RemoveNode(Input.GetKey(KeyCode.LeftShift)));
         stack.AddButtonCompact("Show", EditorContext.MoveCameraToSelectedNode);

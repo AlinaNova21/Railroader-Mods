@@ -84,9 +84,9 @@ namespace MapEditor.Managers
 
     #endregion
 
-    public static void AddNode()
+    public static void AddNode(TrackNode? node = null)
     {
-      var node = EditorContext.SelectedNode!;
+      node ??= EditorContext.SelectedNode!;
       var nid = EditorContext.TrackNodeIdGenerator.Next()!;
       var sid = EditorContext.TrackSegmentIdGenerator.Next()!;
       EditorContext.ChangeManager.AddChange(new CompoundChange(
