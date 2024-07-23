@@ -4,9 +4,14 @@ name: Map Editor
 desc: |-
   A Map Editor for manipulating track mods.
   WARNING: Extremely WIP. I will not be providing support. Use at your own risk.
-downloadUrl: https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.24204.650/MapEditor_1.1.24204.650.zip
-version: '1.1.24204.650'
+downloadUrl: https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.24205.517/MapEditor_1.1.24205.517.zip
+version: '1.1.24205.517'
 changelog:
+- version: '1.1.24205.517'
+  desc: |-
+    - Fixed invisible new segments
+    - Fixed Chevrons showing when editor not active
+    - Possibly other fixes I forgot.
 - version: '1.1.24204.650'
   desc: |-
     - Merged more changes from @CzBuCHi
