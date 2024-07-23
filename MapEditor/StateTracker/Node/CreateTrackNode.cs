@@ -16,11 +16,21 @@ namespace MapEditor.StateTracker.Node
 
     public void Apply()
     {
+      if (EditorContext.Settings.DebugLog)
+      {
+        Serilog.Log.ForContext<CreateTrackNode>().Information($"Apply({_id})");
+      }
+
       _ghost.CreateNode();
     }
 
     public void Revert()
     {
+      if (EditorContext.Settings.DebugLog)
+      {
+        Serilog.Log.ForContext<CreateTrackNode>().Information($"Revert({_id})");
+      }
+
       _ghost.DestroyNode();
     }
 

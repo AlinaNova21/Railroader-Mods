@@ -111,6 +111,10 @@ namespace MapEditor.Managers
     public static void SplitNode(TrackNode? node = null)
     {
       node ??= EditorContext.SelectedNode;
+      if (node == null)
+      {
+        return;
+      }
       // simple track node split:
       // NODE_A --- NODE --- NODE_B
       // result:
@@ -161,6 +165,10 @@ namespace MapEditor.Managers
     public static void RemoveNode(bool altMode, TrackNode? node = null)
     {
       node ??= EditorContext.SelectedNode;
+      if (node == null)
+      {
+        return;
+      }
       // end track node remove:
       // NODE_A --- NODE
       // result
@@ -211,7 +219,8 @@ namespace MapEditor.Managers
       Rebuild();
     }
 
-    public static void InjectNode(TrackSegment trackSegment = null)
+    private static readonly Serilog.ILogger _Logger =  Serilog.Log.ForContext(typeof(NodeManager));
+    public static void InjectNode(TrackSegment? trackSegment = null)
     {
       // inject node in center of segment:
       // NODE_A  --- NODE_B
@@ -223,6 +232,8 @@ namespace MapEditor.Managers
       {
         return;
       }
+
+      _Logger.Information("\r\n\r\nInjectNode START");
 
       var nodeA = trackSegment.a.id;
       var nodeB = trackSegment.b.id;

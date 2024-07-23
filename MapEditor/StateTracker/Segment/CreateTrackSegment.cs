@@ -1,3 +1,4 @@
+using MapEditor.StateTracker.Node;
 using Track;
 
 namespace MapEditor.StateTracker.Segment
@@ -16,11 +17,19 @@ namespace MapEditor.StateTracker.Segment
 
     public void Apply()
     {
+      if (EditorContext.Settings.DebugLog)
+      {
+        Serilog.Log.ForContext<CreateTrackSegment>().Information($"Apply({_id})");
+      }
       _ghost.CreateSegment();
     }
 
     public void Revert()
     {
+      if (EditorContext.Settings.DebugLog)
+      {
+        Serilog.Log.ForContext<CreateTrackSegment>().Information($"Revert({_id})");
+      }
       _ghost.DestroySegment();
     }
 

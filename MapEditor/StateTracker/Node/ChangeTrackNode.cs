@@ -1,4 +1,5 @@
 using System;
+using System.Security.Cryptography;
 using MapEditor.Extensions;
 using Track;
 using UnityEngine;
@@ -68,6 +69,11 @@ namespace MapEditor.StateTracker.Node
 
     public void Apply()
     {
+      if (EditorContext.Settings.DebugLog)
+      {
+        Serilog.Log.ForContext<ChangeTrackNode>().Information($"Apply({_Node.id})");
+      }
+
       _IsEditable = false;
       _Old.UpdateGhost(_Node);
       _New.UpdateNode(_Node);
@@ -77,6 +83,11 @@ namespace MapEditor.StateTracker.Node
 
     public void Revert()
     {
+      if (EditorContext.Settings.DebugLog)
+      {
+        Serilog.Log.ForContext<ChangeTrackNode>().Information($"Apply({_Node.id})");
+      }
+
       _Old.UpdateNode(_Node);
       EditorContext.PatchEditor!.AddOrUpdateNode(_Node);
       Graph.Shared.OnNodeDidChange(_Node);

@@ -1,7 +1,6 @@
 using System;
 using MapEditor.Extensions;
-using MapEditor.Managers;
-using Serilog;
+using MapEditor.StateTracker.Node;
 using Track;
 
 namespace MapEditor.StateTracker.Segment
@@ -69,6 +68,10 @@ namespace MapEditor.StateTracker.Segment
 
     public void Apply()
     {
+      if (EditorContext.Settings.DebugLog)
+      {
+        Serilog.Log.ForContext<ChangeTrackSegment>().Information($"Apply({segment.id})");
+      }
       _IsEditable = false;
       _Old.UpdateGhost(segment);
       _New.UpdateSegment(segment);
@@ -77,6 +80,10 @@ namespace MapEditor.StateTracker.Segment
 
     public void Revert()
     {
+      if (EditorContext.Settings.DebugLog)
+      {
+        Serilog.Log.ForContext<ChangeTrackSegment>().Information($"Revert({segment.id})");
+      }
       _Old.UpdateSegment(segment);
       EditorContext.PatchEditor!.AddOrUpdateSegment(segment);
     }
