@@ -1,9 +1,14 @@
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using MapEditor.Extensions;
 using MapEditor.Managers;
+using Newtonsoft.Json.Linq;
+using Track;
 using UI.Builder;
 using UI.Common;
 using UnityEngine;
+using static AutoTrestle.AutoTrestle;
+using static UI.Common.Window;
 
 namespace MapEditor.Dialogs
 {
@@ -24,16 +29,25 @@ namespace MapEditor.Dialogs
       _Builder = builder;
       _SpeedLimit = Mathf.Floor(segment.speedLimit / 5f);
 
-
       builder.AddSection("Properties", section =>
       {
         section.AddField("Priority", builder.AddInputFieldValidated($"{segment.priority}", value => SegmentManager.UpdatePriority(int.Parse(value)), "\\d+")!);
         section.AddField("Speed Limit", () => $"{_SpeedLimit * 5}", UIPanelBuilder.Frequency.Periodic);
         section.AddSlider(() => _SpeedLimit, () => $"{_SpeedLimit * 5}", o => _SpeedLimit = o, 0, 9, true, o => SegmentManager.UpdateSpeedLimit((int)o * 5));
         section.AddField("Group ID", builder.AddInputField(segment.groupId ?? "", (group) => SegmentManager.UpdateGroup(group), "groupId")!);
-        section.AddField("Track style", builder.AddEnumDropdown(segment.style, (style) => SegmentManager.UpdateStyle(style)));
+        section.AddField("Track style", builder.AddEnumDropdown(segment.style, (style) =>
+        {
+          SegmentManager.UpdateStyle(style);
+          builder.Rebuild();
+        }));
         section.AddField("Track class", builder.AddEnumDropdown(segment.trackClass, (trackClass) => SegmentManager.UpdateTrackClass(trackClass)));
       });
+      if (segment.style == TrackSegment.Style.Bridge)
+      {
+        builder.AddField("Head style", builder.AddDropdown(SegmentManager.TrestleEndStyles, 0, i => SegmentManager.UpdateTrestle(segment, headStyle: i))!);
+        builder.AddField("Tail style", builder.AddDropdown(SegmentManager.TrestleEndStyles, 0, i => SegmentManager.UpdateTrestle(segment, tailStyle: i))!);
+      }
+
       builder.Spacer();
       builder.AddSection("Position", BuildPositionEditor);
       builder.AddSection("Scaling", Utility.BuildScalingEditor);

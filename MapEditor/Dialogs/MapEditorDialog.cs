@@ -15,7 +15,7 @@ namespace MapEditor.Dialogs
         .GroupBy(o => o.Source.ToString(), o => o.Mixinto)
         .ToDictionary(o => o.Key, o => o.ToList());
 
-      _Mods = _Sources.Keys.ToList();
+      _Mods = _Sources.Keys.OrderBy(o => o).ToList();
       _Mods.Insert(0, "Select ...");
     }
 
@@ -37,7 +37,7 @@ namespace MapEditor.Dialogs
       if (_SelectedMod != 0)
       {
         var mod = _Mods[_SelectedMod];
-        var graphs = _Sources[mod]!.Select(Path.GetFileNameWithoutExtension).ToList();
+        var graphs = _Sources[mod]!.Select(Path.GetFileNameWithoutExtension).OrderBy(o => o).ToList();
         graphs.Insert(0, "Select ...");
 
         // show second dropdown only if there is more than one graph ...
@@ -60,7 +60,7 @@ namespace MapEditor.Dialogs
 
           // IDEA: use $"{mod}_{graphs[_SelectedPatch]}" as prefix? (so player can tell which mod modified what)
           builder.AddField("Prefix", builder.AddInputField(EditorContext.Prefix, value => EditorContext.Prefix = value, "Prefix")!);
-          builder.AddField("Recorded commands", EditorContext.ChangeManager.Count.ToString, UIPanelBuilder.Frequency.Periodic);
+          builder.AddField("Recorded commands", () => EditorContext.ChangeManager.Count.ToString(), UIPanelBuilder.Frequency.Fast);
           builder.HStack(stack =>
           {
             stack.AddButtonCompact("Undo", EditorContext.ChangeManager.Undo);
@@ -83,6 +83,12 @@ namespace MapEditor.Dialogs
     public void BuildSettings(UIPanelBuilder builder)
     {
       builder.AddButton("Keyboard bindings", EditorContext.KeyboardSettingsDialog.ShowWindow);
+      builder.AddField("Debug Log", builder.AddToggle(() => EditorContext.Settings.DebugLog, o =>
+      {
+        EditorContext.Settings.DebugLog = o;
+        Serilog.Log.ForContext<MapEditorDialog>().Information($"Debug log is now {(o ? "enabled" : "disabled")})");
+      })!);
+      builder.AddField("Show Segment Chevrons", builder.AddToggle(() => EditorContext.Settings.ShowSegmentChevrons, o => EditorContext.Settings.ShowSegmentChevrons = o)!);
     }
 
     protected override void AfterWindowClosed()

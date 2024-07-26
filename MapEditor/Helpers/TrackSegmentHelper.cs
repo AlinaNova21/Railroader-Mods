@@ -48,7 +48,10 @@ public sealed class TrackSegmentHelper : MonoBehaviour, IPickable
     _LineRenderer.positionCount = points.Length;
     _LineRenderer.SetPositions(points);
 
-    ReBuildChevrons();
+    if (EditorContext.Settings.ShowSegmentChevrons)
+    {
+      ReBuildChevrons();
+    }
   }
 
   [UsedImplicitly]
@@ -57,7 +60,10 @@ public sealed class TrackSegmentHelper : MonoBehaviour, IPickable
     _LineRenderer.material.color = EditorContext.SelectedSegment == _Segment ? Color.green : _Yellow;
     _LineRenderer.enabled = EditorContext.PatchEditor != null;
 
-    UpdateChevrons();
+    if (EditorContext.Settings.ShowSegmentChevrons)
+    {
+      UpdateChevrons();
+    }
   }
 
 

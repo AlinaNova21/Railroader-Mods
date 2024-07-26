@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using Track;
 
 namespace MapEditor.StateTracker.Node
@@ -16,11 +17,21 @@ namespace MapEditor.StateTracker.Node
 
     public void Revert()
     {
+      if (EditorContext.Settings.DebugLog)
+      {
+       Serilog.Log.ForContext<DeleteTrackNode>().Information($"Apply({_Id})");
+      }
+
       _Ghost!.CreateNode();
     }
 
     public override string ToString()
     {
+      if (EditorContext.Settings.DebugLog)
+      {
+        Serilog.Log.ForContext<DeleteTrackNode>().Information($"Apply({_Id})");
+      }
+
       return "DeleteTrackNode: " + _Id;
     }
 

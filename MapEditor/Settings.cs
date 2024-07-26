@@ -4,6 +4,10 @@ namespace MapEditor
 {
   public sealed class Settings
   {
+
+    public bool DebugLog { get; set; }
+    public bool ShowSegmentChevrons { get; set; }
+
     public KeyCode MoveForward { get; set; } = KeyCode.Keypad8;
     public KeyCode MoveBackward { get; set; } = KeyCode.Keypad5;
     public KeyCode MoveLeft { get; set; } = KeyCode.Keypad4;
