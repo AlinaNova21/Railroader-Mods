@@ -27,7 +27,7 @@ namespace AlinasMapMod.Definitions
         internal void ApplyTo(Section.DeliveryPhase phase, ObjectCache cache)
         {
             cache.IndustryComponents.TryGetValue(IndustryComponent, out var industryComponent);
-            phase.industryComponent = (Model.OpsNew.ProgressionIndustryComponent)industryComponent;
+            phase.industryComponent = (Model.Ops.ProgressionIndustryComponent)industryComponent;
             phase.cost = Cost;
             phase.deliveries = Deliveries.Select(d => {
                 var delivery = new Section.Delivery();

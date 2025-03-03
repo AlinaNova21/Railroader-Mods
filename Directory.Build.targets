@@ -41,12 +41,17 @@
     </Reference>
   </ItemGroup>
 
+  <Target Name="SetVersion" AfterTargets="AfterBuild" Condition="'$(Configuration)' == 'Debug' And '$(PackageMod)' == 'enable'">
+    <!-- Replace $(AssemblyVersion) with the actual version -->
+    <Exec Command="powershell -Command &quot;(Get-Content '$(OutDir)Definition.json') -replace '\$\(AssemblyVersion\)', '$(AssemblyVersion)' | Set-Content '$(OutDir)Definition.json'&quot;" />
+  </Target>
+
   <!-- Publish the mod as a neat zip file -->
   <Target Name="PackageMod" AfterTargets="AfterBuild" Condition="'$(Configuration)' == 'Release' And '$(PackageMod)' == 'enable'">
     <Message Text="Packaging $(AssemblyName) v$(AssemblyVersion)" Importance="high" />
     <!-- Replace $(AssemblyVersion) with the actual version -->
     <Exec Command="powershell -Command &quot;(Get-Content '$(OutputPath)Definition.json') -replace '\$\(AssemblyVersion\)', '$(AssemblyVersion)' | Set-Content '$(OutputPath)Definition.json'&quot;" />
-
+    
     <PropertyGroup>
       <ModsDirectory>$(OutputPath)/Mods</ModsDirectory>
       <ModDirectory>$(ModsDirectory)/$(AssemblyName)</ModDirectory>

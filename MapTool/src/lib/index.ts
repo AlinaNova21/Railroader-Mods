@@ -1,4 +1,5 @@
 export * from './Area.js'
+export * from "./Definition.js"
 export * from './Graph.js'
 export * from './Industry.js'
 export * from './IndustryComponent.js'

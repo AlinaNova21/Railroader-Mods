@@ -79,7 +79,7 @@ namespace MapEditor
 
     private void OnMapDidUnload(MapDidUnloadEvent obj)
     {
-      EditorContext.CloseMixinto();
+      // EditorContext.CloseMixinto();
     }
 
     private void AddButtonToTopRightArea()

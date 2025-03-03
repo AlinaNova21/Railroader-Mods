@@ -2,7 +2,7 @@
 import { Vector3 } from 'three'
 
 import { AlinasMapModMixin } from '../lib/AlinasMapMod.js'
-import { DeliveryDirection, Graph, Id, Industry, IndustryComponentId, IndustryComponentType, TrackSpan, TrackSpanPartEnd, getNode, idGenerator, loadHelper } from '../lib/index.js'
+import { DeliveryDirection, Graph, Id, Industry, IndustryComponentId, IndustryComponentType, LayoutFunctionResult, TrackSpan, TrackSpanPartEnd, getNode, idGenerator, loadHelper } from '../lib/index.js'
 
 const UP = new Vector3(0, 1, 0)
 
@@ -106,5 +106,5 @@ export default async function sylvaWye(graph: Graph, originalTracks: Graph) {
     conflicts: [
       { id: 'AlinaNova21.SylvaWye' },
     ]
-  }
+  } as LayoutFunctionResult
 }

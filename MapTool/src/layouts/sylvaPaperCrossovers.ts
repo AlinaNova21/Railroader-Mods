@@ -2,7 +2,7 @@
 import { Vector3 } from 'three'
 
 import { AlinasMapModMixin } from '../lib/AlinasMapMod.js'
-import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, TrackSpan, TrackSpanPartEnd, getNode, loadHelper } from '../lib/index.js'
+import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, LayoutFunctionResult, TrackSpan, TrackSpanPartEnd, getNode, loadHelper } from '../lib/index.js'
 
 const UP = new Vector3(0, 1, 0)
 
@@ -10,21 +10,10 @@ export default async function sylvaPaperCrossover(graph: Graph, originalTracks: 
   const zone = `AN_Sylva_Paper_Crossover`
   const { nid, sid, pid } = Graph.Shared.pushIdGenerator('Sylva_Paper_Crossover')
   
-  const a1 = getNode(Id('Nje2'))
-  const a2 = getNode(Id('N37u'))
-  const a3 = getNode(Id('Nntj'))
   const b1 = getNode(Id('N7w9'))
   const b2 = getNode(Id('N8f9'))
   const b3 = getNode(Id('Nntj'))
   
-  
-  
-  const posA = a3.position.clone()
-  posA.sub(a2.position)
-  posA.multiplyScalar(0.32)
-  posA.add(a2.position)
-  const a4 = graph.createNode(posA,a2.rotation)//create Node a4 on a line between a2 and a3
-
   const posB = b3.position.clone()
   posB.sub(b2.position)
   posB.multiplyScalar(0.28)
@@ -32,20 +21,14 @@ export default async function sylvaPaperCrossover(graph: Graph, originalTracks: 
   const b4 = graph.createNode(posB,b2.rotation)//create Node a4 on a line between a2 and a3
   
 
-  graph.getSegment(Id('Szya')).endId = a4.id//trim segment a2<>a3 to a4<>a3
   graph.getSegment(Id('Skmy')).endId = b4.id
   
-  graph.createSegment(a4.id,a2.id)//fill gap a2<>a4
   graph.createSegment(b4.id,b3.id)
   
-  const as = graph.createSegment(a1.id,a4.id)//create the actual crossover
   const bs = graph.createSegment(b1.id,b4.id)
 
-  as.groupId = zone
   bs.groupId = zone
   
-  a1.flipSwitchStand = false
-  a4.flipSwitchStand = true
   b1.flipSwitchStand = true
   b4.flipSwitchStand = false
   
@@ -84,9 +67,9 @@ export default async function sylvaPaperCrossover(graph: Graph, originalTracks: 
     items: {
       [zone]: {
         identifier: zone,
-        name: 'Sylva Paper Crossovers',
+        name: 'Sylva Paper Crossover',
         groupIds: [zone],
-        description: 'Adds two Crossovers at Sylva Paperboard.',
+        description: 'Adds a Crossover at Sylva Paperboard.',
         area: area.id,
         trackSpans: spans,
         deliveryPhases: [{
@@ -105,9 +88,13 @@ export default async function sylvaPaperCrossover(graph: Graph, originalTracks: 
 
   return {
     name: mixin.items[zone].name,
-    desc: 'Adds two Crossovers at Sylva Paperboard.',
+    desc: 'Adds a Crossover at Sylva Paperboard.',
     mixins: {
       alinasMapMod: mixin
-    }
-  }
+    },
+    version: '1.1.2',
+    changelog: [
+      { version: '1.1.2', desc: 'Removed crossover that conflicts with base game.' }
+    ]
+  } as LayoutFunctionResult
 }

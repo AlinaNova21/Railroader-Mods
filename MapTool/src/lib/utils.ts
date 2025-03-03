@@ -1,6 +1,7 @@
 import { Euler, Vector3 } from "three"
 import { AlinasMapModMixin, AlinasMapModMixinItem } from "./AlinasMapMod.js"
 import { Area } from "./Area.js"
+import { ModReference } from "./Definition.js"
 import { Graph, GraphJson, GraphPart } from "./Graph.js"
 import { Industry } from "./Industry.js"
 import { IndustryComponentType } from "./IndustryComponent.js"
@@ -109,8 +110,9 @@ export function Id<T extends _HasId>(id: string): Id<T> {
   return id as Id<T>
 }
 
-export const recordImporter = <T, R extends _HasId & isDirty>(data: Record<Id<R>, T>, fn: isFromJson<T, R>, parent?: isDirty) => {
+export const recordImporter = <T, R extends _HasId & isDirty>(data: Record<Id<R>, T> | undefined, fn: isFromJson<T, R>, parent?: isDirty) => {
   const ret: Record<Id<R>, R> = {}
+  if (!data) return ret
   for (const id in data) {
     ret[Id<R>(id)] = dirtyWrap(fn(Id(id), data[Id<R>(id)]), false, parent)
   }
@@ -138,20 +140,13 @@ export const recordExporter = <T extends GraphPart<R, T>, R>(records: Record<Id<
 
 export type isFromJson<T, R extends _HasId> = (id: Id<R>, data: T) => R
 
-
-export type LayoutFunction = (graph: Graph, originalTracks: Graph) => Promise<LayoutFunctionResult>
-
 export interface Mixins {
-  gameGraph?: GraphJson,
+  gameGraph?: GraphJson | GraphJson[],
   alinasMapMod?: AlinasMapModMixin
   [key: string]: any
 }
 
-export interface ModReference {
-  id: string
-  notBefore?: string
-  notAfter?: string
-}
+export type LayoutFunction = (graph: Graph, originalTracks: Graph) => Promise<LayoutFunctionResult>
 
 export interface LayoutFunctionResult {
   name: string
@@ -231,4 +226,8 @@ export function WatchDirty<T extends { new (...args:any[]): {}}>(props: string[]
       get: () => dirty
     })
   }
+}
+
+export function entriesWithId<T extends _HasId,V>(data: Record<Id<T>, V>): [Id<T>, V][] {
+  return Object.entries(data).map(([id, item]) => [Id<T>(id), item])
 }

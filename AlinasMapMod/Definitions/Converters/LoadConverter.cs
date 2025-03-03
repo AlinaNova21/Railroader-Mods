@@ -17,7 +17,12 @@ namespace AlinasMapMod.Definitions.Converters
     {
       string s = (string)reader.Value;
       if(existingValue?.id == s) return existingValue;
-      return Resources.FindObjectsOfTypeAll<Load>().Single(l => l.id == s);
+      var load = Resources.FindObjectsOfTypeAll<Load>().SingleOrDefault(l => l.id == s);
+      if(load == null || load == default)
+      {
+        throw new Exception($"Load with id {s} not found");
+      }
+      return load;
     }
   }
 

@@ -14,15 +14,15 @@ export interface GraphPart<T,C extends _HasId> extends isDirty {
 }
 
 export interface GraphJson {
-  tracks: {
-    nodes: Record<Id<TrackNode>, TrackNodeJson>
-    segments: Record<Id<Segment>, SegmentJson>
-    spans: Record<Id<TrackSpan>, TrackSpanJson>
+  tracks?: {
+    nodes?: Record<Id<TrackNode>, TrackNodeJson>
+    segments?: Record<Id<Segment>, SegmentJson>
+    spans?: Record<Id<TrackSpan>, TrackSpanJson>
   }
-  scenery: Record<Id<any>,any>
-  areas: Record<Id<Area>,AreaJson>
-  loads: Record<Id<Load>, Load>
-  splineys: Record<Id<any>, SplineyJson>
+  scenery?: Record<Id<any>,any>
+  areas?: Record<Id<Area>,AreaJson>
+  loads?: Record<Id<Load>, Load>
+  splineys?: Record<Id<any>, SplineyJson>
 }
 
 export class Graph implements isDirty {
@@ -227,53 +227,44 @@ export class Graph implements isDirty {
   static fromJSON(data: GraphJson) {
     const g = new Graph()
     if (!Graph.instance) Graph.instance = g
-    if (!data.tracks) data.tracks = { nodes: {}, segments: {}, spans: {} }
-    g.nodes = recordImporter(data.tracks.nodes, TrackNode.fromJson)
+    g.nodes = recordImporter(data.tracks?.nodes, TrackNode.fromJson)
     Object.values(g.nodes).forEach(node => {
       node.graph = g
       node[isDirtySym] = false
     })
-    
-    g.segments = recordImporter(data.tracks.segments, Segment.fromJson)
+    g.segments = recordImporter(data.tracks?.segments, Segment.fromJson)
     Object.values(g.segments).forEach(segment => {
       segment.graph = g
       segment[isDirtySym] = false
     })
-    
-    g.spans = recordImporter(data.tracks.spans, TrackSpan.fromJson, g)
+    g.spans = recordImporter(data.tracks?.spans, TrackSpan.fromJson, g)
     g.areas = recordImporter(data.areas, Area.fromJson, g)
-    
     g.loads = recordImporter(data.loads, LoadFromJson, g)
     g.scenery = recordImporter(data.scenery, SplineyFromJson)
     return g
   }
   toJSON() {
-    const ret: GraphJson = {
-      tracks: {
-        nodes: {}, 
-        segments: {},
-        spans: {},
-      },
-      areas: {},
-      scenery: {},
-      loads: {},
-      splineys: {},
-    }
+    const ret: GraphJson = {}
+    ret.tracks = ret.tracks || {}
     ret.tracks.nodes = recordExporter(this.nodes)
     ret.tracks.segments = recordExporter(this.segments)
     ret.tracks.spans = recordExporter(this.spans)
     ret.areas = recordExporter(this.areas)
     ret.scenery = recordExporter(this.scenery)
+    ret.splineys = {}
+    ret.loads = {}
     Object.values(this.splineys).forEach(spl => {
       if(spl[isDirtySym]) {
         console.log(`Spliney ${spl.id} is dirty ${JSON.stringify(spl)} ${spl[isDirtySym]}`)
         const { id, ...rest } = spl
+        // @ts-ignore undefined
         ret.splineys[id] = rest
       }
     })
     Object.values(this.loads).forEach(load => { 
       if(load.id == Id("water") && load[isDirtySym]) {
         console.log(`Load ${load.id} is dirty ${JSON.stringify(load)} ${load[isDirtySym]}`)
+        // @ts-ignore undefined
         ret.loads[load.id] = load
       }
     })

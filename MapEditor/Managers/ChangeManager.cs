@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using MapEditor.StateTracker;
+using Serilog.Debugging;
 
 namespace MapEditor.Managers
 {
@@ -8,6 +9,8 @@ namespace MapEditor.Managers
 
     private readonly Stack<IUndoable> _UndoStack = new Stack<IUndoable>();
     private readonly Stack<IUndoable> _RedoStack = new Stack<IUndoable>();
+
+    public IUndoable? LastChange => _UndoStack.Count > 0 ? _UndoStack.Peek() : null;
 
     public int Count => _UndoStack.Count;
 

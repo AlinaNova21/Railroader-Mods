@@ -3,7 +3,7 @@ using System.Linq;
 using Game.Progression;
 using Model;
 using Model.Ops.Definition;
-using Model.OpsNew;
+using Model.Ops;
 using Track;
 using UnityEngine;
 

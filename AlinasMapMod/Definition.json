@@ -8,11 +8,11 @@
   "requires": [
     {
       "id": "railloader",
-      "notBefore": "1.8.0"
+      "notBefore": "1.10.0.2"
     },
     {
       "id": "Zamu.StrangeCustoms",
-      "notBefore": "1.6.24125.1439"
+      "notBefore": "1.10.25017.313"
     }
   ]
 }

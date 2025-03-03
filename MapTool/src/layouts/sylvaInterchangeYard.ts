@@ -2,7 +2,7 @@
 import { MathUtils, Matrix4, Vector3 } from 'three'
 
 import { AlinasMapModMixin } from '../lib/AlinasMapMod.js'
-import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, Segment, TrackNode, TrackSpan, TrackSpanPartEnd, idGenerator, loadHelper } from '../lib/index.js'
+import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, LayoutFunctionResult, Segment, TrackNode, TrackSpan, TrackSpanPartEnd, idGenerator, loadHelper } from '../lib/index.js'
 
 const UP = new Vector3(0, 1, 0)
 
@@ -131,7 +131,7 @@ export default async function sylvaInterchangeYard(graph: Graph, originalTracks:
     conflicts: [
       { id: 'AlinaNova21.SylvaInterchangeYard' },
     ]
-  }
+  } as LayoutFunctionResult
   // graph.newSegment(`N${area}_L0`, in1, inNodes[0])
   // graph.newSegment(`N${area}_L1`, in2, outNodes[0])
 }

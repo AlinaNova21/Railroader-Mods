@@ -3,8 +3,18 @@ modId: AlinaNova21.AlinasMapMod
 name: Alina's Map Mod
 desc: |-
   A mod that adds utilities for other mods to add milestones and other features to the game.
-version: '1.4.24193.2211'
+version: ''
 changelog:
+- version: ''
+  desc: |- 
+    - Added loader builder splineys for placing fuel and water loaders.
+    - Added pax builder splineys for placing pax stations. These function, but may still have bugs. 
+    - Updated docs
+- version: '1.4.25053.1405'
+  desc: |-
+    - Fix milestone object enabling
+    - Fix roundhouses
+    - Rework turntables and roundhouses to be more flexible and more reliable.
 - version: '1.4.24193.2211'
   desc: |-
     - Update for 2024.5

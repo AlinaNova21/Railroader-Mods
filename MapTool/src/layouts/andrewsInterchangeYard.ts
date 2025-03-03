@@ -2,7 +2,7 @@
 import { MathUtils, Matrix4, Vector3 } from 'three'
 
 import { AlinasMapModMixin } from '../lib/AlinasMapMod.js'
-import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, TrackSpan, TrackSpanPartEnd, dirtyLogSym, getNode, getSegment, isDirtySym, loadHelper } from '../lib/index.js'
+import { Graph, Id, Industry, IndustryComponentId, IndustryComponentType, LayoutFunctionResult, TrackSpan, TrackSpanPartEnd, dirtyLogSym, getNode, getSegment, isDirtySym, loadHelper } from '../lib/index.js'
 
 const UP = new Vector3(0, 1, 0)
 
@@ -173,5 +173,5 @@ export default async function andrewsInterchangeYard(graph: Graph, originalTrack
     conflicts: [
       { id: 'AlinaNova21.AndrewsInterchangeYard' },
     ]
-  }
+  } as LayoutFunctionResult
 }

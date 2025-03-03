@@ -191,12 +191,20 @@ namespace MapEditor
 
       ChangeManager.UndoAll();
       PatchEditor = null!;
-      TrackNodeDialog.CloseWindow();
-      TrackSegmentDialog.CloseWindow();
+      if (_TrackNodeDialog != null)
+      {
+        _TrackNodeDialog.CloseWindow();
+      }
+      if (_TrackSegmentDialog != null)
+      {
+        _TrackSegmentDialog.CloseWindow();
+      }
       SelectedNode = null;
       SelectedSegment = null;
 
-      Graph.Shared.RebuildCollections();
+      if(Graph.Shared != null)
+        Graph.Shared.RebuildCollections();
+
       TrackObjectManager.Instance.Rebuild();
 
       DestroyUiHelpers();

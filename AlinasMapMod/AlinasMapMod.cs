@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using AlinasMapMod.Turntable;
 using GalaSoft.MvvmLight.Messaging;
 using Game.Events;
 using HarmonyLib;
 using Railloader;
 using Serilog;
-using SimpleGraph.Runtime;
 using TelegraphPoles;
 using Track;
 using UI.Builder;
@@ -17,22 +15,22 @@ using UnityEngine;
 
 namespace AlinasMapMod
 {
-  public partial class AlinasMapMod : SingletonPluginBase<AlinasMapMod>, IUpdateHandler, IModTabHandler, IMixintoProvider
+  public partial class AlinasMapMod : SingletonPluginBase<AlinasMapMod>, IUpdateHandler, IModTabHandler
   {
-    private IModdingContext moddingContext;
-    private IModDefinition definition;
+    private readonly IModdingContext moddingContext;
+    private readonly IModDefinition Definition;
     private IUIHelper uIHelper;
-    Serilog.ILogger logger = Log.ForContext<AlinasMapMod>();
-    Settings settings;
-    private ObjectCache objectCache { get; } = new ObjectCache();
-    public bool hasDumpedProgressions { get; private set; }
+    readonly Serilog.ILogger logger = Log.ForContext<AlinasMapMod>();
+    readonly Settings settings;
+    private ObjectCache ObjectCache { get; } = new ObjectCache();
+    public bool HasDumpedProgressions { get; private set; }
 
-    private Patcher patcher = new Patcher();
+    private readonly Patcher patcher = new();
 
     public AlinasMapMod(IModdingContext _moddingContext, IModDefinition self, IUIHelper _uIHelper)
     {
       moddingContext = _moddingContext;
-      definition = self;
+      Definition = self;
       uIHelper = _uIHelper;
 
       settings = moddingContext.LoadSettingsData<Settings>(self.Id) ?? new Settings();
@@ -57,6 +55,15 @@ namespace AlinasMapMod
       logger.Information("OnEnable() was called!");
       var harmony = new Harmony("AlinaNova21.AlinasMapMod");
       harmony.PatchCategory("AlinasMapMod");
+      Messenger.Default.Register<MapWillUnloadEvent>(this, (e) =>
+      {
+        VanillaPrefabs.ClearCache();
+      });
+
+      #if DEBUG
+      // var cd = new ConflictDetector(moddingContext);
+      // cd.CheckForConflicts();
+      #endif
 
       Messenger.Default.Register(this, new Action<MapDidLoadEvent>(OnMapDidLoad));
       patcher.OnPatchState += (state) =>
@@ -101,6 +108,8 @@ namespace AlinasMapMod
     public void Update()
     {
     }
+
+
     private void OnMapDidLoad(MapDidLoadEvent @event)
     {
       logger.Debug("OnMapDidLoad()");
@@ -108,21 +117,6 @@ namespace AlinasMapMod
       var tpm = UnityEngine.Object.FindObjectOfType<TelegraphPoleManager>();
       logger.Debug("Adjusting telegraph pole positions");
       var g = tpm.GetComponent<SimpleGraph.Runtime.SimpleGraph>();
-      Node n;
-      // n = g.NodeForId(585);
-      // n.position += new Vector3(0, 2, 0);
-      // n = g.NodeForId(587);
-      // n.position += new Vector3(0, 2, 0);
-      // n = g.NodeForId(591);
-      // n.position += new Vector3(0, 2, 0);
-      // n = g.NodeForId(593);
-      // n.position += new Vector3(0, 2, 0);
-      // n = g.NodeForId(595);
-      // n.position += new Vector3(0, 2, 0);
-      // n = g.NodeForId(603);
-      // n.position += new Vector3(0, 2, 0);
-      // n = g.NodeForId(605);
-      // n.position += new Vector3(0, 2, 0);
 
       logger.Debug("Done adjusting telegraph pole positions");
     }
@@ -171,20 +165,32 @@ namespace AlinasMapMod
     public void ModTabDidClose()
     {
       logger.Debug("Nighttime...");
-      moddingContext.SaveSettingsData(definition.Id, settings);
+      moddingContext.SaveSettingsData(Definition.Id, settings);
       Run();
     }
 
     internal void Run()
     {
       logger.Information($"Run()");
-      if (settings.ProgressionsDumpPath != "" && !hasDumpedProgressions)
+      if (settings.ProgressionsDumpPath != "" && !HasDumpedProgressions)
       {
-        hasDumpedProgressions = true;
+        HasDumpedProgressions = true;
         patcher.Dump(settings.ProgressionsDumpPath);
       }
-      patcher.Patch();
-      objectCache.Rebuild();
+      try {
+        patcher.Patch();
+      } catch (Exception e) {
+        logger.Error(e, "Error while patching progressions");
+        var window = uIHelper.CreateWindow("AMMProgErr", 200, 200, UI.Common.Window.Position.Center);
+        window.Title = "AlinasMapMod Error";
+        uIHelper.PopulateWindow(window, (builder) => {
+          builder.AddLabel("Error while patching progressions");
+          builder.AddLabel(e.Message);
+          builder.AddButton("Close", () => window.CloseWindow());
+        });
+        window.ShowWindow();
+      }
+      ObjectCache.Rebuild();
 
       var alinasMapModGameObject = GameObject.Find("AlinasMapMod");
       if (alinasMapModGameObject == null)
@@ -206,11 +212,6 @@ namespace AlinasMapMod
       //   tt2.transform.parent = alinasMapModGameObject.transform;
       //   tt2.transform.localPosition = new Vector3(13000, 561, 4600);
       // }
-    }
-
-    IEnumerable<string> IMixintoProvider.GetMixintos(string mixintoIdentifier)
-    {
-      yield break;
     }
   }
 }

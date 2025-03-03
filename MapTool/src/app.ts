@@ -2,7 +2,9 @@ import JSZip from "jszip"
 import { createWriteStream } from "node:fs"
 import { mkdir, readFile, readdir, unlink, writeFile } from "node:fs/promises"
 import { generateUpdate } from "./generateUpdate.js"
+import testMod from "./layouts/TestMod.js"
 import alarkaJctAdditional from './layouts/alarkaJctAdditional.js'
+import alarkaJctInterchange from "./layouts/alarkaJctInterchange.js"
 import alarkaLoop from "./layouts/alarkaLoop.js"
 import alarkaPaxStorage from './layouts/alarkaPaxStorage.js'
 import andrewsInterchangeYard from './layouts/andrewsInterchangeYard.js'
@@ -13,27 +15,28 @@ import sylvaWye from './layouts/sylvaWye.js'
 import whittierSawmillConnection from "./layouts/whittierSawmillConnection.js"
 import whittierYard from './layouts/whittierYard.js'
 import { AlinasMapModMixin } from './lib/AlinasMapMod.js'
+import { MixintoDefinitions, ModDefinition } from "./lib/Definition.js"
 import { Mod } from "./lib/Mods.js"
-import { Graph, LayoutFunction, Mixins, ModReference } from './lib/index.js'
+import { Graph, GraphJson, Id, LayoutFunction, Mixins, ModReference, Segment } from './lib/index.js'
 
 async function run() {
   const baseRequires: ModReference[] = [
     {
-      id: 'railloader',
+      id: Id('railloader'),
       notBefore: '1.8.0'
     },
     {
-      id: 'Zamu.StrangeCustoms',
+      id: Id('Zamu.StrangeCustoms'),
       notBefore: '1.6.24125.1439'
     },
     {
-      id: 'AlinaNova21.AlinasMapMod',
+      id: Id('AlinaNova21.AlinasMapMod'),
       notBefore: '1.4.0'
     }
   ]
   const baseConflicts: ModReference[] = [
     {
-      id: 'AlinaNova21.AlinasMapMod',
+      id: Id('AlinaNova21.AlinasMapMod'),
       notAfter: '1.3.24149.1337',
     }
   ]
@@ -42,6 +45,7 @@ async function run() {
   const graph = Graph.fromJSON(dumpJson)
   const layouts = {
     AlarkaJctAdditional: alarkaJctAdditional,
+    AlarkaJctInterchange: alarkaJctInterchange,
     AlarkaLoop: alarkaLoop,
     AlarkaPaxStorage: alarkaPaxStorage,
     AndrewsInterchangeYard: andrewsInterchangeYard,
@@ -52,7 +56,7 @@ async function run() {
     WhittierSawmillConnection: whittierSawmillConnection,
     WhittierYard: whittierYard,
     // WalkerUraniumMine: walkerUraniumMine,
-    // TestMod: testMod,
+    TestMod: testMod,
   } as Record<string, LayoutFunction>
   const allMixins = [] as Mixins[]
   const { version: toolVersion } = JSON.parse(await readFile('package.json', 'utf8'))
@@ -65,7 +69,7 @@ async function run() {
   const mods: Mod[] = []
   for (const [id, fn] of Object.entries(layouts)) {
     const modPath1 = `dist/AMM_${id}`
-    const modPath2 = `../../AMM_${id}`
+    const modPath2 = `../../Mods/AMM_${id}`
     // const modPath = `../../AMM_${id}`
     console.log(`Processing ${id}...`)
     const graph = Graph.fromJSON(dumpJson)
@@ -99,14 +103,27 @@ async function run() {
       await writeFile(`${modPath2}/${file}`, data)
     }
 
-    const mixintos: { [key: string]: string } = {}
+    // Split out progressions and such to enable optional loading
+    const origGraph = mixins['game-graph'] as GraphJson
+    const progJson: GraphJson = {}
+    progJson.tracks = {}
+    progJson.tracks.segments = {}
+    for(const [ id, segment ] of Object.entries(origGraph.tracks?.segments ?? {}) as unknown as [Id<Segment>, Segment][]) {
+      if (segment.groupId) {
+        progJson.tracks.segments[id] = { groupId: segment.groupId }
+      }
+    }
+
+    const mixintos: Record<string, MixintoDefinitions> = {}
     for(const [id, mixin] of Object.entries(mixins)) {
       write(`${id}.json`, JSON.stringify(mixin, null, 2))
-      mixintos[id] = `file(${id}.json)`
+      mixintos[id] = [
+        `file(${id}.json)`
+      ]
     }
-    const definition = {
+    const definition: ModDefinition = {
       manifestVersion: 5,
-      id: `AlinaNova21.AMM_${id}`,
+      id: Id(`AlinaNova21.AMM_${id}`),
       name,
       version,
       requires,

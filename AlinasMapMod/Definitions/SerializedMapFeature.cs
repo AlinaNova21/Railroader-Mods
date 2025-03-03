@@ -36,7 +36,7 @@ namespace AlinasMapMod.Definitions
       DisplayName = feat.displayName;
       if (feat.gameObjectsEnableOnUnlock != null)
       {
-        GameObjectsEnableOnUnlock = feat.gameObjectsEnableOnUnlock.ToDictionary(g => Utils.getPathFromGameObject(g), g => true);
+        GameObjectsEnableOnUnlock = feat.gameObjectsEnableOnUnlock.ToDictionary(g => Utils.GetPathFromGameObject(g), g => true);
       }
       if (feat.trackGroupsAvailableOnUnlock != null)
       {
@@ -65,14 +65,14 @@ namespace AlinasMapMod.Definitions
       feat.description = Description;
       feat.defaultEnableInSandbox = DefaultEnableInSandbox;
       feat.displayName = DisplayName;
-      feat.gameObjectsEnableOnUnlock = GameObjectsEnableOnUnlock.Keys.Select(Utils.gameObjectFromUri).ToArray();
-      feat.prerequisites = Utils.ApplyList(feat.prerequisites ?? [], Prerequisites, cache.MapFeatures);
-      feat.areasEnableOnUnlock = Utils.ApplyList(feat.areasEnableOnUnlock ?? [], AreasEnableOnUnlock, cache.Areas);
-      feat.trackGroupsAvailableOnUnlock = Utils.ApplyList(feat.trackGroupsAvailableOnUnlock ?? [], TrackGroupsAvailableOnUnlock);
-      feat.trackGroupsEnableOnUnlock = Utils.ApplyList(feat.trackGroupsEnableOnUnlock ?? [], TrackGroupsEnableOnUnlock);
-      feat.unlockExcludeIndustries = Utils.ApplyList(feat.unlockExcludeIndustries ?? [], UnlockExcludeIndustries, cache.Industries);
-      feat.unlockIncludeIndustries = Utils.ApplyList(feat.unlockIncludeIndustries ?? [], UnlockIncludeIndustries, cache.Industries);
-      feat.unlockIncludeIndustryComponents = Utils.ApplyList(feat.unlockIncludeIndustryComponents ?? [], UnlockIncludeIndustryComponents, cache.IndustryComponents);
+      feat.gameObjectsEnableOnUnlock = GameObjectsEnableOnUnlock.Keys.Select(Utils.GameObjectFromUri).ToArray();
+      feat.prerequisites = DefinitionUtils.ApplyList(feat.prerequisites ?? [], Prerequisites, cache.MapFeatures);
+      feat.areasEnableOnUnlock = DefinitionUtils.ApplyList(feat.areasEnableOnUnlock ?? [], AreasEnableOnUnlock, cache.Areas);
+      feat.trackGroupsAvailableOnUnlock = DefinitionUtils.ApplyList(feat.trackGroupsAvailableOnUnlock ?? [], TrackGroupsAvailableOnUnlock);
+      feat.trackGroupsEnableOnUnlock = DefinitionUtils.ApplyList(feat.trackGroupsEnableOnUnlock ?? [], TrackGroupsEnableOnUnlock);
+      feat.unlockExcludeIndustries = DefinitionUtils.ApplyList(feat.unlockExcludeIndustries ?? [], UnlockExcludeIndustries, cache.Industries);
+      feat.unlockIncludeIndustries = DefinitionUtils.ApplyList(feat.unlockIncludeIndustries ?? [], UnlockIncludeIndustries, cache.Industries);
+      feat.unlockIncludeIndustryComponents = DefinitionUtils.ApplyList(feat.unlockIncludeIndustryComponents ?? [], UnlockIncludeIndustryComponents, cache.IndustryComponents);
     }
   }
 }

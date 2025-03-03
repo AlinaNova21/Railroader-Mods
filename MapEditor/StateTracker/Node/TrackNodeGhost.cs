@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using MapEditor.Extensions;
 using Track;
 using UnityEngine;
@@ -31,18 +32,43 @@ namespace MapEditor.StateTracker.Node
       node.transform.localPosition = _Position;
       node.transform.localEulerAngles = _Rotation;
       node.flipSwitchStand = _FlipSwitchStand;
+      Graph.Shared.OnNodeDidChange(node);
+      var nodes = new HashSet<TrackNode> {node};
+      var segments = Graph.Shared.SegmentsConnectedTo(node);
+      foreach (var segment in segments)
+      {
+        nodes.Add(segment.a);
+        nodes.Add(segment.b);
+      }
+      foreach (var n in nodes)
+      {
+        if(Graph.Shared.IsSwitch(n)) {
+          var switchSegments = Graph.Shared.SegmentsConnectedTo(n);
+          foreach (var segment in segments)
+          {
+            nodes.Add(segment.a);
+            nodes.Add(segment.b);
+          }
+        }
+      }
+      foreach (var n in nodes)
+      {
+        Graph.Shared.OnNodeDidChange(n);
+      }
     }
 
     public void CreateNode()
     {
-      var gameObject = new GameObject($"Node {id}");
-      gameObject.SetActive(false);
-      var node = gameObject.AddComponent<TrackNode>();
-      node.id = id;
+      var node = Graph.Shared.AddNode(id, _Position, Quaternion.Euler(_Rotation));
       node.transform.SetParent(Graph.Shared.transform);
+      // var gameObject = new GameObject($"Node {id}");
+      // gameObject.SetActive(false);
+      // var node = gameObject.AddComponent<TrackNode>();
+      // node.id = id;
+      // node.transform.SetParent(Graph.Shared.transform);
       UpdateNode(node);
-      gameObject.SetActive(true);
-      Graph.Shared.AddNode(node);
+      // gameObject.SetActive(true);
+      // Graph.Shared.AddNode(node);
       EditorContext.PatchEditor!.AddOrUpdateNode(node);
       EditorContext.AttachUiHelper(node);
     }

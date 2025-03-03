@@ -102,7 +102,7 @@ export default async function whittierSawmillConnection(graph: Graph, originalTr
       progressions,
     },
     conflicts: [
-      { id: 'AlinaNova21.WhittierYard' }
+      { id: Id('AlinaNova21.WhittierYard') }
     ],
     version: '1.1.2',
     changelog: [

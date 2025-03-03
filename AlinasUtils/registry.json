@@ -1,0 +1,109 @@
+{
+  "mods": [
+    {
+      "id": "railloader",
+      "modId": "RailLoader",
+      "name": "RailLoader",
+      "desc": "",
+      "version": "1.7.2",
+      "downloadUrl": "https://railroader.stelltis.ch/content/Railloader_1.7.2.zip",
+      "changelog": []
+    },
+    {
+      "id": "Zamu.StrangeCustoms",
+      "modId": "Zamu.StrangeCustoms",
+      "name": "Strange Customs",
+      "desc": "",
+      "version": "1.6.24083.1951",
+      "requires": [
+        {
+          "id": "railloader",
+          "notBefore": "1.7.2"
+        }
+      ],
+      "downloadUrl": "https://railroader.stelltis.ch/content/StrangeCustoms_1.6.24083.1951.zip"
+    },
+    {
+      "id": "alinas-map-mod",
+      "modId": "AlinaNova21.AlinasMapMod",
+      "name": "Alina's Map Mod",
+      "desc": "A mod that adds a new milestones to the game adding additional tracks, such as yards, wyes, and more.",
+      "version": "1.3.24087.634",
+      "requires": [
+        {
+          "id": "railloader",
+          "notBefore": "1.7.2"
+        },
+        {
+          "id": "Zamu.StrangeCustoms",
+          "notBefore": "1.6.24074.728"
+        }
+      ],
+      "conflictsWith": [
+        {
+          "id": "AlinaNova21.AndrewsInterchangeYard"
+        },
+        {
+          "id": "AlinaNova21.SylvaInterchangeYard"
+        },
+        {
+          "id": "AlinaNova21.SylvaWye"
+        },
+        {
+          "id": "AlinaNova21.WhittierYard"
+        },
+        {
+          "id": "AlinaNova21.AlarkaJctAdditional"
+        }
+      ],
+      "changelog": [
+        {
+          "version": "1.3.24087.634",
+          "desc": "- Fix alarka balloon loop (For real this time!) (Thanks percivalbinglebottom!)"
+        },
+        {
+          "version": "1.3.24087.314",
+          "desc": "- Fix alarka balloon loop (Thanks percivalbinglebottom and crew!)"
+        },
+        {
+          "version": "1.3.24084.413",
+          "desc": "- Updated definitions.json to require RL 1.7.2 at minimum."
+        },
+        {
+          "version": "1.3.24084.353",
+          "desc": "- Refactored to remove older code, RL 1.7 will be required now.\n- Bug fixes for various issues."
+        },
+        {
+          "version": "1.3.24083.2023",
+          "desc": "- Shifted Whittier yard to make room for a new telegraph poles.\n- Rebuild to fix Alarka Balloon Loop\n- Potential migration for Industry name change for pre-1.3.24073.2240 version.\n  - Requires SC 1.6.24083.1951 or later.\n- Now supports Railloader Update checks"
+        },
+        {
+          "version": "1.3.24082.33",
+          "desc": "- Map Editor removed."
+        },
+        {
+          "version": "1.3.24080.327",
+          "desc": "- Flatten Andrews Interchange and yard"
+        },
+        {
+          "version": "1.3.24078.548",
+          "desc": "- Added Alarka Balloon Loop #4"
+        },
+        {
+          "version": "1.3.24078.409",
+          "desc": "Mostly internal changes\n- Bugfixes for various issues\n- Warn if SC version is pre-industry, built-in industries will be removed later.\n- Early Map Editor node helpers added"
+        },
+        {
+          "version": "1.3.24073.2240",
+          "desc": "Updated to support the newer StrangeCustoms Industry support, will fall back on builtin support if SC is too old.\n- Display Error on save load if SC too old\n- Major refactor of MapTool code.\n\nUpgrade Notes:\nAny active milestones from this mod should be completed prior to upgrading. The internal Industry names have changed, so any cars left will be sent to the interchange and a new set delivered."
+        },
+        {
+          "version": "1.3.24070.2359",
+          "desc": "Re-release of discord version here.\nv1.3 Changelog:\n\n- Better error when SC is outdated\n- Added configuration settings:\n  - Deliveries Enabled: Turns deliveries on and off, potentially weird behaviour if milestone is in progress.\n  - Free Milestones: Sets cost for each phase to $0\n  - Car Count Multiplier: Allows you to turn up the number of cars in each delivery"
+        }
+      ],
+      "assemblyName": "AlinasMapMod",
+      "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.3.24087.634/AlinasMapMod_1.3.24087.634.zip"
+    }
+  ]
+}

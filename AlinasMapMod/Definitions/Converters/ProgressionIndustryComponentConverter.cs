@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using Model.OpsNew;
+using Model.Ops;
 using Newtonsoft.Json;
 
 namespace AlinasMapMod.Definitions.Converters
@@ -16,7 +16,12 @@ namespace AlinasMapMod.Definitions.Converters
     {
       string s = (string)reader.Value;
       if (existingValue?.Identifier == s) return existingValue;
-      return UnityEngine.Object.FindObjectsOfType<ProgressionIndustryComponent>(true).Single(ts => ts.Identifier == s);
+      var industryComponent = UnityEngine.Object.FindObjectsOfType<ProgressionIndustryComponent>(true).Single(ts => ts.Identifier == s);
+      if (industryComponent == null || industryComponent == default)
+      {
+        throw new Exception($"Industry component with id {s} not found");
+      }
+      return industryComponent;
     }
   }
 }

@@ -10,8 +10,8 @@ export enum SegmentStyle {
 }
 
 export interface SegmentJson {
-  startId: Id<TrackNode>
-  endId: Id<TrackNode>
+  startId?: Id<TrackNode>
+  endId?: Id<TrackNode>
   priority?: number
   groupId?: string
   style?: SegmentStyle

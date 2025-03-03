@@ -1,6 +1,6 @@
 using System;
 using Game.Progression;
-using Model.OpsNew;
+using Model.Ops;
 
 namespace AlinasMapMod.Definitions
 {

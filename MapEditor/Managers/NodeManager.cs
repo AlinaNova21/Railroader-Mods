@@ -95,7 +95,6 @@ namespace MapEditor.Managers
       ));
       var newNode = Graph.Shared.GetNode(nid);
       EditorContext.SelectedNode = newNode;
-
       Rebuild();
     }
 
@@ -290,7 +289,22 @@ namespace MapEditor.Managers
 
     #endregion
 
-    private static void Rebuild()
+    private static void Rebuild(){
+      var last = EditorContext.ChangeManager.LastChange;
+      if (last == null) {
+        return;
+      }
+      if (last.GetType() == typeof(CreateTrackSegment)) {
+        // last.
+        // TrackObjectManager.Instance.SetNeedsRebuild();
+      }
+
+      // if (last.GetType() == typeof(ChangeTrackNode)) {
+      //   TrackObjectManager.Instance.SetNeedsRebuild(last.NodeId);
+      // }
+    }
+
+    private static void FullRebuild()
     {
       // not sure why this is not working, but calling same method from 'Rebuild Track' button works ...
       Graph.Shared.RebuildCollections();

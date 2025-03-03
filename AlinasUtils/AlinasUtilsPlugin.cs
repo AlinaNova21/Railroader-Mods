@@ -50,6 +50,11 @@ public class AlinasUtilsPlugin : SingletonPluginBase<AlinasUtilsPlugin>, IUpdate
         (value) => Settings.DisableDerailing = value
     ));
 
+    builder.AddField("Disable Damage (Does not prevent wear damage)", builder.AddToggle(
+        () => Settings.DisableDamage,
+        (value) => Settings.DisableDamage = value
+    ));
+
     builder.AddField("Auto Load Save on Startup", builder.AddToggle(
         () => Settings.AutoLoadSaveOnStartup,
         (value) =>

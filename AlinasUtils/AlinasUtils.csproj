@@ -11,11 +11,12 @@
     <Content Include="*.json" CopyToOutputDirectory="Always" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\toolbox-icon.png" />
+    <EmbeddedResource Include="Resources\*.png" />
   </ItemGroup>
   <ItemGroup>
     <GameAssembly Include="0Harmony" />
     <GameAssembly Include="Assembly-CSharp" />
+    <GameAssembly Include="KeyValue.Runtime" />
     <GameAssembly Include="Railloader.Interchange" />
     <GameAssembly Include="Serilog" />
     <GameAssembly Include="Unity.TextMeshPro" />

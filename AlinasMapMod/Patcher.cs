@@ -8,7 +8,7 @@ using AlinasMapMod.Definitions;
 using Game.Messages.OpsSnapshot;
 using Game.Progression;
 using JetBrains.Annotations;
-using Model.OpsNew;
+using Model.Ops;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
@@ -20,7 +20,7 @@ namespace AlinasMapMod
 {
   public class Patcher
   {
-    private PatchState? _initialState;
+    private PatchState _initialState;
     public PatchState InitialState {
       get {
         if (_initialState == null) {

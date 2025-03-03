@@ -17,7 +17,7 @@ namespace AlinasMapMod.Definitions.Converters
     {
       string s = (string)reader.Value;
       if (existingValue?.id == s) return existingValue;
-      
+
       var ret = UnityEngine.Object.FindObjectsOfType<TrackSpan>(true).Single(ts => ts.id == s);
       return ret;
     }

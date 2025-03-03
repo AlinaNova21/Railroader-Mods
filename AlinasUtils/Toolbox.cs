@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +8,8 @@ using Game.Messages;
 using Game.Progression;
 using Game.State;
 using HarmonyLib;
-using Model.OpsNew;
+using KeyValue.Runtime;
+using Model.Ops;
 using Track;
 using UI;
 using UI.Builder;
@@ -45,9 +45,10 @@ class Toolbox
     var tr = UnityEngine.Object.FindObjectOfType<TopRightArea>();
     if (tr != null)
     {
-      var buttons = tr.transform.Find("Buttons");
+      var buttons = tr.transform.Find("Strip");
       var go = new GameObject("AlinasUtilsButton");
       go.transform.parent = buttons;
+      go.transform.SetSiblingIndex(9);
       var button = go.AddComponent<Button>();
       button.onClick.AddListener(() =>
       {
@@ -142,6 +143,11 @@ class Toolbox
     builder.AddButton("Rebuild Track", () =>
     {
       TrackObjectManager.Instance.Rebuild();
+    });
+    builder.AddButton("Reset Derailments", () => {
+      var kv = StateManager.Shared.KeyValueObjectForId("_reputation");
+      if (kv == null) return;
+      kv["derailments"] = Value.Array([]);
     });
   }
 

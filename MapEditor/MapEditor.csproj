@@ -5,6 +5,7 @@
     <MinorVersion>1</MinorVersion>
     <IsMod>true</IsMod>
     <PackageMod>enable</PackageMod>
+    <PublishMod>false</PublishMod>
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>

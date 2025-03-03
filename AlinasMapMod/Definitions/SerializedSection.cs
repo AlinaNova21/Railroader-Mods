@@ -36,10 +36,10 @@ namespace AlinasMapMod.Definitions
         {
             sec.displayName = DisplayName;
             sec.description = Description;
-            sec.prerequisiteSections = Utils.ApplyList(sec.prerequisiteSections ?? [], PrerequisiteSections, cache.Sections);
-            sec.disableFeaturesOnUnlock = Utils.ApplyList(sec.disableFeaturesOnUnlock ?? [], DisableFeaturesOnUnlock, cache.MapFeatures);
-            sec.enableFeaturesOnUnlock = Utils.ApplyList(sec.enableFeaturesOnUnlock ?? [], EnableFeaturesOnUnlock, cache.MapFeatures);
-            sec.enableFeaturesOnAvailable = Utils.ApplyList(sec.enableFeaturesOnAvailable ?? [], EnableFeaturesOnAvailable, cache.MapFeatures);
+            sec.prerequisiteSections = DefinitionUtils.ApplyList(sec.prerequisiteSections ?? [], PrerequisiteSections, cache.Sections);
+            sec.disableFeaturesOnUnlock = DefinitionUtils.ApplyList(sec.disableFeaturesOnUnlock ?? [], DisableFeaturesOnUnlock, cache.MapFeatures);
+            sec.enableFeaturesOnUnlock = DefinitionUtils.ApplyList(sec.enableFeaturesOnUnlock ?? [], EnableFeaturesOnUnlock, cache.MapFeatures);
+            sec.enableFeaturesOnAvailable = DefinitionUtils.ApplyList(sec.enableFeaturesOnAvailable ?? [], EnableFeaturesOnAvailable, cache.MapFeatures);
 
             sec.deliveryPhases = DeliveryPhases.Select(dp =>
             {
