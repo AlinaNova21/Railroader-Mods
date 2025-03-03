@@ -7,6 +7,10 @@
   "updateUrl": "https://railroader.alinanova.dev/update.json",
   "requires": [
     {
+      "id": "railroader",
+      "notBefore": "2024.6.10"
+    },
+    {
       "id": "railloader",
       "notBefore": "1.10.0.2"
     },

@@ -10,8 +10,8 @@
 
   <PropertyGroup>
     <IsMod Condition="'$(IsMod)' == ''">false</IsMod>
-    <PackageMod Condition="'$(PackageMod)' == '' Or '$(IsMod)' == 'false'">disable</PackageMod>
-    <PublishMod Condition="'$(PublishMod)' == '' Or '$(PackageMod)' == 'false'">disable</PublishMod>
+    <PackageMod Condition="'$(PackageMod)' == '' Or '$(IsMod)' == 'false'">false</PackageMod>
+    <PublishMod Condition="'$(PublishMod)' == '' Or '$(PackageMod)' == 'false'">false</PublishMod>
   </PropertyGroup>
 
   <!-- Replace the default version if something was set for it -->
@@ -41,16 +41,14 @@
     </Reference>
   </ItemGroup>
 
-  <Target Name="SetVersion" AfterTargets="AfterBuild" Condition="'$(Configuration)' == 'Debug' And '$(PackageMod)' == 'enable'">
+  <Target Name="SetVersion" AfterTargets="AfterBuild" Condition="'$(PackageMod)' == 'true'">
     <!-- Replace $(AssemblyVersion) with the actual version -->
     <Exec Command="powershell -Command &quot;(Get-Content '$(OutDir)Definition.json') -replace '\$\(AssemblyVersion\)', '$(AssemblyVersion)' | Set-Content '$(OutDir)Definition.json'&quot;" />
   </Target>
 
   <!-- Publish the mod as a neat zip file -->
-  <Target Name="PackageMod" AfterTargets="AfterBuild" Condition="'$(Configuration)' == 'Release' And '$(PackageMod)' == 'enable'">
+  <Target Name="PackageMod" AfterTargets="SetVersion" Condition="'$(Configuration)' == 'Release' And '$(PackageMod)' == 'true'">
     <Message Text="Packaging $(AssemblyName) v$(AssemblyVersion)" Importance="high" />
-    <!-- Replace $(AssemblyVersion) with the actual version -->
-    <Exec Command="powershell -Command &quot;(Get-Content '$(OutputPath)Definition.json') -replace '\$\(AssemblyVersion\)', '$(AssemblyVersion)' | Set-Content '$(OutputPath)Definition.json'&quot;" />
     
     <PropertyGroup>
       <ModsDirectory>$(OutputPath)/Mods</ModsDirectory>
@@ -89,7 +87,7 @@
     <Copy SourceFiles="@(OutputFiles)" DestinationFolder="$(GameModDir)" />
     
   </Target>
-  <Target Name="PublishMod" AfterTargets="PackageMod" Condition="'$(Configuration)' == 'Release' AND '$(PublishMod)' == 'enable'">
+  <Target Name="PublishMod" AfterTargets="PackageMod" Condition="'$(Configuration)' == 'Release' AND '$(PublishMod)' == 'true'">
     <Message Text="Publishing $(AssemblyName) v$(AssemblyVersion)" Importance="high" />
     <!-- Publish to GitHub -->
     <Exec Command="gh release create v$(AssemblyVersion) --generate-notes $(ZipName) @(ExtraZips, ' ')" />

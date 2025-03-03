@@ -4,7 +4,7 @@
     <MajorVersion>1</MajorVersion>
     <MinorVersion>1</MinorVersion>
     <IsMod>true</IsMod>
-    <PackageMod>enable</PackageMod>
+    <PackageMod>true</PackageMod>
     <PublishMod>false</PublishMod>
     <Nullable>enable</Nullable>
   </PropertyGroup>

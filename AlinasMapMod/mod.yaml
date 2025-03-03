@@ -3,9 +3,9 @@ modId: AlinaNova21.AlinasMapMod
 name: Alina's Map Mod
 desc: |-
   A mod that adds utilities for other mods to add milestones and other features to the game.
-version: ''
+version: '1.4.25062.1720'
 changelog:
-- version: ''
+- version: '1.4.25062.1720'
   desc: |- 
     - Added loader builder splineys for placing fuel and water loaders.
     - Added pax builder splineys for placing pax stations. These function, but may still have bugs. 

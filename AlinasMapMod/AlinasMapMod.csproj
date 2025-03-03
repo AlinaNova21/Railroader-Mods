@@ -4,8 +4,8 @@
     <MajorVersion>1</MajorVersion>
     <MinorVersion>4</MinorVersion>
     <IsMod>true</IsMod>
-    <PackageMod>enable</PackageMod>
-    <PublishMod>false</PublishMod>
+    <PackageMod>true</PackageMod>
+    <PublishMod>true</PublishMod>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="*.json" CopyToOutputDirectory="Always" />
@@ -33,6 +33,7 @@
     <GameAssembly Include="UnityEngine.UI" />
   </ItemGroup>
   <ItemGroup>
+    <ExtraZips Include="../bin/AlinasUtils_*.zip" />
     <ExtraZips Include="../bin/AMM_*.zip" />
     <ExtraZips Include="../bin/MapEditor_*.zip" />
   </ItemGroup>
