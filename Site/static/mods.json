@@ -38,14 +38,14 @@
     "version": "1.4.25106.1919",
     "changelog": [],
     "assemblyName": "AlinasUtils",
-    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25062.1720/AlinasUtils_1.4.25106.1919.zip"
+    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25106.1919/AlinasUtils_1.4.25106.1919.zip"
   },
   {
     "id": "alinas-map-mod",
     "modId": "AlinaNova21.AlinasMapMod",
     "name": "Alina's Map Mod",
     "desc": "A mod that adds utilities for other mods to add milestones and other features to the game.",
-    "version": "1.4.25062.1720",
+    "version": "1.4.25106.1919",
     "changelog": [
       {
         "version": "1.4.25106.1919",
@@ -145,7 +145,7 @@
       }
     ],
     "assemblyName": "AlinasMapMod",
-    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25062.1720/AlinasMapMod_1.4.25062.1720.zip"
+    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25106.1919/AlinasMapMod_1.4.25106.1919.zip"
   },
   {
     "id": "amm-alarka-jct-additional",
@@ -155,7 +155,7 @@
     "version": "1.1.1",
     "changelog": [],
     "assemblyName": "AMM_AlarkaJctAdditional",
-    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25062.1720/AMM_AlarkaJctAdditional_1.1.1.zip"
+    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25106.1919/AMM_AlarkaJctAdditional_1.1.1.zip"
   },
   {
     "id": "amm-alarka-jct-interchange",
@@ -170,7 +170,7 @@
       }
     ],
     "assemblyName": "AMM_AlarkaJctInterchange",
-    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25062.1720/AMM_AlarkaJctInterchange_1.0.0.zip"
+    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25106.1919/AMM_AlarkaJctInterchange_1.0.0.zip"
   },
   {
     "id": "amm-alarka-loop",
@@ -180,7 +180,7 @@
     "version": "1.1.1",
     "changelog": [],
     "assemblyName": "AMM_AlarkaLoop",
-    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25062.1720/AMM_AlarkaLoop_1.1.1.zip"
+    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25106.1919/AMM_AlarkaLoop_1.1.1.zip"
   },
   {
     "id": "amm-alarka-pax-storage",
@@ -190,7 +190,7 @@
     "version": "1.1.1",
     "changelog": [],
     "assemblyName": "AMM_AlarkaPaxStorage",
-    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25062.1720/AMM_AlarkaPaxStorage_1.1.1.zip"
+    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25106.1919/AMM_AlarkaPaxStorage_1.1.1.zip"
   },
   {
     "id": "amm-andrews-interchange-yard",
@@ -200,7 +200,7 @@
     "version": "1.1.1",
     "changelog": [],
     "assemblyName": "AMM_AndrewsInterchangeYard",
-    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25062.1720/AMM_AndrewsInterchangeYard_1.1.1.zip"
+    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25106.1919/AMM_AndrewsInterchangeYard_1.1.1.zip"
   },
   {
     "id": "amm-sylva-interchange-yard",
@@ -210,7 +210,7 @@
     "version": "1.1.1",
     "changelog": [],
     "assemblyName": "AMM_SylvaInterchangeYard",
-    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25062.1720/AMM_SylvaInterchangeYard_1.1.1.zip"
+    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25106.1919/AMM_SylvaInterchangeYard_1.1.1.zip"
   },
   {
     "id": "amm-sylva-paper-crossover",
@@ -225,7 +225,7 @@
       }
     ],
     "assemblyName": "AMM_SylvaPaperCrossover",
-    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25062.1720/AMM_SylvaPaperCrossover_1.1.2.zip"
+    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25106.1919/AMM_SylvaPaperCrossover_1.1.2.zip"
   },
   {
     "id": "amm-sylva-pax-storage",
@@ -235,7 +235,7 @@
     "version": "1.1.1",
     "changelog": [],
     "assemblyName": "AMM_SylvaPaxStorage",
-    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25062.1720/AMM_SylvaPaxStorage_1.1.1.zip"
+    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25106.1919/AMM_SylvaPaxStorage_1.1.1.zip"
   },
   {
     "id": "amm-sylva-wye",
@@ -245,7 +245,7 @@
     "version": "1.1.1",
     "changelog": [],
     "assemblyName": "AMM_SylvaWye",
-    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25062.1720/AMM_SylvaWye_1.1.1.zip"
+    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25106.1919/AMM_SylvaWye_1.1.1.zip"
   },
   {
     "id": "amm-whittier-sawmill-connection",
@@ -260,7 +260,7 @@
       }
     ],
     "assemblyName": "AMM_WhittierSawmillConnection",
-    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25062.1720/AMM_WhittierSawmillConnection_1.1.2.zip"
+    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25106.1919/AMM_WhittierSawmillConnection_1.1.2.zip"
   },
   {
     "id": "amm-whittier-yard",
@@ -275,7 +275,7 @@
       }
     ],
     "assemblyName": "AMM_WhittierYard",
-    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25062.1720/AMM_WhittierYard_1.1.2.zip"
+    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25106.1919/AMM_WhittierYard_1.1.2.zip"
   },
   {
     "id": "amm-test-mod",
@@ -285,6 +285,6 @@
     "version": "1.1.1",
     "changelog": [],
     "assemblyName": "AMM_TestMod",
-    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25062.1720/AMM_TestMod_1.1.1.zip"
+    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25106.1919/AMM_TestMod_1.1.1.zip"
   }
 ]
