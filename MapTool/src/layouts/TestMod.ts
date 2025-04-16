@@ -1,7 +1,7 @@
 
 import { Euler, Vector3 } from 'three'
 
-import { Graph, Id, Industry, ProgressionsJson, TrackSpanPartEnd, createIndustry, createNode, createSegment, createTrackSpan, idGenerator } from '../lib/index.js'
+import { Graph, Id, Industry, IndustryComponentType, PaxStationComponent, ProgressionsJson, TrackSpanPartEnd, createIndustry, createNode, createSegment, createTrackSpan, idGenerator } from '../lib/index.js'
 
 const UP = new Vector3(0, 1, 0)
 
@@ -44,6 +44,16 @@ export default async function testMod(graph: Graph, originalTracks: Graph) {
     points.push(lastPos.clone())
     lastPos = lastPos.add(new Vector3(10, 0, 0))
   }
+
+  graph.createSpliney(Id('ammWaterColumn_z'), 'AlinasMapMod.LoaderBuilder', {
+    prefab: 'vanilla://waterColumn',
+    position: { x:0, y:680, z: 0 },
+    rotation: { x: 0, y: 0, z: 0 },
+  })
+
+  const node_1 = createNode(new Vector3(0, 680, 0), new Euler(0, 0, 0))
+  const node_2 = createNode(new Vector3(100, 680, 0), new Euler(0, 0, 0))
+  createSegment(node_1.id, node_2.id)
 
   graph.createSpliney(Id('ammWaterColumn'), 'AlinasMapMod.LoaderBuilder', {
     prefab: 'vanilla://waterColumn',
@@ -89,14 +99,51 @@ export default async function testMod(graph: Graph, originalTracks: Graph) {
     end: TrackSpanPartEnd.Start,
   })
 
+  var span2 = createTrackSpan({
+    segmentId: Id('SREXSTEAMSHOP3.0xs3g'),
+    distance: 20,
+    end: TrackSpanPartEnd.Start,
+  },
+  {
+    segmentId: Id('SREXSTEAMSHOP3.0xs3g'),
+    distance: 60,
+    end: TrackSpanPartEnd.Start,
+  })
+
   var ind = createIndustry(Id('barkers'), Id('barkers-station'), 'Barkers Station')
 
-  graph.createSpliney(Id('ammBarkersStation'), 'AlinasMapMod.PaxBuilder', {
-    industry: ind.id,
-    spanIds: [span1.id],
-    timetableCode: 'BARKERS',
+  ind.newComponent<PaxStationComponent>('ammBarkersStation', "Barkers Creek", {
+    type: IndustryComponentType.PaxStationComponent,
+    timetableCode: 'BC',
     basePopulation: 10,
+    loadId: Id('passengers'),
+    trackSpans: [span1.id],
+    branch: 'Main',
+    neighborIds: [],
+    carTypeFilter: '*',
+    sharedStorage: true,
   })
+
+  var ind = createIndustry(Id('connelly'), Id('connelly-station'), 'Connelly Station')
+
+  ind.newComponent<PaxStationComponent>('ammConnellyStation', "Connelly", {
+    type: IndustryComponentType.PaxStationComponent,
+    timetableCode: 'CC',
+    basePopulation: 10,
+    loadId: Id('passengers'),
+    trackSpans: [span2.id],
+    branch: 'Connelly',
+    neighborIds: [],
+    carTypeFilter: '*',
+    sharedStorage: true,
+  })
+
+  // graph.createSpliney(Id('ammBarkersStation'), 'AlinasMapMod.PaxBuilder', {
+  //   industry: ind.id,
+  //   spanIds: [span1.id],
+  //   timetableCode: 'BARKERS',
+  //   basePopulation: 10,
+  // })
 
   
     // "REXSTEAMTT": {

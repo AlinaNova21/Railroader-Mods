@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Messaging;
 using Game.Events;
 using HarmonyLib;
+using Map.Runtime;
+using Newtonsoft.Json;
 using Railloader;
 using Serilog;
 using TelegraphPoles;
@@ -161,6 +164,9 @@ namespace AlinasMapMod
           },
           1, 5, true, null
       ));
+      builder.AddButton("Rebuild Map", () => {
+        MapManager.Instance.RebuildAll();
+      });
     }
     public void ModTabDidClose()
     {
@@ -213,5 +219,52 @@ namespace AlinasMapMod
       //   tt2.transform.localPosition = new Vector3(13000, 561, 4600);
       // }
     }
+
+    private Dictionary<Vector2Int, string> tilepaths = new Dictionary<Vector2Int, string>();
+
+    internal void LoadMaps(MapStore store)
+    {
+      tilepaths.Clear();
+      var desc = AccessTools.Field(typeof(MapStore), "_descriptors").GetValue(store) as Dictionary<Vector2Int, TileDescriptor>;
+      var mixintos = GetMixintos("maptiles");
+      foreach (var mixinto in mixintos)
+      {
+        var path = Path.GetFullPath(mixinto.Mixinto);
+        var dir = Path.GetDirectoryName(path);
+        Map map = JsonConvert.DeserializeObject<Map>(File.ReadAllText(path));
+        foreach (var tile in map.Tiles)
+        {
+          var tilepath = Path.Combine(dir, string.Format("tile_{0:000}_{1:000}.data.png", tile.X, tile.Y));
+          var position = new Vector2Int(tile.X, tile.Y);
+          if (!desc.ContainsKey(position))
+          {
+            tilepaths[position] = tilepath;
+            desc[position] = new TileDescriptor(position, TileDescriptorStatus.Real);
+          }
+        }
+      }
+    }
+
+    internal string GetMapTile(Vector2Int position)
+    {
+      if (tilepaths.ContainsKey(position))
+      {
+        return tilepaths[position];
+      }
+      return "";
+    }
+  }
+
+
+  class Map
+  {
+    public List<MapTile> Tiles { get; set; }
+  }
+
+
+  public class MapTile
+  {
+    public int X { get; set; }
+    public int Y { get; set; }
   }
 }

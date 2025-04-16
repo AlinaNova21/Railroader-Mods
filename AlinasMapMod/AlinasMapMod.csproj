@@ -15,12 +15,13 @@
     <EmbeddedResource Include="Resources\factory-icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <ModAssembly Include="StrangeCustoms\StrangeCustoms.dll" />
+    <ModAssembly Include="StrangeCustoms\Experimental\StrangeCustoms.dll" />
   </ItemGroup>
   <ItemGroup>
     <GameAssembly Include="Assembly-CSharp" />
     <GameAssembly Include="0Harmony" />
     <GameAssembly Include="Definition" />
+    <GameAssembly Include="Map.Runtime" />
     <GameAssembly Include="Railloader.Interchange" />
     <GameAssembly Include="Serilog" />
     <GameAssembly Include="Newtonsoft.Json" />

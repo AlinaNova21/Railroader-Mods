@@ -23,6 +23,7 @@ export enum IndustryComponentType {
   RepairTrack = "Model.Ops.RepairTrack",
   TeamTrack = "Model.Ops.TeamTrack",
   TeleportLoadingIndustry = "Model.Ops.TeleportLoadingIndustry",
+  PaxStationComponent = "AlinasMapMod.PaxStationComponent",
 }
 
 export type Interchange = {
@@ -75,6 +76,15 @@ export type _IndustryLoaderUnLoader = {
   orderAroundLoaded: boolean
 } & IndustryComponentBase
 
+export type PaxStationComponent = {
+  type: IndustryComponentType.PaxStationComponent
+  loadId: Id<Load>
+  basePopulation: number
+  timetableCode: string
+  neighborIds: string[]
+  branch: string
+} & IndustryComponentBase
+
 export interface IndustryComponentBase extends isDirty{
   name: string
   trackSpans: Id<TrackSpan>[]
@@ -88,6 +98,7 @@ export type IndustryComponent =
   | IndustryUnLoader
   | Interchange
   | InterchangedIndustryLoader
+  | PaxStationComponent
   | ProgressionIndustryComponent
   | RepairTrack
   | TeamTrack

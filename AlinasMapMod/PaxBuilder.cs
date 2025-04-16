@@ -22,6 +22,7 @@ public class PaxBuilder : StrangeCustoms.ISplineyBuilder
   Serilog.ILogger logger = Log.ForContext<PaxBuilder>();
   public GameObject BuildSpliney(string id, Transform parentTransform, JObject data)
   {
+    logger.Warning("PaxBuilder Splineys are deprecated, use industry components instead. Id: ${id}");
     var pax = data.ToObject<SerializedPax>();
     logger.Information($"Configuring pax {id}");
 

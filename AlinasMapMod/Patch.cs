@@ -1,11 +1,14 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Reflection.Emit;
 using Game.Messages;
 using Game.Messages.OpsSnapshot;
 using Game.Persistence;
 using Game.Progression;
 using HarmonyLib;
+using Map.Runtime;
 using Model.Ops;
 using Railloader;
 using Serilog;
@@ -13,6 +16,7 @@ using TelegraphPoles;
 using Track;
 using UI.Builder;
 using UI.CarInspector;
+using UnityEngine;
 
 namespace AlinasMapMod
 {
@@ -94,4 +98,31 @@ namespace AlinasMapMod
       return codeMatcher.Instructions();
     }
   }
+
+#if DEBUG
+  [HarmonyPatch(typeof(MapStore), "Load", [typeof(string)])]
+  [HarmonyPatchCategory("AlinasMapMod")]
+  internal static class MapStoreLoad
+  {
+    private static void Postfix(MapStore __instance, string basePath)
+    {
+      Log.ForContext(typeof(AlinasMapMod)).Debug("MapStore Load({path})");
+      SingletonPluginBase<AlinasMapMod>.Shared?.LoadMaps(__instance);
+    }
+  }
+  [HarmonyPatch(typeof(MapStore), "PathFor", [typeof(Vector2Int)])]
+  [HarmonyPatchCategory("AlinasMapMod")]
+  internal static class MapStorePathFor
+  {
+    private static void Postfix(Vector2Int tp, ref string __result)
+    {
+      string tile = AlinasMapMod.Shared.GetMapTile(tp);
+      if (tile != "")
+      {
+        __result = tile;
+      }
+      Log.ForContext(typeof(AlinasMapMod)).Debug("MapStore PathFor({tp})");
+    }
+  }
 }
+#endif

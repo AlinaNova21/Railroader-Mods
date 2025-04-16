@@ -116,6 +116,8 @@ Example industry:
 
 ## Passenger Stations
 
+### <span style="color:red">***DEPRECATED: Use the industry component instead***
+
 ***NOTE***: There are known issues with pax stations not always showing in the Timetable, especially on branch lines. 
 
 ```json
