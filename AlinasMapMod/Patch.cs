@@ -124,5 +124,5 @@ namespace AlinasMapMod
       Log.ForContext(typeof(AlinasMapMod)).Debug("MapStore PathFor({tp})");
     }
   }
-}
 #endif
+}

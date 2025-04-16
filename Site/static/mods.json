@@ -5,7 +5,7 @@
     "name": "Map Editor",
     "desc": "A Map Editor for manipulating track mods.\nWARNING: Extremely WIP. I will not be providing support. Use at your own risk.",
     "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25062.1720/MapEditor_1.1.25062.1720.zip",
-    "version": "1.1.25062.1720",
+    "version": "1.1.25106.1919",
     "changelog": [
       {
         "version": "1.1.25062.1720",
@@ -35,10 +35,10 @@
     "modId": "AlinaNova21.AlinasUtils",
     "name": "Alina's Utilities",
     "desc": "A mod with a few utilities",
-    "version": "1.3.25062.1720",
+    "version": "1.4.25106.1919",
     "changelog": [],
     "assemblyName": "AlinasUtils",
-    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25062.1720/AlinasUtils_1.3.25062.1720.zip"
+    "downloadUrl": "https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25062.1720/AlinasUtils_1.4.25106.1919.zip"
   },
   {
     "id": "alinas-map-mod",
@@ -47,6 +47,10 @@
     "desc": "A mod that adds utilities for other mods to add milestones and other features to the game.",
     "version": "1.4.25062.1720",
     "changelog": [
+      {
+        "version": "1.4.25106.1919",
+        "desc": "- Added Pax Industry component, see docs for details."
+      },
       {
         "version": "1.4.25062.1720",
         "desc": "- Added loader builder splineys for placing fuel and water loaders.\n- Added pax builder splineys for placing pax stations. These function, but may still have bugs. \n- Updated docs"
