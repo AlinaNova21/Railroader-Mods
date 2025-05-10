@@ -91,6 +91,14 @@ namespace AlinasMapMod
           else
           {
             Log.Warning("Progression missing {id}", identifier);
+            var progressionsObj = GameObject.Find("Progressions");
+            var go = new GameObject(identifier);
+            go.transform.SetParent(progressionsObj.transform);
+            var comp = go.AddComponent<Progression>();
+            comp.identifier = identifier;
+            comp.mapFeatureManager = mapFeatureManager;
+            go.SetActive(true);
+            progression.ApplyTo(comp, cache);
           }
         }
       }

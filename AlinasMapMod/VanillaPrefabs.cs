@@ -21,6 +21,10 @@ internal static class VanillaPrefabs {
         "dieselFuelingStand" => Clone(Utils.GameObjectFromUri("path://scene/World/Large Scenery/Whittier/East Whittier Diesel Fueling Stand")),
         "waterTower" => Clone(Utils.GameObjectFromUri("path://scene/World/Large Scenery/Whittier Water Tower")),
         "waterColumn" => Clone(Utils.GameObjectFromUri("path://scene/World/Large Scenery/Whittier/Water Column")),
+        "flagStopStation" => Clone(Utils.GameObjectFromUri("path://scene/World/Large Scenery/Ela/flagstopstation")),
+        "brysonDepot" => Clone(Utils.GameObjectFromUri("path://scene/World/Large Scenery/Bryson/Bryson Depot")),
+        "dillsboroStation" => Clone(Utils.GameObjectFromUri("path://scene/World/Large Scenery/Dillsboro/Dillsboro Station")),
+        "southernCombinationDepot" => Clone(Utils.GameObjectFromUri("path://scene/World/Large Scenery/Whittier/Southern Combination Depot")),
         _ => throw new ArgumentException("Attempted to load unknown vanilla prefab: " + key),
       };
       prefabs.Add(key, prefab);

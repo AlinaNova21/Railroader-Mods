@@ -1,3 +1,4 @@
+using System;
 using UI.Builder;
 using UI.Common;
 
@@ -5,10 +6,24 @@ namespace MapEditor.Dialogs
 {
   public abstract class DialogBase
   {
-
     private bool _Populated;
     private readonly Window _Window;
 
+    protected DialogBase(string identifier, string title, int width, int height, Window.Position position)
+    {
+      _Window = EditorContext.UIHelper.CreateWindow(identifier, width, height, position);
+      _Window.Title = title;
+
+      _Window.OnShownDidChange += shown =>
+      {
+        if (!shown)
+        {
+          AfterWindowClosed();
+        }
+      };
+    }
+
+    [Obsolete("Use the constructor with identifier parameter instead.")]
     protected DialogBase(string title, int width, int height, Window.Position position)
     {
       _Window = EditorContext.UIHelper.CreateWindow(width, height, position);
@@ -52,13 +67,8 @@ namespace MapEditor.Dialogs
       _Window.CloseWindow();
     }
 
-    protected virtual void BeforeWindowShown()
-    {
-    }
+    protected virtual void BeforeWindowShown() { }
 
-    protected virtual void AfterWindowClosed()
-    {
-    }
-
+    protected virtual void AfterWindowClosed() { }
   }
 }

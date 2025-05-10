@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace MapEditor.Dialogs
 {
-  public sealed class TrackNodeDialog() : DialogBase("Node editor", 400, 350, Window.Position.CenterRight)
+  public sealed class TrackNodeDialog() : DialogBase("nodeeditor", "Node editor", 400, 350, Window.Position.CenterRight)
   {
 
     protected override void BuildWindow(UIPanelBuilder builder)

@@ -110,6 +110,7 @@ namespace AlinasMapMod
       SingletonPluginBase<AlinasMapMod>.Shared?.LoadMaps(__instance);
     }
   }
+
   [HarmonyPatch(typeof(MapStore), "PathFor", [typeof(Vector2Int)])]
   [HarmonyPatchCategory("AlinasMapMod")]
   internal static class MapStorePathFor
@@ -121,7 +122,7 @@ namespace AlinasMapMod
       {
         __result = tile;
       }
-      Log.ForContext(typeof(AlinasMapMod)).Debug("MapStore PathFor({tp})");
+      Log.ForContext(typeof(AlinasMapMod)).Debug("MapStore PathFor({x},{y}): {__result}", tp.x, tp.y, __result);
     }
   }
 #endif

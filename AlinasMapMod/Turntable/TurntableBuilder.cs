@@ -15,8 +15,8 @@ public class TurntableBuilder : StrangeCustoms.ISplineyBuilder
   {
     logger.Information($"Configuring turntable {id}");
     var turntable = data.ToObject<SerializedTurntable>();
-    var pos = new Vector3(turntable.Position.x, turntable.Position.y, turntable.Position.z);
-    var rot = new Vector3(turntable.Rotation.x, turntable.Rotation.y, turntable.Rotation.z);
+    var pos = turntable.Position;
+    var rot = turntable.Rotation;
 
     var go = GameObject.FindObjectsOfType<TurntableComponent>(true).FirstOrDefault(tt => tt.Identifier == id)?.gameObject ?? new GameObject(id);
 

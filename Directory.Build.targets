@@ -1,19 +1,18 @@
 ﻿<Project>
   <PropertyGroup>
     <!-- Try to find the directory on our own -->
-    <GameManagedDir Condition="'$(GameManagedDir)' == ''">$([System.IO.Directory]::GetDirectories(`$(GameDir)`, `*_Data`)[0])\Managed</GameManagedDir>
-    
+    <GameManagedDir Condition="'$(GameManagedDir)' == ''"
+      >$([System.IO.Directory]::GetDirectories(`$(GameDir)`, `*_Data`)[0])\Managed</GameManagedDir
+    >
     <!-- Copy the mod to the game directory -->
     <GameModDir Condition="'$(GameModDir)' == ''">$(GameDir)/Mods/$(AssemblyName)</GameModDir>
-    <OutDir Condition="'$(Configuration)' == 'Debug' And '$(IsMod)' == 'true'">$(GameModDir)/</OutDir>
+    <!-- <OutDir Condition="'$(Configuration)' == 'Debug' And '$(IsMod)' == 'true'">$(GameModDir)/</OutDir> -->
   </PropertyGroup>
-
   <PropertyGroup>
     <IsMod Condition="'$(IsMod)' == ''">false</IsMod>
     <PackageMod Condition="'$(PackageMod)' == '' Or '$(IsMod)' == 'false'">false</PackageMod>
     <PublishMod Condition="'$(PublishMod)' == '' Or '$(PackageMod)' == 'false'">false</PublishMod>
   </PropertyGroup>
-
   <!-- Replace the default version if something was set for it -->
   <PropertyGroup Condition="'$(AssemblyVersion)' == '' OR '$(MajorVersion)' != '' OR '$(MinorVersion)' != ''">
     <MajorVersion Condition="'$(MajorVersion)' == ''">1</MajorVersion>
@@ -22,12 +21,15 @@
     <FileVersion>$(AssemblyVersion)</FileVersion>
     <ProductVersion>$(AssemblyVersion)</ProductVersion>
   </PropertyGroup>
-
   <ItemGroup>
     <!-- Reference the .dll/.exes specified with GameAssembly elements-->
     <Reference Include="@(GameAssembly)">
-      <HintPath Condition="Exists('$(GameManagedDir)\%(Identity).dll')">$(GameManagedDir)\%(Identity).dll</HintPath>
-      <HintPath Condition="Exists('$(GameManagedDir)\%(Identity).exe')">$(GameManagedDir)\%(Identity).exe</HintPath>
+      <HintPath Condition="Exists('$(GameManagedDir)\%(Identity).dll')"
+        >$(GameManagedDir)\%(Identity).dll</HintPath
+      >
+      <HintPath Condition="Exists('$(GameManagedDir)\%(Identity).exe')"
+        >$(GameManagedDir)\%(Identity).exe</HintPath
+      >
       <Private>false</Private>
     </Reference>
     <!-- Allow referencing things like OtherMod/Mod.dll -->
@@ -35,63 +37,55 @@
       <AssemblyName>$([System.IO.Path]::GetFileNameWithoutExtension("%(Identity)"))</AssemblyName>
       <FullModPath>$(GameDir)\Mods\%(Identity)</FullModPath>
     </ModReference>
-    <Reference Include="@(ModReference->'%(AssemblyName)')">
+    <Reference Include="@(ModReference-&gt;'%(AssemblyName)')">
       <HintPath Condition="Exists('%(FullModPath)')">%(FullModPath)</HintPath>
       <Private>false</Private>
     </Reference>
   </ItemGroup>
-
   <Target Name="SetVersion" AfterTargets="AfterBuild" Condition="'$(PackageMod)' == 'true'">
     <!-- Replace $(AssemblyVersion) with the actual version -->
     <Exec Command="powershell -Command &quot;(Get-Content '$(OutDir)Definition.json') -replace '\$\(AssemblyVersion\)', '$(AssemblyVersion)' | Set-Content '$(OutDir)Definition.json'&quot;" />
   </Target>
-
   <!-- Publish the mod as a neat zip file -->
-  <Target Name="PackageMod" AfterTargets="SetVersion" Condition="'$(Configuration)' == 'Release' And '$(PackageMod)' == 'true'">
+  <Target Name="PackageMod" AfterTargets="SetVersion" Condition="'$(PackageMod)' == 'true'">
     <Message Text="Packaging $(AssemblyName) v$(AssemblyVersion)" Importance="high" />
-    
     <PropertyGroup>
       <ModsDirectory>$(OutputPath)/Mods</ModsDirectory>
       <ModDirectory>$(ModsDirectory)/$(AssemblyName)</ModDirectory>
-
       <!-- Folder we'll put the published zips into -->
       <PublishPath>../bin</PublishPath>
       <ZipName>$(PublishPath)/$(AssemblyName)_$(AssemblyVersion).zip</ZipName>
     </PropertyGroup>
-
     <!-- Assure the output path exists -->
     <MakeDir Directories="$(PublishPath)" />
-    
     <!-- Remove the old Mods directory, and Zips file if any is lying around -->
     <ItemGroup>
       <OldZips Include="$(PublishPath)/$(AssemblyName)_*.zip" />
     </ItemGroup>
-    
-    <RemoveDir Directories="$(ModsDirectory)"  ContinueOnError="true" />
+    <RemoveDir Directories="$(ModsDirectory)" ContinueOnError="true" />
     <Delete Files="@(OldZips)" />
-    
     <!-- Create the Mods directory again -->
     <MakeDir Directories="$(ModDirectory)" />
-
     <!-- Move all files to the right folder -->
     <ItemGroup>
       <OutputFiles Include="$(OutputPath)/**/*" />
     </ItemGroup>
-
     <Copy SourceFiles="@(OutputFiles)" DestinationFolder="$(ModDirectory)" />
-
     <!-- Zip it up -->
     <Exec Command="powershell -Command &quot;Compress-Archive -Path '$(ModsDirectory)' -Destination '$(ZipName)'&quot;" />
-    
     <!-- Move them to the game directory -->
     <Copy SourceFiles="@(OutputFiles)" DestinationFolder="$(GameModDir)" />
-    
   </Target>
-  <Target Name="PublishMod" AfterTargets="PackageMod" Condition="'$(Configuration)' == 'Release' AND '$(PublishMod)' == 'true'">
+  <Target
+    Name="PublishMod"
+    AfterTargets="PackageMod"
+    Condition="'$(Configuration)' == 'Release' AND '$(PublishMod)' == 'true'"
+  >
     <Message Text="Publishing $(AssemblyName) v$(AssemblyVersion)" Importance="high" />
     <!-- Publish to GitHub -->
-    <Exec Command="gh release create v$(AssemblyVersion) --generate-notes $(ZipName) @(ExtraZips, ' ')" />
-    
+    <Exec Command="$(SolutionDir)/Utilities/bin/Release/Utilities.exe $(SolutionDir) $(ZipName) @(ExtraZips, ' ')" />
   </Target>
-
+  <Target Name="OldPublishMod" Condition="false">
+    <Exec Command="gh release create v$(AssemblyVersion) --generate-notes $(ZipName) @(ExtraZips, ' ')" />
+  </Target>
 </Project>

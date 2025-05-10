@@ -1,14 +1,18 @@
+using System.Linq;
 using System.Linq.Expressions;
 using Core;
 using HarmonyLib;
+using Helpers;
 using MapEditor.Dialogs;
 using MapEditor.Helpers;
 using MapEditor.Managers;
 using Railloader;
 using Serilog;
+using Serilog.Core;
 using StrangeCustoms.Tracks;
 using Track;
 using UnityEngine;
+using static AlinasMapMod.LoaderBuilder;
 using ILogger = Serilog.ILogger;
 
 namespace MapEditor
@@ -119,6 +123,113 @@ namespace MapEditor
 
     #endregion
 
+    #region SelectedLoader
+    private static CustomLoader? _SelectedLoader;
+    public static CustomLoader? SelectedLoader
+    {
+      get => _SelectedLoader;
+      set
+      {
+        if (_SelectedLoader != value)
+        {
+          _SelectedLoader = value;
+          OnSelectedLoaderChanged(value);
+        }
+      }
+    }
+
+    private static void OnSelectedLoaderChanged(CustomLoader? loader)
+    {
+      _Logger.Information("SelectedLoaderChanged: " + (loader?.id ?? "<null>"));
+      if (PatchEditor == null)
+      {
+        _Logger.Information("PatchEditor NULL");
+        return;
+      }
+      if (loader == null)
+      {
+        LoaderDialog.CloseWindow();
+        KeyboardManager.Deactivate();
+      }
+      else
+      {
+        LoaderDialog.ShowWindow($"Loader Editor - {loader.id}");
+        KeyboardManager.Activate();
+      }
+    }
+
+    #endregion
+
+    #region SelectedScenery
+    private static SceneryAssetInstance? _SelectedScenery;
+    public static SceneryAssetInstance? SelectedScenery
+    {
+      get => _SelectedScenery;
+      set
+      {
+        if (_SelectedScenery != value)
+        {
+          _SelectedScenery = value;
+          OnSelectedSceneryChanged(value);
+        }
+      }
+    }
+
+    private static void OnSelectedSceneryChanged(SceneryAssetInstance? scenery)
+    {
+      _Logger.Information("SelectedSceneryChanged: " + (scenery?.name ?? "<null>"));
+      if (PatchEditor == null)
+      {
+        _Logger.Information("PatchEditor NULL");
+        return;
+      }
+      if (scenery == null)
+      {
+        SceneryDialog.CloseWindow();
+        KeyboardManager.Deactivate();
+      }
+      else
+      {
+        SceneryDialog.ShowWindow($"Scenery Editor - {scenery.name}");
+        KeyboardManager.Activate();
+      }
+    }
+    #endregion
+
+    #region SelectedObject
+    private static IEditableObject? _SelectedObject;
+    public static IEditableObject? SelectedObject
+    {
+      get => _SelectedObject;
+      set
+      {
+        if (_SelectedObject != value)
+        {
+          _SelectedObject = value;
+          OnSelectedObjectChanged(value);
+        }
+      }
+    }
+
+    private static void OnSelectedObjectChanged(IEditableObject? obj)
+    {
+      _Logger.Information("SelectedObjectChanged: " + (obj?.Id ?? "<null>"));
+      if (PatchEditor == null)
+      {
+        _Logger.Information("PatchEditor NULL");
+        return;
+      }
+      if (obj == null)
+      {
+        KeyboardManager.Deactivate();
+      }
+      else
+      {
+        KeyboardManager.Activate();
+      }
+    }
+    #endregion
+
     #region ID Generators
 
     private static string _Prefix = "Custom_";
@@ -140,6 +251,12 @@ namespace MapEditor
 
     private static IdGenerator? _TrackSegmentIdGenerator;
     public static IdGenerator TrackSegmentIdGenerator => _TrackSegmentIdGenerator ??= _IdGeneratorFactory("S" + _Prefix, 4);
+
+    private static IdGenerator? _LoaderIdGenerator;
+    public static IdGenerator LoaderIdGenerator => _LoaderIdGenerator ??= _IdGeneratorFactory("L" + _Prefix, 4);
+
+    private static IdGenerator? _SceneryIdGenerator;
+    public static IdGenerator SceneryIdGenerator => _SceneryIdGenerator ??= _IdGeneratorFactory("Z" + _Prefix, 4);
 
     private delegate IdGenerator IdGeneratorFactoryDelegate(string prefix, int digits);
 
@@ -164,6 +281,7 @@ namespace MapEditor
 
     public static PatchEditor? PatchEditor { get; private set; }
 
+    public static bool HasAlinasMapMod { get; private set; }
     public static ChangeManager ChangeManager { get; } = new ChangeManager();
 
     private static readonly ILogger _Logger = Log.ForContext(typeof(EditorContext));
@@ -175,8 +293,15 @@ namespace MapEditor
       _MixintoFile = fileName;
       _Logger.Information("Opening patch: {fileName}", fileName);
 
+      HasAlinasMapMod = ModdingContext.Mods.Any(m => m.Id == "AlinaNova21.AlinasMapMod" && m.IsLoaded);
+      _Logger.Information("HasAlinasMapMod: " + HasAlinasMapMod);
+
       SelectedNode = null;
       SelectedSegment = null;
+      if (HasAlinasMapMod)
+      {
+        SelectedLoader = null;
+      }
       PatchEditor = new PatchEditor(fileName);
       ChangeManager.Clear();
       TrackSegmentDialog.Activate();
@@ -199,10 +324,23 @@ namespace MapEditor
       {
         _TrackSegmentDialog.CloseWindow();
       }
+      if (HasAlinasMapMod)
+      {
+        if (_LoaderDialog != null)
+        {
+          _LoaderDialog.CloseWindow();
+        }
+        SelectedLoader = null;
+      }
+      if (_SceneryDialog != null)
+      {
+        _SceneryDialog.CloseWindow();
+      }
       SelectedNode = null;
       SelectedSegment = null;
+      SelectedScenery = null;
 
-      if(Graph.Shared != null)
+      if (Graph.Shared != null)
         Graph.Shared.RebuildCollections();
 
       TrackObjectManager.Instance.Rebuild();
@@ -250,11 +388,37 @@ namespace MapEditor
 
     #endregion
 
+    #region LoaderDialog
+    private static LoaderDialog? _LoaderDialog;
+    public static LoaderDialog LoaderDialog => _LoaderDialog ??= new LoaderDialog();
+    #endregion
+
+    #region SceneryDialog
+    private static SceneryDialog? _SceneryDialog;
+    public static SceneryDialog SceneryDialog => _SceneryDialog ??= new SceneryDialog();
+    #endregion
+
     public static void MoveCameraToSelectedNode()
     {
       if (SelectedNode != null)
       {
         CameraSelector.shared.ZoomToPoint(SelectedNode.transform.localPosition);
+      }
+    }
+
+    public static void MoveCameraToSelectedLoader()
+    {
+      if (SelectedLoader != null)
+      {
+        CameraSelector.shared.ZoomToPoint(SelectedLoader.transform.localPosition);
+      }
+    }
+
+    public static void MoveCameraToSelectedScenery()
+    {
+      if (SelectedScenery != null)
+      {
+        CameraSelector.shared.ZoomToPoint(SelectedScenery.transform.localPosition);
       }
     }
 
@@ -275,6 +439,21 @@ namespace MapEditor
       foreach (var trackSegment in Graph.Shared.Segments!)
       {
         AttachUiHelper(trackSegment);
+      }
+
+
+      if (HasAlinasMapMod)
+      {
+        var loaders = GameObject.FindObjectsByType<CustomLoader>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        foreach (var loader in loaders)
+        {
+          AttachUiHelper(loader);
+        }
+      }
+
+      foreach (var scenery in GameObject.FindObjectsByType<SceneryAssetInstance>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+      {
+        AttachUiHelper(scenery);
       }
     }
 
@@ -298,6 +477,27 @@ namespace MapEditor
         }
       }
 
+      if (HasAlinasMapMod)
+      {
+        var loaders = GameObject.FindObjectsByType<CustomLoader>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        foreach (var loader in loaders)
+        {
+          var helper = loader.transform.Find("LoaderHelper");
+          if (helper != null)
+          {
+            Object.Destroy(helper.gameObject);
+          }
+        }
+      }
+
+      foreach (var scenery in GameObject.FindObjectsByType<SceneryAssetInstance>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+      {
+        var helper = scenery.transform.Find("SceneryHelper");
+        if (helper != null)
+        {
+          Object.Destroy(helper.gameObject);
+        }
+      }
     }
 
     internal static void AttachUiHelper(TrackNode node)
@@ -320,6 +520,28 @@ namespace MapEditor
       var gameObject = new GameObject("TrackSegmentHelper");
       gameObject.transform.SetParent(segment.transform);
       gameObject.AddComponent<TrackSegmentHelper>();
+    }
+
+    internal static void AttachUiHelper(CustomLoader loader)
+    {
+      if (loader.transform.Find("LoaderHelper") != null)
+      {
+        return;
+      }
+      var gameObject = new GameObject("LoaderHelper");
+      gameObject.transform.SetParent(loader.transform);
+      gameObject.AddComponent<LoaderHelper>();
+    }
+
+    internal static void AttachUiHelper(SceneryAssetInstance scenery)
+    {
+      if (scenery.transform.Find("SceneryHelper") != null)
+      {
+        GameObject.Destroy(scenery.transform.Find("SceneryHelper"));
+      }
+      var gameObject = new GameObject("SceneryHelper");
+      gameObject.transform.SetParent(scenery.transform);
+      gameObject.AddComponent<SceneryHelper>();
     }
     #endregion
 

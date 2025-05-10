@@ -1,15 +1,17 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using MapEditor.Managers;
 using Track;
 using UI.Builder;
 using UI.Common;
+using UnityEngine;
 
 namespace MapEditor.Dialogs
 {
   public sealed class MapEditorDialog : DialogBase
   {
-    public MapEditorDialog() : base("Map Editor", 400, 350, Window.Position.UpperLeft)
+    public MapEditorDialog() : base("mapeditor", "Map Editor", 400, 350, Window.Position.UpperLeft)
     {
       _Sources = EditorContext.ModdingContext.GetMixintos("game-graph")
         .GroupBy(o => o.Source.ToString(), o => o.Mixinto)
@@ -61,6 +63,17 @@ namespace MapEditor.Dialogs
           // IDEA: use $"{mod}_{graphs[_SelectedPatch]}" as prefix? (so player can tell which mod modified what)
           builder.AddField("Prefix", builder.AddInputField(EditorContext.Prefix, value => EditorContext.Prefix = value, "Prefix")!);
           builder.AddField("Recorded commands", EditorContext.ChangeManager.Count.ToString, UIPanelBuilder.Frequency.Periodic);
+          builder.AddButton("Create Loader", () =>
+          {
+            var position = CameraSelector.shared.CurrentCameraGroundPosition;
+            position -= GameObject.Find("World").transform.position;
+            LoaderManager.AddLoader(position);
+          }); builder.AddButton("Create Scenery", () =>
+          {
+            var position = CameraSelector.shared.CurrentCameraGroundPosition;
+            position -= GameObject.Find("World").transform.position;
+            SceneryManager.AddScenery(position);
+          });
           builder.HStack(stack =>
           {
             stack.AddButtonCompact("Undo", EditorContext.ChangeManager.Undo);

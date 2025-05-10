@@ -6,7 +6,8 @@
   "assemblies": [ "MapEditor" ],
   "updateUrl": "https://railroader.alinanova.dev/update.json",
   "requires": [
-    "Zamu.StrangeCustoms"
+    "Zamu.StrangeCustoms",
+    { "id": "AlinaNova21.AlinasMapMod", "notBefore": "1.4.25128.2221" }
   ],
   "mixintos": {}
 }

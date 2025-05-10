@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace MapEditor.Dialogs
 {
-  public sealed class KeyboardSettingsDialog() : DialogBase("Keyboard bindings", 400, 500, Window.Position.Center)
+  public sealed class KeyboardSettingsDialog() : DialogBase("keyboardbindings", "Keyboard bindings", 400, 500, Window.Position.Center)
   {
 
     private readonly Dictionary<string, TMP_Text> _Labels = new Dictionary<string, TMP_Text>();

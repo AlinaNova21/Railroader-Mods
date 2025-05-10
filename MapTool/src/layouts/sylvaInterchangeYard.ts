@@ -125,11 +125,16 @@ export default async function sylvaInterchangeYard(graph: Graph, originalTracks:
   return {
     name: mixin.items[zone].name,
     desc: 'A yard that can be useful for organizing west bound trains and storing cars if the Interchange is filled to capacity.',
+    version: '1.2.0',
     mixins: {
       alinasMapMod: mixin
     },
     conflicts: [
       { id: 'AlinaNova21.SylvaInterchangeYard' },
+      { id: 'smecko.SylvaInterchange' }
+    ],
+    changelog: [
+      { version: '1.2.0', desc: '- Add conflict for smeckos sylva interchange' }
     ]
   } as LayoutFunctionResult
   // graph.newSegment(`N${area}_L0`, in1, inNodes[0])

@@ -100,11 +100,21 @@ export default async function sylvaWye(graph: Graph, originalTracks: Graph) {
   return {
     name: mixin.items[zone].name,
     desc: 'Adds a Wye at the Sylva Interchange, great for turning around those massive Berks.',
+    version: '1.2.0',
     mixins: {
       alinasMapMod: mixin
     },
     conflicts: [
       { id: 'AlinaNova21.SylvaWye' },
+    ],
+    requires: [
+      { id: 'AlinaNova21.AMM_SylvaInterchangeYard' },
+    ],
+    changelog: [
+      {
+        version: '1.2.0',
+        desc: '- Added dependency for the Sylva Interchange Yard.',
+      }
     ]
   } as LayoutFunctionResult
 }

@@ -16,7 +16,7 @@ namespace MapEditor
     [UsedImplicitly]
     public void Start()
     {
-      StartCoroutine(LoadFromMemoryAsync());
+      //StartCoroutine(LoadFromMemoryAsync());
     }
 
     private IEnumerator LoadFromMemoryAsync()

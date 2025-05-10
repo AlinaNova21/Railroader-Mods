@@ -2,7 +2,7 @@
   <PropertyGroup>
     <!-- Optionally, set a few things to your liking -->
     <MajorVersion>1</MajorVersion>
-    <MinorVersion>1</MinorVersion>
+    <MinorVersion>2</MinorVersion>
     <IsMod>true</IsMod>
     <PackageMod>true</PackageMod>
     <PublishMod>false</PublishMod>
@@ -17,15 +17,16 @@
   </ItemGroup>
   <ItemGroup>
     <!-- <ModAssembly Include="StrangeCustoms" /> -->
-    <Reference Include="StrangeCustoms">
+    <ModAssembly Include="StrangeCustoms\Experimental\StrangeCustoms.dll" />
+    <ModAssembly Include="AlinasMapMod\AlinasMapMod.dll" />
+    <!-- <Reference Include="StrangeCustoms">
       <HintPath Condition="Exists('$(GameDir)\Mods\StrangeCustoms\StrangeCustoms.dll')">$(GameDir)\Mods\StrangeCustoms\StrangeCustoms.dll</HintPath>
       <Private>false</Private>
-    </Reference>
+    </Reference> -->
   </ItemGroup>
   <ItemGroup>
     <GameAssembly Include="Assembly-CSharp" />
     <GameAssembly Include="0Harmony" />
-    <GameAssembly Include="Ops" />
     <GameAssembly Include="Core" />
     <GameAssembly Include="Definition" />
     <GameAssembly Include="Railloader.Interchange" />

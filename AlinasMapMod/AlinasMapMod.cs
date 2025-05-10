@@ -1,20 +1,28 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Messaging;
 using Game.Events;
 using HarmonyLib;
 using Map.Runtime;
+using Model.Ops.Definition;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Railloader;
 using Serilog;
+using StrangeCustoms;
+using StrangeCustoms.Tracks;
 using TelegraphPoles;
 using Track;
 using UI.Builder;
 using UnityEngine;
+using static System.Net.WebRequestMethods;
+using File = System.IO.File;
 
 namespace AlinasMapMod
 {
@@ -62,6 +70,8 @@ namespace AlinasMapMod
       {
         VanillaPrefabs.ClearCache();
       });
+
+      Messenger.Default.Register<GraphWillChangeEvent>(this, GraphWillChangeEvent);
 
       #if DEBUG
       // var cd = new ConflictDetector(moddingContext);
@@ -112,6 +122,76 @@ namespace AlinasMapMod
     {
     }
 
+    private void GraphWillChangeEvent(GraphWillChangeEvent @event)
+    {
+      return; // TODO: finish this
+      var toRemove = new List<string>();
+      foreach (var spliney in @event.State.Splineys)
+      {
+        var handler = spliney.Value.GetValue("Handler").Value<string>();
+        if (handler != "AlinaNova21.PaxBuilder")
+          continue;
+        var id = spliney.Key;
+        var spanIds = spliney.Value.GetValue("SpanIds").ToObject<List<string>>();
+        var industry = spliney.Value.GetValue("Industry").Value<string>();
+        var timetableCode = spliney.Value.GetValue("TimetableCode").Value<string>();
+        var basePopulation = spliney.Value.GetValue("BasePopulation").Value<int>();
+        var neighborIds = spliney.Value.GetValue("NeighborIds").ToObject<List<string>>();
+
+        SerializedIndustry industryObj;
+        foreach (var area in @event.State.Areas)
+        {
+          if(area.Value.Industries.TryGetValue(industry, out industryObj))
+          {
+            var industryComponent = industryObj.Components.FirstOrDefault(kv => true);
+            break;
+          }
+        }
+        /*
+          {
+            "handler": "AlinasMapMod.PaxBuilder",
+            "spanIds": [], // Spans for loading/unloading
+            "industry": "", // Required, see example below
+            "timetableCode": "", // Required
+            // Reference values: Whittier: 30, Ela: 25, Bryson: 50
+            "basePopulation": 40,
+            // List of ids of other passenger stations.
+            // Unsure of exact impact
+            "neighborIds": []
+          }
+
+          "barkers": {
+            "industries": {
+              "barkers-station": {
+                "name": "Barkers Station",
+                "localPosition": { "x": 0, "y": 0, "z": 0},
+                "usesContract": false,
+                "components": {
+                  "ammBarkersStation": {
+                    "name": "Barkers Station",
+                    "type": "AlinasMapMod.PaxStationComponent",
+                    "timetableCode": "BC",
+                    // Reference values: Whittier: 30, Ela: 25, Bryson: 50
+                    "basePopulation": 10,
+                    "loadId": "passengers",
+                    "trackSpans": [ // Spans for loading/unloading
+                      "PAN_Test_Mod_00"
+                    ],
+                    // Future support for custom branches, currently supported is "Main" and "Alarka Branch"
+                    "branch": "Main",
+                    // List of ids of other passenger stations.
+                    // Unsure of exact impact
+                    "neighborIds": [],
+                    "carTypeFilter": "*",
+                    "sharedStorage": true
+                  }
+                }
+              }
+            }
+          }
+        */
+      }
+    }
 
     private void OnMapDidLoad(MapDidLoadEvent @event)
     {
@@ -167,14 +247,23 @@ namespace AlinasMapMod
       builder.AddButton("Rebuild Map", () => {
         MapManager.Instance.RebuildAll();
       });
+#if DEBUG
+      builder.AddField("Bounds", builder.AddInputField(bounds, v => bounds = v));
+      builder.AddButton("Generate Missing Tiles", () =>
+      {
+        GenerateMissingTiles();
+      });
+#endif
     }
+    string bounds { get; set; } = "53,0,60,5";
+
     public void ModTabDidClose()
     {
       logger.Debug("Nighttime...");
       moddingContext.SaveSettingsData(Definition.Id, settings);
       Run();
     }
-
+    
     internal void Run()
     {
       logger.Information($"Run()");
@@ -220,6 +309,60 @@ namespace AlinasMapMod
       // }
     }
 
+    private async Task GenerateMissingTiles() {
+#if DEBUG
+      try
+      {
+        var store = AccessTools.Field(typeof(MapManager), "_store").GetValue(MapManager.Instance) as MapStore;
+        var orig = new MapStore();
+        var origPath = Path.Combine(Application.streamingAssetsPath, "Maps", "BushnellWhittier");
+        orig.Load(origPath);
+        var localPath = "C:\\Steam\\steamapps\\common\\Railroader\\Mods\\AlinaSandbox\\Map";
+        var local = new MapStore();
+        local.Load(localPath);
+        
+        //local.GetType().GetField("_basePath", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(local, localPath);
+        //local.Origin = orig.Origin;
+        //local.TileDimension = orig.TileDimension;
+        var minX = 53;  //-65;
+        var minY = 0;   //-43;
+        var maxX = 60;  //53;
+        var maxY = 5;   //20;
+        var parts = bounds.Split(',').ToList()
+          .Select(int.Parse)
+          .ToArray();
+        minX = parts[0];
+        minY = parts[1];
+        maxX = parts[2];
+        maxY = parts[3];
+        for (int x = minX; x <= maxX; x++)
+        {
+          for (int y = minY; y <= maxY; y++)
+          {
+            var path = Path.Combine(localPath, string.Format("tile_{0:000}_{1:000}.data", x, y));
+            var tile = new Vector2Int(x, y);
+            if (!File.Exists(path))
+            {
+              logger.Debug("Rebuilding tile {0:000}_{1:000}", x, y);
+              if (!orig.HasTileDataAt(tile))
+                await local.RebuildTile(tile);
+            }
+            var desc1 = AccessTools.Field(typeof(MapStore), "_descriptors").GetValue(local) as Dictionary<Vector2Int, TileDescriptor>;
+            if (!desc1.ContainsKey(tile))
+              desc1.Add(new Vector2Int(x, y), new TileDescriptor(new Vector2Int(x, y), TileDescriptorStatus.Real));
+          }
+        }
+        //MapManager.Instance.UpdateVisibleTilesForPosition(CameraSelector.shared.CurrentCameraGroundPosition);
+        logger.Debug("Done rebuilding tiles");
+        local.Save();
+        LoadMaps(store);
+      }catch(Exception e)
+      {
+        logger.Error(e, "Error while generating missing tiles");
+      }
+#endif
+    }
+
     private Dictionary<Vector2Int, string> tilepaths = new Dictionary<Vector2Int, string>();
 
     internal void LoadMaps(MapStore store)
@@ -232,16 +375,32 @@ namespace AlinasMapMod
         var path = Path.GetFullPath(mixinto.Mixinto);
         var dir = Path.GetDirectoryName(path);
         Map map = JsonConvert.DeserializeObject<Map>(File.ReadAllText(path));
-        foreach (var tile in map.Tiles)
-        {
-          var tilepath = Path.Combine(dir, string.Format("tile_{0:000}_{1:000}.data.png", tile.X, tile.Y));
-          var position = new Vector2Int(tile.X, tile.Y);
-          if (!desc.ContainsKey(position))
+        Directory.GetFiles(dir)
+          .Where(f => f.EndsWith(".data") || f.EndsWith(".png"))
+          .ToList()
+          .ForEach(f =>
           {
-            tilepaths[position] = tilepath;
-            desc[position] = new TileDescriptor(position, TileDescriptorStatus.Real);
-          }
-        }
+            var parts = Path.GetFileNameWithoutExtension(f).Split('_');
+            var x = int.Parse(parts[1]);
+            var y = int.Parse(parts[2]);
+            var position = new Vector2Int(x, y);
+            desc[position] = new TileDescriptor(new Vector2Int(x, y), TileDescriptorStatus.Real);
+            tilepaths[position] = f;
+          });
+        //foreach (var tile in map.Tiles)
+        //{
+        //  var tilepath = Path.Combine(dir, string.Format("tile_{0:000}_{1:000}.data", tile.X, tile.Y));
+        //  if (!File.Exists(tilepath))
+        //  {
+        //    tilepath += ".png";
+        //  }
+        //  var position = new Vector2Int(tile.X, tile.Y);
+        //  if (!desc.ContainsKey(position))
+        //  {
+        //    tilepaths[position] = tilepath;
+        //    desc[position] = new TileDescriptor(position, TileDescriptorStatus.Real);
+        //  }
+        //}
       }
     }
 

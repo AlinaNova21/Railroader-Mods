@@ -399,3 +399,4 @@ FodyWeavers.xsd
 
 bin
 node_modules
+upload.json

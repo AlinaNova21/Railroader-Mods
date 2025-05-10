@@ -6,6 +6,7 @@ All listed values are defaults, and may usually be omitted unless otherwise note
 - [Telegraph Poles](#telegraph-poles)
 - [Turntables](#turntables)
 - [Loaders](#loaders)
+- [Passenger Station Agent](#passenger-station-agent-includes-building)]
 - [Passenger Stations](#passenger-stations)
 
 
@@ -15,7 +16,7 @@ All prefabs use the following formats:
 - Scenery: `scenery://sampleSceneryId`
 - Vanilla: `vanilla://vanillaObjectid`  
   This is a special one for specific structures,  
-  as of 02/28/2024, it has the following:
+  as of 05/10/2025, it has the following:
   - roundhouseStall
   - roundhouseStart
   - roundhouseEnd
@@ -24,6 +25,10 @@ All prefabs use the following formats:
   - dieselFuelingStand
   - waterTower
   - waterColumn
+  - flagStopStation
+  - brysonDepot
+  - dillsboroStation
+  - southernCombinationDepot
 
 ## Telegraph poles
 
@@ -66,6 +71,7 @@ All prefabs use the following formats:
 ## Loaders
 ```json
 {
+  "handler": "AlinasMapMod.LoaderBuilder",
   "position": { "x": 0, "y": 0, "z": 0 },
   "rotation": { "x": 0, "y": 0, "z": 0 },
   // Must be set to one of the coal, diesel, or water prefabs
@@ -114,9 +120,30 @@ Example industry:
 }
 ```
 
+## Passenger Station Agent (Includes building)
+
+```json
+{
+  "handler": "AlinasMapMod.StationAgentBuilder",
+  "position": {
+    "x": 12886,
+    "y": 562,
+    "z": 4703
+  },
+  "rotation": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "prefab": "vanilla://flagStopStation",
+  "passengerStop": "whittier"
+}
+```
+
 ## Passenger Stations
 
 ### <span style="color:red">***DEPRECATED: Use the industry component instead***
+
 
 ***NOTE***: There are known issues with pax stations not always showing in the Timetable, especially on branch lines. 
 

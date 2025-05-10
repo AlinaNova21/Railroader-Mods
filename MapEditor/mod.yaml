@@ -4,9 +4,13 @@ name: Map Editor
 desc: |-
   A Map Editor for manipulating track mods.
   WARNING: Extremely WIP. I will not be providing support. Use at your own risk.
-downloadUrl: https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25062.1720/MapEditor_1.1.25062.1720.zip
-version: '1.1.25106.1919'
-changelog:
+# downloadUrl: https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25062.1720/MapEditor_1.1.25062.1720.zip
+version: '1.2.25130.1635'
+changelog:  
+- version: '1.2.25130.1635'
+  desc: |-
+    - Added editable Loaders and Scenery
+    - Fixed issue with loaders hover being linked to original loader
 - version: '1.1.25062.1720'
   desc: |- 
     - Updated for new stable

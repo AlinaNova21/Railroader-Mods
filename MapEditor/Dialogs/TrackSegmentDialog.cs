@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace MapEditor.Dialogs
 {
-  public class TrackSegmentDialog() : DialogBase("Segment editor", 400, 350, Window.Position.LowerRight)
+  public class TrackSegmentDialog() : DialogBase("segmenteditor", "Segment editor", 400, 350, Window.Position.LowerRight)
   {
 
     private UIPanelBuilder? _Builder;
@@ -27,7 +27,7 @@ namespace MapEditor.Dialogs
 
       builder.AddSection("Properties", section =>
       {
-        section.AddField("Priority", builder.AddInputFieldValidated($"{segment.priority}", value => SegmentManager.UpdatePriority(int.Parse(value)), "\\d+")!);
+        section.AddField("Priority", builder.AddInputFieldValidated($"{segment.priority}", value => SegmentManager.UpdatePriority(int.Parse(value)), "-?\\d+")!);
         section.AddField("Speed Limit", () => $"{_SpeedLimit * 5}", UIPanelBuilder.Frequency.Periodic);
         section.AddSlider(() => _SpeedLimit, () => $"{_SpeedLimit * 5}", o => _SpeedLimit = o, 0, 9, true, o => SegmentManager.UpdateSpeedLimit((int)o * 5));
         section.AddField("Group ID", builder.AddInputField(segment.groupId ?? "", (group) => SegmentManager.UpdateGroup(group), "groupId")!);
