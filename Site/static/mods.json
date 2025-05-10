@@ -163,7 +163,7 @@
     "version": "1.1.1",
     "changelog": [],
     "assemblyName": "AMM_AlarkaJctAdditional",
-    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods//AMM_AlarkaJctAdditional_1.1.1.zip"
+    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/AMM_AlarkaJctAdditional_1.1.1.zip"
   },
   {
     "id": "amm-alarka-jct-interchange",
@@ -178,7 +178,7 @@
       }
     ],
     "assemblyName": "AMM_AlarkaJctInterchange",
-    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods//AMM_AlarkaJctInterchange_1.0.0.zip"
+    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/AMM_AlarkaJctInterchange_1.0.0.zip"
   },
   {
     "id": "amm-alarka-loop",
@@ -188,7 +188,7 @@
     "version": "1.1.1",
     "changelog": [],
     "assemblyName": "AMM_AlarkaLoop",
-    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods//AMM_AlarkaLoop_1.1.1.zip"
+    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/AMM_AlarkaLoop_1.1.1.zip"
   },
   {
     "id": "amm-alarka-pax-storage",
@@ -198,7 +198,7 @@
     "version": "1.1.1",
     "changelog": [],
     "assemblyName": "AMM_AlarkaPaxStorage",
-    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods//AMM_AlarkaPaxStorage_1.1.1.zip"
+    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/AMM_AlarkaPaxStorage_1.1.1.zip"
   },
   {
     "id": "amm-andrews-interchange-yard",
@@ -208,7 +208,7 @@
     "version": "1.1.1",
     "changelog": [],
     "assemblyName": "AMM_AndrewsInterchangeYard",
-    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods//AMM_AndrewsInterchangeYard_1.1.1.zip"
+    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/AMM_AndrewsInterchangeYard_1.1.1.zip"
   },
   {
     "id": "amm-sylva-interchange-yard",
@@ -223,7 +223,7 @@
       }
     ],
     "assemblyName": "AMM_SylvaInterchangeYard",
-    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods//AMM_SylvaInterchangeYard_1.2.0.zip"
+    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/AMM_SylvaInterchangeYard_1.2.0.zip"
   },
   {
     "id": "amm-sylva-paper-crossover",
@@ -238,7 +238,7 @@
       }
     ],
     "assemblyName": "AMM_SylvaPaperCrossover",
-    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods//AMM_SylvaPaperCrossover_1.1.2.zip"
+    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/AMM_SylvaPaperCrossover_1.1.2.zip"
   },
   {
     "id": "amm-sylva-pax-storage",
@@ -248,7 +248,7 @@
     "version": "1.1.1",
     "changelog": [],
     "assemblyName": "AMM_SylvaPaxStorage",
-    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods//AMM_SylvaPaxStorage_1.1.1.zip"
+    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/AMM_SylvaPaxStorage_1.1.1.zip"
   },
   {
     "id": "amm-sylva-wye",
@@ -263,7 +263,7 @@
       }
     ],
     "assemblyName": "AMM_SylvaWye",
-    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods//AMM_SylvaWye_1.2.0.zip"
+    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/AMM_SylvaWye_1.2.0.zip"
   },
   {
     "id": "amm-whittier-sawmill-connection",
@@ -278,7 +278,7 @@
       }
     ],
     "assemblyName": "AMM_WhittierSawmillConnection",
-    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods//AMM_WhittierSawmillConnection_1.1.2.zip"
+    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/AMM_WhittierSawmillConnection_1.1.2.zip"
   },
   {
     "id": "amm-whittier-yard",
@@ -293,7 +293,7 @@
       }
     ],
     "assemblyName": "AMM_WhittierYard",
-    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods//AMM_WhittierYard_1.1.2.zip"
+    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/AMM_WhittierYard_1.1.2.zip"
   },
   {
     "id": "amm-test-mod",
@@ -303,6 +303,6 @@
     "version": "1.1.1",
     "changelog": [],
     "assemblyName": "AMM_TestMod",
-    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods//AMM_TestMod_1.1.1.zip"
+    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/AMM_TestMod_1.1.1.zip"
   }
 ]

@@ -28,7 +28,7 @@ export async function generateUpdate(layouts: Mod[]) {
     console.log(mod.changelog[0]?.desc || '')
     console.log(``)
     mod.assemblyName = mod.assemblyName || mod.modId.split('.')[1]
-    mod.downloadUrl = `https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods//${mod.assemblyName}_${mod.version}.zip`
+    mod.downloadUrl = `https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/${mod.assemblyName}_${mod.version}.zip`
     mods.push(mod)
   }
   mods.forEach(mod => console.log(mod.modId))
