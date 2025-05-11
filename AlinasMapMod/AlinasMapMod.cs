@@ -10,6 +10,7 @@ using GalaSoft.MvvmLight.Messaging;
 using Game.Events;
 using HarmonyLib;
 using Map.Runtime;
+using Model.Ops;
 using Model.Ops.Definition;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -124,6 +125,18 @@ namespace AlinasMapMod
 
     private void GraphWillChangeEvent(GraphWillChangeEvent @event)
     {
+      //GameObject.FindObjectsOfType<PassengerStop>(true)
+      //  .ToList()
+      //  .ForEach(ps =>
+      //  {
+      //    logger.Debug("PassengerStop {id}", ps.name);
+      //    var activeSelf = ps.gameObject.activeSelf;
+      //    var activeInHierarchy = ps.gameObject.activeInHierarchy;
+      //    logger.Debug("activeSelf: {activeSelf}, activeInHierarchy: {activeInHierarchy}", ps.name, activeSelf, activeInHierarchy);
+      //    logger.Debug("progressionDisabled: {progressionDisabled}", ps.ProgressionDisabled);
+      //    var ind = ps.GetComponentInParent<Industry>();
+      //    logger.Debug("Industry {id} {activeSelf} {activeInHierachy} {ProgressionDisabled}", ind.name, ind.gameObject.activeSelf, ind.gameObject.activeInHierarchy, ind.ProgressionDisabled);
+      //  });
       return; // TODO: finish this
       var toRemove = new List<string>();
       foreach (var spliney in @event.State.Splineys)

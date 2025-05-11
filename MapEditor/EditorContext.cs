@@ -221,10 +221,12 @@ namespace MapEditor
       }
       if (obj == null)
       {
+        ObjectDialog.CloseWindow();
         KeyboardManager.Deactivate();
       }
       else
       {
+        ObjectDialog.ShowWindow($"Object Editor - {obj.Id}");
         KeyboardManager.Activate();
       }
     }
@@ -398,6 +400,11 @@ namespace MapEditor
     public static SceneryDialog SceneryDialog => _SceneryDialog ??= new SceneryDialog();
     #endregion
 
+    #region ObjectDialog
+    private static ObjectDialog? _ObjectDialog;
+    public static ObjectDialog ObjectDialog => _ObjectDialog ??= new ObjectDialog();
+    #endregion
+
     public static void MoveCameraToSelectedNode()
     {
       if (SelectedNode != null)
@@ -455,6 +462,11 @@ namespace MapEditor
       {
         AttachUiHelper(scenery);
       }
+
+      foreach (ITransformableObject obj in GameObject.FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<ITransformableObject>())
+      {
+        AttachUiHelper(obj);
+      }
     }
 
     private static void DestroyUiHelpers()
@@ -493,6 +505,15 @@ namespace MapEditor
       foreach (var scenery in GameObject.FindObjectsByType<SceneryAssetInstance>(FindObjectsInactive.Include, FindObjectsSortMode.None))
       {
         var helper = scenery.transform.Find("SceneryHelper");
+        if (helper != null)
+        {
+          Object.Destroy(helper.gameObject);
+        }
+      }
+
+      foreach (ITransformableObject obj in GameObject.FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<ITransformableObject>())
+      {
+        var helper = obj.Transform.Find("ObjectHelper");
         if (helper != null)
         {
           Object.Destroy(helper.gameObject);
@@ -542,6 +563,17 @@ namespace MapEditor
       var gameObject = new GameObject("SceneryHelper");
       gameObject.transform.SetParent(scenery.transform);
       gameObject.AddComponent<SceneryHelper>();
+    }
+
+    internal static void AttachUiHelper(ITransformableObject obj)
+    {
+      if (obj.Transform.Find("ObjectHelper") != null)
+      {
+        GameObject.Destroy(obj.Transform.Find("ObjectHelper"));
+      }
+      var gameObject = new GameObject("ObjectHelper");
+      gameObject.transform.SetParent(obj.Transform);
+      gameObject.AddComponent<ObjectHelper>();
     }
     #endregion
 

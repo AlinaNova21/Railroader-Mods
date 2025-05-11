@@ -88,6 +88,10 @@ namespace MapEditor.Managers
       loader ??= EditorContext.SelectedLoader;
       EditorContext.SelectedLoader = null;
 
+      if (loader == null)
+      {
+        return;
+      }
       EditorContext.ChangeManager.AddChange(new DeleteLoader(loader));
 
       Rebuild();

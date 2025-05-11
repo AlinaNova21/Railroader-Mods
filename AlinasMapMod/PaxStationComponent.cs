@@ -1,9 +1,15 @@
+using System;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using System.Linq;
+using GalaSoft.MvvmLight.Messaging;
+using Game.Events;
+using Helpers;
 using Model.Ops;
 using Model.Ops.Definition;
 using Model.Ops.Timetable;
 using Newtonsoft.Json.Linq;
+using Serilog;
 using StrangeCustoms.Tracks;
 using StrangeCustoms.Tracks.Industries;
 using Track;
@@ -11,13 +17,16 @@ using UnityEngine;
 
 namespace AlinasMapMod;
 
-public class PaxStationComponent : IndustryComponent, ICustomIndustryComponent
+public class PaxStationComponent : IndustryComponent, ICustomIndustryComponent, IIndustryTrackDisplayable
 {
+  private Serilog.ILogger logger = Log.ForContext(typeof(PaxStationComponent));
   public string TimetableCode { get; set; } = "";
   public int BasePopulation { get; set; } = 40;
   public string[] NeighborIds { get; set; } = [];
   public string Branch { get; set; } = "Main";
   public Load Load { get; set; }
+
+  public override bool IsVisible => false;
 
   public void DeserializeComponent(SerializedComponent serializedComponent, PatchingContext ctx)
   {
@@ -61,13 +70,32 @@ public class PaxStationComponent : IndustryComponent, ICustomIndustryComponent
   }
 
   public void OnEnable() {
-    var paxStop = GetComponentInChildren<PassengerStop>();
+    Messenger.Default.Register<GraphDidRebuildCollections>(this, UpdatePax);
+    logger.Information("PaxStationComponent {name} OnEnable", this.name);
+  }
+
+  public void OnDisable()
+  {
+    Messenger.Default.Unregister<GraphDidRebuildCollections>(this, UpdatePax);
+  }
+
+  private void UpdatePax(GraphDidRebuildCollections collections)
+  {
+    var paxStop = transform.parent.GetComponentInChildren<PassengerStop>();
+    var wasActive = paxStop != null && paxStop.gameObject.activeSelf;
     if (paxStop == null) {
+      logger.Information("PaxStop {name} does not exist, creating", this.name);
       var go = new GameObject(this.name);
+      wasActive = true;
       go.SetActive(false);
-      go.transform.parent = this.transform;
+      go.transform.parent = this.transform.parent;
       paxStop = go.AddComponent<PassengerStop>();
+    } else
+    {
+      logger.Information("PaxStop {name} already exists active: {wasActive}, updating", paxStop.name, wasActive);
     }
+    paxStop.gameObject.SetActive(false);
+    paxStop.transform.DestroyAllChildren();
     paxStop.identifier = name;
     paxStop.passengerLoad = Load;
     paxStop.basePopulation = BasePopulation;
@@ -99,23 +127,8 @@ public class PaxStationComponent : IndustryComponent, ICustomIndustryComponent
       station.passengerStop = paxStop;
     }
 
-    var existingSpans = paxStop.GetComponents<TrackSpan>();
-    var spansToRemove = new HashSet<TrackSpan>(existingSpans);
-    foreach(var span in this.TrackSpans) {
-      TrackSpan ts = existingSpans.FirstOrDefault(ts => ts.id + ".pax" == span.id);
-      if (ts == null || ts == default) {
-        ts = paxStop.gameObject.AddComponent<TrackSpan>();
-      } else {
-        spansToRemove.Remove(span);
-      }
-      ts.id = span.id + ".pax";
-      ts.upper = span.upper;
-      ts.lower = span.lower;
-    }
-    foreach(var span in spansToRemove) {
-      Destroy(span);
-    }
-    paxStop.gameObject.SetActive(true);
+    if (wasActive && !paxStop.gameObject.activeSelf)
+      paxStop.gameObject.SetActive(true);
   }
 
   public override void Service(IIndustryContext ctx)

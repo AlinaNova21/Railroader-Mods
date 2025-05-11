@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Game.Messages;
+using HarmonyLib;
+using MapEditor.StateTracker;
+using MapEditor.StateTracker.Generic;
 using MapEditor.StateTracker.Node;
 using UnityEngine;
 
@@ -36,7 +40,7 @@ namespace MapEditor.Managers
           _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null!)
         };
 
-      EditorContext.ChangeManager.AddChange(new TransformObject(obj).Move(obj.Transform.localPosition + vector));
+      EditorContext.ChangeManager.AddChange(new TransformObject(obj).Move(obj.Position + vector));
     }
 
     public static void Rotate(Vector3 offset, ITransformableObject? obj = null)
@@ -48,9 +52,48 @@ namespace MapEditor.Managers
         return;
       }
 
-      EditorContext.ChangeManager.AddChange(new TransformObject(obj).Rotate(obj.Transform.localEulerAngles + offset * Scaling));
+      EditorContext.ChangeManager.AddChange(new TransformObject(obj).Rotate(obj.Rotation + offset * Scaling));
     }
-    
+
+    public static void SetProperty(string property, object value, IEditableObject? obj = null)
+    {
+      obj ??= EditorContext.SelectedObject;
+      if (obj == null)
+      {
+        return;
+      }
+      EditorContext.ChangeManager.AddChange(new ChangeProperty(obj).SetProperty(property, value));
+    }
+
+    public static void Create<T>() where T : class, IEditableObject
+    {
+      var obj = EditorContext.SelectedObject;
+      if (obj == null)
+      {
+        return;
+      }
+      var newObj = Activator.CreateInstance(typeof(T)) as T;
+      if (newObj == null)
+      {
+        return;
+      }
+      var changeType = typeof(CreateObject<>).MakeGenericType([typeof(T)]);
+      var change = Activator.CreateInstance(changeType, obj.Id);
+      changeType.GetMethod("Create")?.Invoke(change, null);
+      EditorContext.ChangeManager.AddChange((IUndoable)changeType);
+    }
+
+    public static void Remove(IEditableObject? obj = null)
+    {
+      obj ??= EditorContext.SelectedObject;
+      if (obj == null)
+      {
+        return;
+      }
+      EditorContext.SelectedObject = null;
+      EditorContext.ChangeManager.AddChange(new DeleteObject(obj));
+    }
+
     #region Scaling
 
     public static float Scaling { get; set; } = 1.0f;

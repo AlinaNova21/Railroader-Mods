@@ -7,7 +7,8 @@ namespace MapEditor.Managers
 {
   public interface IEditableObject
   {
-    string Id { get; }
+    string Id { get; set; }
+    string DisplayType { get; }
     bool CanEdit { get; }
     bool CanMove { get; }
     bool CanRotate { get; }
@@ -15,8 +16,8 @@ namespace MapEditor.Managers
     bool CanCreate { get; }
     bool CanDestroy { get; }
     List<string> Properties { get; }
-    void SetProperty<T>(string property, T value);
-    T? GetProperty<T>(string property);
+    void SetProperty(string property, object value);
+    object GetProperty(string property);
     void BuildUI(UIPanelBuilder builder);
     void Save();
     void Load();

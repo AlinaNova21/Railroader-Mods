@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using MapEditor.Managers;
 using UnityEngine;
@@ -20,7 +21,7 @@ namespace MapEditor.StateTracker.Generic
       }
       foreach (var property in obj.Properties)
       {
-        var val = obj.GetProperty<object>(property);
+        var val = obj.GetProperty(property);
         if (val != null)
         {
           Properties[property] = val;
@@ -41,6 +42,30 @@ namespace MapEditor.StateTracker.Generic
         {
           obj.SetProperty(property, Properties[property]);
         }
+      }
+    }
+
+    public void Create<T>() where T : Component, IEditableObject
+    {
+      var parent = GameObject.Find("Large Scenery");
+      var go = new GameObject(id);
+      go.transform.parent = parent.transform;
+      var obj = go.AddComponent<T>();
+      obj.Id = id;
+      UpdateObject(obj);
+      obj.Save();
+      if (obj is ITransformableObject transformable)
+      {
+        EditorContext.AttachUiHelper(transformable);
+      }
+    }
+
+    public void Destroy()
+    {
+      var obj = GameObject.Find(id);
+      if (obj != null)
+      {
+        UnityEngine.Object.Destroy(obj);
       }
     }
   }

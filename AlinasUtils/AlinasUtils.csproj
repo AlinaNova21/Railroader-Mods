@@ -5,7 +5,7 @@
     <MinorVersion>3</MinorVersion>
     <IsMod>true</IsMod>
     <PackageMod>true</PackageMod>
-    <PublishMod>false</PublishMod>
+    <PublishMod>true</PublishMod>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="*.json" CopyToOutputDirectory="Always" />

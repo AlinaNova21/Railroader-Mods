@@ -3,8 +3,11 @@ modId: AlinaNova21.AlinasMapMod
 name: Alina's Map Mod
 desc: |-
   A mod that adds utilities for other mods to add milestones and other features to the game.
-version: '1.5.25130.1635'
+version: '1.5.25131.608'
 changelog:
+- version: '1.5.25131.608'
+  desc: |
+    - Update Pax station span handling
 - version: '1.5.25130.1635'
   desc: |-
     - Deprecated pax builder splineys, it will now throw an error. Use the newer pax industry component instead.
