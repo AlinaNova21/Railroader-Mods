@@ -22,6 +22,7 @@ namespace AlinasUtils;
 class Toolbox
 {
   private Window window;
+  private CTCDialog ctcDialog;
   public Toolbox()
   {
 
@@ -29,6 +30,7 @@ class Toolbox
 
   public void Init()
   {
+    ctcDialog = new CTCDialog();
     if (window != null)
     {
       window.CloseWindow();
@@ -148,6 +150,10 @@ class Toolbox
       var kv = StateManager.Shared.KeyValueObjectForId("_reputation");
       if (kv == null) return;
       kv["derailments"] = Value.Array([]);
+    });
+    builder.AddButton("CTC", () =>
+    {
+      ctcDialog.ShowWindow();
     });
   }
 

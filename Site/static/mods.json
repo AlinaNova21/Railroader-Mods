@@ -53,8 +53,12 @@
     "modId": "AlinaNova21.AlinasMapMod",
     "name": "Alina's Map Mod",
     "desc": "A mod that adds utilities for other mods to add milestones and other features to the game.",
-    "version": "1.5.25131.608",
+    "version": "1.5.25132.2239",
     "changelog": [
+      {
+        "version": "1.5.25132.2239",
+        "desc": "- Fixes for the Pax station breaking passenger list\n"
+      },
       {
         "version": "1.5.25131.608",
         "desc": "- Update Pax station span handling\n"
@@ -161,7 +165,7 @@
       }
     ],
     "assemblyName": "AlinasMapMod",
-    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/AlinasMapMod_1.5.25131.608.zip"
+    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/AlinasMapMod_1.5.25132.2239.zip"
   },
   {
     "id": "amm-alarka-jct-additional",

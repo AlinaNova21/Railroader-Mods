@@ -3,8 +3,11 @@ modId: AlinaNova21.AlinasMapMod
 name: Alina's Map Mod
 desc: |-
   A mod that adds utilities for other mods to add milestones and other features to the game.
-version: '1.5.25131.608'
+version: '1.5.25132.2239'
 changelog:
+- version: '1.5.25132.2239'
+  desc: |
+    - Fixes for the Pax station breaking passenger list
 - version: '1.5.25131.608'
   desc: |
     - Update Pax station span handling

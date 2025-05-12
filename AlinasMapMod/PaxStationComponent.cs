@@ -96,7 +96,7 @@ public class PaxStationComponent : IndustryComponent, ICustomIndustryComponent, 
     }
     paxStop.gameObject.SetActive(false);
     paxStop.transform.DestroyAllChildren();
-    paxStop.identifier = name;
+    paxStop.identifier = subIdentifier;
     paxStop.passengerLoad = Load;
     paxStop.basePopulation = BasePopulation;
     paxStop.timetableCode = TimetableCode;

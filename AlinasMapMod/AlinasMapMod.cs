@@ -261,14 +261,25 @@ namespace AlinasMapMod
         MapManager.Instance.RebuildAll();
       });
 #if DEBUG
-      builder.AddField("Bounds", builder.AddInputField(bounds, v => bounds = v));
-      builder.AddButton("Generate Missing Tiles", () =>
+      builder.AddSection("Map Tiles", builder =>
       {
-        GenerateMissingTiles();
+        builder.AddField("Map Name", builder.AddInputField(mapName, v => mapName = v));
+        var mods = moddingContext.Mods.Select(m => m.Name).ToList();
+        builder.AddField("Map Mod", builder.AddDropdown(mods, mods.IndexOf(mapMod), v =>
+        {
+          mapMod = mods[v];
+        }));
+        builder.AddField("Bounds", builder.AddInputField(bounds, v => bounds = v));
+        builder.AddButton("Generate Missing Tiles", () =>
+        {
+          GenerateMissingTiles();
+        });
       });
 #endif
     }
     string bounds { get; set; } = "53,0,60,5";
+    string mapMod { get; set; } = "AlinasSandbox";
+    string mapName { get; set; } = "BushnellWhittier";
 
     public void ModTabDidClose()
     {
@@ -328,20 +339,21 @@ namespace AlinasMapMod
       {
         var store = AccessTools.Field(typeof(MapManager), "_store").GetValue(MapManager.Instance) as MapStore;
         var orig = new MapStore();
-        var origPath = Path.Combine(Application.streamingAssetsPath, "Maps", "BushnellWhittier");
+        var origPath = Path.Combine(Application.streamingAssetsPath, "Maps", mapName);
         orig.Load(origPath);
-        var localPath = "C:\\Steam\\steamapps\\common\\Railroader\\Mods\\AlinaSandbox\\Map";
+        var mod = moddingContext.Mods.FirstOrDefault(m => m.Name == mapMod);
+        var localPath = Path.Combine(mod.Directory, "Maps", mapName);
         var local = new MapStore();
-        local.Load(localPath);
-        
-        //local.GetType().GetField("_basePath", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(local, localPath);
-        //local.Origin = orig.Origin;
-        //local.TileDimension = orig.TileDimension;
-        var minX = 53;  //-65;
+        local.GetType().GetField("_basePath", BindingFlags.NonPublic | BindingFlags.Instance).SetValue(local, localPath);
+        local.Origin = orig.Origin;
+        local.TileDimension = orig.TileDimension;
+        var minX = 53;  //-65; -65,20,53,26
         var minY = 0;   //-43;
         var maxX = 60;  //53;
         var maxY = 5;   //20;
-        var parts = bounds.Split(',').ToList()
+        var parts = bounds
+          .Split(',')
+          .ToList()
           .Select(int.Parse)
           .ToArray();
         minX = parts[0];
@@ -357,8 +369,7 @@ namespace AlinasMapMod
             if (!File.Exists(path))
             {
               logger.Debug("Rebuilding tile {0:000}_{1:000}", x, y);
-              if (!orig.HasTileDataAt(tile))
-                await local.RebuildTile(tile);
+              await local.RebuildTile(tile);
             }
             var desc1 = AccessTools.Field(typeof(MapStore), "_descriptors").GetValue(local) as Dictionary<Vector2Int, TileDescriptor>;
             if (!desc1.ContainsKey(tile))
@@ -367,7 +378,6 @@ namespace AlinasMapMod
         }
         //MapManager.Instance.UpdateVisibleTilesForPosition(CameraSelector.shared.CurrentCameraGroundPosition);
         logger.Debug("Done rebuilding tiles");
-        local.Save();
         LoadMaps(store);
       }catch(Exception e)
       {
@@ -381,39 +391,27 @@ namespace AlinasMapMod
     internal void LoadMaps(MapStore store)
     {
       tilepaths.Clear();
+      var mapName = MapManager.Instance.directoryName;
+      logger.Information($"Loading modded map tiles for {mapName}");
       var desc = AccessTools.Field(typeof(MapStore), "_descriptors").GetValue(store) as Dictionary<Vector2Int, TileDescriptor>;
-      var mixintos = GetMixintos("maptiles");
-      foreach (var mixinto in mixintos)
+      foreach (var mod in moddingContext.Mods)
       {
-        var path = Path.GetFullPath(mixinto.Mixinto);
-        var dir = Path.GetDirectoryName(path);
-        Map map = JsonConvert.DeserializeObject<Map>(File.ReadAllText(path));
-        Directory.GetFiles(dir)
-          .Where(f => f.EndsWith(".data") || f.EndsWith(".png"))
-          .ToList()
-          .ForEach(f =>
+        var path = Path.Combine(mod.Directory, "Maps", mapName);
+        if (Directory.Exists(path))
+        {
+          var cnt = 0;
+          foreach (var file in Directory.GetFiles(path, "*.data"))
           {
-            var parts = Path.GetFileNameWithoutExtension(f).Split('_');
+            var parts = Path.GetFileNameWithoutExtension(file).Split('_');
             var x = int.Parse(parts[1]);
             var y = int.Parse(parts[2]);
             var position = new Vector2Int(x, y);
             desc[position] = new TileDescriptor(new Vector2Int(x, y), TileDescriptorStatus.Real);
-            tilepaths[position] = f;
-          });
-        //foreach (var tile in map.Tiles)
-        //{
-        //  var tilepath = Path.Combine(dir, string.Format("tile_{0:000}_{1:000}.data", tile.X, tile.Y));
-        //  if (!File.Exists(tilepath))
-        //  {
-        //    tilepath += ".png";
-        //  }
-        //  var position = new Vector2Int(tile.X, tile.Y);
-        //  if (!desc.ContainsKey(position))
-        //  {
-        //    tilepaths[position] = tilepath;
-        //    desc[position] = new TileDescriptor(position, TileDescriptorStatus.Real);
-        //  }
-        //}
+            tilepaths[position] = file;
+            cnt++;
+          }
+          logger.Information("Loaded {cnt} tiles from {mod}", cnt, mod.Name);
+        }
       }
     }
 
