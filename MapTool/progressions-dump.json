@@ -1,0 +1,1347 @@
+{
+  "mapFeatures": {
+    "ewh-intch": {
+      "description": "",
+      "prerequisites": {},
+      "areasEnableOnUnlock": {},
+      "defaultEnableInSandbox": false,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {
+        "path://scene/World/Map Labels/EWH Interchange": true
+      },
+      "trackGroupsAvailableOnUnlock": {
+        "ewh-int": true
+      },
+      "trackGroupsEnableOnUnlock": {
+        "ewh-int": true
+      },
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {
+        "ewh-interchange": true
+      },
+      "unlockIncludeIndustryComponents": {}
+    },
+    "db-yard": {
+      "description": "",
+      "prerequisites": {
+        "db-sy": true
+      },
+      "areasEnableOnUnlock": {},
+      "defaultEnableInSandbox": false,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {},
+      "trackGroupsAvailableOnUnlock": {
+        "db-yard": true
+      },
+      "trackGroupsEnableOnUnlock": {
+        "db-yard": true
+      },
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {}
+    },
+    "db-sy": {
+      "description": "",
+      "prerequisites": {},
+      "areasEnableOnUnlock": {
+        "sylva": true,
+        "dillsboro": true
+      },
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {
+        "path://scene/World/Map Labels/Sylva Interchange": true
+      },
+      "trackGroupsAvailableOnUnlock": {
+        "sy-db": true,
+        "sylva-paperboard": true
+      },
+      "trackGroupsEnableOnUnlock": {},
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {}
+    },
+    "diesel-an": {
+      "description": "",
+      "prerequisites": {},
+      "areasEnableOnUnlock": {},
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {
+        "path://scene/World/Large Scenery/Andrews/Andrews Diesel Fueling Stand": true
+      },
+      "trackGroupsAvailableOnUnlock": {},
+      "trackGroupsEnableOnUnlock": {},
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {
+        "andrews-service.diesel": true
+      }
+    },
+    "dby-ext-2st": {
+      "description": "",
+      "prerequisites": {
+        "db-yard": true
+      },
+      "areasEnableOnUnlock": {},
+      "defaultEnableInSandbox": false,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {},
+      "trackGroupsAvailableOnUnlock": {
+        "dby-ext-2st": true
+      },
+      "trackGroupsEnableOnUnlock": {
+        "dby-ext-2st": true
+      },
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {}
+    },
+    "db-engsvc": {
+      "description": "",
+      "prerequisites": {
+        "db-sy": true
+      },
+      "areasEnableOnUnlock": {},
+      "defaultEnableInSandbox": false,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {
+        "path://scene/World/Large Scenery/Dillsboro Turntable": true,
+        "path://scene/World/Large Scenery/Dillsboro/Dillsboro Coaling Tower": true,
+        "path://scene/World/Large Scenery/Dillsboro/Dillsboro Water Column - Yard": true
+      },
+      "trackGroupsAvailableOnUnlock": {
+        "db-engsvc": true
+      },
+      "trackGroupsEnableOnUnlock": {
+        "db-engsvc": true
+      },
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {
+        "dillsboro-roundhouse-ops": true
+      },
+      "unlockIncludeIndustryComponents": {}
+    },
+    "signals-na-mc": {
+      "description": "",
+      "prerequisites": {
+        "signals-bk-hw": true
+      },
+      "areasEnableOnUnlock": {},
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {
+        "path://scene/CTC/CTC Panel Bryson/Left/Schematic/Canvas/NA-WE-MC": true,
+        "path://scene/CTC/CTC Panel Bryson/Left/Board/NA-WE-MC": true,
+        "path://scene/CTC/CTC Panel Bryson/Center/Schematic/Canvas/MC-BK": true,
+        "path://scene/CTC/NA-WE-MC Module": true,
+        "path://scene/CTC/BK-MC Module": true
+      },
+      "trackGroupsAvailableOnUnlock": {},
+      "trackGroupsEnableOnUnlock": {},
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {}
+    },
+    "el-br": {
+      "description": "",
+      "prerequisites": {},
+      "areasEnableOnUnlock": {
+        "bryson-above": true,
+        "bryson": true
+      },
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {
+        "path://scene/World/Telegraph Pole Feature Targets/Tag 2 EL-BR": true
+      },
+      "trackGroupsAvailableOnUnlock": {
+        "ela-bridge": true,
+        "s2": true,
+        "walker": true
+      },
+      "trackGroupsEnableOnUnlock": {
+        "ela-bridge": true
+      },
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {}
+    },
+    "signals-tv-db": {
+      "description": "",
+      "prerequisites": {
+        "signals": true
+      },
+      "areasEnableOnUnlock": {},
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {
+        "path://scene/CTC/CTC Panel Bryson/Right/Schematic/Canvas/TV-BK-CW-DB": true,
+        "path://scene/CTC/CTC Panel Bryson/Right/Board": true,
+        "path://scene/CTC/CTC Panel Bryson/Center/Schematic/Canvas/WH-TV": true,
+        "path://scene/CTC/TV-BC-CW-DB-SY Module": true,
+        "path://scene/CTC/TV-WH Module": true
+      },
+      "trackGroupsAvailableOnUnlock": {},
+      "trackGroupsEnableOnUnlock": {},
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {}
+    },
+    "na-an": {
+      "description": "",
+      "prerequisites": {},
+      "areasEnableOnUnlock": {
+        "topton": true,
+        "rhodo": true,
+        "andrews": true,
+        "gcrr": true
+      },
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {},
+      "trackGroupsAvailableOnUnlock": {
+        "s5": true
+      },
+      "trackGroupsEnableOnUnlock": {
+        "s5": true
+      },
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {}
+    },
+    "signals-an-to": {
+      "description": "",
+      "prerequisites": {
+        "signals-na-mc": true
+      },
+      "areasEnableOnUnlock": {},
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {
+        "path://scene/CTC/CTC Panel Bryson/Left/Schematic/Canvas/AN-RH-TO": true,
+        "path://scene/CTC/CTC Panel Bryson/Left/Board/AN-RH-TO": true,
+        "path://scene/CTC/CTC Panel Bryson/Left/Schematic/Canvas/TO-NA": true,
+        "path://scene/CTC/AN-RH-TO Module": true,
+        "path://scene/CTC/NA-TO Module": true
+      },
+      "trackGroupsAvailableOnUnlock": {},
+      "trackGroupsEnableOnUnlock": {},
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {}
+    },
+    "fo-na": {
+      "description": "",
+      "prerequisites": {},
+      "areasEnableOnUnlock": {
+        "almond": true,
+        "wesser": true,
+        "hewitt": true,
+        "nantahala": true
+      },
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {},
+      "trackGroupsAvailableOnUnlock": {
+        "s4": true
+      },
+      "trackGroupsEnableOnUnlock": {
+        "s4": true
+      },
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {}
+    },
+    "signals-bk-hw": {
+      "description": "",
+      "prerequisites": {
+        "signals": true
+      },
+      "areasEnableOnUnlock": {},
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {
+        "path://scene/CTC/CTC Panel Bryson/Center/Schematic/Canvas/BK-AJ-HW": true,
+        "path://scene/CTC/CTC Panel Bryson/Center/Board/BK-AJ-HW": true,
+        "path://scene/CTC/BK-AJ-HW Module": true,
+        "path://scene/CTC/BR-HW Module": true
+      },
+      "trackGroupsAvailableOnUnlock": {},
+      "trackGroupsEnableOnUnlock": {},
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {}
+    },
+    "alarka-jct-wye": {
+      "description": "",
+      "prerequisites": {
+        "br-fo": true
+      },
+      "areasEnableOnUnlock": {},
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {},
+      "trackGroupsAvailableOnUnlock": {
+        "aj-wye": true
+      },
+      "trackGroupsEnableOnUnlock": {
+        "aj-wye": true
+      },
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {}
+    },
+    "wh-el": {
+      "description": "",
+      "prerequisites": {},
+      "areasEnableOnUnlock": {
+        "whittier": true,
+        "ela": true,
+        "connelly": true
+      },
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {
+        "path://scene/World/Telegraph Pole Feature Targets/Tag 1 SY-EL": true
+      },
+      "trackGroupsAvailableOnUnlock": {},
+      "trackGroupsEnableOnUnlock": {},
+      "unlockExcludeIndustries": {
+        "ewh-interchange": true
+      },
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {}
+    },
+    "cw-wh": {
+      "description": "",
+      "prerequisites": {},
+      "areasEnableOnUnlock": {
+        "barkers": true,
+        "wilmot": true
+      },
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {},
+      "trackGroupsAvailableOnUnlock": {
+        "s1": true,
+        "cowee-bridge": true
+      },
+      "trackGroupsEnableOnUnlock": {},
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {}
+    },
+    "diesel-db": {
+      "description": "",
+      "prerequisites": {},
+      "areasEnableOnUnlock": {},
+      "defaultEnableInSandbox": false,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {
+        "path://scene/World/Large Scenery/Dillsboro/Dillsboro Diesel Fueling Stand": true
+      },
+      "trackGroupsAvailableOnUnlock": {},
+      "trackGroupsEnableOnUnlock": {},
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {
+        "dillsboro-roundhouse-ops.diesel": true
+      }
+    },
+    "diesel-br": {
+      "description": "",
+      "prerequisites": {},
+      "areasEnableOnUnlock": {},
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {
+        "path://scene/World/Large Scenery/Bryson/Diesel Fueling Stand": true
+      },
+      "trackGroupsAvailableOnUnlock": {},
+      "trackGroupsEnableOnUnlock": {},
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {
+        "bryson-roundhouse-ops.diesel": true
+      }
+    },
+    "ajct-water": {
+      "description": "",
+      "prerequisites": {
+        "alarka-jct-wye": true
+      },
+      "areasEnableOnUnlock": {},
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {
+        "path://scene/World/Large Scenery/Alarka Jct/Alarka Jct Water Column": true
+      },
+      "trackGroupsAvailableOnUnlock": {},
+      "trackGroupsEnableOnUnlock": {},
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {}
+    },
+    "al-water": {
+      "description": "",
+      "prerequisites": {
+        "fo-na": true
+      },
+      "areasEnableOnUnlock": {},
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {
+        "path://scene/World/Large Scenery/Almond/Almond Water Column": true
+      },
+      "trackGroupsAvailableOnUnlock": {},
+      "trackGroupsEnableOnUnlock": {},
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {}
+    },
+    "alarka": {
+      "description": "",
+      "prerequisites": {
+        "alarka-jct-wye": true
+      },
+      "areasEnableOnUnlock": {
+        "cochran": true,
+        "alarka": true
+      },
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {},
+      "trackGroupsAvailableOnUnlock": {
+        "s3a": true
+      },
+      "trackGroupsEnableOnUnlock": {
+        "s3a": true
+      },
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {}
+    },
+    "diesel-ewh": {
+      "description": "",
+      "prerequisites": {
+        "wh-el": true
+      },
+      "areasEnableOnUnlock": {},
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {
+        "path://scene/World/Large Scenery/Whittier/East Whittier Diesel Fueling Stand": true
+      },
+      "trackGroupsAvailableOnUnlock": {},
+      "trackGroupsEnableOnUnlock": {},
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {
+        "wh-e-engine.diesel": true
+      }
+    },
+    "signals": {
+      "description": "",
+      "prerequisites": {},
+      "areasEnableOnUnlock": {},
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {
+        "path://scene/CTC": true,
+        "path://scene/World/Signs/Sign Begin CTC Andrews": true,
+        "path://scene/World/Signs/Sign Begin CTC Sylva": true
+      },
+      "trackGroupsAvailableOnUnlock": {},
+      "trackGroupsEnableOnUnlock": {},
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {}
+    },
+    "br-fo": {
+      "description": "",
+      "prerequisites": {},
+      "areasEnableOnUnlock": {
+        "hemingway": true,
+        "alarka-jct": true,
+        "fontana": true
+      },
+      "defaultEnableInSandbox": true,
+      "displayName": "",
+      "gameObjectsEnableOnUnlock": {
+        "path://scene/World/Telegraph Pole Feature Targets/Tag 3 BR-AJ": true
+      },
+      "trackGroupsAvailableOnUnlock": {
+        "s3": true
+      },
+      "trackGroupsEnableOnUnlock": {
+        "s3": true
+      },
+      "unlockExcludeIndustries": {},
+      "unlockIncludeIndustries": {},
+      "unlockIncludeIndustryComponents": {}
+    }
+  },
+  "progressions": {
+    "ewh": {
+      "sections": {
+        "s2": {
+          "displayName": "Repair Ela Track & Bridge",
+          "description": "The bridge between Ela and Governor's island was also damaged by the flood. Deliver bridge and track supplies to extend the railroad to Bryson.\n\nExpands the mainline 4.4 miles, adds Bryson yard and service facilities.",
+          "prerequisiteSections": {},
+          "deliveryPhases": [
+            {
+              "deliveries": [
+                {
+                  "direction": 0,
+                  "count": 5,
+                  "load": "concrete",
+                  "carTypeFilter": "XM*"
+                },
+                {
+                  "direction": 0,
+                  "count": 4,
+                  "load": "gravel",
+                  "carTypeFilter": "GS"
+                },
+                {
+                  "direction": 0,
+                  "count": 2,
+                  "load": "rebar",
+                  "carTypeFilter": "FM*"
+                },
+                {
+                  "direction": 0,
+                  "count": 2,
+                  "load": "lumber-dimensional",
+                  "carTypeFilter": "FM*"
+                }
+              ],
+              "cost": 1000,
+              "industryComponent": "ela-bridge.site"
+            },
+            {
+              "deliveries": [
+                {
+                  "direction": 0,
+                  "count": 7,
+                  "load": "bridge-section",
+                  "carTypeFilter": "FM*"
+                },
+                {
+                  "direction": 0,
+                  "count": 1,
+                  "load": "bridge-seats",
+                  "carTypeFilter": "FM*"
+                }
+              ],
+              "cost": 1000,
+              "industryComponent": "ela-bridge.site"
+            },
+            {
+              "deliveries": [
+                {
+                  "direction": 0,
+                  "count": 2,
+                  "load": "ties",
+                  "carTypeFilter": "FB*"
+                },
+                {
+                  "direction": 0,
+                  "count": 2,
+                  "load": "ballast",
+                  "carTypeFilter": "GS"
+                },
+                {
+                  "direction": 0,
+                  "count": 2,
+                  "load": "rails",
+                  "carTypeFilter": "FM*"
+                }
+              ],
+              "cost": 1000,
+              "industryComponent": "ela-bridge.site"
+            }
+          ],
+          "disableFeaturesOnUnlock": {},
+          "enableFeaturesOnUnlock": {
+            "el-br": true
+          },
+          "enableFeaturesOnAvailable": {}
+        },
+        "s3": {
+          "displayName": "Bryson Bridge, Line to Fontana",
+          "description": "Extend the mainline 10 miles to Fontana Lake shore.\n\nAdds Robinson Gap coal mine, Hemingway and Alarka Jct passenger stops.",
+          "prerequisiteSections": {
+            "s2": true
+          },
+          "deliveryPhases": [
+            {
+              "deliveries": [
+                {
+                  "direction": 0,
+                  "count": 5,
+                  "load": "concrete",
+                  "carTypeFilter": "XM*"
+                },
+                {
+                  "direction": 0,
+                  "count": 4,
+                  "load": "gravel",
+                  "carTypeFilter": "GS"
+                },
+                {
+                  "direction": 0,
+                  "count": 2,
+                  "load": "rebar",
+                  "carTypeFilter": "FM*"
+                },
+                {
+                  "direction": 0,
+                  "count": 2,
+                  "load": "lumber-dimensional",
+                  "carTypeFilter": "FM*"
+                }
+              ],
+              "cost": 2000,
+              "industryComponent": "bryson-bridge.site"
+            },
+            {
+              "deliveries": [
+                {
+                  "direction": 0,
+                  "count": 7,
+                  "load": "bridge-section",
+                  "carTypeFilter": "FM*"
+                },
+                {
+                  "direction": 0,
+                  "count": 1,
+                  "load": "bridge-seats",
+                  "carTypeFilter": "FM*"
+                }
+              ],
+              "cost": 2000,
+              "industryComponent": "bryson-bridge.site"
+            },
+            {
+              "deliveries": [
+                {
+                  "direction": 0,
+                  "count": 2,
+                  "load": "ties",
+                  "carTypeFilter": "FB*"
+                },
+                {
+                  "direction": 0,
+                  "count": 2,
+                  "load": "ballast",
+                  "carTypeFilter": "GS"
+                },
+                {
+                  "direction": 0,
+                  "count": 2,
+                  "load": "rails",
+                  "carTypeFilter": "FM*"
+                }
+              ],
+              "cost": 2000,
+              "industryComponent": "bryson-bridge.site"
+            }
+          ],
+          "disableFeaturesOnUnlock": {},
+          "enableFeaturesOnUnlock": {
+            "br-fo": true
+          },
+          "enableFeaturesOnAvailable": {}
+        },
+        "alarka-jct": {
+          "displayName": "Alarka Jct Wye",
+          "description": "Build a wye at Alarka Jct. It could be helpful when working the coal mine, or in turning trains returning from the west. It'll also set you up to build rails to Alarka.",
+          "prerequisiteSections": {
+            "s3": true
+          },
+          "deliveryPhases": [
+            {
+              "deliveries": [
+                {
+                  "direction": 0,
+                  "count": 4,
+                  "load": "ballast",
+                  "carTypeFilter": "GB*"
+                },
+                {
+                  "direction": 0,
+                  "count": 2,
+                  "load": "gravel",
+                  "carTypeFilter": "GB*"
+                },
+                {
+                  "direction": 0,
+                  "count": 2,
+                  "load": "ties",
+                  "carTypeFilter": "GB*"
+                },
+                {
+                  "direction": 0,
+                  "count": 1,
+                  "load": "rails",
+                  "carTypeFilter": "FM*"
+                }
+              ],
+              "cost": 2000,
+              "industryComponent": "alarka-track.site"
+            }
+          ],
+          "disableFeaturesOnUnlock": {},
+          "enableFeaturesOnUnlock": {
+            "alarka-jct-wye": true
+          },
+          "enableFeaturesOnAvailable": {}
+        },
+        "alarka-jct-water": {
+          "displayName": "Alarka Jct Water Column",
+          "description": "Build a water column at Alarka Junction.",
+          "prerequisiteSections": {
+            "alarka-jct": true
+          },
+          "deliveryPhases": [
+            {
+              "deliveries": [
+                {
+                  "direction": 0,
+                  "count": 1,
+                  "load": "boxcar-parts",
+                  "carTypeFilter": "XM*"
+                }
+              ],
+              "cost": 250,
+              "industryComponent": "alarka-track.site-water"
+            }
+          ],
+          "disableFeaturesOnUnlock": {},
+          "enableFeaturesOnUnlock": {
+            "ajct-water": true
+          },
+          "enableFeaturesOnAvailable": {}
+        },
+        "alarka-branch": {
+          "displayName": "Alarka Branch",
+          "description": "The Alarka Copper Co. wants to ship their copper ore on your railroad. Doing so will enable their company town to flourish, bringing new freight and passenger opportunities.\n\nBuilds 3.5 miles of track to Alarka.",
+          "prerequisiteSections": {
+            "alarka-jct": true
+          },
+          "deliveryPhases": [
+            {
+              "deliveries": [
+                {
+                  "direction": 0,
+                  "count": 4,
+                  "load": "mow-machinery",
+                  "carTypeFilter": "FM*"
+                },
+                {
+                  "direction": 0,
+                  "count": 4,
+                  "load": "mining-supplies",
+                  "carTypeFilter": "XM*"
+                },
+                {
+                  "direction": 0,
+                  "count": 2,
+                  "load": "building-supplies",
+                  "carTypeFilter": "XM*"
+                },
+                {
+                  "direction": 1,
+                  "count": 8,
+                  "load": "debris",
+                  "carTypeFilter": "GB*"
+                }
+              ],
+              "cost": 2500,
+              "industryComponent": "alarka-track.site2"
+            },
+            {
+              "deliveries": [
+                {
+                  "direction": 0,
+                  "count": 6,
+                  "load": "bridge-section",
+                  "carTypeFilter": "FM*"
+                },
+                {
+                  "direction": 0,
+                  "count": 2,
+                  "load": "bridge-seats",
+                  "carTypeFilter": "FM*"
+                },
+                {
+                  "direction": 0,
+                  "count": 4,
+                  "load": "building-supplies",
+                  "carTypeFilter": "XM*"
+                },
+                {
+                  "direction": 0,
+                  "count": 8,
+                  "load": "ballast",
+                  "carTypeFilter": "HT*"
+                },
+                {
+                  "direction": 0,
+                  "count": 1,
+                  "load": "concrete",
+                  "carTypeFilter": "XM*"
+                }
+              ],
+              "cost": 2500,
+              "industryComponent": "alarka-track.site2"
+            },
+            {
+              "deliveries": [
+                {
+                  "direction": 0,
+                  "count": 6,
+                  "load": "ties",
+                  "carTypeFilter": "GB*"
+                },
+                {
+                  "direction": 0,
+                  "count": 3,
+                  "load": "rails",
+                  "carTypeFilter": "FM*"
+                },
+                {
+                  "direction": 0,
+                  "count": 6,
+                  "load": "ballast",
+                  "carTypeFilter": "HT*"
+                },
+                {
+                  "direction": 1,
+                  "count": 4,
+                  "load": "mow-machinery",
+                  "carTypeFilter": "FM*"
+                },
+                {
+                  "direction": 1,
+                  "count": 2,
+                  "load": "debris",
+                  "carTypeFilter": "GB*"
+                }
+              ],
+              "cost": 2500,
+              "industryComponent": "alarka-track.site2"
+            }
+          ],
+          "disableFeaturesOnUnlock": {},
+          "enableFeaturesOnUnlock": {
+            "alarka": true
+          },
+          "enableFeaturesOnAvailable": {}
+        },
+        "sd-ewh": {
+          "displayName": "Diesel Fueling Stand - East Whittier",
+          "description": "Install diesel fueling stand at East Whittier",
+          "prerequisiteSections": {},
+          "deliveryPhases": [
+            {
+              "deliveries": [
+                {
+                  "direction": 0,
+                  "count": 1,
+                  "load": "boxcar-parts",
+                  "carTypeFilter": "XM*"
+                }
+              ],
+              "cost": 350,
+              "industryComponent": "wh-e-engine.diesel-purchase"
+            }
+          ],
+          "disableFeaturesOnUnlock": {},
+          "enableFeaturesOnUnlock": {
+            "diesel-ewh": true
+          },
+          "enableFeaturesOnAvailable": {}
+        },
+        "sd-bryson": {
+          "displayName": "Diesel Fueling Stand - Bryson",
+          "description": "Install diesel fueling stand at Bryson.",
+          "prerequisiteSections": {
+            "s2": true
+          },
+          "deliveryPhases": [
+            {
+              "deliveries": [
+                {
+                  "direction": 0,
+                  "count": 1,
+                  "load": "boxcar-parts",
+                  "carTypeFilter": "XM*"
+                }
+              ],
+              "cost": 350,
+              "industryComponent": "bryson-freight.diesel-eq-delivery"
+            }
+          ],
+          "disableFeaturesOnUnlock": {},
+          "enableFeaturesOnUnlock": {
+            "diesel-br": true
+          },
+          "enableFeaturesOnAvailable": {}
+        },
+        "s5": {
+          "displayName": "Build Fontana Lake Bridge",
+          "description": "Extend the mainline to cross Fontana Lake and on to Nantahala, 12 miles west.\n\nAdds customers at Hewitt and Nantahala.",
+          "prerequisiteSections": {
+            "s3": true
+          },
+          "deliveryPhases": [
+            {
+              "deliveries": [
+                {
+                  "direction": 0,
+                  "count": 5,
+                  "load": "concrete",
+                  "carTypeFilter": "XM*"
+                },
+                {
+                  "direction": 0,
+                  "count": 4,
+                  "load": "gravel",
+                  "carTypeFilter": "GS"
+                },
+                {
+                  "direction": 0,
+                  "count": 2,
+                  "load": "rebar",
+                  "carTypeFilter": "FM*"
+                },
+                {
+                  "direction": 0,
+                  "count": 2,
+                  "load": "lumber-dimensional",
+                  "carTypeFilter": "FM*"
+                }
+              ],
+              "cost": 2500,
+              "industryComponent": "fontana-bridge.site"
+            },
+            {
+              "deliveries": [
+                {
+                  "direction": 0,
+                  "count": 7,
+                  "load": "bridge-section",
+                  "carTypeFilter": "FM*"
+                },
+                {
+                  "direction": 0,
+                  "count": 1,
+                  "load": "bridge-seats",
+                  "carTypeFilter": "FM*"
+                }
+              ],
+              "cost": 2500,
+              "industryComponent": "fontana-bridge.site"
+            },
+            {
+              "deliveries": [
+                {
+                  "direction": 0,
+                  "count": 2,
+                  "load": "ties",
+                  "carTypeFilter": "FB*"
+                },
+                {
+                  "direction": 0,
+                  "count": 2,
+                  "load": "ballast",
+                  "carTypeFilter": "GS"
+                },
+                {
+                  "direction": 0,
+                  "count": 2,
+                  "load": "rails",
+                  "carTypeFilter": "FM*"
+                }
+              ],
+              "cost": 2500,
+              "industryComponent": "fontana-bridge.site"
+            }
+          ],
+          "disableFeaturesOnUnlock": {},
+          "enableFeaturesOnUnlock": {
+            "fo-na": true
+          },
+          "enableFeaturesOnAvailable": {}
+        },
+        "al-water": {
+          "displayName": "Almond Water Column",
+          "description": "Build a water column at Almond.",
+          "prerequisiteSections": {
+            "s5": true
+          },
+          "deliveryPhases": [
+            {
+              "deliveries": [
+                {
+                  "direction": 0,
+                  "count": 1,
+                  "load": "boxcar-parts",
+                  "carTypeFilter": "XM*"
+                }
+              ],
+              "cost": 250,
+              "industryComponent": "almond-depot.al-water-staging"
+            }
+          ],
+          "disableFeaturesOnUnlock": {},
+          "enableFeaturesOnUnlock": {
+            "al-water": true
+          },
+          "enableFeaturesOnAvailable": {}
+        },
+        "s6": {
+          "displayName": "Build Red Marble Grade to Andrews",
+          "description": "Extend the line up the challenging Red Marble Grade to Andrews, 12 miles further west.\n\nA new western interchange will be built in Andrews, and pulpwood cars can be interchanged at Graham County Railroad near the top of the grade.",
+          "prerequisiteSections": {
+            "s5": true
+          },
+          "deliveryPhases": [
+            {
+              "deliveries": [
+                {
+                  "direction": 0,
+                  "count": 2,
+                  "load": "mow-machinery",
+                  "carTypeFilter": "FM"
+                },
+                {
+                  "direction": 1,
+                  "count": 6,
+                  "load": "debris",
+                  "carTypeFilter": "GB"
+                }
+              ],
+              "cost": 3000,
+              "industryComponent": "nantahala-site.site"
+            },
+            {
+              "deliveries": [
+                {
+                  "direction": 0,
+                  "count": 6,
+                  "load": "ties",
+                  "carTypeFilter": "FB"
+                },
+                {
+                  "direction": 0,
+                  "count": 4,
+                  "load": "rails",
+                  "carTypeFilter": "FM"
+                }
+              ],
+              "cost": 3000,
+              "industryComponent": "nantahala-site.site"
+            },
+            {
+              "deliveries": [
+                {
+                  "direction": 0,
+                  "count": 8,
+                  "load": "ballast",
+                  "carTypeFilter": "GS"
+                },
+                {
+                  "direction": 0,
+                  "count": 6,
+                  "load": "gravel",
+                  "carTypeFilter": "GS"
+                },
+                {
+                  "direction": 1,
+                  "count": 2,
+                  "load": "mow-machinery",
+                  "carTypeFilter": "FM"
+                }
+              ],
+              "cost": 3000,
+              "industryComponent": "nantahala-site.site"
+            }
+          ],
+          "disableFeaturesOnUnlock": {},
+          "enableFeaturesOnUnlock": {
+            "na-an": true
+          },
+          "enableFeaturesOnAvailable": {}
+        },
+        "sd-andrews": {
+          "displayName": "Diesel Fueling Stand - Andrews",
+          "description": "Install diesel fueling stand at Andrews.",
+          "prerequisiteSections": {
+            "s6": true
+          },
+          "deliveryPhases": [
+            {
+              "deliveries": [
+                {
+                  "direction": 0,
+                  "count": 1,
+                  "load": "boxcar-parts",
+                  "carTypeFilter": "XM*"
+                }
+              ],
+              "cost": 350,
+              "industryComponent": "andrews-service.an-es-delivery"
+            }
+          ],
+          "disableFeaturesOnUnlock": {},
+          "enableFeaturesOnUnlock": {
+            "diesel-an": true
+          },
+          "enableFeaturesOnAvailable": {}
+        },
+        "s1": {
+          "displayName": "Purchase Track to Sylva",
+          "description": "Purchase track from the Atlantic Railway to take over their operations to Wilmot, Dillsboro, and Sylva. Eastern interchange will be moved from East Whittier to east of Sylva. East Whittier yard tracks will remain.\n\nAdds 12 miles of mainline to the east.",
+          "prerequisiteSections": {},
+          "deliveryPhases": [
+            {
+              "deliveries": [],
+              "cost": 10000,
+              "industryComponent": ""
+            }
+          ],
+          "disableFeaturesOnUnlock": {
+            "ewh-intch": true
+          },
+          "enableFeaturesOnUnlock": {
+            "cw-wh": true,
+            "db-sy": true
+          },
+          "enableFeaturesOnAvailable": {}
+        },
+        "db-engsvc": {
+          "displayName": "Dillsboro Engine Service",
+          "description": "Build an engine service facility at Dillsboro: turntable with three track engine shed, coaling tower and water column.",
+          "prerequisiteSections": {
+            "s1": true
+          },
+          "deliveryPhases": [
+            {
+              "deliveries": [],
+              "cost": 5000,
+              "industryComponent": ""
+            }
+          ],
+          "disableFeaturesOnUnlock": {},
+          "enableFeaturesOnUnlock": {
+            "db-engsvc": true
+          },
+          "enableFeaturesOnAvailable": {}
+        },
+        "db-yard": {
+          "displayName": "Dillsboro Yard",
+          "description": "Build a three track yard just west of Dillsboro. (60 cars)",
+          "prerequisiteSections": {
+            "s1": true
+          },
+          "deliveryPhases": [
+            {
+              "deliveries": [],
+              "cost": 5000,
+              "industryComponent": ""
+            }
+          ],
+          "disableFeaturesOnUnlock": {},
+          "enableFeaturesOnUnlock": {
+            "db-yard": true
+          },
+          "enableFeaturesOnAvailable": {}
+        },
+        "db-yard-st": {
+          "displayName": "Dillsboro Yard Storage Tracks",
+          "description": "Adds two storage tracks behind Dillsboro Yard. (20 cars)",
+          "prerequisiteSections": {
+            "db-yard": true
+          },
+          "deliveryPhases": [
+            {
+              "deliveries": [],
+              "cost": 1000,
+              "industryComponent": ""
+            }
+          ],
+          "disableFeaturesOnUnlock": {},
+          "enableFeaturesOnUnlock": {
+            "dby-ext-2st": true
+          },
+          "enableFeaturesOnAvailable": {}
+        },
+        "sd-dillsboro": {
+          "displayName": "Diesel Fueling Stand - Dillsboro",
+          "description": "Install diesel fueling stand at Dillsboro.",
+          "prerequisiteSections": {
+            "db-engsvc": true
+          },
+          "deliveryPhases": [
+            {
+              "deliveries": [
+                {
+                  "direction": 0,
+                  "count": 1,
+                  "load": "boxcar-parts",
+                  "carTypeFilter": "XM*"
+                }
+              ],
+              "cost": 350,
+              "industryComponent": "dillsboro-roundhouse-ops.an-es-delivery"
+            }
+          ],
+          "disableFeaturesOnUnlock": {},
+          "enableFeaturesOnUnlock": {
+            "diesel-db": true
+          },
+          "enableFeaturesOnAvailable": {}
+        },
+        "sctc": {
+          "displayName": "Signals: Whittier to Bryson",
+          "description": "Enhance the railroad with CTC signals.",
+          "prerequisiteSections": {
+            "s2": true
+          },
+          "deliveryPhases": [
+            {
+              "deliveries": [
+                {
+                  "direction": 0,
+                  "count": 4,
+                  "load": "signal-parts",
+                  "carTypeFilter": "XM*"
+                }
+              ],
+              "cost": 10000,
+              "industryComponent": "bryson-freight.ctc-delivery"
+            }
+          ],
+          "disableFeaturesOnUnlock": {},
+          "enableFeaturesOnUnlock": {
+            "signals": true
+          },
+          "enableFeaturesOnAvailable": {}
+        },
+        "sig-hw-bk": {
+          "displayName": "Signals: Hemingway to Brooks",
+          "description": "Expand signals to the siding at Brooks.",
+          "prerequisiteSections": {
+            "sctc": true,
+            "s3": true,
+            "alarka-jct": true
+          },
+          "deliveryPhases": [
+            {
+              "deliveries": [
+                {
+                  "direction": 0,
+                  "count": 3,
+                  "load": "signal-parts",
+                  "carTypeFilter": "XM*"
+                }
+              ],
+              "cost": 3000,
+              "industryComponent": "alarka-track.site-signals"
+            }
+          ],
+          "disableFeaturesOnUnlock": {},
+          "enableFeaturesOnUnlock": {
+            "signals-bk-hw": true
+          },
+          "enableFeaturesOnAvailable": {}
+        },
+        "sig-mc-na": {
+          "displayName": "Signals: McClain to Nantahala",
+          "description": "Extend signals to Nantahala.",
+          "prerequisiteSections": {
+            "sig-hw-bk": true,
+            "s5": true
+          },
+          "deliveryPhases": [
+            {
+              "deliveries": [
+                {
+                  "direction": 0,
+                  "count": 3,
+                  "load": "signal-parts",
+                  "carTypeFilter": "XM*"
+                }
+              ],
+              "cost": 3000,
+              "industryComponent": "almond-depot.al-sig-staging"
+            }
+          ],
+          "disableFeaturesOnUnlock": {},
+          "enableFeaturesOnUnlock": {
+            "signals-na-mc": true
+          },
+          "enableFeaturesOnAvailable": {}
+        },
+        "sig-to-an": {
+          "displayName": "Signals: Topton to Andrews",
+          "description": "Extend signals to Andrews.",
+          "prerequisiteSections": {
+            "sig-mc-na": true,
+            "s6": true
+          },
+          "deliveryPhases": [
+            {
+              "deliveries": [
+                {
+                  "direction": 0,
+                  "count": 3,
+                  "load": "signal-parts",
+                  "carTypeFilter": "XM*"
+                }
+              ],
+              "cost": 2500,
+              "industryComponent": "an-sig-staging.a"
+            }
+          ],
+          "disableFeaturesOnUnlock": {},
+          "enableFeaturesOnUnlock": {
+            "signals-an-to": true
+          },
+          "enableFeaturesOnAvailable": {}
+        },
+        "sig-tv-sy": {
+          "displayName": "Signals: Thomas Valley to Sylva",
+          "description": "Expand signals to Sylva.",
+          "prerequisiteSections": {
+            "sctc": true,
+            "s1": true
+          },
+          "deliveryPhases": [
+            {
+              "deliveries": [
+                {
+                  "direction": 0,
+                  "count": 4,
+                  "load": "signal-parts",
+                  "carTypeFilter": "XM*"
+                }
+              ],
+              "cost": 4500,
+              "industryComponent": "wilmot-sig-staging.a"
+            }
+          ],
+          "disableFeaturesOnUnlock": {},
+          "enableFeaturesOnUnlock": {
+            "signals-tv-db": true
+          },
+          "enableFeaturesOnAvailable": {}
+        }
+      }
+    }
+  }
+}

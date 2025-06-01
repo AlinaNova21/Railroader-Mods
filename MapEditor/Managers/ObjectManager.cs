@@ -1,11 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Game.Messages;
-using HarmonyLib;
-using MapEditor.StateTracker;
+using AlinasMapMod.MapEditor;
+using MapEditor.Dialogs;
 using MapEditor.StateTracker.Generic;
 using MapEditor.StateTracker.Node;
 using UnityEngine;
@@ -14,32 +10,30 @@ namespace MapEditor.Managers
 {
   internal class ObjectManager
   {
+    private static Serilog.ILogger logger = Serilog.Log.ForContext<ObjectManager>();
     public static void Move(Direction direction, ITransformableObject? obj = null)
     {
       obj ??= EditorContext.SelectedObject as ITransformableObject;
-      if (obj == null)
-      {
+      if (obj == null) {
         return;
       }
 
-      if (!obj.CanMove)
-      {
+      if (!obj.CanMove) {
         return;
       }
-
+      var scaling = EditorContext.Scaling.Movement / 100f;
       var pos = obj.Position;
       var vector =
         direction switch
         {
-          Direction.up => obj.Transform.up * Scaling,
-          Direction.down => obj.Transform.up * -Scaling,
-          Direction.left => obj.Transform.right * -Scaling,
-          Direction.right => obj.Transform.right * Scaling,
-          Direction.forward => obj.Transform.forward * Scaling,
-          Direction.backward => obj.Transform.forward * -Scaling,
+          Direction.up => obj.Transform.up * scaling,
+          Direction.down => obj.Transform.up * -scaling,
+          Direction.left => obj.Transform.right * -scaling,
+          Direction.right => obj.Transform.right * scaling,
+          Direction.forward => obj.Transform.forward * scaling,
+          Direction.backward => obj.Transform.forward * -scaling,
           _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null!)
         };
-
       EditorContext.ChangeManager.AddChange(new TransformObject(obj).Move(obj.Position + vector));
     }
 
@@ -47,85 +41,60 @@ namespace MapEditor.Managers
     {
 
       obj ??= EditorContext.SelectedObject as ITransformableObject;
-      if (obj == null)
-      {
+      if (obj == null) {
         return;
       }
+      var scaling = EditorContext.Scaling.Rotation / 100f;
+      EditorContext.ChangeManager.AddChange(new TransformObject(obj).Rotate(obj.Rotation + offset * scaling));
+    }
 
-      EditorContext.ChangeManager.AddChange(new TransformObject(obj).Rotate(obj.Rotation + offset * Scaling));
+    public static void Scale(Vector3 offset, ITransformableObject? obj = null)
+    {
+      obj ??= EditorContext.SelectedObject as ITransformableObject;
+      if (obj == null) {
+        return;
+      }
+      var scaling = EditorContext.Scaling.Scale / 100f;
+      // TODO: implement scaling in ITransformableObject
+      EditorContext.ChangeManager.AddChange(new TransformObject(obj).Scale(obj.Transform.localScale + offset * scaling));
     }
 
     public static void SetProperty(string property, object value, IEditableObject? obj = null)
     {
       obj ??= EditorContext.SelectedObject;
-      if (obj == null)
-      {
+      if (obj == null) {
         return;
       }
       EditorContext.ChangeManager.AddChange(new ChangeProperty(obj).SetProperty(property, value));
     }
 
-    public static void Create<T>() where T : class, IEditableObject
+    public static void Create(Type type, string id, Vector3 position)
     {
-      var obj = EditorContext.SelectedObject;
-      if (obj == null)
-      {
-        return;
-      }
-      var newObj = Activator.CreateInstance(typeof(T)) as T;
-      if (newObj == null)
-      {
-        return;
-      }
-      var changeType = typeof(CreateObject<>).MakeGenericType([typeof(T)]);
-      var change = Activator.CreateInstance(changeType, obj.Id);
-      changeType.GetMethod("Create")?.Invoke(change, null);
-      EditorContext.ChangeManager.AddChange((IUndoable)changeType);
+      EditorContext.ChangeManager.AddChange(new CreateObject(type, id, position));
+      EditorContext.SelectedObject = GameObject.FindObjectsOfType<MonoBehaviour>()
+          .Where(o => o is IEditableObject)
+          .Select(o => o as IEditableObject)
+          .FirstOrDefault(x => x!.Id == id);
     }
 
     public static void Remove(IEditableObject? obj = null)
     {
       obj ??= EditorContext.SelectedObject;
-      if (obj == null)
-      {
+      if (obj == null) {
         return;
       }
       EditorContext.SelectedObject = null;
       EditorContext.ChangeManager.AddChange(new DeleteObject(obj));
     }
 
-    #region Scaling
-
-    public static float Scaling { get; set; } = 1.0f;
-
-    public static void MultiplyScaling()
-    {
-      if (Scaling <= 10)
-      {
-        Scaling *= 10;
-      }
-    }
-
-    public static void DivideScaling()
-    {
-      if (Scaling > 0.01f)
-      {
-        Scaling /= 10;
-      }
-    }
-
-    #endregion
-
     #region Rotation
-
-    private static Vector3 _savedRotation = Vector3.forward;
 
     public static void CopyRotation()
     {
       var obj = EditorContext.SelectedObject! as ITransformableObject;
       if (obj == null)
         return;
-      _savedRotation = obj.Rotation;
+      Clipboard.Vector3 = obj.Rotation;
     }
 
     public static void PasteRotation()
@@ -133,21 +102,20 @@ namespace MapEditor.Managers
       var obj = EditorContext.SelectedObject! as ITransformableObject;
       if (obj == null)
         return;
-      EditorContext.ChangeManager.AddChange(new TransformObject(obj).Rotate(_savedRotation));
+      var vector = Clipboard.Vector3;
+      EditorContext.ChangeManager.AddChange(new TransformObject(obj).Rotate(vector));
     }
 
     #endregion
 
     #region Elevation
 
-    private static float _savedElevation;
-
     public static void CopyElevation()
     {
       var obj = EditorContext.SelectedObject! as ITransformableObject;
       if (obj == null)
         return;
-      _savedElevation = obj.Position.y;
+      Clipboard.Set(obj.Position.y);
     }
 
     public static void PasteElevation()
@@ -155,7 +123,7 @@ namespace MapEditor.Managers
       var obj = EditorContext.SelectedObject! as ITransformableObject;
       if (obj == null)
         return;
-      EditorContext.ChangeManager.AddChange(new TransformObject(obj).Move(obj.Position.x, _savedElevation, obj.Position.z));
+      EditorContext.ChangeManager.AddChange(new TransformObject(obj).Move(obj.Position.x, Clipboard.Get<float>(), obj.Position.z));
     }
 
     #endregion

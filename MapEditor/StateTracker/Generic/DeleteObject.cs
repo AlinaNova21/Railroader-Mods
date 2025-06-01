@@ -1,4 +1,4 @@
-using MapEditor.Managers;
+using AlinasMapMod.MapEditor;
 using MapEditor.StateTracker.Generic;
 
 namespace MapEditor.StateTracker.Node
@@ -7,17 +7,16 @@ namespace MapEditor.StateTracker.Node
   {
 
     private readonly string _Id = obj.Id;
-    private ObjectGhost? _Ghost;
+    private ObjectGhost _Ghost = new ObjectGhost(obj.GetType(), obj.Id);
 
     public void Apply()
     {
-      _Ghost = new ObjectGhost(_Id);
-      //_Ghost.Destroy();
+      _Ghost.Destroy();
     }
 
     public void Revert()
     {
-      //_Ghost!.Create();
+      _Ghost.Create();
     }
 
     public override string ToString()

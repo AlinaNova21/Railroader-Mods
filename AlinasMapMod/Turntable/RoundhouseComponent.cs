@@ -18,7 +18,8 @@ public class RoundhouseComponent : MonoBehaviour
     this.Build();
   }
 
-  public void Build() {
+  public void Build()
+  {
     if (Stalls == _lastStalls) {
       Log.Information("Roundhouse stalls unchanged, skipping");
       return;
@@ -51,15 +52,15 @@ public class RoundhouseComponent : MonoBehaviour
 
     var startPos = Stalls < Subdivisions ? 1 : 0;
     var endPos = Stalls < Subdivisions ? Stalls - 1 : Stalls;
-    for (var i = startPos; i < endPos; i++)
-    {
+    for (var i = startPos; i < endPos; i++) {
       var angle = (i + 1) * interval;
       var stallInstance = Instantiate(StallPrefab, rh.transform);
       stallInstance.transform.localEulerAngles = angle * Vector3.up;
       PatchDoors(stallInstance, $"stall-doors.{i}");
     }
   }
-  private void PatchDoors(GameObject go, string key) {
+  private void PatchDoors(GameObject go, string key)
+  {
     var kvt = go.GetComponentInChildren<KeyValuePickableToggle>();
     var kva = go.GetComponentInChildren<KeyValueBoolAnimator>();
     if (kvt == null || kva == null) {

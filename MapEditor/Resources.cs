@@ -29,15 +29,12 @@ namespace MapEditor
 
     private static Texture2D LoadTexture2D(string path, int width, int height)
     {
-      try
-      {
+      try {
         var bytes = GetBytes($"MapEditor.Resources.{path}");
         var texture = new Texture2D(width, height);
         texture.LoadImage(bytes);
         return texture;
-      }
-      catch (System.Exception e)
-      {
+      } catch (System.Exception e) {
         Log.Error(e, "Failed to load texture {0}", path);
       }
 

@@ -1,39 +1,72 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <!-- Optionally, set a few things to your liking -->
-    <MajorVersion>1</MajorVersion>
-    <MinorVersion>5</MinorVersion>
-    <IsMod>true</IsMod>
-    <PackageMod>true</PackageMod>
-    <PublishMod>true</PublishMod>
-  </PropertyGroup>
-  <ItemGroup>
-    <Content Include="*.json" CopyToOutputDirectory="Always" />
-    <Content Include="docs/*" CopyToOutputDirectory="Always" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\factory-icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ModAssembly Include="StrangeCustoms\Experimental\StrangeCustoms.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <GameAssembly Include="Assembly-CSharp" />
-    <GameAssembly Include="0Harmony" />
-    <GameAssembly Include="Definition" />
-    <GameAssembly Include="Map.Runtime" />
-    <GameAssembly Include="Railloader.Interchange" />
-    <GameAssembly Include="Serilog" />
-    <GameAssembly Include="Newtonsoft.Json" />
-    <GameAssembly Include="SimpleGraph.Runtime" />
-    <GameAssembly Include="KeyValue.Runtime" />
-    <GameAssembly Include="Unity.TextMeshPro" />
-    <GameAssembly Include="UnityEngine.CoreModule" />
-    <GameAssembly Include="UnityEngine.PhysicsModule" />
-    <GameAssembly Include="UnityEngine.ImageConversionModule" />
-    <GameAssembly Include="UnityEngine.UI" />
-  </ItemGroup>
-  <ItemGroup>
-    <ExtraZips Include="../bin/AMM_*.zip" />
-  </ItemGroup>
+	<PropertyGroup>
+		<!-- Optionally, set a few things to your liking -->
+		<MajorVersion>1</MajorVersion>
+		<MinorVersion>6</MinorVersion>
+		<IsMod>true</IsMod>
+		<PackageMod>true</PackageMod>
+		<PublishMod>true</PublishMod>
+		<Configurations>Debug;Release;PrivateTesting;Testing</Configurations>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PrivateTesting|AnyCPU'">
+	  <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Testing|AnyCPU'">
+	  <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+	</PropertyGroup>
+	<ItemGroup>
+		<Content Include="*.json" CopyToOutputDirectory="Always" />
+		<Content Include="docs/*" CopyToOutputDirectory="Always" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(Configuration)' != 'Testing' and '$(Configuration)' != 'PrivateTesting'">
+		<Compile Remove="Map/**/*.cs" />
+    <Compile Include="Map/EditableMapLabel.cs" />
+    <Compile Include="Map/MapLabelBuilder.cs" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(Configuration)' != 'PrivateTesting'">
+		<Compile Remove="Map/CustomMapManager.cs" />
+		<Compile Remove="Map/MapDefinition.cs" />
+		<Compile Remove="Patcher/**/*.cs" />
+		<Compile Remove="Patcher/**/*.xsd" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(Configuration)' == 'Release'">
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Resources\factory-icon.png" />
+	</ItemGroup>
+	<ItemGroup>
+		<ModAssembly Include="StrangeCustoms\Experimental\StrangeCustoms.dll" />
+	</ItemGroup>
+	<ItemGroup>
+		<GameAssembly Include="Assembly-CSharp" />
+		<GameAssembly Include="0Harmony" />
+		<GameAssembly Include="Definition" />
+		<GameAssembly Include="Map.Runtime" />
+		<GameAssembly Include="Railloader.Interchange" />
+		<GameAssembly Include="Serilog" />
+		<GameAssembly Include="Newtonsoft.Json" />
+		<GameAssembly Include="SimpleGraph.Runtime" />
+		<GameAssembly Include="KeyValue.Runtime" />
+		<GameAssembly Include="Unity.TextMeshPro" />
+		<GameAssembly Include="UnityEngine.CoreModule" />
+		<GameAssembly Include="UnityEngine.PhysicsModule" />
+		<GameAssembly Include="UnityEngine.ImageConversionModule" />
+		<GameAssembly Include="UnityEngine.UI" />
+		<GameAssembly Include="UnityEngine.UIModule" />
+	</ItemGroup>
+	<ItemGroup>
+		<ExtraZips Include="../bin/AMM_*.zip" />
+	</ItemGroup>
+	<ItemGroup>
+	  <EmbeddedResource Include="Resources\TelegraphPoleStrings.txt" />
+	</ItemGroup>
+	<ItemGroup>
+		<Reference Include="System.Net.Http" />
+	</ItemGroup>
 </Project>

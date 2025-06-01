@@ -1,25 +1,31 @@
 using System;
-using System.ComponentModel;
 using MapEditor.StateTracker.Generic;
+using UnityEngine;
 
 namespace MapEditor.StateTracker.Node
 {
-  public sealed class CreateObject<T> : IUndoable
-    where T: Component, IEditableObject
+  public sealed class CreateObject : IUndoable
   {
     private readonly string _id;
     private readonly ObjectGhost _ghost;
 
-    public CreateObject(string id)
+    public CreateObject(Type type, string id)
     {
       _id = id;
-      _ghost = new ObjectGhost(id);
+      _ghost = new ObjectGhost(type, id);
+      _ghost.Position = Vector3.zero;
+    }
+
+    public CreateObject(Type type, string id, Vector3 position)
+    {
+      _id = id;
+      _ghost = new ObjectGhost(type, id);
+      _ghost.Position = position;
     }
 
     public void Apply()
     {
-      // Hack to call the generic Create method
-      _ghost.GetType().GetMethod("Create").MakeGenericMethod(typeof(T)).Invoke(_ghost, null);
+      _ghost.Create();
     }
 
     public void Revert()

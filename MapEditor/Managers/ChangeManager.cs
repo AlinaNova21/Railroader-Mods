@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using MapEditor.StateTracker;
-using Serilog.Debugging;
 
 namespace MapEditor.Managers
 {
@@ -23,8 +22,7 @@ namespace MapEditor.Managers
 
     public void Undo()
     {
-      if (_UndoStack.Count == 0)
-      {
+      if (_UndoStack.Count == 0) {
         return;
       }
 
@@ -35,8 +33,7 @@ namespace MapEditor.Managers
 
     public void Redo()
     {
-      if (_RedoStack.Count == 0)
-      {
+      if (_RedoStack.Count == 0) {
         return;
       }
 
@@ -53,8 +50,7 @@ namespace MapEditor.Managers
 
     public void UndoAll()
     {
-      while (_UndoStack.Count > 0)
-      {
+      while (_UndoStack.Count > 0) {
         var change = _UndoStack.Pop()!;
         change.Revert();
       }

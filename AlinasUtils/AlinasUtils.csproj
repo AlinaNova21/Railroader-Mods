@@ -2,10 +2,11 @@
   <PropertyGroup>
     <!-- Optionally, set a few things to your liking -->
     <MajorVersion>1</MajorVersion>
-    <MinorVersion>3</MinorVersion>
+    <MinorVersion>4</MinorVersion>
     <IsMod>true</IsMod>
     <PackageMod>true</PackageMod>
     <PublishMod>true</PublishMod>
+    <Configurations>Debug;Release;PrivateTesting;Testing</Configurations>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="*.json" CopyToOutputDirectory="Always" />
@@ -17,11 +18,18 @@
     <GameAssembly Include="0Harmony" />
     <GameAssembly Include="Assembly-CSharp" />
     <GameAssembly Include="KeyValue.Runtime" />
+    <GameAssembly Include="Map.Runtime" />
     <GameAssembly Include="Railloader.Interchange" />
     <GameAssembly Include="Serilog" />
     <GameAssembly Include="Unity.TextMeshPro" />
     <GameAssembly Include="UnityEngine.CoreModule" />
     <GameAssembly Include="UnityEngine.ImageConversionModule" />
+    <GameAssembly Include="UnityEngine.InputLegacyModule" />
     <GameAssembly Include="UnityEngine.UI" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="UnityModManager">
+      <HintPath>..\..\..\..\..\..\Users\ashum\Downloads\UnityModManagerInstaller\UnityModManager.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

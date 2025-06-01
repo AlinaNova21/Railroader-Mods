@@ -24,8 +24,7 @@ namespace MapEditor.StateTracker.Node
 
     public ChangeTrackNode Move(Vector3 newPosition)
     {
-      if (!_IsEditable)
-      {
+      if (!_IsEditable) {
         throw new InvalidOperationException();
       }
 
@@ -35,8 +34,7 @@ namespace MapEditor.StateTracker.Node
 
     public ChangeTrackNode Move(float? x = null, float? y = null, float? z = null)
     {
-      if (!_IsEditable)
-      {
+      if (!_IsEditable) {
         throw new InvalidOperationException();
       }
 
@@ -46,8 +44,7 @@ namespace MapEditor.StateTracker.Node
 
     public ChangeTrackNode Rotate(Vector3 newRotation)
     {
-      if (!_IsEditable)
-      {
+      if (!_IsEditable) {
         throw new InvalidOperationException();
       }
 
@@ -57,8 +54,7 @@ namespace MapEditor.StateTracker.Node
 
     public ChangeTrackNode FlipSwitchStand(bool value)
     {
-      if (!_IsEditable)
-      {
+      if (!_IsEditable) {
         throw new InvalidOperationException();
       }
 

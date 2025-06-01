@@ -26,12 +26,14 @@ internal static class MenuManagerStartPatch
 
     List<SceneDescriptor> list1 = new List<SceneDescriptor>
       {
-        #if DEBUG
+        #if PRIVATETESTING
         SceneDescriptor.Editor,
         #endif
         descriptor,
         SceneDescriptor.EnvironmentEnviro
       };
-    gameManager.Launch(new GlobalGameManager.SceneLoadSetup(list1, descriptor), new GameSetup(plugin.Settings.SaveToLoadOnStartup), default(StartSingleplayerSetup));
+    var sceneLoadSetup = new GlobalGameManager.SceneLoadSetup(list1, descriptor);
+    var gameSetup = new GameSetup(plugin.Settings.SaveToLoadOnStartup);
+    gameManager.Launch(sceneLoadSetup, gameSetup, default(StartSingleplayerSetup));
   }
 }

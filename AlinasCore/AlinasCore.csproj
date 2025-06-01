@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- Optionally, set a few things to your liking -->
+    <MajorVersion>1</MajorVersion>
+    <MinorVersion>0</MinorVersion>
+    <IsMod>true</IsMod>
+    <PackageMod>enable</PackageMod>
+    <PublishMod>false</PublishMod>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="*.json" CopyToOutputDirectory="Always" />
+  </ItemGroup>
+  <ItemGroup>
+    <GameAssembly Include="0Harmony" />
+    <GameAssembly Include="Assembly-CSharp" />
+    <GameAssembly Include="Railloader.Interchange" />
+    <GameAssembly Include="Serilog" />
+    <GameAssembly Include="Unity.TextMeshPro" />
+    <GameAssembly Include="UnityEngine.CoreModule" />
+    <GameAssembly Include="UnityEngine.ImageConversionModule" />
+    <GameAssembly Include="UnityEngine.UI" />
+  </ItemGroup>
+</Project>

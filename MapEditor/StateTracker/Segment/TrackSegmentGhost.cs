@@ -8,8 +8,8 @@ namespace MapEditor.StateTracker.Segment
   public sealed class TrackSegmentGhost(string id)
   {
 
-    private string _a = null!;
-    private string _b = null!;
+    internal string _a = null!;
+    internal string _b = null!;
     internal int _priority;
     internal int _speedLimit;
     internal string _groupId = null!;
@@ -48,6 +48,7 @@ namespace MapEditor.StateTracker.Segment
       segment.groupId = _groupId;
       segment.style = _style;
       segment.trackClass = _trackClass;
+      segment.GetComponentInChildren<TrackSegmentHelper>()?.Rebuild();
     }
 
     public void CreateSegment()

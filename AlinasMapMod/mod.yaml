@@ -3,8 +3,29 @@ modId: AlinaNova21.AlinasMapMod
 name: Alina's Map Mod
 desc: |-
   A mod that adds utilities for other mods to add milestones and other features to the game.
-version: '1.5.25132.2239'
+version: '1.6.25152.217'
 changelog:
+- version: '1.6.25152.217'
+  desc: |
+    - Added interfaces to enable mods to register editable objects in MapEditor.  
+      These are IEditableObject, ITransformableObject, and IObjectFactory. See the code of the below features for examples of use.
+    - Added loaders as editable objects (replaces MapEditor implementation)
+    - Added station agents as editable objects
+    - Added MapLabel splineys, also supported via editable objects.
+    - Added new query tool event, `QueryTooltipUpdateEvent`, register to it to extend the tooltip information shown in the query tool.
+    - Started reworking serialized object data to include more validation, 
+      this will be used to ensure that the data is valid and can be used by the game.
+    - Some namespaces were changed and classes moved around. As such, all builders have new handler values.
+      There is an automatic migration in place in order to maintain backwards compatibility, however, mod authors should update their  
+      mods to use the new namespaces and classes.
+      The mappings between the old and new values are
+      - AlinasMapMod.LoaderBuilder => AlinasMapMod.Loaders.LoaderBuilder
+      - AlinasMapMod.MapLabelBuilder => AlinasMapMod.Map.MapLabelBuilder
+      - AlinasMapMod.StationAgentBuilder => AlinasMapMod.Stations.StationAgentBuilder
+      - AlinasMapMod.TelegraphPoleBuilder => AlinasMapMod.TelegraphPoles.TelegraphPoleBuilder
+      - AlinasMapMod.TelegraphPoleMover => AlinasMapMod.TelegraphPoles.TelegraphPoleMover
+      Additionally, the PaxStationComponent was moved as well
+      - AlinasMapMod.PaxStationComponent => AlinasMapMod.Stations.PaxStationComponent 
 - version: '1.5.25132.2239'
   desc: |
     - Fixes for the Pax station breaking passenger list

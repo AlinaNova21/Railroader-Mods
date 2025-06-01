@@ -1,0 +1,8 @@
+{
+  "Id": "AlinaNova21.AlinasUtils",
+  "DisplayName": "Alina's Utils'",
+  "Author": "AlinaNova21",
+  "Version": "1.0.0",
+  "AssemblyName": "AlinasUtils.dll",
+  "EntryMethod": "AlinasUtils.UMM.Mod.Load"
+}

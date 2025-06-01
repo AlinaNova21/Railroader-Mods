@@ -38,10 +38,8 @@ namespace MapEditor.Extensions
       List<string> values = [title, .. items.Select(o => o.DisplayName)];
 
       TMP_Dropdown dropdown = null!;
-      var rect = builder.AddDropdown(values, 0, o =>
-      {
-        if (o == 0)
-        {
+      var rect = builder.AddDropdown(values, 0, o => {
+        if (o == 0) {
           return;
         }
 
@@ -63,11 +61,9 @@ namespace MapEditor.Extensions
     private static List<string> GetEnumValues<T>()
     {
       var type = typeof(T);
-      if (!_EnumValues.TryGetValue(type, out var values))
-      {
+      if (!_EnumValues.TryGetValue(type, out var values)) {
         values = new List<string>();
-        foreach (var value in Enum.GetValues(type))
-        {
+        foreach (var value in Enum.GetValues(type)) {
           values.Add(value.ToString());
         }
 

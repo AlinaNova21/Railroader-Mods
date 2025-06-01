@@ -1,6 +1,6 @@
 using System.Linq;
 using AlinasMapMod.Definitions;
-using Microsoft.SqlServer.Server;
+using MapEditor.Objects;
 using Newtonsoft.Json.Linq;
 using Serilog;
 using Track;
@@ -19,6 +19,8 @@ public class TurntableBuilder : StrangeCustoms.ISplineyBuilder
     var rot = turntable.Rotation;
 
     var go = GameObject.FindObjectsOfType<TurntableComponent>(true).FirstOrDefault(tt => tt.Identifier == id)?.gameObject ?? new GameObject(id);
+
+    var et = go.GetComponent<EditableTurntable>() ?? go.AddComponent<EditableTurntable>();
 
     if (go.transform.childCount == 0) {
       go.SetActive(false);

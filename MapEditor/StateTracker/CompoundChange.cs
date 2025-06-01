@@ -20,16 +20,14 @@ namespace MapEditor.StateTracker
 
     public void Apply()
     {
-      foreach (var change in _changes)
-      {
+      foreach (var change in _changes) {
         change.Apply();
       }
     }
 
     public void Revert()
     {
-      foreach (var change in _changes.Reverse())
-      {
+      foreach (var change in _changes.Reverse()) {
         change.Revert();
       }
     }

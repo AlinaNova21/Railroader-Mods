@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using MapEditor.Extensions;
+using MapEditor.Helpers;
 using Track;
 using UnityEngine;
 
@@ -33,27 +34,28 @@ namespace MapEditor.StateTracker.Node
       node.transform.localEulerAngles = _Rotation;
       node.flipSwitchStand = _FlipSwitchStand;
       Graph.Shared.OnNodeDidChange(node);
-      var nodes = new HashSet<TrackNode> {node};
+      var nodes = new HashSet<TrackNode> { node };
       var segments = Graph.Shared.SegmentsConnectedTo(node);
-      foreach (var segment in segments)
-      {
+      foreach (var segment in segments) {
         nodes.Add(segment.a);
         nodes.Add(segment.b);
       }
-      foreach (var n in nodes)
-      {
-        if(Graph.Shared.IsSwitch(n)) {
+      foreach (var n in nodes) {
+        if (Graph.Shared.IsSwitch(n)) {
           var switchSegments = Graph.Shared.SegmentsConnectedTo(n);
-          foreach (var segment in segments)
-          {
+          foreach (var segment in segments) {
             nodes.Add(segment.a);
             nodes.Add(segment.b);
           }
         }
       }
-      foreach (var n in nodes)
-      {
-        Graph.Shared.OnNodeDidChange(n);
+      foreach (var n in nodes) {
+        //Graph.Shared.OnNodeDidChange(n);
+        TrackObjectManager.Instance.SetNeedsRebuild(n);
+        var helper = n.GetComponentInChildren<TrackNodeHelper>();
+        if (helper != null) {
+          helper.SwitchHelper();
+        }
       }
     }
 

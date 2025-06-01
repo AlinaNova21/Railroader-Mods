@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MapEditor.Dialogs;
 using MapEditor.StateTracker;
 using MapEditor.StateTracker.Node;
 using MapEditor.StateTracker.Segment;
@@ -15,11 +16,11 @@ namespace MapEditor.Managers
     public static void Move(Direction direction, TrackNode? node = null)
     {
       node ??= EditorContext.SelectedNode;
-      if (node == null)
-      {
+      if (node == null) {
         return;
       }
 
+      var Scaling = EditorContext.Scaling.Movement / 100f;
       var vector =
         direction switch
         {
@@ -38,12 +39,11 @@ namespace MapEditor.Managers
     public static void Rotate(Vector3 offset, TrackNode? node = null)
     {
       node ??= EditorContext.SelectedNode;
-      if (node == null)
-      {
+      if (node == null) {
         return;
       }
-
-      EditorContext.ChangeManager.AddChange(new ChangeTrackNode(node).Rotate(node.transform.localEulerAngles + offset * Scaling));
+      var scaling = EditorContext.Scaling.Rotation / 100f;
+      EditorContext.ChangeManager.AddChange(new ChangeTrackNode(node).Rotate(node.transform.localEulerAngles + offset * scaling));
     }
 
     public static bool GetFlipSwitchStand(TrackNode? node = null)
@@ -55,40 +55,37 @@ namespace MapEditor.Managers
     public static void FlipSwitchStand(bool value, TrackNode? node = null)
     {
       node ??= EditorContext.SelectedNode;
-      if (node == null || node.flipSwitchStand == value)
-      {
+      if (node == null || node.flipSwitchStand == value) {
         return;
       }
       EditorContext.ChangeManager.AddChange(new ChangeTrackNode(node).FlipSwitchStand(value));
     }
 
-    #region Scaling
-
-    public static float Scaling { get; set; } = 1.0f;
-
-    public static void MultiplyScaling()
+    public static void LevelNode(TrackNode? node = null)
     {
-      if (Scaling <= 10)
-      {
-        Scaling *= 10;
+      node ??= EditorContext.SelectedNode;
+      if (node == null) {
+        return;
       }
+      var y = node.transform.localEulerAngles.y;
+      EditorContext.ChangeManager.AddChange(new ChangeTrackNode(node).Rotate(new Vector3(0, y, 0)));
     }
 
-    public static void DivideScaling()
+    public static void FlipNode(TrackNode? node = null)
     {
-      if (Scaling > 0.01f)
-      {
-        Scaling /= 10;
+      node ??= EditorContext.SelectedNode;
+      if (node == null) {
+        return;
       }
+      EditorContext.ChangeManager.AddChange(new ChangeTrackNode(node).Rotate(node.transform.localEulerAngles + Vector3.up * 180));
     }
-
-    #endregion
 
     public static void AddNode(TrackNode? node = null)
     {
       node ??= EditorContext.SelectedNode!;
       var nid = EditorContext.TrackNodeIdGenerator.Next()!;
       var sid = EditorContext.TrackSegmentIdGenerator.Next()!;
+      var Scaling = EditorContext.Scaling.Movement / 100f;
       EditorContext.ChangeManager.AddChange(new CompoundChange(
         new CreateTrackNode(nid, node.transform.localPosition + node.transform.forward * Scaling, node.transform.localEulerAngles),
         new CreateTrackSegment(sid, node.id, nid)
@@ -110,6 +107,9 @@ namespace MapEditor.Managers
     public static void SplitNode(TrackNode? node = null)
     {
       node ??= EditorContext.SelectedNode;
+      if (node == null) {
+        return;
+      }
       // simple track node split:
       // NODE_A --- NODE --- NODE_B
       // result:
@@ -129,18 +129,15 @@ namespace MapEditor.Managers
 
       var segments = Graph.Shared.SegmentsAffectedByNodes([node])!;
       segments.Remove(segments.First());
-      if (segments.Count == 0)
-      {
+      if (segments.Count == 0) {
         return;
       }
 
-      foreach (var trackSegment in segments)
-      {
+      foreach (var trackSegment in segments) {
         actions.Add(new DeleteTrackSegment(trackSegment));
       }
 
-      foreach (var trackSegment in segments)
-      {
+      foreach (var trackSegment in segments) {
         var other = trackSegment.GetOtherNode(node)!;
 
         // move new node in direction of 'other' node (result should be then nodes not on top of each other with buffer stops on each end)
@@ -160,6 +157,9 @@ namespace MapEditor.Managers
     public static void RemoveNode(bool altMode, TrackNode? node = null)
     {
       node ??= EditorContext.SelectedNode;
+      if (node == null) {
+        return;
+      }
       // end track node remove:
       // NODE_A --- NODE
       // result
@@ -188,15 +188,13 @@ namespace MapEditor.Managers
 
       var segments = Graph.Shared.SegmentsAffectedByNodes([node])!;
 
-      foreach (var trackSegment in segments)
-      {
+      foreach (var trackSegment in segments) {
         actions.Add(new DeleteTrackSegment(trackSegment));
       }
 
       actions.Add(new DeleteTrackNode(node));
 
-      if (segments.Count == 2 && altMode)
-      {
+      if (segments.Count == 2 && altMode) {
         var firstSegment = segments.First();
         var firstNode = firstSegment.GetOtherNode(node)!;
         var lastNode = segments.Last().GetOtherNode(node)!;
@@ -210,7 +208,7 @@ namespace MapEditor.Managers
       Rebuild();
     }
 
-    public static void InjectNode(TrackSegment trackSegment = null)
+    public static void InjectNode(TrackSegment? trackSegment = null)
     {
       // inject node in center of segment:
       // NODE_A  --- NODE_B
@@ -218,8 +216,7 @@ namespace MapEditor.Managers
       // NODE_A  --- NODE --- NODE_B
 
       trackSegment ??= EditorContext.SelectedSegment;
-      if (trackSegment == null)
-      {
+      if (trackSegment == null) {
         return;
       }
 
@@ -271,25 +268,25 @@ namespace MapEditor.Managers
 
     #region Elevation
 
-    private static float _savedElevation;
-
     public static void CopyNodeElevation()
     {
       var node = EditorContext.SelectedNode!;
-      _savedElevation = node.transform.localPosition.y;
+
+      Clipboard.Set(node.transform.localPosition.y);
     }
 
     public static void PasteNodeElevation()
     {
       var node = EditorContext.SelectedNode!;
-      EditorContext.ChangeManager.AddChange(new ChangeTrackNode(node).Move(y: _savedElevation));
+      EditorContext.ChangeManager.AddChange(new ChangeTrackNode(node).Move(y: Clipboard.Get<float>()));
 
       Rebuild();
     }
 
     #endregion
 
-    private static void Rebuild(){
+    private static void Rebuild()
+    {
       var last = EditorContext.ChangeManager.LastChange;
       if (last == null) {
         return;

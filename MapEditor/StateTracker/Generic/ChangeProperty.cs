@@ -1,9 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MapEditor.Managers;
+using AlinasMapMod.MapEditor;
 
 namespace MapEditor.StateTracker.Generic
 {
@@ -25,8 +21,7 @@ namespace MapEditor.StateTracker.Generic
 
     public ChangeProperty SetProperty(string property, object value)
     {
-      if (!_IsEditable || !_Object.Properties.Contains(property))
-      {
+      if (!_IsEditable || !_Object.Properties.Contains(property)) {
         throw new InvalidOperationException();
       }
       _New.Properties[property] = value;
@@ -37,13 +32,13 @@ namespace MapEditor.StateTracker.Generic
       _IsEditable = false;
       _Old.UpdateGhost(_Object);
       _New.UpdateObject(_Object);
-      _Object.Save();
+      _Object.Save(EditorContext.PatchEditor!);
     }
 
     public void Revert()
     {
       _Old.UpdateObject(_Object);
-      _Object.Save();
+      _Object.Save(EditorContext.PatchEditor!);
     }
 
     public override string ToString()

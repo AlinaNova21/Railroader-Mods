@@ -1,40 +1,43 @@
-using System.Collections.Generic;
-using System.Linq;
-using Game.Progression;
-using Model;
-using Model.Ops.Definition;
-using Model.Ops;
-using Track;
-using UnityEngine;
+using System;
+using AlinasMapMod.Caches;
 
-namespace AlinasMapMod
+namespace AlinasMapMod;
+
+[Obsolete("Use cache instances instead of this class directly. This class will be removed in a future version.")]
+public class ObjectCache : Singleton<ObjectCache>
 {
-  public class ObjectCache
-  {
-    public Dictionary<string, MapFeature> MapFeatures { get; private set; } = new Dictionary<string, MapFeature>();
-    public Dictionary<string, Section> Sections { get; private set; } = new Dictionary<string, Section>();
-    public Dictionary<string, Industry> Industries { get; private set; } = new Dictionary<string, Industry>();
-    public Dictionary<string, IndustryComponent> IndustryComponents { get; private set; } = new Dictionary<string, IndustryComponent>();
-    public Dictionary<string, TrackSpan> TrackSpans { get; private set; } = new Dictionary<string, TrackSpan>();
-    public Dictionary<string, Load> Loads { get; private set; } = new Dictionary<string, Load>();
-    public Dictionary<string, Area> Areas { get; private set; } = new Dictionary<string, Area>();
 
-    public void Rebuild()
-    {
-      MapFeatures = Object.FindObjectsByType<MapFeature>(FindObjectsSortMode.None)
-          .ToDictionary(v => v.identifier);
-      Sections = Object.FindObjectsByType<Section>(FindObjectsSortMode.None)
-          .ToDictionary(v => v.identifier);
-      Industries = Object.FindObjectsByType<Industry>(FindObjectsSortMode.None)
-          .ToDictionary(v => v.identifier);
-      IndustryComponents = Object.FindObjectsByType<IndustryComponent>(FindObjectsSortMode.None)
-          .ToDictionary(v => v.gameObject.GetComponentInParent<Industry>(true).identifier + "." + v.subIdentifier);
-      TrackSpans = Object.FindObjectsByType<TrackSpan>(FindObjectsSortMode.None)
-          .ToDictionary(v => v.id);
-      Loads = CarPrototypeLibrary.instance.opsLoads
-          .ToDictionary(v => v.id);
-      Areas = Object.FindObjectsByType<Area>(FindObjectsSortMode.None)
-          .ToDictionary(v => v.identifier);
-    }
+  #region Vanilla Objects
+  public MapFeatureCache MapFeatures => MapFeatureCache.Instance;
+  public SectionCache Sections => SectionCache.Instance;
+  public IndustryCache Industries => IndustryCache.Instance;
+  public IndustryComponentCache IndustryComponents => IndustryComponentCache.Instance;
+  public TrackSpanCache TrackSpans => TrackSpanCache.Instance;
+  public LoadCache Loads => LoadCache.Instance;
+  public AreaCache Areas => AreaCache.Instance;
+  public TrackNodeCache TrackNodes => TrackNodeCache.Instance;
+  public TrackSegmentCache TrackSegments => TrackSegmentCache.Instance;
+  public MapLabelCache MapLabels => MapLabelCache.Instance;
+  #endregion
+
+  #region Custom Objects
+  public LoaderCache LoaderInstances => LoaderCache.Instance;
+  public StationAgentCache PaxStationAgents => StationAgentCache.Instance;
+  #endregion
+
+  public void Rebuild()
+  {
+    MapFeatures.Rebuild();
+    Sections.Rebuild();
+    Industries.Rebuild();
+    IndustryComponents.Rebuild();
+    TrackSpans.Rebuild();
+    Loads.Rebuild();
+    Areas.Rebuild();
+    TrackNodes.Rebuild();
+    TrackSegments.Rebuild();
+    MapLabels.Rebuild();
+    LoaderInstances.Rebuild();
+    PaxStationAgents.Rebuild();
   }
 }

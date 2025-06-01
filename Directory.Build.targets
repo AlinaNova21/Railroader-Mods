@@ -83,7 +83,7 @@
   >
     <Message Text="Publishing $(AssemblyName) v$(AssemblyVersion)" Importance="high" />
     <!-- Publish to GitHub -->
-    <Exec Command="$(SolutionDir)/Utilities/bin/Release/Utilities.exe $(SolutionDir) $(ZipName) @(ExtraZips, ' ')" />
+    <Exec Command="$(SolutionDir)/Utilities/bin/Release/Utilities.exe upload --prefix railroader-mods $(ZipName) @(ExtraZips, ' ')" />
   </Target>
   <Target Name="OldPublishMod" Condition="false">
     <Exec Command="gh release create v$(AssemblyVersion) --generate-notes $(ZipName) @(ExtraZips, ' ')" />

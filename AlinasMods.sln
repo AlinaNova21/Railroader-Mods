@@ -19,8 +19,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlinasMapMod", "AlinasMapMo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapEditor", "MapEditor\MapEditor.csproj", "{D49B95EB-0F2B-43EB-817E-9226E8961E66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransformHandles", "TransformHandles\TransformHandles.csproj", "{65837A87-F496-4304-A2B0-15C38D8EC5D1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlinasUtils", "AlinasUtils\AlinasUtils.csproj", "{427DE3F5-4F3D-497E-909A-0E50AB372F61}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "Utilities\Utilities.csproj", "{04B183D5-8D1E-406F-91B8-C56BA8A826E4}"
@@ -28,29 +26,43 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		PrivateTesting|Any CPU = PrivateTesting|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Testing|Any CPU = Testing|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{5A3A18BA-6DB3-41B5-BD90-CCA58B8C83B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5A3A18BA-6DB3-41B5-BD90-CCA58B8C83B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A3A18BA-6DB3-41B5-BD90-CCA58B8C83B4}.PrivateTesting|Any CPU.ActiveCfg = PrivateTesting|Any CPU
+		{5A3A18BA-6DB3-41B5-BD90-CCA58B8C83B4}.PrivateTesting|Any CPU.Build.0 = PrivateTesting|Any CPU
 		{5A3A18BA-6DB3-41B5-BD90-CCA58B8C83B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A3A18BA-6DB3-41B5-BD90-CCA58B8C83B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A3A18BA-6DB3-41B5-BD90-CCA58B8C83B4}.Testing|Any CPU.ActiveCfg = Testing|Any CPU
+		{5A3A18BA-6DB3-41B5-BD90-CCA58B8C83B4}.Testing|Any CPU.Build.0 = Testing|Any CPU
 		{D49B95EB-0F2B-43EB-817E-9226E8961E66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D49B95EB-0F2B-43EB-817E-9226E8961E66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D49B95EB-0F2B-43EB-817E-9226E8961E66}.PrivateTesting|Any CPU.ActiveCfg = PrivateTesting|Any CPU
+		{D49B95EB-0F2B-43EB-817E-9226E8961E66}.PrivateTesting|Any CPU.Build.0 = PrivateTesting|Any CPU
 		{D49B95EB-0F2B-43EB-817E-9226E8961E66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D49B95EB-0F2B-43EB-817E-9226E8961E66}.Release|Any CPU.Build.0 = Release|Any CPU
-		{65837A87-F496-4304-A2B0-15C38D8EC5D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{65837A87-F496-4304-A2B0-15C38D8EC5D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{65837A87-F496-4304-A2B0-15C38D8EC5D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{65837A87-F496-4304-A2B0-15C38D8EC5D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D49B95EB-0F2B-43EB-817E-9226E8961E66}.Testing|Any CPU.ActiveCfg = Testing|Any CPU
+		{D49B95EB-0F2B-43EB-817E-9226E8961E66}.Testing|Any CPU.Build.0 = Testing|Any CPU
 		{427DE3F5-4F3D-497E-909A-0E50AB372F61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{427DE3F5-4F3D-497E-909A-0E50AB372F61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{427DE3F5-4F3D-497E-909A-0E50AB372F61}.PrivateTesting|Any CPU.ActiveCfg = PrivateTesting|Any CPU
+		{427DE3F5-4F3D-497E-909A-0E50AB372F61}.PrivateTesting|Any CPU.Build.0 = PrivateTesting|Any CPU
 		{427DE3F5-4F3D-497E-909A-0E50AB372F61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{427DE3F5-4F3D-497E-909A-0E50AB372F61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{427DE3F5-4F3D-497E-909A-0E50AB372F61}.Testing|Any CPU.ActiveCfg = Testing|Any CPU
+		{427DE3F5-4F3D-497E-909A-0E50AB372F61}.Testing|Any CPU.Build.0 = Testing|Any CPU
 		{04B183D5-8D1E-406F-91B8-C56BA8A826E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{04B183D5-8D1E-406F-91B8-C56BA8A826E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04B183D5-8D1E-406F-91B8-C56BA8A826E4}.PrivateTesting|Any CPU.ActiveCfg = PrivateTesting|Any CPU
+		{04B183D5-8D1E-406F-91B8-C56BA8A826E4}.PrivateTesting|Any CPU.Build.0 = PrivateTesting|Any CPU
 		{04B183D5-8D1E-406F-91B8-C56BA8A826E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04B183D5-8D1E-406F-91B8-C56BA8A826E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04B183D5-8D1E-406F-91B8-C56BA8A826E4}.Testing|Any CPU.ActiveCfg = Testing|Any CPU
+		{04B183D5-8D1E-406F-91B8-C56BA8A826E4}.Testing|Any CPU.Build.0 = Testing|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,5 +1,5 @@
 using System;
-using MapEditor.Managers;
+using AlinasMapMod.MapEditor;
 using MapEditor.StateTracker.Generic;
 using UnityEngine;
 
@@ -23,11 +23,11 @@ namespace MapEditor.StateTracker.Node
 
     public TransformObject Move(Vector3 newPosition)
     {
-      if (!_IsEditable || !_Object.CanMove)
-      {
+      if (!_IsEditable || !_Object.CanMove) {
         throw new InvalidOperationException();
       }
 
+      Serilog.Log.Logger.Debug("TransformObject.Move: {0} to {1}", _Object.Position, newPosition);
       _New.Position = newPosition;
       return this;
     }
@@ -39,12 +39,20 @@ namespace MapEditor.StateTracker.Node
 
     public TransformObject Rotate(Vector3 newRotation)
     {
-      if (!_IsEditable || !_Object.CanRotate)
-      {
+      if (!_IsEditable || !_Object.CanRotate) {
         throw new InvalidOperationException();
       }
 
       _New.Rotation = newRotation;
+      return this;
+    }
+
+    public TransformObject Scale(Vector3 newScale)
+    {
+      if (!_IsEditable || !_Object.CanScale) {
+        throw new InvalidOperationException();
+      }
+      _New.Scale = newScale;
       return this;
     }
 
@@ -53,13 +61,13 @@ namespace MapEditor.StateTracker.Node
       _IsEditable = false;
       _Old.UpdateGhost(_Object);
       _New.UpdateObject(_Object);
-      _Object.Save();
+      _Object.Save(EditorContext.PatchEditor!);
     }
 
     public void Revert()
     {
       _Old.UpdateObject(_Object);
-      _Object.Save();
+      _Object.Save(EditorContext.PatchEditor!);
     }
 
     public override string ToString()

@@ -4,8 +4,12 @@
     "modId": "AlinaNova21.MapEditor",
     "name": "Map Editor",
     "desc": "A Map Editor for manipulating track mods.\nWARNING: Extremely WIP. I will not be providing support. Use at your own risk.",
-    "version": "1.2.25131.610",
+    "version": "1.3.25152.217",
     "changelog": [
+      {
+        "version": "1.3.25152.217",
+        "desc": "- Added support for mods to register editable objects, see AMM documentation.\n- Removed Loader support, this will be handled by AMM now.\n- Added switch helpers\n- Additional query tool info\n    - Now shows the tile coordinates under the cursor.  \n    - Also shows map height mask groupings. The number is the `order` of the mask,  \n      these are grouped and processed as a batch. If a group has more than 256 items,  \n      it will get truncated to 256, causing terrain to not be updated for the lost masks.\n- A lot more QOL changes and bug fixes.\n"
+      },
       {
         "version": "1.2.25131.610",
         "desc": "- 'Add editable turntables. Note: The turntable tracks will not update until the mod is saved and SC tracks reloaded.'\n"
@@ -36,25 +40,34 @@
       }
     ],
     "assemblyName": "MapEditor",
-    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/MapEditor_1.2.25131.610.zip"
+    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/MapEditor_1.3.25152.217.zip"
   },
   {
     "id": "alinas-utils",
     "modId": "AlinaNova21.AlinasUtils",
     "name": "Alina's Utilities",
     "desc": "A mod with a few utilities",
-    "version": "1.3.25130.1633",
-    "changelog": [],
+    "version": "1.4.25152.217",
+    "changelog": [
+      {
+        "version": "1.4.25152.217",
+        "desc": "- Added time freeze checkbox\n- Added live query info \n- Other various tweaks and tools.\n"
+      }
+    ],
     "assemblyName": "AlinasUtils",
-    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/AlinasUtils_1.3.25130.1633.zip"
+    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/AlinasUtils_1.4.25152.217.zip"
   },
   {
     "id": "alinas-map-mod",
     "modId": "AlinaNova21.AlinasMapMod",
     "name": "Alina's Map Mod",
     "desc": "A mod that adds utilities for other mods to add milestones and other features to the game.",
-    "version": "1.5.25132.2239",
+    "version": "1.6.25152.217",
     "changelog": [
+      {
+        "version": "1.6.25152.217",
+        "desc": "- Added interfaces to enable mods to register editable objects in MapEditor.  \n  These are IEditableObject, ITransformableObject, and IObjectFactory. See the code of the below features for examples of use.\n- Added loaders as editable objects (replaces MapEditor implementation)\n- Added station agents as editable objects\n- Added MapLabel splineys, also supported via editable objects.\n- Added new query tool event, `QueryTooltipUpdateEvent`, register to it to extend the tooltip information shown in the query tool.\n- Started reworking serialized object data to include more validation, \n  this will be used to ensure that the data is valid and can be used by the game.\n- Some namespaces were changed and classes moved around. As such, all builders have new handler values.\n  There is an automatic migration in place in order to maintain backwards compatibility, however, mod authors should update their  \n  mods to use the new namespaces and classes.\n  The mappings between the old and new values are\n  - AlinasMapMod.LoaderBuilder => AlinasMapMod.Loaders.LoaderBuilder\n  - AlinasMapMod.MapLabelBuilder => AlinasMapMod.Map.MapLabelBuilder\n  - AlinasMapMod.StationAgentBuilder => AlinasMapMod.Stations.StationAgentBuilder\n  - AlinasMapMod.TelegraphPoleBuilder => AlinasMapMod.TelegraphPoles.TelegraphPoleBuilder\n  - AlinasMapMod.TelegraphPoleMover => AlinasMapMod.TelegraphPoles.TelegraphPoleMover\n  Additionally, the PaxStationComponent was moved as well\n  - AlinasMapMod.PaxStationComponent => AlinasMapMod.Stations.PaxStationComponent \n"
+      },
       {
         "version": "1.5.25132.2239",
         "desc": "- Fixes for the Pax station breaking passenger list\n"
@@ -165,7 +178,7 @@
       }
     ],
     "assemblyName": "AlinasMapMod",
-    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/AlinasMapMod_1.5.25132.2239.zip"
+    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/AlinasMapMod_1.6.25152.217.zip"
   },
   {
     "id": "amm-alarka-jct-additional",

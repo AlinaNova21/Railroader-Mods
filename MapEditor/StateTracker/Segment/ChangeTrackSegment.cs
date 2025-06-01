@@ -1,7 +1,5 @@
 using System;
 using MapEditor.Extensions;
-using MapEditor.Managers;
-using Serilog;
 using Track;
 
 namespace MapEditor.StateTracker.Segment
@@ -14,8 +12,7 @@ namespace MapEditor.StateTracker.Segment
 
     public ChangeTrackSegment Priority(int priority)
     {
-      if (!_IsEditable)
-      {
+      if (!_IsEditable) {
         throw new InvalidOperationException();
       }
 
@@ -25,8 +22,7 @@ namespace MapEditor.StateTracker.Segment
 
     public ChangeTrackSegment SpeedLimit(int speedLimit)
     {
-      if (!_IsEditable)
-      {
+      if (!_IsEditable) {
         throw new InvalidOperationException();
       }
 
@@ -36,8 +32,7 @@ namespace MapEditor.StateTracker.Segment
 
     public ChangeTrackSegment GroupId(string groupId)
     {
-      if (!_IsEditable)
-      {
+      if (!_IsEditable) {
         throw new InvalidOperationException();
       }
 
@@ -47,8 +42,7 @@ namespace MapEditor.StateTracker.Segment
 
     public ChangeTrackSegment Style(TrackSegment.Style style)
     {
-      if (!_IsEditable)
-      {
+      if (!_IsEditable) {
         throw new InvalidOperationException();
       }
 
@@ -58,12 +52,25 @@ namespace MapEditor.StateTracker.Segment
 
     public ChangeTrackSegment TrackClass(TrackClass trackClass)
     {
-      if (!_IsEditable)
-      {
+      if (!_IsEditable) {
         throw new InvalidOperationException();
       }
 
       _New._trackClass = trackClass;
+      return this;
+    }
+
+    public ChangeTrackSegment Flip()
+    {
+      if (!_IsEditable) {
+        throw new InvalidOperationException();
+      }
+      var a = segment.a;
+      var b = segment.b;
+      segment.a = b;
+      segment.b = a;
+      _New._a = b.id;
+      _New._b = a.id;
       return this;
     }
 
@@ -80,11 +87,10 @@ namespace MapEditor.StateTracker.Segment
       _Old.UpdateSegment(segment);
       EditorContext.PatchEditor!.AddOrUpdateSegment(segment);
     }
-    
+
     public override string ToString()
     {
       return "ChangeTrackSegment: " + segment.id;
     }
-
   }
 }

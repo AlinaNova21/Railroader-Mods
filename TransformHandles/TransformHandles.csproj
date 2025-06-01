@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Assemblyversion>1.0.0</Assemblyversion>
+    <Configurations>Debug;Release;PrivateTesting;Testing</Configurations>
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\rth.runtime" />

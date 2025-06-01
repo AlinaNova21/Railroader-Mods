@@ -1,28 +1,26 @@
-using Track;
-using static AlinasMapMod.LoaderBuilder;
+using AlinasMapMod.Loaders;
 
-namespace MapEditor.StateTracker.Node
+namespace MapEditor.StateTracker.Node;
+
+public sealed class DeleteLoader(LoaderInstance loader) : IUndoable
 {
-  public sealed class DeleteLoader(CustomLoader loader) : IUndoable
+
+  private readonly string _Id = loader.identifier;
+  private LoaderGhost? _Ghost;
+
+  public void Apply()
   {
+    _Ghost = new LoaderGhost(_Id);
+    _Ghost.DestroyLoader();
+  }
 
-    private readonly string _Id = loader.id;
-    private LoaderGhost? _Ghost;
+  public void Revert()
+  {
+    _Ghost!.CreateLoader();
+  }
 
-    public void Apply()
-    {
-      _Ghost = new LoaderGhost(_Id);
-      _Ghost.DestroyLoader();
-    }
-
-    public void Revert()
-    {
-      _Ghost!.CreateLoader();
-    }
-
-    public override string ToString()
-    {
-      return "DeleteLoader: " + _Id;
-    }
+  public override string ToString()
+  {
+    return "DeleteLoader: " + _Id;
   }
 }

@@ -5,8 +5,19 @@ desc: |-
   A Map Editor for manipulating track mods.
   WARNING: Extremely WIP. I will not be providing support. Use at your own risk.
 # downloadUrl: https://github.com/AlinaNova21/Railroader-Mods/releases/download/v1.4.25062.1720/MapEditor_1.1.25062.1720.zip
-version: '1.2.25131.610'
+version: '1.3.25152.217'
 changelog:  
+- version: '1.3.25152.217'
+  desc: |
+    - Added support for mods to register editable objects, see AMM documentation.
+    - Removed Loader support, this will be handled by AMM now.
+    - Added switch helpers
+    - Additional query tool info
+        - Now shows the tile coordinates under the cursor.  
+        - Also shows map height mask groupings. The number is the `order` of the mask,  
+          these are grouped and processed as a batch. If a group has more than 256 items,  
+          it will get truncated to 256, causing terrain to not be updated for the lost masks.
+    - A lot more QOL changes and bug fixes.
 - version: '1.2.25131.610'
   desc: |
     - 'Add editable turntables. Note: The turntable tracks will not update until the mod is saved and SC tracks reloaded.'

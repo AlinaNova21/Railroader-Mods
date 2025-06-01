@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Core;
 using Helpers;
 using JetBrains.Annotations;
 using MapEditor.Managers;
@@ -19,6 +20,7 @@ public sealed class TrackSegmentHelper : MonoBehaviour, IPickable
   private static readonly Material _LineMaterial = new(Shader.Find("Universal Render Pipeline/Lit"));
   private LineRenderer _LineRenderer = null!;
   private TrackSegment _Segment = null!;
+  private BezierCurve _Curve;
 
   [UsedImplicitly]
   public void Start()
@@ -38,12 +40,11 @@ public sealed class TrackSegmentHelper : MonoBehaviour, IPickable
 
   public void Rebuild()
   {
-    if (_Segment == null!)
-    {
+    if (_Segment == null!) {
       return;
     }
-
-    var points = _Segment.Curve.Approximate().Select(p => p.point + new Vector3(0, 0.02f, 0)).ToArray();
+    _Curve = _Segment.CreateBezier();
+    var points = _Curve.Approximate().Select(p => p.point + new Vector3(0, 0.02f, 0)).ToArray();
 
     _LineRenderer.positionCount = points.Length;
     _LineRenderer.SetPositions(points);
@@ -63,8 +64,7 @@ public sealed class TrackSegmentHelper : MonoBehaviour, IPickable
 
   public void Activate(PickableActivateEvent evt)
   {
-    if (evt.Activation == PickableActivation.Secondary)
-    {
+    if (evt.Activation == PickableActivation.Secondary) {
       ShowContextMenu();
       return;
     }
@@ -75,8 +75,7 @@ public sealed class TrackSegmentHelper : MonoBehaviour, IPickable
   {
     var sprite = Sprite.Create(Texture2D.whiteTexture, new Rect(0, 0, 1, 1), Vector2.zero);
     var shared = UI.ContextMenu.ContextMenu.Shared;
-    if (UI.ContextMenu.ContextMenu.IsShown)
-    {
+    if (UI.ContextMenu.ContextMenu.IsShown) {
       shared.Hide();
     }
     shared.Clear();
@@ -93,8 +92,7 @@ public sealed class TrackSegmentHelper : MonoBehaviour, IPickable
     yield return new WaitForSeconds(0.1f);
     var sprite = Sprite.Create(Texture2D.whiteTexture, new Rect(0, 0, 1, 1), Vector2.zero);
     var shared = UI.ContextMenu.ContextMenu.Shared;
-    if (UI.ContextMenu.ContextMenu.IsShown)
-    {
+    if (UI.ContextMenu.ContextMenu.IsShown) {
       shared.Hide();
     }
     shared.Clear();
@@ -129,7 +127,7 @@ public sealed class TrackSegmentHelper : MonoBehaviour, IPickable
     sb.AppendLine($"GroupId: {_Segment.groupId}");
     sb.AppendLine($"Style: {_Segment.style}");
     sb.AppendLine($"Class: {_Segment.trackClass}");
-    sb.AppendLine($"Length: {_Segment.Curve.CalculateLength()}m");
+    sb.AppendLine($"Length: {_Curve.CalculateLength()}m");
 
 
     return new TooltipInfo($"Segment {_Segment.id}", sb.ToString());
@@ -141,16 +139,14 @@ public sealed class TrackSegmentHelper : MonoBehaviour, IPickable
 
   private void UpdateChevrons()
   {
-    foreach (var lineRenderer in _Chevrons)
-    {
+    foreach (var lineRenderer in _Chevrons) {
       lineRenderer.material.color = EditorContext.SelectedSegment == _Segment ? Color.green : _Yellow;
     }
   }
 
   private void ReBuildChevrons()
   {
-    foreach (var chevron in _Chevrons)
-    {
+    foreach (var chevron in _Chevrons) {
       Destroy(chevron.gameObject);
     }
 
@@ -162,25 +158,20 @@ public sealed class TrackSegmentHelper : MonoBehaviour, IPickable
 
     var chevronCount = Mathf.Floor(length / carLength);
 
-    if (chevronCount == 0)
-    {
+    if (chevronCount == 0) {
       // segment too short - render single chevron in center
       _Chevrons.Add(CreateChevron(0.5f));
-    }
-    else
-    {
+    } else {
       // render chevrons centered on segment
       var firstOffset = (length - chevronCount * carLength) * 0.5f / length;
-      if (firstOffset < carLength / 2)
-      {
+      if (firstOffset < carLength / 2) {
         // gap between first chevron and node is too small
         --chevronCount;
         firstOffset = (length - chevronCount * carLength) * 0.5f / length;
       }
 
       var deltaT = carLength / length;
-      for (var t = firstOffset; t < 1; t += deltaT)
-      {
+      for (var t = firstOffset; t < 1; t += deltaT) {
         _Chevrons.Add(CreateChevron(t));
       }
     }
@@ -190,8 +181,8 @@ public sealed class TrackSegmentHelper : MonoBehaviour, IPickable
   {
     var chevron = new GameObject("TrackSegmentHelper_Chevron");
     chevron.transform.parent = transform;
-    chevron.transform.localPosition = _Segment.Curve.GetPoint(t) + new Vector3(0, 0.025f, 0);
-    chevron.transform.localEulerAngles = _Segment.Curve.GetRotation(t).eulerAngles;
+    chevron.transform.localPosition = _Curve.GetPoint(t) + new Vector3(0, 0.025f, 0);
+    chevron.transform.localEulerAngles = _Curve.GetRotation(t).eulerAngles;
     chevron.layer = Layers.Clickable;
 
     var lineRenderer = chevron.AddComponent<LineRenderer>();

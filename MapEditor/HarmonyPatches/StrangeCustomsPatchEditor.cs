@@ -1,19 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
 using HarmonyLib;
-using JetBrains.Annotations;
-using MapEditor.Helpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using StrangeCustoms.Tracks;
 using UnityEngine;
-using static UI.Common.Window;
 
 namespace MapEditor.HarmonyPatches
 {

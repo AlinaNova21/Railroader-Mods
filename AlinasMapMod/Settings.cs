@@ -6,5 +6,6 @@ namespace AlinasMapMod
     public bool FreeMilestones { get; set; } = false;
     public float DeliveryCarCountMultiplier { get; set; } = 1;
     public string ProgressionsDumpPath { get; set; } = "";
+    public bool DownloadMissingTiles { get; set; } = false;
   }
 }

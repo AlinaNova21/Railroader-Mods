@@ -33,10 +33,9 @@ public partial class TurntablePlugin : SingletonPluginBase<TurntablePlugin>
     // return;
     var state = @event.State;
     var splineys = state.Splineys;
-    foreach (var id in splineys.Keys)
-    {
+    foreach (var id in splineys.Keys) {
       var data = splineys[id];
-      if(data == null) continue; // Skip nulls
+      if (data == null) continue; // Skip nulls
       var handler = data.Value<string>("handler");
       if (handler != "AlinasMapMod.Turntable.TurntableBuilder") continue;
       var turntable = data.ToObject<SerializedTurntable>();
@@ -46,38 +45,36 @@ public partial class TurntablePlugin : SingletonPluginBase<TurntablePlugin>
       var interval = 360f / turntable.Subdivisions;
       var radius = turntable.Radius;
 
-      for (var i = 0; i < turntable.Subdivisions; i++)
-      {
+      for (var i = 0; i < turntable.Subdivisions; i++) {
         var num = interval * i;
         Quaternion quaternion = Quaternion.Euler(0f, rot.y + num, 0f);
         var nodeId = $"N{id}TurntableNode{i}";
         SerializedNode node;
-        if(!state.Tracks.Nodes.TryGetValue(nodeId, out node)) {
+        if (!state.Tracks.Nodes.TryGetValue(nodeId, out node)) {
           node = state.Tracks.Nodes[nodeId] = new SerializedNode();
         }
-        node.Position = pos + quaternion * Vector3.forward * radius;
+        node.Position = pos + (quaternion * Vector3.forward * radius);
         node.Rotation = new Vector3(0, rot.y + num, 0);
         @event.MarkChanged(["tracks", "nodes", nodeId]);
       }
 
-      for (var i = 1; i <= turntable.RoundhouseStalls; i++)
-      {
+      for (var i = 1; i <= turntable.RoundhouseStalls; i++) {
         var dist = turntable.RoundhouseTrackLength + radius;
         var num = interval * i;
         Quaternion quaternion = Quaternion.Euler(0f, rot.y + num, 0f);
 
         var nodeId = $"N{id}RoundhouseNode{i}";
         SerializedNode node;
-        if(!state.Tracks.Nodes.TryGetValue(nodeId, out node)) {
+        if (!state.Tracks.Nodes.TryGetValue(nodeId, out node)) {
           node = state.Tracks.Nodes[nodeId] = new SerializedNode();
         }
-        node.Position = pos + quaternion * Vector3.forward * dist;
+        node.Position = pos + (quaternion * Vector3.forward * dist);
         node.Rotation = new Vector3(0, rot.y + num, 0);
         @event.MarkChanged(["tracks", "nodes", nodeId]);
 
         var segmentId = $"S{id}RoundhouseSegment{i}";
         SerializedSegment segment;
-        if(!state.Tracks.Segments.TryGetValue(segmentId, out segment)) {
+        if (!state.Tracks.Segments.TryGetValue(segmentId, out segment)) {
           segment = state.Tracks.Segments[segmentId] = new SerializedSegment();
         }
         segment.StartId = $"N{id}TurntableNode{i}";

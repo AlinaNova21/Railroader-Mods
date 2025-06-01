@@ -1,120 +1,100 @@
-using System.Linq;
-using System.Text;
+using AlinasMapMod.MapEditor;
 using Helpers;
 using JetBrains.Annotations;
-using MapEditor.Dialogs;
-using MapEditor.Managers;
 using RLD;
-using Serilog;
-using Track;
-using UI;
-using UI.ContextMenu;
 using UnityEngine;
-using static UI.Common.Window;
 
-namespace MapEditor.Helpers
+namespace MapEditor.Helpers;
+
+public sealed class ObjectHelper : MonoBehaviour, IPickable
 {
-  public sealed class ObjectHelper : MonoBehaviour, IPickable
+  private static readonly Material _Material = new(Shader.Find("Universal Render Pipeline/Lit"));
+
+  private IEditableObject _Object = null!;
+
+  private GameObject? _Shape;
+  public float MaxPickDistance => 200f;
+  public int Priority => 1;
+  public TooltipInfo TooltipInfo => BuildTooltipInfo();
+  public PickableActivationFilter ActivationFilter => PickableActivationFilter.Any;
+
+  private TooltipInfo BuildTooltipInfo()
   {
-    private static readonly Material _Material = new(Shader.Find("Universal Render Pipeline/Lit"));
-
-    private IEditableObject _Object = null!;
-
-    private GameObject? _Shape;
-
-    public float MaxPickDistance => 200f;
-
-    public int Priority => 1;
-
-    public TooltipInfo TooltipInfo => BuildTooltipInfo();
-    public PickableActivationFilter ActivationFilter => PickableActivationFilter.Any;
-
-    private TooltipInfo BuildTooltipInfo()
-    {
-      var sb = new System.Text.StringBuilder();
-      sb.AppendLine($"Id: {_Object.Id}");
-      if (_Object is ITransformableObject)
-      {
-        var transformable = (ITransformableObject)_Object;
+    var sb = new System.Text.StringBuilder();
+    sb.AppendLine($"Id: {_Object.Id}");
+    if (_Object is ITransformableObject) {
+      var transformable = (ITransformableObject)_Object;
+      if (transformable.CanMove)
         sb.AppendLine($"Position: {transformable.Position}");
+      if (transformable.CanRotate)
         sb.AppendLine($"Rotation: {transformable.Rotation}");
-      }
-      foreach (var property in _Object.Properties)
-      {
-        var val = _Object.GetProperty(property);
-        if (val != null)
-          sb.AppendLine($"{property}: {val}");
-      }
-      return new TooltipInfo($"{_Object.DisplayType} {_Object.Id}", sb.ToString());
     }
+    foreach (var property in _Object.Properties) {
+      var val = _Object.GetProperty(property);
+      if (val != null)
+        sb.AppendLine($"{property}: {val}");
+    }
+    return new TooltipInfo($"{_Object.DisplayType} {_Object.Id}", sb.ToString());
+  }
 
-    [UsedImplicitly]
-    public void Start()
-    {
-      _Object = transform.parent.GetComponent<IEditableObject>()!;
+  [UsedImplicitly]
+  public void Start()
+  {
+    _Object = transform.parent.GetComponent<IEditableObject>()!;
 
-      transform.localPosition = Vector3.zero;
-      transform.localEulerAngles = Vector3.zero;
+    transform.localPosition = Vector3.zero;
+    transform.localEulerAngles = Vector3.zero;
 
-      gameObject.layer = Layers.Clickable;
-
-      var boxCollider = gameObject.AddComponent<BoxCollider>();
-      boxCollider.size = new Vector3(0.5f, 1.5f, 0.5f);
-      boxCollider.center = new Vector3(0, 0.75f, 0);
-
-      if (_Object is ICustomHelper customHelper)
-        _Shape = GameObject.Instantiate(customHelper.HelperPrefab);
-      else
-      {
-        _Shape = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-        _Shape.transform.localScale = new Vector3(0.4f, 1.5f, 0.4f);
-      }
-
-      _Shape.transform.parent = transform;
-      _Shape.transform.localPosition = Vector3.zero;
+    if (_Object is ICustomHelper customHelper) {
+      _Shape = GameObject.Instantiate(customHelper.HelperPrefab, transform);
+    } else {
+      _Shape = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+      _Shape.transform.localScale = new Vector3(0.4f, 1f, 0.4f);
+      _Shape.transform.localPosition = new Vector3(0, 1f, 0);
       _Shape.transform.localEulerAngles = Vector3.zero;
-      _Shape.GetMeshRenderer().material = _Material;
     }
+    _Shape.layer = Layers.Clickable;
 
-    [UsedImplicitly]
-    public void Update()
-    {
-      var mr = _Shape.GetMeshRenderer();
-      mr.material.color = EditorContext.SelectedObject == _Object ? Color.magenta : Color.cyan;
-      mr.enabled = EditorContext.PatchEditor != null;
+    _Shape.transform.SetParent(transform, false);
+    _Shape.GetMeshRenderer().material = _Material;
+  }
+
+  [UsedImplicitly]
+  public void Update()
+  {
+    var mr = _Shape.GetMeshRenderer();
+    mr.material.color = EditorContext.SelectedObject == _Object ? Color.magenta : Color.cyan;
+    mr.enabled = EditorContext.PatchEditor != null;
+  }
+
+  public void Activate(PickableActivateEvent evt)
+  {
+    if (evt.Activation == PickableActivation.Secondary) {
+      ShowContextMenu();
+      return;
     }
+    EditorContext.SelectedObject = _Object;
+  }
 
-    public void Activate(PickableActivateEvent evt)
-    {
-      if (evt.Activation == PickableActivation.Secondary)
-      {
-        ShowContextMenu();
-        return;
-      }
-      EditorContext.SelectedObject = _Object;
-    }
+  public void ShowContextMenu()
+  {
+    //var node = transform.parent.GetComponent<TrackNode>();
+    //var sprite = Sprite.Create(Texture2D.whiteTexture, new Rect(0, 0, 1, 1), Vector2.zero);
+    //var shared = UI.ContextMenu.ContextMenu.Shared;
+    //if (UI.ContextMenu.ContextMenu.IsShown)
+    //{
+    //  shared.Hide();
+    //}
+    //shared.Clear();
+    //shared.AddButton(ContextMenuQuadrant.General, (EditorContext.SelectedNode == node) ? "Deselect" : "Select", SpriteName.Select, () => EditorContext.SelectedNode = (EditorContext.SelectedNode == node) ? null : node);
+    //shared.AddButton(ContextMenuQuadrant.Brakes, "Delete", sprite, () => NodeManager.RemoveNode(node));
+    //shared.AddButton(ContextMenuQuadrant.Unused1, "Flip Switch Stand", sprite, () => NodeManager.FlipSwitchStand(!node.flipSwitchStand, node));
+    //shared.AddButton(ContextMenuQuadrant.Unused2, "Split", sprite, () => NodeManager.SplitNode(node));
 
-    public void ShowContextMenu()
-    {
-      //var node = transform.parent.GetComponent<TrackNode>();
-      //var sprite = Sprite.Create(Texture2D.whiteTexture, new Rect(0, 0, 1, 1), Vector2.zero);
-      //var shared = UI.ContextMenu.ContextMenu.Shared;
-      //if (UI.ContextMenu.ContextMenu.IsShown)
-      //{
-      //  shared.Hide();
-      //}
-      //shared.Clear();
-      //shared.AddButton(ContextMenuQuadrant.General, (EditorContext.SelectedNode == node) ? "Deselect" : "Select", SpriteName.Select, () => EditorContext.SelectedNode = (EditorContext.SelectedNode == node) ? null : node);
-      //shared.AddButton(ContextMenuQuadrant.Brakes, "Delete", sprite, () => NodeManager.RemoveNode(node));
-      //shared.AddButton(ContextMenuQuadrant.Unused1, "Flip Switch Stand", sprite, () => NodeManager.FlipSwitchStand(!node.flipSwitchStand, node));
-      //shared.AddButton(ContextMenuQuadrant.Unused2, "Split", sprite, () => NodeManager.SplitNode(node));
+    //shared.Show($"Node {node.id}");
+  }
 
-      //shared.Show($"Node {node.id}");
-    }
-
-    public void Deactivate()
-    {
-    }
-
+  public void Deactivate()
+  {
   }
 }

@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-using System.Security.Policy;
 using HarmonyLib;
-using Helpers;
-using KeyValue.Runtime;
 using RollingStock.Controls;
 using Serilog;
 using Track;
@@ -31,8 +28,7 @@ public class TurntableComponent : MonoBehaviour
     var nodes = new List<TrackNode>();
     var nodesField = AccessTools.Field(typeof(Track.Turntable), "nodes");
     nodesField.SetValue(tt, nodes);
-    for (var i = 0; i < tt.subdivisions; i++)
-    {
+    for (var i = 0; i < tt.subdivisions; i++) {
       var nodeId = $"N{Identifier}TurntableNode{i}";
       var node = Graph.Shared.GetNode(nodeId);
       nodes.Add(node);

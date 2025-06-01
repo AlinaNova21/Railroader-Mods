@@ -110,6 +110,17 @@ export default async function testMod(graph: Graph, originalTracks: Graph) {
     end: TrackSpanPartEnd.Start,
   })
 
+  var span3 = createTrackSpan({
+    segmentId: Id('SREXSTEAMSHOP3.0xs3g'),
+    distance: 20,
+    end: TrackSpanPartEnd.Start,
+  },
+  {
+    segmentId: Id('SREXSTEAMSHOP3.0xs3g'),
+    distance: 60,
+    end: TrackSpanPartEnd.Start,
+  })
+
   var ind = createIndustry(Id('barkers'), Id('barkers-station'), 'Barkers Station')
 
   ind.newComponent<PaxStationComponent>('ammBarkersStation', "Barkers Creek", {
@@ -126,13 +137,13 @@ export default async function testMod(graph: Graph, originalTracks: Graph) {
 
   var ind = createIndustry(Id('connelly'), Id('connelly-station'), 'Connelly Station')
 
-  ind.newComponent<PaxStationComponent>('ammConnellyStation', "Connelly", {
+  ind.newComponent<PaxStationComponent>('ela', "Connelly", {
     type: IndustryComponentType.PaxStationComponent,
     timetableCode: 'CC',
     basePopulation: 10,
     loadId: Id('passengers'),
-    trackSpans: [span2.id],
-    branch: 'Connelly',
+    trackSpans: [span1.id, span2.id, span3.id],
+    branch: 'Main',
     neighborIds: [],
     carTypeFilter: '*',
     sharedStorage: true,

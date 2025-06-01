@@ -14,9 +14,9 @@ namespace MapEditor.HarmonyPatches
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     private static void Postfix(TrackSegment __instance)
     {
+      if (__instance.id == "ghost") return;
       var helper = __instance.transform.Find("TrackSegmentHelper")?.GetComponent<TrackSegmentHelper>();
-      if (helper != null)
-      {
+      if (helper != null) {
         helper.Rebuild();
       }
     }

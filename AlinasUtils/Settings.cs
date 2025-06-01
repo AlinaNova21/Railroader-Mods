@@ -12,4 +12,6 @@ internal class Settings
   [Obsolete("Combined into DisableDamage")]
   public bool DisableCollisions { get => false; }
   public bool DisableDamage { get; set; } = false;
+  public int MaxCameraDistance { get; set; } = 500;
+  public int MaxTileLoadDistance { get; set; } = 1500;
 }

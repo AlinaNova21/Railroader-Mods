@@ -1,21 +1,47 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace AlinasMapMod;
-internal static class VanillaPrefabs {
+internal static class VanillaPrefabs
+{
   private static Dictionary<string, GameObject> prefabs = new Dictionary<string, GameObject>();
+
+  public static string[] AvailablePrefabs => [
+    .. AvailableRoundhousePrefabs,
+    .. AvailableLoaderPrefabs,
+    .. AvailableStationPrefabs
+  ];
+
+  public static string[] AvailableRoundhousePrefabs => [
+    "roundhouseStall",
+    "roundhouseStart",
+    "roundhouseEnd"
+  ];
+
+  public static string[] AvailableLoaderPrefabs => [
+    "coalConveyor",
+    "coalTower",
+    "dieselFuelingStand",
+    "waterTower",
+    "waterColumn"
+  ];
+
+  public static string[] AvailableStationPrefabs => [
+    "flagStopStation",
+    "brysonDepot",
+    "dillsboroDepot",
+    "southernCombinationDepot",
+  ];
 
   public static GameObject GetPrefab(string key)
   {
-    if (!prefabs.ContainsKey(key))
-    {
+    if (!prefabs.ContainsKey(key)) {
       var prefab = key switch
       {
-        "roundhouseStall" =>  GenerateRoundhouseStallPrefab(),
-        "roundhouseStart" =>  GenerateRoundhouseEndPrefab(false),
-        "roundhouseEnd" =>  GenerateRoundhouseEndPrefab(true),
+        "roundhouseStall" => GenerateRoundhouseStallPrefab(),
+        "roundhouseStart" => GenerateRoundhouseEndPrefab(false),
+        "roundhouseEnd" => GenerateRoundhouseEndPrefab(true),
         "coalConveyor" => Clone(Utils.GameObjectFromUri("path://scene/World/Large Scenery/Whittier/Coal Conveyor")),
         "coalTower" => Clone(Utils.GameObjectFromUri("path://scene/World/Large Scenery/Bryson/Bryson Coaling Tower")),
         "dieselFuelingStand" => Clone(Utils.GameObjectFromUri("path://scene/World/Large Scenery/Whittier/East Whittier Diesel Fueling Stand")),
@@ -23,7 +49,7 @@ internal static class VanillaPrefabs {
         "waterColumn" => Clone(Utils.GameObjectFromUri("path://scene/World/Large Scenery/Whittier/Water Column")),
         "flagStopStation" => Clone(Utils.GameObjectFromUri("path://scene/World/Large Scenery/Ela/flagstopstation")),
         "brysonDepot" => Clone(Utils.GameObjectFromUri("path://scene/World/Large Scenery/Bryson/Bryson Depot")),
-        "dillsboroStation" => Clone(Utils.GameObjectFromUri("path://scene/World/Large Scenery/Dillsboro/Dillsboro Station")),
+        "dillsboroDepot" => Clone(Utils.GameObjectFromUri("path://scene/World/Large Scenery/Dillsboro/Dillsboro Depot")),
         "southernCombinationDepot" => Clone(Utils.GameObjectFromUri("path://scene/World/Large Scenery/Whittier/Southern Combination Depot")),
         _ => throw new ArgumentException("Attempted to load unknown vanilla prefab: " + key),
       };
@@ -34,8 +60,7 @@ internal static class VanillaPrefabs {
 
   public static void ClearCache()
   {
-    foreach (var prefab in prefabs.Values)
-    {
+    foreach (var prefab in prefabs.Values) {
       GameObject.Destroy(prefab);
     }
     prefabs.Clear();

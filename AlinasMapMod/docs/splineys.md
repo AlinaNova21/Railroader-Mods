@@ -8,6 +8,7 @@ All listed values are defaults, and may usually be omitted unless otherwise note
 - [Loaders](#loaders)
 - [Passenger Station Agent](#passenger-station-agent-includes-building)]
 - [Passenger Stations](#passenger-stations)
+- [Map Labels](#map-labels)
 
 
 ## Prefab formats
@@ -144,35 +145,13 @@ Example industry:
 
 ### <span style="color:red">***DEPRECATED: Use the industry component instead***
 
+## Map Labels
 
-***NOTE***: There are known issues with pax stations not always showing in the Timetable, especially on branch lines. 
-
-```json
-  {
-    "handler": "AlinasMapMod.PaxBuilder",
-    "spanIds": [], // Spans for loading/unloading
-    "industry": "", // Required, see example below
-    "timetableCode": "", // Required
-    // Reference values: Whittier: 30, Ela: 25, Bryson: 50
-    "basePopulation": 40,
-    // List of ids of other passenger stations.
-    // Unsure of exact impact
-    "neighborIds": []
-  }
-```
-
-Industry:
 ```json
 {
- "barkers": {
-    "industries": {
-      "barkers-station": {
-        "name": "Barkers Station",
-        "localPosition": { "x": 0, "y": 0, "z": 0},
-        "usesContract": false,
-        "components": {}
-      }
-    }
-  }
+  "handler": "AlinasMapMod.Map.MapLabelBuilder",
+  "position": { "x": 0, "y": 0, "z": 0 },
+  "text": "Map Label",
 }
+
 ```

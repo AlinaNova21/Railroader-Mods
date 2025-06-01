@@ -1,9 +1,10 @@
-using System;
 using System.Linq;
 using GalaSoft.MvvmLight.Messaging;
+using Game;
 using Game.Events;
 using Game.Persistence;
 using HarmonyLib;
+using Map.Runtime;
 using Railloader;
 using Serilog;
 using UI.Builder;
@@ -21,10 +22,8 @@ public class AlinasUtilsPlugin : SingletonPluginBase<AlinasUtilsPlugin>, IUpdate
   private readonly Toolbox toolbox = new Toolbox();
   internal Settings Settings
   {
-    get
-    {
-      if (_settings == null)
-      {
+    get {
+      if (_settings == null) {
         _settings = ModdingContext.LoadSettingsData<Settings>(Definition.Id) ?? new Settings();
       }
       return _settings;
@@ -57,14 +56,12 @@ public class AlinasUtilsPlugin : SingletonPluginBase<AlinasUtilsPlugin>, IUpdate
 
     builder.AddField("Auto Load Save on Startup", builder.AddToggle(
         () => Settings.AutoLoadSaveOnStartup,
-        (value) =>
-        {
+        (value) => {
           Settings.AutoLoadSaveOnStartup = value;
           builder.Rebuild();
         }
     ));
-    if (Settings.AutoLoadSaveOnStartup)
-    {
+    if (Settings.AutoLoadSaveOnStartup) {
       var saves = WorldStore.FindSaveInfos().Select(save => save.Name).ToList();
       var currentSave = saves.IndexOf(Settings.SaveToLoadOnStartup);
       builder.AddField("Save to Load on Startup", builder.AddDropdown(
@@ -73,6 +70,27 @@ public class AlinasUtilsPlugin : SingletonPluginBase<AlinasUtilsPlugin>, IUpdate
           (index) => Settings.SaveToLoadOnStartup = saves[index]
       ));
     }
+    builder.AddField("Max Camera Distance", builder.AddSlider(
+        () => Settings.MaxCameraDistance,
+        () => $"{Settings.MaxCameraDistance}",
+        (value) => Settings.MaxCameraDistance = (int)value,
+        500f, 5000f, true
+    ));
+    builder.AddField("Max Tile Load Distance", builder.AddSlider(
+        () => Settings.MaxTileLoadDistance / 100,
+        () => $"{Settings.MaxTileLoadDistance}",
+        (value) => Settings.MaxTileLoadDistance = (int)value * 100,
+        15f, 500f, true
+    ));
+    builder.AddField("Graphics Draw Distance", builder.AddSlider(
+        () => Preferences.GraphicsDrawDistance,
+        () => $"{Preferences.GraphicsDrawDistance}",
+        (value) => Preferences.GraphicsDrawDistance = value,
+        200f, 10000f, true
+    ));
+    builder.AddButton("The Crash Rex Button", () => {
+      MapManager.Instance.FetchAll();
+    });
   }
 
   public void Update()
@@ -81,10 +99,16 @@ public class AlinasUtilsPlugin : SingletonPluginBase<AlinasUtilsPlugin>, IUpdate
 
   public override void OnEnable()
   {
+    if (UMM.Mod.Loaded) {
+      Logger.Information("UMM is loaded");
+    } else {
+      Logger.Information("UMM is not loaded");
+    }
     Logger.Information("OnEnable() was called!");
     var harmony = new Harmony(Definition.Id);
     harmony.PatchAll();
     Messenger.Default.Register<MapDidLoadEvent>(this, OnMapDidLoad);
+    UMM.Mod.LoadedExternal = true;
   }
 
   private void OnMapDidLoad(MapDidLoadEvent @event)
@@ -98,5 +122,6 @@ public class AlinasUtilsPlugin : SingletonPluginBase<AlinasUtilsPlugin>, IUpdate
     var harmony = new Harmony(Definition.Id);
     harmony.UnpatchAll();
     Messenger.Default.Unregister(this);
+    UMM.Mod.LoadedExternal = false;
   }
 }

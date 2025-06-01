@@ -1,23 +1,19 @@
 using System;
-using System.Linq;
 using Model.Ops;
 using Newtonsoft.Json;
-using UnityEngine;
 
-namespace AlinasMapMod.Definitions.Converters
+namespace AlinasMapMod.Definitions.Converters;
+
+public class CarTypeFilterConverter : JsonConverter<CarTypeFilter>
 {
-  public class CarTypeFilterConverter : JsonConverter<CarTypeFilter>
+  public override void WriteJson(JsonWriter writer, CarTypeFilter value, JsonSerializer serializer)
   {
-    public override void WriteJson(JsonWriter writer, CarTypeFilter value, JsonSerializer serializer)
-    {
-      writer.WriteValue(value.queryString);
-    }
-
-    public override CarTypeFilter ReadJson(JsonReader reader, Type objectType, CarTypeFilter existingValue, bool hasExistingValue, JsonSerializer serializer)
-    {
-      string s = (string)reader.Value;
-      return new CarTypeFilter(s);
-    }
+    writer.WriteValue(value.queryString);
   }
 
+  public override CarTypeFilter ReadJson(JsonReader reader, Type objectType, CarTypeFilter existingValue, bool hasExistingValue, JsonSerializer serializer)
+  {
+    string s = (string)reader.Value;
+    return new CarTypeFilter(s);
+  }
 }

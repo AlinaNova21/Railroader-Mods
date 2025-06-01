@@ -9,8 +9,7 @@ namespace MapEditor.HarmonyPatches
   {
     private static void Postfix(TurntableComponent __instance)
     {
-      if (__instance.gameObject.GetComponent<EditableTurntable>() == null)
-      {
+      if (__instance.gameObject.GetComponent<EditableTurntable>() == null) {
         __instance.gameObject.AddComponent<EditableTurntable>();
       }
     }

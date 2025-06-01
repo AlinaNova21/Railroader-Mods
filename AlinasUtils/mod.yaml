@@ -3,5 +3,10 @@ modId: AlinaNova21.AlinasUtils
 name: Alina's Utilities
 desc: |-
   A mod with a few utilities
-version: '1.3.25130.1633'
-changelog: []
+version: '1.4.25152.217'
+changelog:
+- version: '1.4.25152.217'
+  desc: |
+    - Added time freeze checkbox
+    - Added live query info 
+    - Other various tweaks and tools.

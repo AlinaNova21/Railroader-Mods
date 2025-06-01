@@ -1,5 +1,3 @@
-using System.Numerics;
-
 namespace AlinasMapMod.Definitions
 {
   public partial class SerializedTurntable

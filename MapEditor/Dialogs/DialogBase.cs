@@ -14,10 +14,8 @@ namespace MapEditor.Dialogs
       _Window = EditorContext.UIHelper.CreateWindow(identifier, width, height, position);
       _Window.Title = title;
 
-      _Window.OnShownDidChange += shown =>
-      {
-        if (!shown)
-        {
+      _Window.OnShownDidChange += shown => {
+        if (!shown) {
           AfterWindowClosed();
         }
       };
@@ -29,10 +27,8 @@ namespace MapEditor.Dialogs
       _Window = EditorContext.UIHelper.CreateWindow(width, height, position);
       _Window.Title = title;
 
-      _Window.OnShownDidChange += shown =>
-      {
-        if (!shown)
-        {
+      _Window.OnShownDidChange += shown => {
+        if (!shown) {
           AfterWindowClosed();
         }
       };
@@ -48,18 +44,21 @@ namespace MapEditor.Dialogs
 
     public void ShowWindow()
     {
-      if (!_Populated)
-      {
+      if (!_Populated) {
         EditorContext.UIHelper.PopulateWindow(_Window, BuildWindow);
         _Populated = true;
       }
 
       BeforeWindowShown();
 
-      if (!_Window.IsShown)
-      {
+      if (!_Window.IsShown) {
         _Window.ShowWindow();
       }
+    }
+
+    public void Rebuild()
+    {
+      EditorContext.UIHelper.PopulateWindow(_Window, BuildWindow);
     }
 
     public void CloseWindow()
