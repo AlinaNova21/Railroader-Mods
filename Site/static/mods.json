@@ -43,27 +43,16 @@
     "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/MapEditor_1.3.25152.217.zip"
   },
   {
-    "id": "alinas-utils",
-    "modId": "AlinaNova21.AlinasUtils",
-    "name": "Alina's Utilities",
-    "desc": "A mod with a few utilities",
-    "version": "1.4.25152.217",
-    "changelog": [
-      {
-        "version": "1.4.25152.217",
-        "desc": "- Added time freeze checkbox\n- Added live query info \n- Other various tweaks and tools.\n"
-      }
-    ],
-    "assemblyName": "AlinasUtils",
-    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/AlinasUtils_1.4.25152.217.zip"
-  },
-  {
     "id": "alinas-map-mod",
     "modId": "AlinaNova21.AlinasMapMod",
     "name": "Alina's Map Mod",
     "desc": "A mod that adds utilities for other mods to add milestones and other features to the game.",
-    "version": "1.6.25152.217",
+    "version": "1.6.25154.435",
     "changelog": [
+      {
+        "version": "1.6.25154.435",
+        "desc": "- Improve errors when passed invalid object uris\n- Make errors on loaderbuilders more user friendly\n"
+      },
       {
         "version": "1.6.25152.217",
         "desc": "- Added interfaces to enable mods to register editable objects in MapEditor.  \n  These are IEditableObject, ITransformableObject, and IObjectFactory. See the code of the below features for examples of use.\n- Added loaders as editable objects (replaces MapEditor implementation)\n- Added station agents as editable objects\n- Added MapLabel splineys, also supported via editable objects.\n- Added new query tool event, `QueryTooltipUpdateEvent`, register to it to extend the tooltip information shown in the query tool.\n- Started reworking serialized object data to include more validation, \n  this will be used to ensure that the data is valid and can be used by the game.\n- Some namespaces were changed and classes moved around. As such, all builders have new handler values.\n  There is an automatic migration in place in order to maintain backwards compatibility, however, mod authors should update their  \n  mods to use the new namespaces and classes.\n  The mappings between the old and new values are\n  - AlinasMapMod.LoaderBuilder => AlinasMapMod.Loaders.LoaderBuilder\n  - AlinasMapMod.MapLabelBuilder => AlinasMapMod.Map.MapLabelBuilder\n  - AlinasMapMod.StationAgentBuilder => AlinasMapMod.Stations.StationAgentBuilder\n  - AlinasMapMod.TelegraphPoleBuilder => AlinasMapMod.TelegraphPoles.TelegraphPoleBuilder\n  - AlinasMapMod.TelegraphPoleMover => AlinasMapMod.TelegraphPoles.TelegraphPoleMover\n  Additionally, the PaxStationComponent was moved as well\n  - AlinasMapMod.PaxStationComponent => AlinasMapMod.Stations.PaxStationComponent \n"
@@ -178,7 +167,22 @@
       }
     ],
     "assemblyName": "AlinasMapMod",
-    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/AlinasMapMod_1.6.25152.217.zip"
+    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/AlinasMapMod_1.6.25154.435.zip"
+  },
+  {
+    "id": "alinas-utils",
+    "modId": "AlinaNova21.AlinasUtils",
+    "name": "Alina's Utilities",
+    "desc": "A mod with a few utilities",
+    "version": "1.4.25152.217",
+    "changelog": [
+      {
+        "version": "1.4.25152.217",
+        "desc": "- Added time freeze checkbox\n- Added live query info \n- Other various tweaks and tools.\n"
+      }
+    ],
+    "assemblyName": "AlinasUtils",
+    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/AlinasUtils_1.4.25152.217.zip"
   },
   {
     "id": "amm-alarka-jct-additional",

@@ -23,7 +23,7 @@ using UnityEngine;
 
 namespace AlinasMapMod;
 
-public partial class AlinasMapMod : SingletonModBase<AlinasMapMod>
+public partial class AlinasMapMod : Mods.SingletonModBase<AlinasMapMod>
 {
   public static JsonSerializerSettings JsonSerializerSettings => new JsonSerializerSettings
   {
@@ -200,10 +200,10 @@ public partial class AlinasMapMod : SingletonModBase<AlinasMapMod>
     builder.AddButton("Rerun Patcher", () =>
     {
       var patcher = new Patcher.GamePatcher();
-      logger.Information("Rerunning patcher");
+      Logger.Information("Rerunning patcher");
       patcher.RunPatcher();
       patcher.Dump("Mods/AlinasMapMod/game-dump-patched.xml");
-      logger.Information("Done rerunning patcher");
+      Logger.Information("Done rerunning patcher");
     });
 #endif
 #if TESTING || PRIVATETESTING
@@ -272,10 +272,10 @@ public partial class AlinasMapMod : SingletonModBase<AlinasMapMod>
     var dumpFile1 = "Mods/AlinasMapMod/game-dump-orig.xml";
     var dumpFile2 = "Mods/AlinasMapMod/game-dump-patched.xml";
     gp.Dump(dumpFile1);
-    logger.Information("Dumped game state to {file}", dumpFile1);
+    Logger.Information("Dumped game state to {file}", dumpFile1);
     gp.RunPatcher();
     gp.Dump(dumpFile2);
-    logger.Information("Dumped game state to {file}", dumpFile2);
+    Logger.Information("Dumped game state to {file}", dumpFile2);
 #endif
   }
 }

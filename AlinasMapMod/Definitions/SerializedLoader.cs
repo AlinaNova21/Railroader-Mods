@@ -1,4 +1,3 @@
-
 using AlinasMapMod.Caches;
 using AlinasMapMod.Loaders;
 using UnityEngine;
@@ -52,6 +51,9 @@ public class SerializedLoader :
 
   public void Validate()
   {
+    if (!Prefab.Contains("://")) {
+      throw new ValidationException("Prefab must be a valid URI  " + Prefab);
+    }
     if (Industry == "" && (Prefab.Contains("coal") || Prefab.Contains("diesel"))) {
       throw new ValidationException("Industry required for prefab " + Prefab);
     }

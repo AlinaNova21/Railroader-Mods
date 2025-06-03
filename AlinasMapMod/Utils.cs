@@ -2,7 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 using AlinasMapMod.Caches;
+using GalaSoft.MvvmLight.Messaging;
+using Game.Events;
 using Helpers;
 using Serilog;
 using UnityEngine;
@@ -14,6 +17,11 @@ public class Utils
   public static readonly Serilog.ILogger logger = Log.ForContext<Utils>();
 
   private static Dictionary<string, GameObject> _parents = [];
+
+  static Utils() => Messenger.Default.Register<MapWillUnloadEvent>(AlinasMapMod.Instance, _ => {
+    logger.Information("Map will unload, clearing parents");
+    _parents.Clear();
+  });
 
   public static GameObject GetParent(string id)
   {
@@ -63,6 +71,9 @@ public class Utils
 
   public static GameObject GameObjectFromUri(string uriString)
   {
+    var requiredParts = new string[] { "://" };
+    if (String.IsNullOrEmpty(uriString)) throw new ArgumentException("Invalid uri: empty string is not allowed");
+    if (!uriString.Contains("://")) throw new ArgumentException($"Invalid uri: '{uriString}', must match the pattern of (empty|path|scenery|vanilla)://host/path");
     var scheme = uriString.Split(':')[0];
     var hostPath = uriString.Split(':')[1];
     var segments = hostPath.Split('/');
