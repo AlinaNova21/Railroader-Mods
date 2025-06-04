@@ -16,6 +16,7 @@ using HarmonyLib;
 using Map.Runtime;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Serilog.Core;
 using TelegraphPoles;
 using Track;
 using UI.Builder;
@@ -69,7 +70,8 @@ public partial class AlinasMapMod : Mods.SingletonModBase<AlinasMapMod>
     base.Load();
     var harmony = new Harmony("AlinasMapMod");
     harmony.PatchAll();
-    Messenger.Default.Register<MapWillUnloadEvent>(this, (e) => VanillaPrefabs.ClearCache());
+    Messenger.Default.Register<MapWillLoadEvent>(this, _ => Utils.ClearCaches());
+    Messenger.Default.Register<MapWillUnloadEvent>(this, _ => Utils.ClearCaches());
     Messenger.Default.Register<MapDidLoadEvent>(this, OnMapDidLoad);
     Messenger.Default.Register<GraphDidRebuildCollections>(this, OnGraphDidRebuildCollections);
     //Messenger.Default.Register<SceneActivationEvent>(this, OnSceneActivation);

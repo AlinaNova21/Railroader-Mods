@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 using AlinasMapMod.Caches;
 using GalaSoft.MvvmLight.Messaging;
@@ -16,12 +17,7 @@ public class Utils
 {
   public static readonly Serilog.ILogger logger = Log.ForContext<Utils>();
 
-  private static Dictionary<string, GameObject> _parents = [];
-
-  static Utils() => Messenger.Default.Register<MapWillUnloadEvent>(AlinasMapMod.Instance, _ => {
-    logger.Information("Map will unload, clearing parents");
-    _parents.Clear();
-  });
+  internal static Dictionary<string, GameObject> _parents = [];
 
   public static GameObject GetParent(string id)
   {
@@ -123,6 +119,11 @@ public class Utils
       .Take(1)
       .Select(t => (IObjectCache<T>)Activator.CreateInstance(t, true))
       .SingleOrDefault();
+  internal static void ClearCaches()
+  {
+    _parents.Clear();
+    VanillaPrefabs.ClearCache();
+  }
 
 #if PRIVATETESTING
   public static T[] GetFromCache<T>(IEnumerable<XElement> elems)

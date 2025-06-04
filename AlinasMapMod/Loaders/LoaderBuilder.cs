@@ -25,6 +25,9 @@ public partial class LoaderBuilder : StrangeCustoms.ISplineyBuilder, IObjectFact
     try {
       loader.Validate();
       return loader.Create(id).gameObject;
+    } catch (ValidationException ex) {
+      logger.Error(ex, "Validation failed for loader {Id}", id);
+      throw new ValidationException($"Validation failed for loader {id}: {ex.Message}");
     } catch (Exception ex) {
       logger.Error(ex, "Failed to create loader {Id}", id);
       throw new InvalidOperationException($"Failed to create loader {id}", ex);
