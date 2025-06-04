@@ -15,11 +15,14 @@ public class SerializedStationAgent :
 
   public PaxStationAgent Create(string id)
   {
-    var agent = new PaxStationAgent();
-    agent.transform.parent = Utils.GetParent("StationAgents").transform;
-    Write(agent);
-    StationAgentCache.Instance[id] = agent;
-    return agent;
+    var go = new GameObject(id);
+    go.transform.parent = Utils.GetParent("StationAgents").transform;
+    var comp = go.AddComponent<PaxStationAgent>();
+    comp.name = id;
+    comp.identifier = id;
+    Write(comp);
+    StationAgentCache.Instance[id] = comp;
+    return comp;
   }
 
   public void Write(PaxStationAgent comp)
