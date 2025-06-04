@@ -3,9 +3,9 @@ modId: AlinaNova21.AlinasMapMod
 name: Alina's Map Mod
 desc: |-
   A mod that adds utilities for other mods to add milestones and other features to the game.
-version: '1.3.25155.151'
+version: '1.3.25155.155'
 changelog:
-- version: '1.3.25155.151'
+- version: '1.3.25155.155'
   desc: |
     - Fix station agents. No idea when that was broken.
 - version: '1.6.25155.116'
