@@ -43,6 +43,21 @@
     "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/MapEditor_1.3.25152.217.zip"
   },
   {
+    "id": "alinas-utils",
+    "modId": "AlinaNova21.AlinasUtils",
+    "name": "Alina's Utilities",
+    "desc": "A mod with a few utilities",
+    "version": "1.4.25152.217",
+    "changelog": [
+      {
+        "version": "1.4.25152.217",
+        "desc": "- Added time freeze checkbox\n- Added live query info \n- Other various tweaks and tools.\n"
+      }
+    ],
+    "assemblyName": "AlinasUtils",
+    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/AlinasUtils_1.4.25152.217.zip"
+  },
+  {
     "id": "alinas-map-mod",
     "modId": "AlinaNova21.AlinasMapMod",
     "name": "Alina's Map Mod",
@@ -180,21 +195,6 @@
     ],
     "assemblyName": "AlinasMapMod",
     "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/AlinasMapMod_1.6.25160.2058.zip"
-  },
-  {
-    "id": "alinas-utils",
-    "modId": "AlinaNova21.AlinasUtils",
-    "name": "Alina's Utilities",
-    "desc": "A mod with a few utilities",
-    "version": "1.4.25152.217",
-    "changelog": [
-      {
-        "version": "1.4.25152.217",
-        "desc": "- Added time freeze checkbox\n- Added live query info \n- Other various tweaks and tools.\n"
-      }
-    ],
-    "assemblyName": "AlinasUtils",
-    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/AlinasUtils_1.4.25152.217.zip"
   },
   {
     "id": "amm-alarka-jct-additional",
