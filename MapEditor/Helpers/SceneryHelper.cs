@@ -87,5 +87,4 @@ public sealed class SceneryHelper : MonoBehaviour, IPickable
   public void Deactivate()
   {
   }
-
 }

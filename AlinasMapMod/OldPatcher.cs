@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -43,51 +44,79 @@ public class OldPatcher
       var state = json.ToObject<PatchState>();
       if (state == null) continue;
       OnPatchStateEvent(state);
-      foreach (KeyValuePair<string, SerializedMapFeature> pair in state.MapFeatures) {
-        var identifier = pair.Key;
-        var mapFeature = pair.Value;
-
-        if (mapFeature == null) {
-          Log.Warning("MapFeatures cannot be deleted. {id}", identifier);
-          continue;
+      try {
+        foreach (KeyValuePair<string, SerializedMapFeature> pair in state.MapFeatures) {
+          var identifier = pair.Key;
+          var mapFeature = pair.Value;
+          if (mapFeature == null) {
+            Log.Warning("MapFeatures cannot be deleted. {id}", identifier);
+            continue;
+          }
+          if (MapFeatureCache.Instance.TryGetValue(identifier, out var existing)) {
+            Log.Information("Patching MapFeature {id}", identifier);
+            try {
+              mapFeature.ApplyTo(existing); // This can throw exceptions if the map feature is not valid
+            } catch (Exception e) {
+              Log.Error(e, "Failed to apply map feature {id}", identifier);
+              continue; // Skip this map feature if it fails
+            }
+          } else {
+            Log.Warning("Creating MapFeature {id}", identifier);
+            var go = new GameObject(identifier);
+            go.transform.SetParent(mapFeatureManager.transform);
+            existing = go.AddComponent<MapFeature>();
+            existing.identifier = identifier;
+            MapFeatureCache.Instance[identifier] = existing;
+            try { // ApplyTo can throw exceptions if the map feature is not valid
+              mapFeature.ApplyTo(existing);
+            } catch (Exception e) {
+              Log.Error(e, "Failed to apply map feature {id}", identifier);
+              GameObject.Destroy(existing.gameObject);
+              continue;
+            }
+          }
+          Log.Information("Patching MapFeature {id}", identifier);
+          
         }
-        MapFeature existing;
-        if (!MapFeatureCache.Instance.TryGetValue(identifier, out existing)) {
-          Log.Warning("Creating MapFeature {id}", identifier);
-          var go = new GameObject(identifier);
-          go.transform.SetParent(mapFeatureManager.transform);
-          existing = go.AddComponent<MapFeature>();
-          existing.identifier = identifier;
-          MapFeatureCache.Instance[identifier] = existing;
-        }
-        Log.Information("Patching MapFeature {id}", identifier);
-        mapFeature.ApplyTo(existing);
+      } catch (Exception e) {
+        Log.Error(e, "Failed to patch map features from {file}", mixinto.Mixinto);
+        continue;
       }
 
-      foreach (KeyValuePair<string, SerializedProgression> pair in state.Progressions) {
-        var identifier = pair.Key;
-        var progression = pair.Value;
+      try {
+        foreach (KeyValuePair<string, SerializedProgression> pair in state.Progressions) {
+          var identifier = pair.Key;
+          var progression = pair.Value;
 
-        if (progression == null) {
-          Log.Warning("Progressions cannot be deleted. {id}", identifier);
-          continue;
-        }
+          if (progression == null) {
+            Log.Warning("Progressions cannot be deleted. {id}", identifier);
+            continue;
+          }
 
-        if (ProgressionCache.Instance.TryGetValue(identifier, out var existing)) {
-          Log.Information("Patching progression {id}", identifier);
-          progression.ApplyTo(existing);
-        } else {
-          Log.Warning("Progression missing {id}", identifier);
-          var progressionsObj = GameObject.Find("Progressions");
-          var go = new GameObject(identifier);
-          go.transform.SetParent(progressionsObj.transform);
-          var comp = go.AddComponent<Progression>();
-          comp.identifier = identifier;
-          comp.mapFeatureManager = mapFeatureManager;
-          go.SetActive(true);
-          progression.ApplyTo(comp);
-          ProgressionCache.Instance[identifier] = comp;
+          if (ProgressionCache.Instance.TryGetValue(identifier, out var comp)) {
+            Log.Information("Patching progression {id}", identifier);
+            progression.ApplyTo(comp);
+          } else {
+            Log.Warning("Progression missing {id}", identifier);
+            var progressionsObj = GameObject.Find("Progressions");
+            var go = new GameObject(identifier);
+            go.transform.SetParent(progressionsObj.transform);
+            comp = go.AddComponent<Progression>();
+            comp.identifier = identifier;
+            comp.mapFeatureManager = mapFeatureManager;
+            go.SetActive(true);
+            ProgressionCache.Instance[identifier] = comp;
+            try {
+              progression.ApplyTo(comp);
+            } catch (Exception e) {
+              Log.Error(e, "Failed to apply progression {id}", identifier);
+              GameObject.Destroy(comp.gameObject);
+              continue;
+            }
+          }
         }
+      } catch (Exception e) {
+        Log.Error(e, "Failed to patch progressions from {file}", mixinto.Mixinto);
       }
     }
   }

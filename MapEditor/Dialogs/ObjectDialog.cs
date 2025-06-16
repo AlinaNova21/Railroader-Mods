@@ -1,7 +1,9 @@
+using System.Linq;
 using MapEditor.Extensions;
 using MapEditor.Managers;
 using UI.Builder;
 using UI.Common;
+using UnityEngine;
 
 namespace MapEditor.Dialogs;
 
@@ -12,27 +14,35 @@ public sealed class ObjectDialog() : DialogBase("ObjectEditor", "Node editor", 4
   {
     builder.AddField("Keyboard mode", () => KeyboardManager.Rotate ? "rotate" : "move", UIPanelBuilder.Frequency.Periodic);
     builder.AddField("Type", () => EditorContext.SelectedObject?.DisplayType ?? "Unknown", UIPanelBuilder.Frequency.Periodic);
-    var transformable = EditorContext.SelectedTransformableObject;
-    if (transformable != null) {
-      if (transformable.CanMove) {
-        builder.AddField("Position", () => transformable.Position.ToString() ?? "", UIPanelBuilder.Frequency.Periodic);
+    var transformables = EditorContext.SelectedTransformableObjects;
+    if (transformables.Any()) {
+      if (transformables.All(s => s.CanMove)) {
+        builder.AddField("Position", () => transformables[0].Position.ToString() ?? "", UIPanelBuilder.Frequency.Periodic);
       }
-      if (transformable.CanRotate) {
-        builder.AddField("Rotation", () => transformable.Rotation.ToString() ?? "", UIPanelBuilder.Frequency.Periodic);
+      if (transformables.All(s => s.CanRotate)) {
+        builder.AddField("Rotation", () => transformables[0].Rotation.ToString() ?? "", UIPanelBuilder.Frequency.Periodic);
       }
       builder.Spacer();
       builder.HStack(stack => {
-        if (transformable.CanMove)
+        if (transformables.All(s => s.CanMove))
           stack.AddSection("Position", builder => Utility.BuildPositionEditor(builder, dir => ObjectManager.Move(dir)));
         else
           builder.AddLabel("Cannot Move");
         stack.Spacer();
-        if (transformable.CanRotate)
+        if (transformables.All(s => s.CanRotate))
           stack.AddSection("Rotation", builder => Utility.BuildRotationEditor(builder, off => ObjectManager.Rotate(off)));
         else
           builder.AddLabel("Cannot Rotate");
       });
+      builder.Spacer(10);
       builder.AddSection("Adjustment Scaling", Utility.BuildScalingEditor);
+      if (transformables.Count > 1 && transformables.All(s => s.CanMove)) {
+        builder.AddSection("Alignment");
+        builder.HStack(stack => {
+          stack.AddButtonCompact("Align X", () => ObjectManager.Align(Vector3.right));
+          stack.AddButtonCompact("Align Z", () => ObjectManager.Align(Vector3.forward));
+        });
+      }
     }
     builder.Spacer(10);
     builder.AddSection(EditorContext.SelectedObject?.DisplayType ?? "Object", builder => EditorContext.SelectedObject?.BuildUI(builder, UIHelper.Instance));

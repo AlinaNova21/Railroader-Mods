@@ -63,7 +63,7 @@ public sealed class ObjectHelper : MonoBehaviour, IPickable
   public void Update()
   {
     var mr = _Shape.GetMeshRenderer();
-    mr.material.color = EditorContext.SelectedObject == _Object ? Color.magenta : Color.cyan;
+    mr.material.color = EditorContext.SelectedObjects.Contains(_Object) ? Color.magenta : Color.cyan;
     mr.enabled = EditorContext.PatchEditor != null;
   }
 
@@ -71,6 +71,13 @@ public sealed class ObjectHelper : MonoBehaviour, IPickable
   {
     if (evt.Activation == PickableActivation.Secondary) {
       ShowContextMenu();
+      return;
+    }
+    if (evt.IsControlDown) {
+      if (EditorContext.SelectedObjects.Contains(_Object))
+        EditorContext.RemoveSelectedObject(_Object);
+      else 
+        EditorContext.AddSelectedObject(_Object);
       return;
     }
     EditorContext.SelectedObject = _Object;

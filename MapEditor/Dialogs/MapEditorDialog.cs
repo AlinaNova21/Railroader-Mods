@@ -61,7 +61,14 @@ public sealed class MapEditorDialog : DialogBase
       }
 
       if (_SelectedPatch != 0) {
-        EditorContext.OpenMixinto(_Sources[mod]![_SelectedPatch - 1]!); // -1 because of 'Select ...'
+        var selected = graphs[_SelectedPatch];
+        var mixinto = _Sources[mod]!.FirstOrDefault(m => Path.GetFileNameWithoutExtension(m) == selected);
+        if (mixinto != null) {
+          EditorContext.OpenMixinto(mixinto);
+        } else {
+          logger.Error($"Mixinto for mod {mod} and graph {selected} not found.");
+        }
+        //EditorContext.OpenMixinto(_Sources[mod]![_SelectedPatch - 1]!); // -1 because of 'Select ...'
 
         // IDEA: use $"{mod}_{graphs[_SelectedPatch]}" as prefix? (so player can tell which mod modified what)
         builder.AddField("Prefix", builder.AddInputField(EditorContext.Prefix, value => EditorContext.Prefix = value, "Prefix")!);

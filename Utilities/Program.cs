@@ -2,14 +2,22 @@ using Amazon.S3;
 using Amazon.S3.Model;
 using CommandLine;
 using Newtonsoft.Json;
+using Serilog;  
+using Utilities;
 
 var config = new Dictionary<string, string>();
 AmazonS3Client client;
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateLogger();
+var Logger = Log.ForContext<Program>();
 
-Parser.Default.ParseArguments<UploadOptions, CreateIndexOptions, ListOptions>(args)
+Parser.Default.ParseArguments<UploadOptions, CreateIndexOptions, ListOptions, MapOptions>(args)
   .WithParsed<UploadOptions>(opts => { SetupEnv(opts); UploadFiles(opts).Wait(); })
   .WithParsed<CreateIndexOptions>(opts => { SetupEnv(opts); CreateIndex(opts).Wait(); })
-  .WithParsed<ListOptions>(opts => { SetupEnv(opts); ListFiles(opts).Wait(); });
+  .WithParsed<ListOptions>(opts => { SetupEnv(opts); ListFiles(opts).Wait(); })
+  .WithParsed<MapOptions>(opts => { SetupEnv(opts); MapHelper.Run(opts).Wait(); });
+
 
 void SetupEnv(BaseOptions opts)
 {
@@ -19,7 +27,7 @@ void SetupEnv(BaseOptions opts)
 
   var configFile = opts.Config;
   if (string.IsNullOrEmpty(configFile)) {
-    Console.WriteLine("Config file is not set.");
+    Logger.Information("Config file is not set.");
     throw new Exception("Config file is not set.");
   }
   if (configFile.Contains("/") || configFile.Contains("\\")) {
@@ -28,13 +36,13 @@ void SetupEnv(BaseOptions opts)
     configFile = FindConfig(configFile);
   }
   if (!File.Exists(configFile)) {
-    Console.WriteLine($"Config file {configFile} does not exist.");
+    Logger.Information($"Config file {configFile} does not exist.");
     throw new Exception($"Config file {configFile} does not exist.");
   }
   var raw = File.ReadAllText(configFile);
   config = JsonConvert.DeserializeObject<Dictionary<string, string>>(raw);
   if (config == null) {
-    Console.WriteLine($"Config file {configFile} is not valid JSON.");
+    Logger.Information($"Config file {configFile} is not valid JSON.");
     throw new Exception($"Config file {configFile} is not valid JSON.");
   }
   client = new AmazonS3Client(config["AccessKeyId"], config["AccessKeySecret"], new AmazonS3Config
@@ -59,16 +67,16 @@ async Task UploadFiles(UploadOptions opts)
     if (File.Exists(file)) {
       fileList.Add(file);
     } else {
-      Console.WriteLine($"File {file} does not exist.");
+      Logger.Information($"File {file} does not exist.");
       return;
     }
   }
   int uploaded = 0;
   int skipped = 0;
-  Console.WriteLine($"Uploading {fileList.Count} files to {config!["Bucket"]}/{opts.Prefix}...");
+  Logger.Information($"Uploading {fileList.Count} files to {config!["Bucket"]}/{opts.Prefix}...");
   foreach (var file in fileList) {
     if (!File.Exists(file)) {
-      Console.WriteLine($"File {file} does not exist.");
+      Logger.Information($"File {file} does not exist.");
       return;
     }
     var fileName = Path.GetFileName(file);
@@ -80,15 +88,15 @@ async Task UploadFiles(UploadOptions opts)
     await UploadFile(file, dest);
     uploaded++;
   }
-  Console.WriteLine($"Uploaded {uploaded} files to {config!["Bucket"]}/{opts.Prefix}, skipped {skipped}");
+  Logger.Information($"Uploaded {uploaded} files to {config!["Bucket"]}/{opts.Prefix}, skipped {skipped}");
 }
 
 async Task ListFiles(ListOptions opts)
 {
   var existingFiles = await GetListFiles(opts.Prefix);
-  Console.WriteLine($"Files in {opts.Prefix}:");
+  Logger.Information($"Files in {opts.Prefix}:");
   foreach (var file in existingFiles) {
-    Console.WriteLine(file);
+    Logger.Information(file);
   }
 }
 
@@ -102,12 +110,12 @@ async Task CreateIndex(CreateIndexOptions opts)
     }
   }
   await UploadFile(indexFile, $"{opts.Prefix}/index.txt");
-  Console.WriteLine($"Uploaded index file to {config!["Bucket"]}/{opts.Prefix}/index.txt");
+  Logger.Information($"Uploaded index file to {config!["Bucket"]}/{opts.Prefix}/index.txt");
 }
 
 async Task<List<string>> GetListFiles(string prefix)
 {
-  Console.WriteLine("Getting list of files...");
+  Logger.Information("Getting list of files...");
   var list = new List<string>();
   string token = "";
   while (true) {
@@ -119,14 +127,14 @@ async Task<List<string>> GetListFiles(string prefix)
     });
     var existingFiles = existingFilesResp.S3Objects?.Select(o => o.Key).ToList() ?? [];
     list.AddRange(existingFiles);
-    Console.WriteLine($"Got {existingFiles.Count} files, token: {existingFilesResp.NextContinuationToken}");
+    Logger.Information($"Got {existingFiles.Count} files, token: {existingFilesResp.NextContinuationToken}");
     if (existingFilesResp.IsTruncated ?? false) {
       token = existingFilesResp.NextContinuationToken;
     } else {
       break;
     }
   }
-  Console.WriteLine($"Got {list.Count} files");
+  Logger.Information($"Got {list.Count} files");
   return list;
 }
 
@@ -158,7 +166,7 @@ async Task UploadFile(string file, string path)
   };
   var response = await client.PutObjectAsync(req);
   var filename = Path.GetFileName(file);
-  Console.WriteLine($"Uploaded {filename} to {config!["Bucket"]}/{path}  Resp: {response.HttpStatusCode}");
+  Logger.Information($"Uploaded {filename} to {config!["Bucket"]}/{path}  Resp: {response.HttpStatusCode}");
 }
 
 class BaseOptions

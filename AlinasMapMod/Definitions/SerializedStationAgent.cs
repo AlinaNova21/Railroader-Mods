@@ -45,6 +45,7 @@ public class SerializedStationAgent :
   {
     if (string.IsNullOrEmpty(Prefab))
       throw new ValidationException("Prefab must be set.");
+    Utils.ValidatePrefab(Prefab, VanillaPrefabs.AvailableStationPrefabs);
     if (string.IsNullOrEmpty(PassengerStop))
       throw new ValidationException("PassengerStop must be set.");
     if (Position == null || Rotation == null)

@@ -13,5 +13,28 @@
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
-
+    <ItemGroup>
+		<Reference Include="Assembly-CSharp">
+			<HintPath Condition="Exists('$(GameManagedDir)\%(Identity).dll')">$(GameManagedDir)\%(Identity).dll</HintPath>
+			<Private>True</Private>
+		</Reference>
+		<Reference Include="Map.Runtime">
+			<HintPath Condition="Exists('$(GameManagedDir)\%(Identity).dll')">$(GameManagedDir)\%(Identity).dll</HintPath>
+			<Private>True</Private>
+		</Reference>
+		<Reference Include="Serilog">
+			<HintPath>..\..\Railroader_Data\Managed\Serilog.dll</HintPath>
+		</Reference>
+		<Reference Include="Serilog">
+			<HintPath>..\..\Railroader_Data\Managed\Serilog.Sinks.Console.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.CoreModule">
+			<HintPath Condition="Exists('$(GameManagedDir)\%(Identity).dll')">$(GameManagedDir)\%(Identity).dll</HintPath>
+			<Private>True</Private>
+		</Reference>
+		<Reference Include="StrangeCustoms">
+			<HintPath Condition="Exists('$(GameDir)\Mods\StrangeCustoms\Experimental\StrangeCustoms.dll')">$(GameDir)\Mods\StrangeCustoms\Experimental\StrangeCustoms.dll</HintPath>
+			<Private>True</Private>
+		</Reference>
+	</ItemGroup>
 </Project>

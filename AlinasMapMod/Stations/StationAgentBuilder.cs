@@ -25,6 +25,9 @@ public partial class StationAgentBuilder : StrangeCustoms.ISplineyBuilder, IObje
     try {
       agent.Validate();
       return agent.Create(id).gameObject;
+    } catch (ValidationException ex) {
+      logger.Error(ex, "Validation failed for Station Agent {Id}", id);
+      throw new ValidationException($"Validation failed for Station Agent {id}: {ex.Message}");
     } catch (Exception ex) {
       logger.Error(ex, "Failed to create Station Agent {Id}", id);
       throw new InvalidOperationException($"Failed to create Station Agent {id}", ex);

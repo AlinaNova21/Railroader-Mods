@@ -92,5 +92,4 @@ public sealed class SceneryDialog() : DialogBase("SceneryEditor", "Node editor",
     base.AfterWindowClosed();
     EditorContext.SelectedNode = null;
   }
-
 }

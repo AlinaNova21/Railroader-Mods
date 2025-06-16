@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using AlinasMapMod.Loaders;
@@ -9,6 +10,7 @@ using MapEditor.Dialogs;
 using MapEditor.Helpers;
 using MapEditor.Managers;
 using Railloader;
+using RLD;
 using Serilog;
 using StrangeCustoms.Tracks;
 using Track;
@@ -117,37 +119,6 @@ public static class EditorContext
 
   #endregion
 
-  #region SelectedLoader
-  private static LoaderInstance? _SelectedLoader;
-  public static LoaderInstance? SelectedLoader
-  {
-    get => _SelectedLoader;
-    set {
-      if (_SelectedLoader != value) {
-        _SelectedLoader = value;
-        OnSelectedLoaderChanged(value);
-      }
-    }
-  }
-
-  private static void OnSelectedLoaderChanged(LoaderInstance? loader)
-  {
-    _Logger.Information("SelectedLoaderChanged: " + (loader?.identifier ?? "<null>"));
-    if (PatchEditor == null) {
-      _Logger.Information("PatchEditor NULL");
-      return;
-    }
-    if (loader == null) {
-      LoaderDialog.CloseWindow();
-      KeyboardManager.Deactivate();
-    } else {
-      LoaderDialog.ShowWindow($"Loader Editor - {loader.identifier}");
-      KeyboardManager.Activate();
-    }
-  }
-
-  #endregion
-
   #region SelectedScenery
   private static SceneryAssetInstance? _SelectedScenery;
   public static SceneryAssetInstance? SelectedScenery
@@ -179,32 +150,66 @@ public static class EditorContext
   #endregion
 
   #region SelectedObject
-  private static IEditableObject? _SelectedObject;
+  private static List<IEditableObject> _SelectedObjects = [];
+  private static IEditableObject? _selectedObject => _SelectedObjects.FirstOrDefault();
+  public static bool HasSelectedObjects => _SelectedObjects.Any();
+  public static List<IEditableObject> SelectedObjects
+  {
+    get => _SelectedObjects;
+    set {
+      _SelectedObjects = value;
+      OnSelectedObjectsChanged();
+    }
+  }
+  public static void AddSelectedObject(IEditableObject obj)
+  {
+    if (obj == null) return;
+    if (!_SelectedObjects.Contains(obj)) {
+      _SelectedObjects.Add(obj);
+      OnSelectedObjectsChanged();
+    }
+  }
+
+  public static void RemoveSelectedObject(IEditableObject obj)
+  {
+    if (obj == null) return;
+    if (_SelectedObjects.Contains(obj)) {
+      _SelectedObjects.Remove(obj);
+      OnSelectedObjectsChanged();
+    }
+  }
+
   public static IEditableObject? SelectedObject
   {
-    get => _SelectedObject;
+    get => _selectedObject;
     set {
-      if (_SelectedObject != value) {
-        _SelectedObject = value;
-        OnSelectedObjectChanged(value);
+      if (_selectedObject != value) {
+        if (value == null) {
+          _SelectedObjects.Clear();
+        } else if (!_SelectedObjects.Contains(value)) {
+          _SelectedObjects.Clear();
+          _SelectedObjects.Add(value);
+        }
+        OnSelectedObjectsChanged();
       }
     }
   }
-  public static ITransformableObject? SelectedTransformableObject => _SelectedObject as ITransformableObject;
+  public static ITransformableObject? SelectedTransformableObject => _selectedObject as ITransformableObject;
+  public static List<ITransformableObject> SelectedTransformableObjects => _SelectedObjects.OfType<ITransformableObject>().ToList();
 
-  private static void OnSelectedObjectChanged(IEditableObject? obj)
+  private static void OnSelectedObjectsChanged()
   {
-    _Logger.Information("SelectedObjectChanged: " + (obj?.Id ?? "<null>"));
     if (PatchEditor == null) {
       _Logger.Information("PatchEditor NULL");
       return;
     }
-    if (obj == null) {
+    if (_SelectedObjects.Any()) {
+      var items = string.Join(", ", _SelectedObjects.Select(o => o.Id));
+      ObjectDialog.ShowWindow($"Object Editor - {items}");
+      KeyboardManager.Activate();
+    } else {
       ObjectDialog.CloseWindow();
       KeyboardManager.Deactivate();
-    } else {
-      ObjectDialog.ShowWindow($"Object Editor - {obj.Id}");
-      KeyboardManager.Activate();
     }
   }
   #endregion
@@ -276,9 +281,6 @@ public static class EditorContext
 
     SelectedNode = null;
     SelectedSegment = null;
-    if (HasAlinasMapMod) {
-      SelectedLoader = null;
-    }
     PatchEditor = new PatchEditor(fileName);
     ChangeManager.Clear();
     TrackSegmentDialog.Activate();
@@ -298,12 +300,6 @@ public static class EditorContext
     }
     if (_TrackSegmentDialog != null) {
       _TrackSegmentDialog.CloseWindow();
-    }
-    if (HasAlinasMapMod) {
-      if (_LoaderDialog != null) {
-        _LoaderDialog.CloseWindow();
-      }
-      SelectedLoader = null;
     }
     if (_SceneryDialog != null) {
       _SceneryDialog.CloseWindow();
@@ -361,11 +357,6 @@ public static class EditorContext
 
   #endregion
 
-  #region LoaderDialog
-  private static LoaderDialog? _LoaderDialog;
-  public static LoaderDialog LoaderDialog => _LoaderDialog ??= new LoaderDialog();
-  #endregion
-
   #region SceneryDialog
   private static SceneryDialog? _SceneryDialog;
   public static SceneryDialog SceneryDialog => _SceneryDialog ??= new SceneryDialog();
@@ -392,14 +383,6 @@ public static class EditorContext
       CameraSelector.shared.ZoomToPoint(c);
     }
   }
-
-  public static void MoveCameraToSelectedLoader()
-  {
-    if (SelectedLoader != null) {
-      CameraSelector.shared.ZoomToPoint(SelectedLoader.transform.localPosition);
-    }
-  }
-
   public static void MoveCameraToSelectedScenery()
   {
     if (SelectedScenery != null) {
@@ -508,16 +491,6 @@ public static class EditorContext
     var gameObject = new GameObject("TrackSegmentHelper");
     gameObject.transform.SetParent(segment.transform);
     gameObject.AddComponent<TrackSegmentHelper>();
-  }
-
-  internal static void AttachUiHelper(LoaderInstance loader)
-  {
-    if (loader.transform.Find("LoaderHelper") != null) {
-      return;
-    }
-    var gameObject = new GameObject("LoaderHelper");
-    gameObject.transform.SetParent(loader.transform);
-    gameObject.AddComponent<LoaderHelper>();
   }
 
   internal static void AttachUiHelper(SceneryAssetInstance scenery)

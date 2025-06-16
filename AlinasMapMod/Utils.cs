@@ -65,6 +65,19 @@ public class Utils
     return string.Join("/", parts);
   }
 
+  public static void ValidatePrefab(string prefabUri, string[] vanillaValidList)
+  {
+    if (string.IsNullOrEmpty(prefabUri))
+      throw new ValidationException("Prefab URI cannot be null or empty");
+    if (!prefabUri.Contains("://"))
+      throw new ValidationException($"Invalid prefab URI: {prefabUri}, must match the pattern of (empty|path|scenery|vanilla)://host/path");
+    var scheme = prefabUri.Split(':')[0];
+    var hostPath = prefabUri.Split(':')[1];
+    var host = hostPath.Split('/')[0];
+    if (scheme == "vanilla" && !vanillaValidList.Contains(host))
+      throw new ValidationException($"Invalid vanilla prefab: {host}, must be one of {string.Join(", ", vanillaValidList)}");
+  }
+
   public static GameObject GameObjectFromUri(string uriString)
   {
     var requiredParts = new string[] { "://" };
