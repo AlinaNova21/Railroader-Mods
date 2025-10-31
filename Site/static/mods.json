@@ -66,8 +66,12 @@
     "modId": "AlinaNova21.AlinasMapMod",
     "name": "Alina's Map Mod",
     "desc": "A mod that adds utilities for other mods to add milestones and other features to the game.",
-    "version": "1.6.25167.144",
+    "version": "1.7.25304.436",
     "changelog": [
+      {
+        "version": "1.7.25304.436",
+        "desc": "- Fixed bugs with turntables and station agents\n- Added Map tiles loading. By default, this will auto-download missing tiles if available. (This can be disabled in the RL Settings page for AMM)\n    - Additionally, individual tile packs are available for download at https://rmh.alinanova.dev.\n- Added placable map labels, see docs for details."
+      },
       {
         "version": "1.6.25167.144",
         "desc": "- Internal refactoring of StateTracker classes\n- Various bug fixes and code improvements"
@@ -202,7 +206,7 @@
       }
     ],
     "assemblyName": "AlinasMapMod",
-    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/AlinasMapMod_1.6.25167.144.zip"
+    "downloadUrl": "https://whoverse.nyc3.digitaloceanspaces.com/railroader-mods/AlinasMapMod_1.7.25304.436.zip"
   },
   {
     "id": "amm-alarka-jct-additional",
