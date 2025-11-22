@@ -1,5 +1,7 @@
 # Pax stations
 
+This allows creating custom stations:
+
 Industry:
 ```json
 {
@@ -20,7 +22,7 @@ Industry:
             "trackSpans": [ // Spans for loading/unloading
               "PAN_Test_Mod_00"
             ],
-            // Future support for custom branches, currently supported is "Main" and "Alarka Branch"
+            // Which branch this stations belongs to:
             "branch": "Main",
             // List of ids of other passenger stations.
             // Unsure of exact impact
@@ -34,3 +36,16 @@ Industry:
   }
 }
 ```
+
+## Branches
+
+A station can be in multiple branches at the same time. E.g. Alarka Jct is in the Main branch and the Alarka branch.
+
+You can specifiy this by separating branche names with a ':':
+```json
+"branch": "Main:My Custom Branch"
+```
+
+This will create a custom branch called "My Custom Branch" that connects to the Main branch at this station.
+
+
