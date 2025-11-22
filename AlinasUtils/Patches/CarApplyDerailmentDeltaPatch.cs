@@ -8,8 +8,8 @@ public static class CarApplyDerailmentDeltaPatch
 {
   public static bool Prefix(ref float delta)
   {
-    var plugin = AlinasUtilsPlugin.Shared;
-    if (plugin.IsEnabled && plugin.Settings.DisableDerailing) {
+    var settings = AlinasUtilsPlugin.Shared?.Settings ?? UMM.Mod.Settings;
+    if (settings.DisableDamage && delta < 0) {
       return false;
     }
     return true;

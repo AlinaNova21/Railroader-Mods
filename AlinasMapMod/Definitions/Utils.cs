@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using AlinasMapMod.Caches;
 using Game.Progression;
 using Model.Ops;
 using Serilog;
@@ -24,7 +25,7 @@ public class DefinitionUtils
     return items.ToArray();
   }
 
-  public static T[] ApplyList<T>(T[] vals, Dictionary<string, bool> dict)
+  private static T[] ApplyList<T>(T[] vals, Dictionary<string, bool> dict)
   {
     var cached = Utils.GetCache<T>();
     var items = vals.ToList();
@@ -46,9 +47,10 @@ public class DefinitionUtils
     return items.ToArray();
   }
 
-  public static Section[] ApplyList(Section[] sections, Dictionary<string, bool> dict, Dictionary<string, Section> cached)
+  public static Section[] ApplyList(Section[] sections, Dictionary<string, bool> dict, Dictionary<string, Section> cached = null)
   {
-    var items = sections.ToDictionary(s => s.identifier, s => s);
+        cached ??= SectionCache.Instance;
+        var items = sections.ToDictionary(s => s.identifier, s => s);
     foreach (var pair in dict) {
       var identifier = pair.Key;
       var val = pair.Value;
@@ -67,8 +69,9 @@ public class DefinitionUtils
     return items.Values.ToArray();
   }
 
-  public static MapFeature[] ApplyList(MapFeature[] list, Dictionary<string, bool> dict, Dictionary<string, MapFeature> cached)
+  public static MapFeature[] ApplyList(MapFeature[] list, Dictionary<string, bool> dict, Dictionary<string, MapFeature> cached = null)
   {
+    cached ??= MapFeatureCache.Instance;
     var items = list.ToDictionary(s => s.identifier, s => s);
     foreach (var pair in dict) {
       var identifier = pair.Key;
@@ -86,9 +89,10 @@ public class DefinitionUtils
     return items.Values.ToArray();
   }
 
-  public static Area[] ApplyList(Area[] list, Dictionary<string, bool> dict, Dictionary<string, Area> cached)
+  public static Area[] ApplyList(Area[] list, Dictionary<string, bool> dict, Dictionary<string, Area> cached = null)
   {
-    var items = list.ToDictionary(s => s.identifier, s => s);
+    cached ??= AreaCache.Instance;
+        var items = list.ToDictionary(s => s.identifier, s => s);
     foreach (var pair in dict) {
       var identifier = pair.Key;
       var val = pair.Value;
@@ -105,9 +109,10 @@ public class DefinitionUtils
     return items.Values.ToArray();
   }
 
-  public static Industry[] ApplyList(Industry[] list, Dictionary<string, bool> dict, Dictionary<string, Industry> cached)
+  public static Industry[] ApplyList(Industry[] list, Dictionary<string, bool> dict, Dictionary<string, Industry> cached = null)
   {
-    var items = list.ToDictionary(s => s.identifier, s => s);
+        cached ??= IndustryCache.Instance;
+        var items = list.ToDictionary(s => s.identifier, s => s);
     foreach (var pair in dict) {
       var identifier = pair.Key;
       var val = pair.Value;
@@ -124,9 +129,10 @@ public class DefinitionUtils
     return items.Values.ToArray();
   }
 
-  public static IndustryComponent[] ApplyList(IndustryComponent[] list, Dictionary<string, bool> dict, Dictionary<string, IndustryComponent> cached)
+  public static IndustryComponent[] ApplyList(IndustryComponent[] list, Dictionary<string, bool> dict, Dictionary<string, IndustryComponent> cached = null)
   {
-    var items = list.ToDictionary(s => s.Identifier, s => s);
+        cached ??= IndustryComponentCache.Instance;
+        var items = list.ToDictionary(s => s.Identifier, s => s);
     foreach (var pair in dict) {
       var identifier = pair.Key;
       var val = pair.Value;

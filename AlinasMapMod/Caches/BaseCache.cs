@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using GalaSoft.MvvmLight.Messaging;
+using Serilog;
 
 namespace AlinasMapMod.Caches;
 
 public abstract class BaseCache<IType, CType> : Dictionary<string, CType>, IObjectCache<CType>
 {
+  protected readonly ILogger logger = Log.ForContext(typeof(IType));
   private static IType instance;
   public static IType Instance
   {

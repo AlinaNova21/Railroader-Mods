@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using AlinasMapMod.Definitions;
 using AlinasMapMod.MapEditor;
+using AlinasMapMod.Validation;
 using Model.Ops;
 using Newtonsoft.Json.Linq;
 using Serilog;
@@ -10,8 +12,10 @@ using StrangeCustoms.Tracks;
 using UI.Builder;
 using UnityEngine;
 
+using AlinasMapMod;
+
 namespace AlinasMapMod.Loaders;
-partial class LoaderInstance : IEditableObject, ITransformableObject
+partial class LoaderInstance : IEditableObject, ITransformableObject, IValidatable
 {
   public string Id { get => identifier; set => identifier = value; }
 
@@ -93,6 +97,8 @@ partial class LoaderInstance : IEditableObject, ITransformableObject
   }
   public void SetProperty(string property, object value)
   {
+    ValidatePropertyChange(property, value, GetSerializedLoader);
+    
     switch (property) {
       case "Prefab":
         Prefab = (string)value;
@@ -102,9 +108,49 @@ partial class LoaderInstance : IEditableObject, ITransformableObject
         break;
       default:
         throw new InvalidOperationException($"property not valid: {property}");
-    };
+    }
   }
 
+  private SerializedLoader GetSerializedLoader()
+  {
+    var serializedLoader = new SerializedLoader();
+    serializedLoader.Read(this);
+    return serializedLoader;
+  }
+  
+  public void Validate()
+  {
+    GetSerializedLoader().Validate();
+  }
+  
+  public ValidationResult ValidateWithDetails()
+  {
+    return GetSerializedLoader().ValidateWithDetails();
+  }
+  
+  private void ValidatePropertyChange<T>(string property, object value, Func<T> getValidationObject) where T : IValidatable
+  {
+    var validationObject = getValidationObject();
+    
+    // Apply the proposed change using reflection
+    var propertyInfo = typeof(T).GetProperty(property);
+    if (propertyInfo == null)
+      throw new InvalidOperationException($"Property {property} not found on {typeof(T).Name}");
+      
+    propertyInfo.SetValue(validationObject, value);
+    
+    // Validate the change
+    try
+    {
+      validationObject.Validate();
+    }
+    catch (ValidationException ex)
+    {
+      Log.ForContext(GetType()).Warning("Validation failed for {Property}: {Message}", property, ex.Message);
+      throw new InvalidOperationException($"Invalid value for {property}: {ex.Message}", ex);
+    }
+  }
+  
   public void Destroy(PatchEditor editor)
   {
     editor.RemoveSpliney(Id);

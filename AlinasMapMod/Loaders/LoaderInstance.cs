@@ -52,7 +52,7 @@ public partial class LoaderInstance : MonoBehaviour
     var lgo = Instantiate(prefab, transform);
     lgo.SetActive(false);
     lgo.name = "prefab";
-    transform.name = identifier; ;
+    transform.name = identifier;
 
     var trackMarker = lgo.GetComponent<TrackMarker>();
     if (trackMarker != null) trackMarker.enabled = false;

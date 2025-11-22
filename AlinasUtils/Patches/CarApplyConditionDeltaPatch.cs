@@ -8,8 +8,8 @@ public static class CarApplyConditionDeltaPatch
 {
   public static bool Prefix(float delta)
   {
-    var plugin = AlinasUtilsPlugin.Shared;
-    if (plugin.IsEnabled && plugin.Settings.DisableDamage && delta < 0) {
+    var settings = AlinasUtilsPlugin.Shared?.Settings ?? UMM.Mod.Settings;
+    if (settings.DisableDamage && delta < 0) {
       return false;
     }
     return true;

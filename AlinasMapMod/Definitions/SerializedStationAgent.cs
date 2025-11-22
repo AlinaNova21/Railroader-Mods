@@ -1,10 +1,10 @@
 using AlinasMapMod.Caches;
 using AlinasMapMod.Stations;
+using AlinasMapMod.Validation;
 using UnityEngine;
 
 namespace AlinasMapMod.Definitions;
-public class SerializedStationAgent :
- ISerializedPatchableComponent<PaxStationAgent>,
+public class SerializedStationAgent : SerializedComponentBase<PaxStationAgent>,
  ICreatableComponent<PaxStationAgent>,
  IDestroyableComponent<PaxStationAgent>
 {
@@ -13,19 +13,50 @@ public class SerializedStationAgent :
   public string Prefab { get; set; } = "empty://";
   public string PassengerStop { get; set; } = "whittier";
 
-  public PaxStationAgent Create(string id)
+  protected override void ConfigureValidation()
   {
-    var go = new GameObject(id);
-    go.transform.parent = Utils.GetParent("StationAgents").transform;
-    var comp = go.AddComponent<PaxStationAgent>();
-    comp.name = id;
-    comp.identifier = id;
-    Write(comp);
-    StationAgentCache.Instance[id] = comp;
-    return comp;
+    RuleFor(() => Prefab)
+      .Required()
+      .AsGameObjectUri(VanillaPrefabs.AvailableStationPrefabs);
+
+    RuleFor(() => PassengerStop)
+      .Required();
+
+    RuleFor(() => Position)
+      .Required();
+
+    RuleFor(() => Rotation)
+      .Required();
   }
 
-  public void Write(PaxStationAgent comp)
+  public override PaxStationAgent Create(string id)
+  {
+    GameObject go = null;
+    try
+    {
+      go = new GameObject(id);
+      go.transform.parent = Utils.GetParent("StationAgents").transform;
+      var comp = go.AddComponent<PaxStationAgent>();
+      comp.name = id;
+      comp.identifier = id;
+      Write(comp);
+      StationAgentCache.Instance[id] = comp;
+      return comp;
+    }
+    catch
+    {
+      // Clean up the GameObject if creation failed
+      if (go != null)
+      {
+        UnityEngine.Object.DestroyImmediate(go);
+      }
+      // Remove from cache if it was added
+      StationAgentCache.Instance.Remove(id);
+      throw;
+    }
+  }
+
+  public override void Write(PaxStationAgent comp)
   {
     comp.transform.localPosition = Position;
     comp.transform.localEulerAngles = Rotation;
@@ -33,23 +64,12 @@ public class SerializedStationAgent :
     comp.PassengerStop = PassengerStop;
   }
 
-  public void Read(PaxStationAgent comp)
+  public override void Read(PaxStationAgent comp)
   {
     Position = comp.transform.localPosition;
     Rotation = comp.transform.localEulerAngles;
     Prefab = comp.Prefab;
     PassengerStop = comp.PassengerStop;
-  }
-
-  public void Validate()
-  {
-    if (string.IsNullOrEmpty(Prefab))
-      throw new ValidationException("Prefab must be set.");
-    Utils.ValidatePrefab(Prefab, VanillaPrefabs.AvailableStationPrefabs);
-    if (string.IsNullOrEmpty(PassengerStop))
-      throw new ValidationException("PassengerStop must be set.");
-    if (Position == null || Rotation == null)
-      throw new ValidationException("Position and Rotation must be defined.");
   }
 
   public void Destroy(PaxStationAgent comp)

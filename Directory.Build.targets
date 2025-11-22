@@ -1,15 +1,21 @@
 ﻿<Project>
   <PropertyGroup>
-    <!-- Try to find the directory on our own -->
+    <!-- Use RefasMer reference assemblies when available -->
+    <UseReferenceAssemblies Condition="'$(UseReferenceAssemblies)' == ''">true</UseReferenceAssemblies>
+    <ReferenceAssembliesDir Condition="'$(ReferenceAssembliesDir)' == ''">$(MSBuildThisFileDirectory)ref-assemblies</ReferenceAssembliesDir>
+	<BepInExCoreDir Condition="'$(BepInExCoreDir)' == ''">$([System.IO.Path]::Combine(`$(GameDir)`, `BepInEx`, `core`))</BepInExCoreDir>
+
+	  <!-- Try to find the game directory (still needed for runtime deployment) -->
     <GameManagedDir Condition="'$(GameManagedDir)' == ''"
-      >$([System.IO.Directory]::GetDirectories(`$(GameDir)`, `*_Data`)[0])\Managed</GameManagedDir
-    >
-    <!-- Copy the mod to the game directory -->
-    <GameModDir Condition="'$(GameModDir)' == ''">$(GameDir)/Mods/$(AssemblyName)</GameModDir>
+      >$([System.IO.Path]::Combine($([System.IO.Directory]::GetDirectories(`$(GameDir)`, `*_Data`)[0]), `Managed`))</GameManagedDir>
+	<!-- Copy the mod to the game directory -->
+    <GameModDir Condition="'$(GameModDir)' == ''">$([System.IO.Path]::Combine(`$(GameDir)`, `Mods`, `$(AssemblyName)`))</GameModDir>
+	<GamePluginDir Condition="'$(GamePluginDir)' == ''">$([System.IO.Path]::Combine(`$(GameDir)`, `BepInEx`, `plugins`, `$(AssemblyName)`))</GamePluginDir>
     <!-- <OutDir Condition="'$(Configuration)' == 'Debug' And '$(IsMod)' == 'true'">$(GameModDir)/</OutDir> -->
   </PropertyGroup>
   <PropertyGroup>
     <IsMod Condition="'$(IsMod)' == ''">false</IsMod>
+	<IsPlugin Condition="'$(IsPlugin)' == ''">false</IsPlugin>
     <PackageMod Condition="'$(PackageMod)' == '' Or '$(IsMod)' == 'false'">false</PackageMod>
     <PublishMod Condition="'$(PublishMod)' == '' Or '$(PackageMod)' == 'false'">false</PublishMod>
   </PropertyGroup>
@@ -22,38 +28,59 @@
     <ProductVersion>$(AssemblyVersion)</ProductVersion>
   </PropertyGroup>
   <ItemGroup>
-    <!-- Reference the .dll/.exes specified with GameAssembly elements-->
-    <Reference Include="@(GameAssembly)">
-      <HintPath Condition="Exists('$(GameManagedDir)\%(Identity).dll')"
-        >$(GameManagedDir)\%(Identity).dll</HintPath
+	<Reference Include="@(BepInExReference)">
+		<HintPath Condition="Exists('$([System.IO.Path]::Combine(`$(BepInExCoreDir)`, `%(Identity).dll`))')"
+        >$([System.IO.Path]::Combine(`$(BepInExCoreDir)`, `%(Identity).dll`))</HintPath>
+	  <Private>false</Private>
+	</Reference>
+		<!-- Reference assemblies from RefasMer (preferred) -->
+	<Reference Include="@(GameAssembly)" Condition="'$(UseReferenceAssemblies)' == 'true'">
+	  <HintPath Condition="Exists('$([System.IO.Path]::Combine(`$(ReferenceAssembliesDir)`, `%(Identity).dll`))')"
+        >$([System.IO.Path]::Combine(`$(ReferenceAssembliesDir)`, `%(Identity).dll`))</HintPath
       >
-      <HintPath Condition="Exists('$(GameManagedDir)\%(Identity).exe')"
-        >$(GameManagedDir)\%(Identity).exe</HintPath
+      <HintPath Condition="Exists('$([System.IO.Path]::Combine(`$(ReferenceAssembliesDir)`, `%(Identity).exe`))')"
+        >$([System.IO.Path]::Combine(`$(ReferenceAssembliesDir)`, `%(Identity).exe`))</HintPath
+      >
+      <Private>false</Private>
+    </Reference>
+    
+    <!-- Fallback to game assemblies if reference assemblies not available or disabled -->
+    <Reference Include="@(GameAssembly)" Condition="'$(UseReferenceAssemblies)' != 'true'">
+	  <HintPath Condition="Exists('$([System.IO.Path]::Combine(`$(GameManagedDir)`, `%(Identity).dll`))')"
+        >$([System.IO.Path]::Combine(`$(GameManagedDir)`, `%(Identity).dll`))</HintPath
+      >
+      <HintPath Condition="Exists('$([System.IO.Path]::Combine(`$(GameManagedDir)`, `%(Identity).exe`))')"
+        >$([System.IO.Path]::Combine(`$(GameManagedDir)`, `%(Identity).exe`))</HintPath
       >
       <Private>false</Private>
     </Reference>
     <!-- Allow referencing things like OtherMod/Mod.dll -->
     <ModReference Include="@(ModAssembly)">
       <AssemblyName>$([System.IO.Path]::GetFileNameWithoutExtension("%(Identity)"))</AssemblyName>
-      <FullModPath>$(GameDir)\Mods\%(Identity)</FullModPath>
+      <FullModPath>$([System.IO.Path]::Combine(`$(GameDir)`, `Mods`, `%(Identity)`))</FullModPath>
     </ModReference>
-    <Reference Include="@(ModReference-&gt;'%(AssemblyName)')">
-      <HintPath Condition="Exists('%(FullModPath)')">%(FullModPath)</HintPath>
-      <Private>false</Private>
-    </Reference>
+	  <Reference Include="@(ModReference-&gt;'%(AssemblyName)')">
+		  <HintPath Condition="Exists('%(FullModPath)')">%(FullModPath)</HintPath>
+		  <Private>false</Private>
+	  </Reference>
   </ItemGroup>
-  <Target Name="SetVersion" AfterTargets="AfterBuild" Condition="'$(PackageMod)' == 'true'">
-    <!-- Replace $(AssemblyVersion) with the actual version -->
-    <Exec Command="powershell -Command &quot;(Get-Content '$(OutDir)Definition.json') -replace '\$\(AssemblyVersion\)', '$(AssemblyVersion)' | Set-Content '$(OutDir)Definition.json'&quot;" />
-  </Target>
   <!-- Publish the mod as a neat zip file -->
-  <Target Name="PackageMod" AfterTargets="SetVersion" Condition="'$(PackageMod)' == 'true'">
+  <Target Name="PackageMod" AfterTargets="AfterBuild" Condition="'$(PackageMod)' == 'true'">
+    <!-- Replace $(AssemblyVersion) with the actual version in output directory -->
+    <PropertyGroup>
+      <DefinitionJsonPath>$(OutDir)Definition.json</DefinitionJsonPath>
+    </PropertyGroup>
+    <!-- Replace VERSION_PLACEHOLDER with the actual version -->
+    <Exec Command="sed -i 's/VERSION_PLACEHOLDER/$(AssemblyVersion)/g' &quot;$(DefinitionJsonPath)&quot;" 
+          Condition="Exists('$(DefinitionJsonPath)') And ($([MSBuild]::IsOSPlatform('Linux')) Or $([MSBuild]::IsOSPlatform('OSX')))" />
+    <Exec Command="powershell -Command &quot;(Get-Content '$(DefinitionJsonPath)') -replace 'VERSION_PLACEHOLDER', '$(AssemblyVersion)' | Set-Content '$(DefinitionJsonPath)'&quot;" 
+          Condition="Exists('$(DefinitionJsonPath)') And $([MSBuild]::IsOSPlatform('Windows'))" />
     <Message Text="Packaging $(AssemblyName) v$(AssemblyVersion)" Importance="high" />
     <PropertyGroup>
       <ModsDirectory>$(OutputPath)/Mods</ModsDirectory>
       <ModDirectory>$(ModsDirectory)/$(AssemblyName)</ModDirectory>
       <!-- Folder we'll put the published zips into -->
-      <PublishPath>../bin</PublishPath>
+      <PublishPath>$(MSBuildThisFileDirectory)bin</PublishPath>
       <ZipName>$(PublishPath)/$(AssemblyName)_$(AssemblyVersion).zip</ZipName>
     </PropertyGroup>
     <!-- Assure the output path exists -->
@@ -71,10 +98,14 @@
       <OutputFiles Include="$(OutputPath)/**/*" />
     </ItemGroup>
     <Copy SourceFiles="@(OutputFiles)" DestinationFolder="$(ModDirectory)" />
-    <!-- Zip it up -->
-    <Exec Command="powershell -Command &quot;Compress-Archive -Path '$(ModsDirectory)' -Destination '$(ZipName)'&quot;" />
+    <!-- Zip it up using cross-platform approach -->
+    <Exec Command="zip -r &quot;$(ZipName)&quot; Mods" WorkingDirectory="$(OutputPath)" Condition="$([MSBuild]::IsOSPlatform('Linux')) Or $([MSBuild]::IsOSPlatform('OSX'))" />
+    <Exec Command="powershell -Command &quot;Compress-Archive -Path '$(ModsDirectory)' -Destination '$(ZipName)'&quot;" Condition="$([MSBuild]::IsOSPlatform('Windows'))" />
     <!-- Move them to the game directory -->
-    <Copy SourceFiles="@(OutputFiles)" DestinationFolder="$(GameModDir)" />
+	<Copy SourceFiles="@(OutputFiles)" DestinationFolder="$(GameModDir)" />
+
+	<MakeDir Directories="$(GamePluginDir)" Condition="'$(IsPlugin)' == 'true'" />
+	<Copy SourceFiles="@(OutputFiles)" DestinationFolder="$(GamePluginDir)" Condition="'$(IsPlugin)' == 'true'"/>  
   </Target>
   <Target
     Name="PublishMod"
@@ -83,7 +114,8 @@
   >
     <Message Text="Publishing $(AssemblyName) v$(AssemblyVersion)" Importance="high" />
     <!-- Publish to GitHub -->
-    <Exec Command="$(SolutionDir)/Utilities/bin/Release/Utilities.exe upload --prefix railroader-mods $(ZipName) @(ExtraZips, ' ')" />
+    <Exec Command="dotnet &quot;$(MSBuildThisFileDirectory)Utilities/bin/Release/Utilities.dll&quot; upload --prefix railroader-mods $(ZipName) @(ExtraZips, ' ')" Condition="$([MSBuild]::IsOSPlatform('Linux')) Or $([MSBuild]::IsOSPlatform('OSX'))" />
+    <Exec Command="&quot;$(MSBuildThisFileDirectory)Utilities/bin/Release/Utilities.exe&quot; upload --prefix railroader-mods $(ZipName) @(ExtraZips, ' ')" Condition="$([MSBuild]::IsOSPlatform('Windows'))" />
   </Target>
   <Target Name="OldPublishMod" Condition="false">
     <Exec Command="gh release create v$(AssemblyVersion) --generate-notes $(ZipName) @(ExtraZips, ' ')" />

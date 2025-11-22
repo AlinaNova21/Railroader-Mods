@@ -197,7 +197,14 @@ public partial class AlinasMapMod : Mods.SingletonModBase<AlinasMapMod>
     builder.AddButton("Rebuild Map", () => {
       MapManager.Instance.RebuildAll();
     });
-
+    builder.AddField("Download Missing Map Tiles", builder.AddToggle(
+        () => settings.DownloadMissingTiles,
+        v => {
+            settings.DownloadMissingTiles = v;
+            TileManager.AllowDownloadingTiles = v;
+            commitChanges();
+        }
+    ));
 #if PRIVATETESTING
     builder.AddButton("Rerun Patcher", () =>
     {
@@ -207,27 +214,15 @@ public partial class AlinasMapMod : Mods.SingletonModBase<AlinasMapMod>
       patcher.Dump("Mods/AlinasMapMod/game-dump-patched.xml");
       Logger.Information("Done rerunning patcher");
     });
-#endif
-#if TESTING || PRIVATETESTING
-    builder.AddField("Download Missing Map Tiles", builder.AddToggle(
-        () => settings.DownloadMissingTiles,
-        v => {
-          settings.DownloadMissingTiles = v;
-          TileManager.AllowDownloadingTiles = v;
-          commitChanges();
-        }
-    ));
-#endif
-#if PRIVATETESTING
     builder.AddSection("Map Tiles", builder =>
     {
-      builder.AddField("Map Name", builder.AddInputField(mapName, v => mapName = v));
+      builder.AddField("Map Name", builder.AddInputField(MapName, v => MapName = v));
       var mods = Directory.GetDirectories("Mods").Select(d => Path.GetFileName(d)).ToList();
-      builder.AddField("Map Mod", builder.AddDropdown(mods, mods.IndexOf(mapMod), v =>
+      builder.AddField("Map Mod", builder.AddDropdown(mods, mods.IndexOf(MapMod), v =>
       {
-        mapMod = mods[v];
+        MapMod = mods[v];
       }));
-      builder.AddField("Bounds", builder.AddInputField(bounds, v => bounds = v));
+      builder.AddField("Bounds", builder.AddInputField(Bounds, v => Bounds = v));
       builder.AddButton("Generate Missing Tiles", () =>
       {
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
@@ -236,10 +231,10 @@ public partial class AlinasMapMod : Mods.SingletonModBase<AlinasMapMod>
       });
     });
 #endif
-  }
-  string bounds { get; set; } = "53,0,60,5";
-  string mapMod { get; set; } = "AlinasSandbox";
-  string mapName { get; set; } = "BushnellWhittier";
+    }
+  private string Bounds { get; set; } = "53,0,60,5";
+  private string MapMod { get; set; } = "AlinasSandbox";
+  private string MapName { get; set; } = "BushnellWhittier";
 
   public void ModTabDidClose()
   {
@@ -252,7 +247,8 @@ public partial class AlinasMapMod : Mods.SingletonModBase<AlinasMapMod>
   {
     Logger.Information($"Run()");
     try {
-      patcher.Patch();
+        Messenger.Default.Send(new CachesNeedRebuildEvent());
+        patcher.Patch();
     } catch (Exception e) {
       Logger.Error(e, "Error while patching progressions");
       // TODO: Redo this
@@ -267,17 +263,17 @@ public partial class AlinasMapMod : Mods.SingletonModBase<AlinasMapMod>
       //window.ShowWindow();
     }
 
-    Messenger.Default.Send(new CachesNeedRebuildEvent());
+        //Messenger.Default.Send(new CachesNeedRebuildEvent());
 
 #if PRIVATETESTING
-    var gp = new Patcher.GamePatcher();
-    var dumpFile1 = "Mods/AlinasMapMod/game-dump-orig.xml";
-    var dumpFile2 = "Mods/AlinasMapMod/game-dump-patched.xml";
-    gp.Dump(dumpFile1);
-    Logger.Information("Dumped game state to {file}", dumpFile1);
-    gp.RunPatcher();
-    gp.Dump(dumpFile2);
-    Logger.Information("Dumped game state to {file}", dumpFile2);
+        //var gp = new Patcher.GamePatcher();
+        //var dumpFile1 = "Mods/AlinasMapMod/game-dump-orig.xml";
+        //var dumpFile2 = "Mods/AlinasMapMod/game-dump-patched.xml";
+        //gp.Dump(dumpFile1);
+        //Logger.Information("Dumped game state to {file}", dumpFile1);
+        //gp.RunPatcher();
+        //gp.Dump(dumpFile2);
+        //Logger.Information("Dumped game state to {file}", dumpFile2);
 #endif
-  }
+    }
 }

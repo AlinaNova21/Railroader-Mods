@@ -62,21 +62,34 @@ public partial class PaxStationAgent : MonoBehaviour
     go.name = identifier;
 
     go.SetActive(false);
-    var stationAgent = go.GetComponentInChildren<StationAgent>(true);
-    if (!PassengerStopCache.Instance.TryGetValue(_passengerStop, out var passengerStop)) {
+    var stationAgent = lgo.GetComponentInChildren<StationAgent>(true);
+    stationAgent.name = "Agent - " + identifier;
+        if (!PassengerStopCache.Instance.TryGetValue(_passengerStop, out var passengerStop)) {
       throw new ArgumentException($"Passenger stop not found: {_passengerStop}");
     }
     var area = passengerStop.GetComponentInParent<Area>(true);
-    typeof(StationAgent).GetField("area", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-      ?.SetValue(stationAgent, area);
-    typeof(StationAgent).GetField("passengerStop", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-      ?.SetValue(stationAgent, passengerStop);
-    var secondaryAreas = AccessTools.Field(typeof(StationAgent), "secondaryAreas").GetValue(stationAgent) as List<Area>;
+    var areaField = typeof(StationAgent).GetField("area", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+    areaField.SetValue(stationAgent, area);
+    logger.Information($"Set Station Agent area to {areaField.GetValue(stationAgent)} for {identifier}");
+
+        var stopField =  typeof(StationAgent).GetField("passengerStop", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+    stopField.SetValue(stationAgent, passengerStop);
+        logger.Information($"Set Station Agent passenger stop to {stopField.GetValue(stationAgent)} for {identifier}");
+
+        var secondaryAreas = AccessTools.Field(typeof(StationAgent), "secondaryAreas").GetValue(stationAgent) as List<Area>;
     secondaryAreas.Clear();
 
     var signs = lgo.GetComponentsInChildren<TextMeshPro>(true);
     foreach (var sign in signs) {
-      if (sign.transform.parent.name.StartsWith("Sign-Station")) sign.text = area.name;
+        if (sign.transform.parent.name.StartsWith("Sign-Station")) {
+            sign.text = area.name;
+            var sign2 = sign.transform.Find("Sign-Station");
+            if (sign2 != null) {
+                var scale = sign2.localScale;
+                scale.y = 100;
+                sign2.localScale = scale;
+            }
+        }
     }
 
     foreach (Renderer r in lgo.transform.GetComponentsInChildren<Renderer>()) {

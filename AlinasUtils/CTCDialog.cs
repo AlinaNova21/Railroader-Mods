@@ -8,24 +8,33 @@ using UnityEngine;
 
 namespace AlinasUtils;
 
-internal class CTCDialog
+internal class CTCDialog : WindowBase
 {
-  private bool _Populated;
   private readonly Window _Window;
 
-  public CTCDialog()
-  {
-    _Window = AlinasUtilsPlugin.Shared.UIHelper.CreateWindow("ctc-dialog", 400, 600, Window.Position.Center);
-    _Window.Title = "CTC";
+  public override string WindowIdentifier => "ctc-dialog";
 
-    _Window.OnShownDidChange += shown => {
-      if (!shown) {
-        AfterWindowClosed();
-      }
-    };
+  public override string Title => "CTC";
+
+  public override Vector2Int DefaultSize => new(400, 600);
+
+  public override Window.Position DefaultPosition => Window.Position.Center;
+
+  public override Window.Sizing Sizing => Window.Sizing.Fixed(DefaultSize);
+
+
+  public void Show()
+  {
+    Rebuild();
+    Window.ShowWindow();
   }
 
-  protected void BuildWindow(UIPanelBuilder builder)
+  public void Close()
+  {
+    Window.CloseWindow();
+  }
+
+  public override void Populate(UIPanelBuilder builder)
   {
     builder.VScrollView(builder => {
       var ctc = GameObject.FindObjectOfType<CTCSwitchMonitor>();
@@ -87,28 +96,4 @@ internal class CTCDialog
       }
     }
   }
-
-  public void ShowWindow()
-  {
-    //if (!_Populated)
-    //{
-    AlinasUtilsPlugin.Shared.UIHelper.PopulateWindow(_Window, BuildWindow);
-    //_Populated = true;
-    //}
-
-    BeforeWindowShown();
-
-    if (!_Window.IsShown) {
-      _Window.ShowWindow();
-    }
-  }
-
-  public void CloseWindow()
-  {
-    _Window.CloseWindow();
-  }
-
-  protected virtual void BeforeWindowShown() { }
-
-  protected virtual void AfterWindowClosed() { }
 }

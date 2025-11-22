@@ -1,6 +1,5 @@
-﻿namespace AlinasMapMod.MapEditor
+﻿namespace AlinasMapMod.MapEditor;
+
+internal interface IEditorManager
 {
-  internal interface IEditorManager
-  {
-  }
 }

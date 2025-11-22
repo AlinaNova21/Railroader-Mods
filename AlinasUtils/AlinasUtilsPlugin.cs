@@ -88,9 +88,9 @@ public class AlinasUtilsPlugin : SingletonPluginBase<AlinasUtilsPlugin>, IUpdate
         (value) => Preferences.GraphicsDrawDistance = value,
         200f, 10000f, true
     ));
-    builder.AddButton("The Crash Rex Button", () => {
-      MapManager.Instance.FetchAll();
-    });
+    //builder.AddButton("The Crash Rex Button", () => {
+    //  MapManager.Instance.FetchAll();
+    //});
   }
 
   public void Update()

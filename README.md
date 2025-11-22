@@ -30,6 +30,28 @@ In order to get going with this, follow the following steps:
 3. Open the Solution
 4. You're ready!
 
+### Reference Assemblies (Recommended)
+
+For faster compilation and legal distribution, setup RefasMer reference assemblies:
+
+**Windows:**
+```batch
+setup-refasmer.bat
+```
+
+**Linux/macOS:**
+```bash
+./setup-refasmer.sh
+```
+
+This creates metadata-only assemblies in `ref-assemblies/` that provide:
+- ✅ Faster compilation (metadata-only assemblies)
+- ✅ Legal distribution (no game code included)
+- ✅ Smaller repository size
+- ✅ Cross-platform compatibility
+
+The build system automatically uses reference assemblies when available and falls back to game assemblies if needed.
+
 ### During Development
 Make sure you're using the _Debug_ configuration. Every time you build your project, the files will be copied to your Mods folder and you can immediately start the game to test it.
 

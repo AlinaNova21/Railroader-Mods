@@ -2,7 +2,7 @@
   "manifestVersion": 5,
   "id": "AlinaNova21.AlinasMapMod",
   "name": "Alina's Map Mod",
-  "version": "$(AssemblyVersion)",
+  "version": "VERSION_PLACEHOLDER",
   "assemblies": [ "AlinasMapMod" ],
   "updateUrl": "https://railroader.alinanova.dev/update.json",
   "requires": [

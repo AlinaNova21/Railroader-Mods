@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<!-- Optionally, set a few things to your liking -->
 		<MajorVersion>1</MajorVersion>
-		<MinorVersion>6</MinorVersion>
+		<MinorVersion>7</MinorVersion>
 		<IsMod>true</IsMod>
 		<PackageMod>true</PackageMod>
 		<PublishMod>true</PublishMod>
@@ -26,8 +26,10 @@
 	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)' != 'Testing' and '$(Configuration)' != 'PrivateTesting'">
 		<Compile Remove="Map/**/*.cs" />
-    <Compile Include="Map/EditableMapLabel.cs" />
-    <Compile Include="Map/MapLabelBuilder.cs" />
+		<Compile Include="Map/EditableMapLabel.cs" />
+		<Compile Include="Map/MapLabelBuilder.cs" />
+		<Compile Include="Map/Patches.cs" />
+		<Compile Include="Map/TileManager.cs" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)' != 'PrivateTesting'">
 		<Compile Remove="Map/CustomMapManager.cs" />
@@ -57,6 +59,7 @@
 		<GameAssembly Include="UnityEngine.CoreModule" />
 		<GameAssembly Include="UnityEngine.PhysicsModule" />
 		<GameAssembly Include="UnityEngine.ImageConversionModule" />
+		<GameAssembly Include="UnityEngine.TerrainModule" />
 		<GameAssembly Include="UnityEngine.UI" />
 		<GameAssembly Include="UnityEngine.UIModule" />
 	</ItemGroup>
@@ -68,5 +71,8 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Reference Include="System.Net.Http" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Compile Include="Map\CustomMapPatches.local.cs" />
 	</ItemGroup>
 </Project>

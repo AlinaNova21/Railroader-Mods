@@ -2,7 +2,7 @@ using System;
 
 namespace AlinasUtils;
 
-internal class Settings
+public class Settings
 {
   public string SaveToLoadOnStartup { get; set; } = "";
   public bool AutoLoadSaveOnStartup { get; set; } = false;

@@ -130,7 +130,7 @@ public class Utils
       .SelectMany(a => a.GetTypes())
       .Where(t => typeof(IObjectCache<T>).IsAssignableFrom(t))
       .Take(1)
-      .Select(t => (IObjectCache<T>)Activator.CreateInstance(t, true))
+      .Select(t => typeof(IObjectCache<T>).GetProperty("Instance", System.Reflection.BindingFlags.Static).GetMethod.Invoke(null, null) as IObjectCache<T>)
       .SingleOrDefault();
   internal static void ClearCaches()
   {

@@ -4,6 +4,7 @@
     <MajorVersion>1</MajorVersion>
     <MinorVersion>4</MinorVersion>
     <IsMod>true</IsMod>
+	<IsPlugin>true</IsPlugin>
     <PackageMod>true</PackageMod>
     <PublishMod>true</PublishMod>
     <Configurations>Debug;Release;PrivateTesting;Testing</Configurations>
@@ -15,21 +16,42 @@
     <EmbeddedResource Include="Resources\*.png" />
   </ItemGroup>
   <ItemGroup>
-    <GameAssembly Include="0Harmony" />
-    <GameAssembly Include="Assembly-CSharp" />
+    <Compile Remove="BepinEx\**" />
+    <Content Remove="BepinEx\**" />
+    <EmbeddedResource Remove="BepinEx\**" />
+    <None Remove="BepinEx\**" />
+  </ItemGroup>
+  <ItemGroup>
+	<GameAssembly Include="Assembly-CSharp" />
+	<GameAssembly Include="0Harmony" />
     <GameAssembly Include="KeyValue.Runtime" />
     <GameAssembly Include="Map.Runtime" />
     <GameAssembly Include="Railloader.Interchange" />
     <GameAssembly Include="Serilog" />
     <GameAssembly Include="Unity.TextMeshPro" />
-    <GameAssembly Include="UnityEngine.CoreModule" />
+	<GameAssembly Include="UnityEngine" />
+	<GameAssembly Include="UnityEngine.CoreModule" />
     <GameAssembly Include="UnityEngine.ImageConversionModule" />
     <GameAssembly Include="UnityEngine.InputLegacyModule" />
     <GameAssembly Include="UnityEngine.UI" />
   </ItemGroup>
+	<!--
+  <ItemGroup>
+	<BepInExReference Include="BepInEx" />
+	<BepInExReference Include="Mono.Cecil" />
+	<BepInExReference Include="MonoMod.RuntimeDetour" />
+	<BepInExReference Include="MonoMod.Utils" />
+  </ItemGroup>
+  -->
   <ItemGroup>
     <Reference Include="UnityModManager">
       <HintPath>..\..\..\..\..\..\Users\ashum\Downloads\UnityModManagerInstaller\UnityModManager.dll</HintPath>
+		<Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Update="BepInEx">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
   </ItemGroup>
 </Project>

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using AlinasMapMod.Map;
 using GalaSoft.MvvmLight.Messaging;
 using Railloader;
 using Serilog;
@@ -22,6 +23,7 @@ public partial class AlinasMapModPlugin : SingletonPluginBase<AlinasMapModPlugin
     Definition = self;
 
     settings = moddingContext.LoadSettingsData<Settings>(self.Id) ?? new Settings();
+    TileManager.AllowDownloadingTiles = settings.DownloadMissingTiles;
   }
 
   public IEnumerable<ModMixinto> GetMixintos(string identifier)
@@ -100,10 +102,6 @@ public partial class AlinasMapModPlugin : SingletonPluginBase<AlinasMapModPlugin
   {
     AlinasMapMod.Instance.BuildSettingsWindow(builder);
   }
-
-  string bounds { get; set; } = "53,0,60,5";
-  string mapMod { get; set; } = "AlinasSandbox";
-  string mapName { get; set; } = "BushnellWhittier";
 
   public void ModTabDidClose()
   {

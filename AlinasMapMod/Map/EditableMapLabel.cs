@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using AlinasMapMod.Definitions;
 using AlinasMapMod.MapEditor;
+using AlinasMapMod.Validation;
 using Newtonsoft.Json.Linq;
 using Serilog;
 using StrangeCustoms.Tracks;
@@ -10,9 +13,11 @@ using UI.Builder;
 using UI.Map;
 using UnityEngine;
 
+using AlinasMapMod;
+
 namespace AlinasMapMod.Map;
 
-public class EditableMapLabel : MonoBehaviour, IEditableObject, ITransformableObject
+public class EditableMapLabel : MonoBehaviour, IEditableObject, ITransformableObject, IValidatable
 {
   public string Id { get; set; }
   public string DisplayType => "Map Label";
@@ -23,7 +28,7 @@ public class EditableMapLabel : MonoBehaviour, IEditableObject, ITransformableOb
   public bool CanCreate => true;
   public bool CanDestroy => true;
 
-  public List<string> Properties => ["Text", "Alignment"];
+  public List<string> Properties => ["Text"];
 
   public Vector3 Position { get => Transform.localPosition; set => Transform.localPosition = value; }
   public Vector3 Rotation
@@ -57,20 +62,18 @@ public class EditableMapLabel : MonoBehaviour, IEditableObject, ITransformableOb
     switch (property) {
       case "Text":
         return mapLabel.text;
-      case "Alignment":
-        return mapLabel.alignment.ToString();
+      default:
+        throw new InvalidOperationException($"property not valid: {property}");
     }
-    return null;
   }
 
   public void SetProperty(string property, object value)
   {
+    ValidatePropertyChange(property, value, GetSerializedMapLabel);
+    
     switch (property) {
       case "Text":
         mapLabel.text = (string)value;
-        break;
-      case "Alignment":
-        mapLabel.alignment = (MapLabel.Alignment)Enum.Parse(typeof(MapLabel.Alignment), (string)value);
         break;
       default:
         throw new InvalidOperationException($"property not valid: {property}");
@@ -90,7 +93,6 @@ public class EditableMapLabel : MonoBehaviour, IEditableObject, ITransformableOb
     var data = raw.ToObject<SerializedMapLabel>();
     Position = data.Position;
     mapLabel.text = data.Text;
-    mapLabel.alignment = data.Alingnment;
     var text = GetComponentInChildren<TextMeshProUGUI>();
     text.text = data.Text;
   }
@@ -111,9 +113,8 @@ public class EditableMapLabel : MonoBehaviour, IEditableObject, ITransformableOb
     var mapLabel = GetComponentInChildren<MapLabel>();
 
     if (mapLabel == null) {
-      var clone = GameObject.Instantiate(parent.GetComponentInChildren<MapLabel>().gameObject);
+      var clone = GameObject.Instantiate(parent.GetComponentInChildren<MapLabel>().gameObject, transform, true);
       clone.name = "MapLabel";
-      clone.transform.SetParent(transform);
       clone.transform.localPosition = Vector3.zero;
       mapLabel = clone.GetComponent<MapLabel>();
       var canvas = clone.GetComponent<Canvas>();
@@ -127,15 +128,59 @@ public class EditableMapLabel : MonoBehaviour, IEditableObject, ITransformableOb
     text!.text = mapLabel.text;
   }
 
+  private SerializedMapLabel GetSerializedMapLabel()
+  {
+    return new SerializedMapLabel
+    {
+      Position = Position,
+      Text = mapLabel?.text ?? "Map Label"
+    };
+  }
+  
   private JObject GetSpliney()
   {
     var obj = new JObject
     {
       ["handler"] = "AlinasMapMod.MapLabelBuilder",
       ["position"] = JObject.FromObject(Position, AlinasMapMod.JsonSerializer),
-      ["text"] = mapLabel.text,
-      ["alignment"] = mapLabel.alignment.ToString()
+      ["text"] = mapLabel.text
     };
     return obj;
+  }
+  
+  public void Validate()
+  {
+    GetSerializedMapLabel().Validate();
+  }
+  
+  public ValidationResult ValidateWithDetails()
+  {
+    return GetSerializedMapLabel().ValidateWithDetails();
+  }
+  
+  private void ValidatePropertyChange<T>(string property, object value, Func<T> getValidationObject) where T : IValidatable
+  {
+    var validationObject = getValidationObject();
+    
+    // Apply the proposed change using reflection
+    var actualProperty = property;
+    
+    // Apply the proposed change using reflection
+    var propertyInfo = typeof(T).GetProperty(actualProperty);
+    if (propertyInfo == null)
+      throw new InvalidOperationException($"Property {actualProperty} not found on {typeof(T).Name}");
+      
+    propertyInfo.SetValue(validationObject, value);
+    
+    // Validate the change
+    try
+    {
+      validationObject.Validate();
+    }
+    catch (ValidationException ex)
+    {
+      Log.ForContext(GetType()).Warning("Validation failed for {Property}: {Message}", property, ex.Message);
+      throw new InvalidOperationException($"Invalid value for {property}: {ex.Message}", ex);
+    }
   }
 }

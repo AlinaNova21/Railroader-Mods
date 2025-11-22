@@ -14,9 +14,8 @@ internal static class MenuManagerStartPatch
   [HarmonyPostfix]
   public static void SkipStart(MenuManager __instance)
   {
-    var plugin = AlinasUtilsPlugin.Shared;
-    if (!plugin.IsEnabled) return;
-    if (!plugin.Settings.AutoLoadSaveOnStartup) return;
+    var settings = AlinasUtilsPlugin.Shared?.Settings ?? UMM.Mod.Settings;
+    if (!settings.AutoLoadSaveOnStartup) return;
     if (launched) return;
     launched = true;
     var gameManagerField = typeof(MenuManager).GetField("gameManager", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
@@ -33,7 +32,7 @@ internal static class MenuManagerStartPatch
         SceneDescriptor.EnvironmentEnviro
       };
     var sceneLoadSetup = new GlobalGameManager.SceneLoadSetup(list1, descriptor);
-    var gameSetup = new GameSetup(plugin.Settings.SaveToLoadOnStartup);
+    var gameSetup = new GameSetup(settings.SaveToLoadOnStartup);
     gameManager.Launch(sceneLoadSetup, gameSetup, default(StartSingleplayerSetup));
   }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using AlinasMapMod.Caches;
 using GalaSoft.MvvmLight.Messaging;
 using Game.Events;
 using Helpers;
@@ -159,7 +160,8 @@ public class PaxStationComponent : IndustryComponent, ICustomIndustryComponent, 
 
     if (wasActive && !paxStop.gameObject.activeSelf)
       paxStop.gameObject.SetActive(true);
-  }
+    PassengerStopCache.Instance[paxStop.identifier] = paxStop;
+    }
 
   public override void Service(IIndustryContext ctx)
   {

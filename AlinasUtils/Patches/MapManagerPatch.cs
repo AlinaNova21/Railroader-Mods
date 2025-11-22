@@ -9,7 +9,8 @@ namespace AlinasUtils.Patches
   {
     public static void Postfix(ref Single __result)
     {
-      __result = AlinasUtilsPlugin.Shared.Settings.MaxTileLoadDistance;
+      var settings = AlinasUtilsPlugin.Shared?.Settings ?? UMM.Mod.Settings;
+      __result = settings.MaxTileLoadDistance;
     }
   }
 }

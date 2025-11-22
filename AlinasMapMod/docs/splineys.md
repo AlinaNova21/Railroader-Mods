@@ -146,6 +146,7 @@ Example industry:
 ### <span style="color:red">***DEPRECATED: Use the industry component instead***
 
 ## Map Labels
+### Note that live editing may have ssizing issues, these are usually resolved on a save reload. 
 
 ```json
 {

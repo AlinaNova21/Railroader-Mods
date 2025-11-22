@@ -12,12 +12,118 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 var Logger = Log.ForContext<Program>();
 
-Parser.Default.ParseArguments<UploadOptions, CreateIndexOptions, ListOptions, MapOptions>(args)
+Parser.Default.ParseArguments<UploadOptions, CreateIndexOptions, ListOptions, MapOptions, ReflectOptions>(args)
   .WithParsed<UploadOptions>(opts => { SetupEnv(opts); UploadFiles(opts).Wait(); })
   .WithParsed<CreateIndexOptions>(opts => { SetupEnv(opts); CreateIndex(opts).Wait(); })
   .WithParsed<ListOptions>(opts => { SetupEnv(opts); ListFiles(opts).Wait(); })
-  .WithParsed<MapOptions>(opts => { SetupEnv(opts); MapHelper.Run(opts).Wait(); });
+  .WithParsed<MapOptions>(opts => { SetupEnv(opts); MapHelper.Run(opts).Wait(); })
+  .WithParsed<ReflectOptions>(opts => { ReflectAssembly(opts); });
 
+void ReflectAssembly(ReflectOptions opts)
+{
+  try
+  {
+    var assembly = System.Reflection.Assembly.LoadFrom(opts.AssemblyPath);
+    
+    // Get types with better error handling
+    Type[] types;
+    try 
+    {
+      types = assembly.GetTypes();
+    }
+    catch (System.Reflection.ReflectionTypeLoadException ex)
+    {
+      Logger.Information($"Some types could not be loaded, working with available types...");
+      types = ex.Types.Where(t => t != null).ToArray()!;
+    }
+    
+    // Find track-related types
+    var trackTypes = types
+      .Where(t => t.Name.Contains("Track") || t.FullName.Contains("Track"))
+      .OrderBy(t => t.FullName)
+      .ToList();
+    
+    Logger.Information($"Track-related types in {opts.AssemblyPath}:");
+    foreach (var type in trackTypes)
+    {
+      var typeKind = type.IsEnum ? "Enum" : type.IsClass ? "Class" : type.IsInterface ? "Interface" : "Other";
+      Logger.Information($"  {type.FullName} ({typeKind})");
+      
+      if (type.IsEnum)
+      {
+        var values = Enum.GetNames(type);
+        Logger.Information($"    Values: {string.Join(", ", values)}");
+      }
+      else if (type.IsClass)
+      {
+        var relevantProps = type.GetProperties()
+          .Where(p => p.Name.ToLower().Contains("style") || 
+                     p.Name.ToLower().Contains("class") ||
+                     p.Name.ToLower().Contains("type"))
+          .ToArray();
+          
+        if (relevantProps.Any())
+        {
+          Logger.Information($"    Relevant Properties:");
+          foreach (var prop in relevantProps)
+          {
+            Logger.Information($"      {prop.Name} : {prop.PropertyType.Name}");
+          }
+        }
+      }
+    }
+    
+    // Also search for style/class enums more broadly
+    if (opts.SearchEnums)
+    {
+      var styleClassEnums = types
+        .Where(t => t.IsEnum && 
+          (t.Name.ToLower().Contains("style") || 
+           t.Name.ToLower().Contains("class")))
+        .OrderBy(t => t.FullName)
+        .ToList();
+      
+      if (styleClassEnums.Any())
+      {
+        Logger.Information($"\nStyle/Class enums in {opts.AssemblyPath}:");
+        foreach (var enumType in styleClassEnums)
+        {
+          Logger.Information($"  {enumType.FullName}");
+          var values = Enum.GetNames(enumType);
+          Logger.Information($"    Values: {string.Join(", ", values)}");
+        }
+      }
+    }
+    
+    if (opts.SearchPattern != null)
+    {
+      var patternTypes = types
+        .Where(t => t.FullName.ToLower().Contains(opts.SearchPattern.ToLower()))
+        .OrderBy(t => t.FullName)
+        .ToList();
+        
+      if (patternTypes.Any())
+      {
+        Logger.Information($"\nTypes matching '{opts.SearchPattern}':");
+        foreach (var type in patternTypes)
+        {
+          var typeKind = type.IsEnum ? "Enum" : type.IsClass ? "Class" : type.IsInterface ? "Interface" : "Other";
+          Logger.Information($"  {type.FullName} ({typeKind})");
+          
+          if (type.IsEnum)
+          {
+            var values = Enum.GetNames(type);
+            Logger.Information($"    Values: {string.Join(", ", values)}");
+          }
+        }
+      }
+    }
+  }
+  catch (Exception ex)
+  {
+    Logger.Error($"Error reflecting assembly: {ex.Message}");
+  }
+}
 
 void SetupEnv(BaseOptions opts)
 {
@@ -204,4 +310,17 @@ class ListOptions : BaseOptions
 
   [Option(Default = "railroader-mods")]
   public string Prefix { get; set; } = "railroader-mods";
+}
+
+[Verb("reflect", HelpText = "Reflect on .NET assembly to find types.")]
+class ReflectOptions
+{
+  [Value(0, Required = true, HelpText = "Path to the assembly to reflect")]
+  public string AssemblyPath { get; set; } = "";
+
+  [Option('e', "enums", HelpText = "Search for style/class enums")]
+  public bool SearchEnums { get; set; } = false;
+
+  [Option('s', "search", HelpText = "Search for types matching pattern")]
+  public string? SearchPattern { get; set; } = null;
 }

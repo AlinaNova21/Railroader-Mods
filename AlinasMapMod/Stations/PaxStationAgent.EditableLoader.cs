@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using AlinasMapMod.Definitions;
 using AlinasMapMod.MapEditor;
+using AlinasMapMod.Validation;
 using Model.Ops;
 using Newtonsoft.Json.Linq;
 using Serilog;
@@ -10,8 +12,10 @@ using StrangeCustoms.Tracks;
 using UI.Builder;
 using UnityEngine;
 
+using AlinasMapMod;
+
 namespace AlinasMapMod.Stations;
-partial class PaxStationAgent : IEditableObject, ITransformableObject, ICustomHelper
+partial class PaxStationAgent : IEditableObject, ITransformableObject, ICustomHelper, IValidatable
 {
   public string Id { get => identifier; set => identifier = value; }
 
@@ -106,6 +110,8 @@ partial class PaxStationAgent : IEditableObject, ITransformableObject, ICustomHe
   }
   public void SetProperty(string property, object value)
   {
+    ValidatePropertyChange(property, value, GetSerializedStationAgent);
+    
     switch (property) {
       case "Prefab":
         Prefab = (string)value;
@@ -115,9 +121,49 @@ partial class PaxStationAgent : IEditableObject, ITransformableObject, ICustomHe
         break;
       default:
         throw new InvalidOperationException($"property not valid: {property}");
-    };
+    }
   }
 
+  private SerializedStationAgent GetSerializedStationAgent()
+  {
+    var serializedStationAgent = new SerializedStationAgent();
+    serializedStationAgent.Read(this);
+    return serializedStationAgent;
+  }
+  
+  public void Validate()
+  {
+    GetSerializedStationAgent().Validate();
+  }
+  
+  public ValidationResult ValidateWithDetails()
+  {
+    return GetSerializedStationAgent().ValidateWithDetails();
+  }
+  
+  private void ValidatePropertyChange<T>(string property, object value, Func<T> getValidationObject) where T : IValidatable
+  {
+    var validationObject = getValidationObject();
+    
+    // Apply the proposed change using reflection
+    var propertyInfo = typeof(T).GetProperty(property);
+    if (propertyInfo == null)
+      throw new InvalidOperationException($"Property {property} not found on {typeof(T).Name}");
+      
+    propertyInfo.SetValue(validationObject, value);
+    
+    // Validate the change
+    try
+    {
+      validationObject.Validate();
+    }
+    catch (ValidationException ex)
+    {
+      Log.ForContext(GetType()).Warning("Validation failed for {Property}: {Message}", property, ex.Message);
+      throw new InvalidOperationException($"Invalid value for {property}: {ex.Message}", ex);
+    }
+  }
+  
   public void Destroy(PatchEditor editor)
   {
     editor.RemoveSpliney(Id);

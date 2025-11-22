@@ -38,44 +38,47 @@ internal class ToolboxWindow : WindowBase
     Window.CloseWindow();
   }
 
-  public override void Populate(UIPanelBuilder builder)
-  {
-    builder.AddLabel("This is another test");
-    if (StateManager.IsHost) {
-      var setGamemode = (GameMode mode) =>
-        StateManager.ApplyLocal(new PropertyChange("_game", "mode", new IntPropertyValue((int)mode)));
-      builder.AddSection("Gamemode", gmBuilder => {
-        gmBuilder.HStack(b => {
-          b.AddField("Sandbox", b.AddToggle(() => StateManager.Shared.GameMode == GameMode.Sandbox, value => { setGamemode(value ? GameMode.Sandbox : GameMode.Company); }));
-          b.AddField("Company", b.AddToggle(() => StateManager.Shared.GameMode == GameMode.Company, value => { setGamemode(value ? GameMode.Company : GameMode.Sandbox); }));
-        });
-      });
-    }
-    builder.AddField("Hide Trees", builder.AddToggle(
-      () => HideTrees,
-      (value) => {
-        HideTrees = value;
-        MapManager.Instance!.ForceDisableTrees = value;
-        MapManager.Instance!.RebuildAll();
-      }
-    ));
-    builder.AddField("Pause Time", builder.AddToggle(
-      () => TimeWeather.TimeMultiplier == 0,
-      (value) => {
-        TimeWeather.TimeMultiplier = value ? 0 : 1;
-      }
-    ));
-    builder.AddSection("Sleep");
-    builder.HStack(b => {
-      var wait = (float hours) => StateManager.ApplyLocal(new WaitTime { Hours = hours });
-      builder.AddButtonCompact("1 Hour", () => wait(1));
-      builder.AddButtonCompact("Night", () => {
-        var now = TimeWeather.Now.Hours;
-        var tgt = StateManager.Shared.Storage.InterchangeServeHour;
-        var diff = now < tgt ? tgt - now : 24 - now + tgt;
-        wait(diff);
-      });
-    });
+    public override void Populate(UIPanelBuilder builder)
+    {
+        if (StateManager.IsHost) {
+            var setGamemode = (GameMode mode) =>
+                StateManager.ApplyLocal(new PropertyChange("_game", "mode", new IntPropertyValue((int)mode)));
+            builder.AddSection("Gamemode", gmBuilder => {
+                gmBuilder.HStack(b => {
+                    b.AddField("Sandbox", b.AddToggle(() => StateManager.Shared.GameMode == GameMode.Sandbox, value => { setGamemode(value ? GameMode.Sandbox : GameMode.Company); }));
+                    b.AddField("Company", b.AddToggle(() => StateManager.Shared.GameMode == GameMode.Company, value => { setGamemode(value ? GameMode.Company : GameMode.Sandbox); }));
+                });
+            });
+        }
+        builder.AddField("Hide Trees", builder.AddToggle(
+            () => HideTrees,
+            (value) => {
+                HideTrees = value;
+                MapManager.Instance!.ForceDisableTrees = value;
+                MapManager.Instance!.RebuildAll();
+            }
+        ));
+        if (StateManager.IsHost) {
+            builder.AddField("Pause Time", builder.AddToggle(
+              () => TimeWeather.TimeMultiplier == 0,
+              (value) => {
+                  TimeWeather.TimeMultiplier = value ? 0 : 1;
+              }
+            ));
+            builder.AddSection("Sleep");
+            builder.HStack(b => {
+                var wait = (float hours) => StateManager.ApplyLocal(new WaitTime { Hours = hours });
+                builder.AddButtonCompact("1 Hour", () => wait(1));
+                builder.AddButtonCompact("3 Hour", () => wait(3));
+                builder.AddButtonCompact("6 Hour", () => wait(6));
+                builder.AddButtonCompact("Night", () => {
+                    var now = TimeWeather.Now.Hours;
+                    var tgt = StateManager.Shared.Storage.InterchangeServeHour;
+                    var diff = now < tgt ? tgt - now : 24 - now + tgt;
+                    wait(diff);
+                });
+            });
+        }
 
     var areas = OpsController.Shared.Areas;
     var spawnpoints = SpawnPoint.All.Where(sp => {
@@ -115,11 +118,16 @@ internal class ToolboxWindow : WindowBase
     builder.AddButton("Rebuild Track", () => {
       TrackObjectManager.Instance.Rebuild();
     });
-    builder.AddButton("Reset Derailments", () => {
-      var kv = StateManager.Shared.KeyValueObjectForId("_reputation");
-      if (kv == null) return;
-      kv["derailments"] = Value.Array([]);
+    builder.AddButton("Rebuild Terrain", () => {
+        MapManager.Instance.RebuildAll();
     });
+    if (StateManager.IsHost) {
+        builder.AddButton("Reset Derailments", () => {
+            var kv = StateManager.Shared.KeyValueObjectForId("_reputation");
+            if (kv == null) return;
+            kv["derailments"] = Value.Array([]);
+        });
+    }
 
     builder.AddSection("Tooltip", builder => {
       builder.AddLabel(() => {

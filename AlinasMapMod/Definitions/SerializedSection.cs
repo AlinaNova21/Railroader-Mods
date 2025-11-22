@@ -1,10 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
+using AlinasMapMod.Validation;
+using AlinasMapMod.Caches;
 using Game.Progression;
+using UnityEngine;
 
 namespace AlinasMapMod.Definitions;
 
-public class SerializedSection
+public class SerializedSection : SerializedComponentBase<Section>,
+  ICreatableComponent<Section>,
+  IDestroyableComponent<Section>
 {
   public string DisplayName { get; set; } = "";
   public string Description { get; set; } = "";
@@ -20,32 +25,76 @@ public class SerializedSection
 
   public SerializedSection(Section s)
   {
-    DisplayName = s.displayName;
-    Description = s.description;
-    PrerequisiteSections = s.prerequisiteSections.ToDictionary(s => s.identifier, s => true);
-    DeliveryPhases = s.deliveryPhases.Select(dp => new SerializedDeliveryPhase(dp));
-    DisableFeaturesOnUnlock = s.disableFeaturesOnUnlock.ToDictionary(f => f.identifier, f => true);
-    EnableFeaturesOnUnlock = s.enableFeaturesOnUnlock.ToDictionary(f => f.identifier, f => true);
-    EnableFeaturesOnAvailable = s.enableFeaturesOnAvailable.ToDictionary(f => f.identifier, f => true);
+    Read(s);
   }
 
-  internal void ApplyTo(Section sec)
+  protected override void ConfigureValidation()
   {
-    sec.displayName = DisplayName;
-    sec.description = Description;
-    sec.prerequisiteSections = DefinitionUtils.ApplyList(sec.prerequisiteSections ?? [], PrerequisiteSections);
-    sec.disableFeaturesOnUnlock = DefinitionUtils.ApplyList(sec.disableFeaturesOnUnlock ?? [], DisableFeaturesOnUnlock);
-    sec.enableFeaturesOnUnlock = DefinitionUtils.ApplyList(sec.enableFeaturesOnUnlock ?? [], EnableFeaturesOnUnlock);
-    sec.enableFeaturesOnAvailable = DefinitionUtils.ApplyList(sec.enableFeaturesOnAvailable ?? [], EnableFeaturesOnAvailable);
+    RuleFor(() => DisplayName)
+      .Required();
+    
+    RuleFor(() => Description)
+      .Required();
 
-    sec.deliveryPhases = DeliveryPhases.Select(dp => {
+    // Validate delivery phases - will be validated when Write is called
+  }
+
+  public override Section Create(string id)
+  {
+    // Create GameObject with Section component (based on progression patterns)
+    var go = new GameObject(id);
+    var section = go.AddComponent<Section>();
+    section.identifier = id;
+    
+    // Register in cache
+    SectionCache.Instance[id] = section;
+    
+    // Apply configuration
+    Write(section);
+    
+    return section;
+  }
+
+  public override void Write(Section section)
+  {
+    section.displayName = DisplayName;
+    section.description = Description;
+    section.prerequisiteSections = DefinitionUtils.ApplyList(section.prerequisiteSections ?? [], PrerequisiteSections);
+    section.disableFeaturesOnUnlock = DefinitionUtils.ApplyList(section.disableFeaturesOnUnlock ?? [], DisableFeaturesOnUnlock);
+    section.enableFeaturesOnUnlock = DefinitionUtils.ApplyList(section.enableFeaturesOnUnlock ?? [], EnableFeaturesOnUnlock);
+    section.enableFeaturesOnAvailable = DefinitionUtils.ApplyList(section.enableFeaturesOnAvailable ?? [], EnableFeaturesOnAvailable);
+
+    section.deliveryPhases = DeliveryPhases.Select(dp => {
       var phase = new Section.DeliveryPhase();
-      try {
-        dp.ApplyTo(phase);
-      } catch (ValidationException e) {
-        throw new ValidationException($"Error applying delivery phase: {e.Message}", e);
-      }
+      dp.Write(phase); // Use new Write method
       return phase;
     }).ToArray();
+  }
+
+  public override void Read(Section section)
+  {
+    DisplayName = section.displayName;
+    Description = section.description;
+    PrerequisiteSections = section.prerequisiteSections.ToDictionary(s => s.identifier, s => true);
+    DeliveryPhases = section.deliveryPhases.Select(dp => new SerializedDeliveryPhase(dp));
+    DisableFeaturesOnUnlock = section.disableFeaturesOnUnlock.ToDictionary(f => f.identifier, f => true);
+    EnableFeaturesOnUnlock = section.enableFeaturesOnUnlock.ToDictionary(f => f.identifier, f => true);
+    EnableFeaturesOnAvailable = section.enableFeaturesOnAvailable.ToDictionary(f => f.identifier, f => true);
+  }
+
+  public void Destroy(Section section)
+  {
+    // Remove from cache
+    SectionCache.Instance.Remove(section.identifier);
+    
+    // Destroy GameObject
+    GameObject.Destroy(section.gameObject);
+  }
+
+  internal void ApplyTo(Section section)
+  {
+    // Validate before applying
+    Validate();
+    Write(section);
   }
 }

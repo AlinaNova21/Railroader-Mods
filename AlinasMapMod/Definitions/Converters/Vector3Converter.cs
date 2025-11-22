@@ -10,7 +10,7 @@ internal sealed class Vector3Converter : JsonConverter<Vector3>
   public override Vector3 ReadJson(JsonReader reader, Type objectType, Vector3 existingValue, bool hasExistingValue, JsonSerializer serializer)
   {
     if (reader.TokenType == JsonToken.Null) return Vector3.zero;
-    var obj = JObject.FromObject(reader.Value);
+    var obj = JObject.FromObject(reader.Value!);
     if (obj.ContainsKey("x")) existingValue.x = (float)obj["x"];
     if (obj.ContainsKey("y")) existingValue.y = (float)obj["y"];
     if (obj.ContainsKey("z")) existingValue.z = (float)obj["z"];

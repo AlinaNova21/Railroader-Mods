@@ -7,7 +7,6 @@
 <div>
 WIP, check back later.
 </div>
-<!-- { JSON.stringify(data.mod) } -->
 Changelog:
 <Container>
   {@const mod = data.mod}

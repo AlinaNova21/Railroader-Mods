@@ -1,10 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
+using AlinasMapMod.Validation;
+using AlinasMapMod.Caches;
 using Game.Progression;
+using UnityEngine;
 
 namespace AlinasMapMod.Definitions;
 
-public class SerializedMapFeature
+public class SerializedMapFeature : SerializedComponentBase<MapFeature>,
+  ICreatableComponent<MapFeature>,
+  IDestroyableComponent<MapFeature>
 {
   public string Description { get; set; } = "";
   public Dictionary<string, bool> Prerequisites { get; set; } = [];
@@ -23,7 +28,62 @@ public class SerializedMapFeature
   }
   public SerializedMapFeature(MapFeature feat)
   {
-    Description = feat.description; // Assign a value to Description
+    Read(feat);
+  }
+
+  protected override void ConfigureValidation()
+  {
+    RuleFor(() => DisplayName)
+      .Required();
+
+    // Validate GameObject URIs using Custom validation
+    RuleFor(() => GameObjectsEnableOnUnlock)
+      .Custom((gameObjects, context) =>
+      {
+        var result = new ValidationResult { IsValid = true };
+        
+        if (gameObjects != null)
+        {
+          foreach (var kvp in gameObjects)
+          {
+            var gameObjectUri = kvp.Key;
+            if (string.IsNullOrEmpty(gameObjectUri))
+            {
+              result.IsValid = false;
+              result.Errors.Add(new ValidationError
+              {
+                Field = $"{nameof(GameObjectsEnableOnUnlock)}[{kvp.Key}]",
+                Message = "GameObject URI cannot be null or empty",
+                Code = "REQUIRED",
+                Value = gameObjectUri
+              });
+            }
+            // Additional URI validation could be added here
+          }
+        }
+        
+        return result;
+      });
+  }
+
+  public override void Write(MapFeature feat)
+  {
+    feat.description = Description;
+    feat.defaultEnableInSandbox = DefaultEnableInSandbox;
+    feat.displayName = DisplayName;
+    feat.gameObjectsEnableOnUnlock = GameObjectsEnableOnUnlock.Keys.Select(Utils.GameObjectFromUri).Where(g => g != null).ToArray();
+    feat.prerequisites = DefinitionUtils.ApplyList(feat.prerequisites ?? [], Prerequisites);
+    feat.areasEnableOnUnlock = DefinitionUtils.ApplyList(feat.areasEnableOnUnlock ?? [], AreasEnableOnUnlock);
+    feat.trackGroupsAvailableOnUnlock = DefinitionUtils.ApplyList(feat.trackGroupsAvailableOnUnlock ?? [], TrackGroupsAvailableOnUnlock);
+    feat.trackGroupsEnableOnUnlock = DefinitionUtils.ApplyList(feat.trackGroupsEnableOnUnlock ?? [], TrackGroupsEnableOnUnlock);
+    feat.unlockExcludeIndustries = DefinitionUtils.ApplyList(feat.unlockExcludeIndustries ?? [], UnlockExcludeIndustries);
+    feat.unlockIncludeIndustries = DefinitionUtils.ApplyList(feat.unlockIncludeIndustries ?? [], UnlockIncludeIndustries);
+    feat.unlockIncludeIndustryComponents = DefinitionUtils.ApplyList(feat.unlockIncludeIndustryComponents ?? [], UnlockIncludeIndustryComponents);
+  }
+
+  public override void Read(MapFeature feat)
+  {
+    Description = feat.description;
     if (feat.prerequisites != null) {
       Prerequisites = feat.prerequisites.ToDictionary(p => p.identifier, p => true);
     }
@@ -54,16 +114,41 @@ public class SerializedMapFeature
 
   internal void ApplyTo(MapFeature feat)
   {
-    feat.description = Description;
-    feat.defaultEnableInSandbox = DefaultEnableInSandbox;
-    feat.displayName = DisplayName;
-    feat.gameObjectsEnableOnUnlock = GameObjectsEnableOnUnlock.Keys.Select(Utils.GameObjectFromUri).Where(g => g != null).ToArray();
-    feat.prerequisites = DefinitionUtils.ApplyList(feat.prerequisites ?? [], Prerequisites);
-    feat.areasEnableOnUnlock = DefinitionUtils.ApplyList(feat.areasEnableOnUnlock ?? [], AreasEnableOnUnlock);
-    feat.trackGroupsAvailableOnUnlock = DefinitionUtils.ApplyList(feat.trackGroupsAvailableOnUnlock ?? [], TrackGroupsAvailableOnUnlock);
-    feat.trackGroupsEnableOnUnlock = DefinitionUtils.ApplyList(feat.trackGroupsEnableOnUnlock ?? [], TrackGroupsEnableOnUnlock);
-    feat.unlockExcludeIndustries = DefinitionUtils.ApplyList(feat.unlockExcludeIndustries ?? [], UnlockExcludeIndustries);
-    feat.unlockIncludeIndustries = DefinitionUtils.ApplyList(feat.unlockIncludeIndustries ?? [], UnlockIncludeIndustries);
-    feat.unlockIncludeIndustryComponents = DefinitionUtils.ApplyList(feat.unlockIncludeIndustryComponents ?? [], UnlockIncludeIndustryComponents);
+    // Validate before applying
+    Validate();
+    Write(feat);
+  }
+
+  public override MapFeature Create(string id)
+  {
+    // Find the MapFeatureManager (based on OldPatcher pattern)
+    var mapFeatureManager = Object.FindObjectOfType<MapFeatureManager>(false);
+    if (mapFeatureManager == null)
+    {
+      throw new System.InvalidOperationException("MapFeatureManager not found");
+    }
+
+    // Create GameObject and MapFeature component (based on OldPatcher pattern)
+    var go = new GameObject(id);
+    go.transform.SetParent(mapFeatureManager.transform);
+    var mapFeature = go.AddComponent<MapFeature>();
+    mapFeature.identifier = id;
+    
+    // Register in cache
+    MapFeatureCache.Instance[id] = mapFeature;
+    
+    // Apply configuration
+    Write(mapFeature);
+    
+    return mapFeature;
+  }
+
+  public void Destroy(MapFeature mapFeature)
+  {
+    // Destroy the GameObject (like MapLabel pattern)
+    GameObject.Destroy(mapFeature.gameObject);
+    
+    // Remove from cache
+    MapFeatureCache.Instance.Remove(mapFeature.identifier);
   }
 }

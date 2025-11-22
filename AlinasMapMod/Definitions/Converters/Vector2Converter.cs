@@ -10,9 +10,10 @@ internal sealed class Vector2Converter : JsonConverter<Vector2>
   public override Vector2 ReadJson(JsonReader reader, Type objectType, Vector2 existingValue, bool hasExistingValue, JsonSerializer serializer)
   {
     if (reader.TokenType == JsonToken.Null) return Vector2.zero;
-    var obj = JObject.FromObject(reader.Value);
+    var obj = JObject.FromObject(reader.Value!);
     if (obj.ContainsKey("x")) existingValue.x = (float)obj["x"];
     if (obj.ContainsKey("y")) existingValue.y = (float)obj["y"];
+
     return existingValue;
   }
 

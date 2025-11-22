@@ -21,7 +21,6 @@ namespace AlinasUtils;
 
 class Toolbox : IDisposable
 {
-  private ToolboxWindow window;
   private CTCDialog ctcDialog;
   private Button button;
   public Toolbox()
@@ -40,9 +39,8 @@ class Toolbox : IDisposable
 
   public void Init()
   {
-    ctcDialog = new CTCDialog();
-
     WindowHelper.CreateWindow<ToolboxWindow>(null);
+    WindowHelper.CreateWindow<CTCDialog>(null);
 
     var tr = UnityEngine.Object.FindObjectOfType<TopRightArea>();
     if (tr != null) {
@@ -136,7 +134,7 @@ class Toolbox : IDisposable
       kv["derailments"] = Value.Array([]);
     });
     builder.AddButton("CTC", () => {
-      ctcDialog.ShowWindow();
+      ctcDialog.Show();
     });
   }
 

@@ -1,12 +1,12 @@
 using AlinasMapMod.Caches;
 using AlinasMapMod.Loaders;
+using AlinasMapMod.Validation;
 using UnityEngine;
 
 namespace AlinasMapMod.Definitions;
 
 [RootObject("loaders")]
-public class SerializedLoader :
-  ISerializedPatchableComponent<LoaderInstance>,
+public class SerializedLoader : SerializedComponentBase<LoaderInstance>,
   ICreatableComponent<LoaderInstance>,
   IDestroyableComponent<LoaderInstance>
 {
@@ -15,16 +15,64 @@ public class SerializedLoader :
   public string Prefab { get; set; } = "empty://";
   public string Industry { get; set; } = "";
 
-  public LoaderInstance Create(string id)
+  protected override void ConfigureValidation()
   {
-    var go = new GameObject(id);
-    go.transform.parent = Utils.GetParent("Loaders").transform;
-    var comp = go.AddComponent<LoaderInstance>();
-    comp.name = id;
-    comp.identifier = id;
-    Write(comp);
-    LoaderCache.Instance[id] = comp;
-    return comp;
+    RuleFor(() => Prefab)
+      .Required()
+      .AsGameObjectUri(VanillaPrefabs.AvailableLoaderPrefabs)
+      .Custom((prefab, context) =>
+      {
+        var result = new ValidationResult { IsValid = true };
+        
+        // Business logic validation: coal/diesel prefabs require industry
+        if (string.IsNullOrEmpty(Industry) && 
+            (prefab.Contains("coal") || prefab.Contains("diesel")))
+        {
+          result.IsValid = false;
+          result.Errors.Add(new ValidationError
+          {
+            Field = "Industry",
+            Message = $"Industry required for prefab {prefab}",
+            Code = "INDUSTRY_REQUIRED_FOR_PREFAB",
+            Value = Industry
+          });
+        }
+        
+        return result;
+      });
+
+    RuleFor(() => Position)
+      .Required();
+      
+    RuleFor(() => Rotation)
+      .Required();
+  }
+
+  public override LoaderInstance Create(string id)
+  {
+    GameObject go = null;
+    try
+    {
+      go = new GameObject(id);
+      go.transform.parent = Utils.GetParent("Loaders").transform;
+      var comp = go.AddComponent<LoaderInstance>();
+      comp.name = id;
+      comp.identifier = id;
+      Write(comp);
+      LoaderCache.Instance[id] = comp;
+      return comp;
+    }
+    catch
+    {
+      // Clean up the GameObject if creation failed
+      if (go != null)
+      {
+        UnityEngine.Object.DestroyImmediate(go);
+      }
+      // Remove from cache if it was added
+      LoaderCache.Instance.Remove(id);
+      throw;
+    }
   }
 
   public void Destroy(LoaderInstance comp)
@@ -33,7 +81,7 @@ public class SerializedLoader :
     LoaderCache.Instance.Remove(comp.identifier);
   }
 
-  public void Read(LoaderInstance comp)
+  public override void Read(LoaderInstance comp)
   {
     Position = comp.transform.localPosition;
     Rotation = comp.transform.localEulerAngles;
@@ -41,21 +89,11 @@ public class SerializedLoader :
     Industry = comp.Industry;
   }
 
-  public void Write(LoaderInstance comp)
+  public override void Write(LoaderInstance comp)
   {
     comp.transform.localPosition = Position;
     comp.transform.localEulerAngles = Rotation;
     comp.Prefab = Prefab;
     comp.Industry = Industry;
-  }
-
-  public void Validate()
-  {
-    if (!Prefab.Contains("://")) {
-      throw new ValidationException("Prefab must be a valid URI  " + Prefab);
-    }
-    if (Industry == "" && (Prefab.Contains("coal") || Prefab.Contains("diesel"))) {
-      throw new ValidationException("Industry required for prefab " + Prefab);
-    }
   }
 }

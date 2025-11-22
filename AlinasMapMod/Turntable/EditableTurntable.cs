@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using AlinasMapMod.Definitions;
 using AlinasMapMod.MapEditor;
-using AlinasMapMod.Turntable;
+using AlinasMapMod.Validation;
 using Newtonsoft.Json.Linq;
+using Serilog;
 using StrangeCustoms.Tracks;
 using UI.Builder;
 using UnityEngine;
 
-namespace MapEditor.Objects;
+namespace AlinasMapMod.Turntable;
 
 public class TurntableFactory : IObjectFactory
 {
@@ -28,7 +29,7 @@ public class TurntableFactory : IObjectFactory
     return obj;
   }
 }
-public class EditableTurntable : MonoBehaviour, IEditableObject, ITransformableObject
+public class EditableTurntable : MonoBehaviour, IEditableObject, ITransformableObject, IValidatable
 {
   private TurntableComponent Turntable => GetComponent<TurntableComponent>() ?? gameObject.AddComponent<TurntableComponent>();
   private RoundhouseComponent Roundhouse => GetComponent<RoundhouseComponent>() ?? gameObject.AddComponent<RoundhouseComponent>();
@@ -82,6 +83,8 @@ public class EditableTurntable : MonoBehaviour, IEditableObject, ITransformableO
   }
   public void SetProperty(string property, object value)
   {
+    ValidatePropertyChange(property, value, GetSerializedTurntable);
+    
     switch (property) {
       case "Subdivisions":
         Turntable.Subdivisions = (int)value;
@@ -159,6 +162,22 @@ public class EditableTurntable : MonoBehaviour, IEditableObject, ITransformableO
     ttb.BuildSpliney(Turntable.Identifier, Transform, GetSpliney());
   }
 
+  private SerializedTurntable GetSerializedTurntable()
+  {
+    return new SerializedTurntable
+    {
+      Identifier = Id,
+      Position = Position,
+      Rotation = Rotation,
+      RoundhouseStalls = Roundhouse.Stalls,
+      Radius = Turntable.Radius,
+      Subdivisions = Turntable.Subdivisions,
+      StartPrefab = StartPrefab,
+      EndPrefab = EndPrefab,
+      StallPrefab = StallPrefab
+    };
+  }
+  
   private JObject GetSpliney()
   {
     var obj = new JObject
@@ -172,5 +191,38 @@ public class EditableTurntable : MonoBehaviour, IEditableObject, ITransformableO
       ["StallPrefab"] = StallPrefab
     };
     return obj;
+  }
+  
+  public void Validate()
+  {
+    GetSerializedTurntable().Validate();
+  }
+  
+  public ValidationResult ValidateWithDetails()
+  {
+    return GetSerializedTurntable().ValidateWithDetails();
+  }
+  
+  private void ValidatePropertyChange<T>(string property, object value, Func<T> getValidationObject) where T : IValidatable
+  {
+    var validationObject = getValidationObject();
+    
+    // Apply the proposed change using reflection
+    var propertyInfo = typeof(T).GetProperty(property);
+    if (propertyInfo == null)
+      throw new InvalidOperationException($"Property {property} not found on {typeof(T).Name}");
+      
+    propertyInfo.SetValue(validationObject, value);
+    
+    // Validate the change
+    try
+    {
+      validationObject.Validate();
+    }
+    catch (ValidationException ex)
+    {
+      Log.ForContext(GetType()).Warning("Validation failed for {Property}: {Message}", property, ex.Message);
+      throw new InvalidOperationException($"Invalid value for {property}: {ex.Message}", ex);
+    }
   }
 }

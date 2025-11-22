@@ -1,37 +1,25 @@
 using System;
 using AlinasMapMod.Definitions;
 using AlinasMapMod.MapEditor;
-using Helpers;
+using AlinasMapMod.Validation;
 using Newtonsoft.Json.Linq;
-using Serilog;
 using StrangeCustoms.Tracks;
 using UnityEngine;
 
 namespace AlinasMapMod.Map;
-public class MapLabelBuilder : StrangeCustoms.ISplineyBuilder, IObjectFactory
+
+public class MapLabelBuilder : SplineyBuilderBase, IObjectFactory
 {
-  readonly Serilog.ILogger logger = Log.ForContext<MapLabelBuilder>();
-
   public string Name => "Map Label";
-
   public Type ObjectType => typeof(EditableMapLabel);
-
   public bool Enabled => true;
 
-  public GameObject BuildSpliney(string id, Transform parentTransform, JObject raw)
+  protected override GameObject BuildSplineyInternal(string id, Transform parentTransform, JObject data)
   {
-    logger.Information($"Configuring map label {id}");
-
-    var parent = GameObject.Find("Map Labels");
-    var go = parent.transform.Find(id)?.gameObject ?? new GameObject(id);
-    go.transform.parent = parent.transform;
-    go.layer = Layers.Map;
-    go.SetActive(false);
-    var eml = go.GetComponent<EditableMapLabel>() ?? go.AddComponent<EditableMapLabel>();
-    eml.Id = id;
-    eml.Load(raw);
-    go.SetActive(true);
-    return new GameObject();
+    Logger.Information("Building {BuilderType} with ID {Id}", GetType().Name, id);
+    var result = BuildFromCreatableComponent<UI.Map.MapLabel, SerializedMapLabel>(id, data);
+    Logger.Information("Successfully built {BuilderType} with ID {Id}", GetType().Name, id);
+    return result;
   }
 
   public IEditableObject CreateObject(PatchEditor editor, string id)

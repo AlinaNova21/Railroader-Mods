@@ -1,9 +1,9 @@
 using Game.Progression;
 
-namespace AlinasMapMod.Definitions
+namespace AlinasMapMod.Definitions;
+
+public class MapModItem
 {
-  public class MapModItem
-  {
     public string Identifier { get; set; } = "";
     public string Name { get; set; } = "";
     public string[] GroupIds { get; set; } = [];
@@ -13,5 +13,4 @@ namespace AlinasMapMod.Definitions
     public string Area { get; set; } = "";
     public string[] TrackSpans { get; set; } = [];
     public string IndustryComponent { get; set; } = "";
-  }
 }

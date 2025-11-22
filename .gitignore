@@ -400,3 +400,5 @@ FodyWeavers.xsd
 bin
 node_modules
 utilities.config.json
+
+*.local.cs

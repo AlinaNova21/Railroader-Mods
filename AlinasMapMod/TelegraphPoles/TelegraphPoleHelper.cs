@@ -16,7 +16,7 @@ class TelegraphPoleHelper : MonoBehaviour, IPickable
 
   public TooltipInfo TooltipInfo => new TooltipInfo($"Telegraph Pole {id}", $"{transform.localPosition}\n{randomText}");
 
-  public PickableActivationFilter ActivationFilter { get; }
+  public PickableActivationFilter ActivationFilter => PickableActivationFilter.Any;
 
   private static string[] _randomText = [];
   public static string RandomText
@@ -56,7 +56,6 @@ class TelegraphPoleHelper : MonoBehaviour, IPickable
 
   public void Activate(PickableActivateEvent evt)
   {
-    throw new System.NotImplementedException();
   }
 
   public void Deactivate()

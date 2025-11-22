@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "id": "AlinaNova21.MapEditor",
   "name": "Map Editor",
-  "version": "$(AssemblyVersion)",
+  "version": "VERSION_PLACEHOLDER",
   "assemblies": [ "MapEditor" ],
   "updateUrl": "https://railroader.alinanova.dev/update.json",
   "requires": [
