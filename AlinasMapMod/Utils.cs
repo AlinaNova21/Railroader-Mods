@@ -72,8 +72,7 @@ public class Utils
     if (!prefabUri.Contains("://"))
       throw new ValidationException($"Invalid prefab URI: {prefabUri}, must match the pattern of (empty|path|scenery|vanilla)://host/path");
     var scheme = prefabUri.Split(':')[0];
-    var hostPath = prefabUri.Split(':')[1];
-    var host = hostPath.Split('/')[0];
+    var host = prefabUri.Substring(prefabUri.IndexOf("://") + 3);
     if (scheme == "vanilla" && !vanillaValidList.Contains(host))
       throw new ValidationException($"Invalid vanilla prefab: {host}, must be one of {string.Join(", ", vanillaValidList)}");
   }

@@ -81,6 +81,11 @@ public class PaxStationComponent : IndustryComponent, ICustomIndustryComponent, 
       DisplayError(msg);
       return false;
     }
+    if (paxStop != null && paxStop.timetableCode != TimetableCode) {
+      var msg = $"Existing station (${paxStop.identifier})) found but timetable codes do not match, ({TimetableCode} != {paxStop.timetableCode})";
+      DisplayError(msg);
+      return false;
+    }
     var areaPaxStops = transform.parent.parent.GetComponentsInChildren<PassengerStop>(true);
     var matchingStop = areaPaxStops.SingleOrDefault(p => p.identifier == subIdentifier);
     if (matchingStop != null) {
@@ -97,6 +102,7 @@ public class PaxStationComponent : IndustryComponent, ICustomIndustryComponent, 
 
   private void DisplayError(string msg)
   {
+    logger.Error(msg);
     var console = UI.Console.Console.shared;
     if (console != null) {
       console.AddLine($"Error occurred for PaxStationComponent {subIdentifier}:");
@@ -134,34 +140,74 @@ public class PaxStationComponent : IndustryComponent, ICustomIndustryComponent, 
     paxStop.neighbors = NeighborIds.Select(neighborId => FindObjectsOfType<PassengerStop>(true).First(stop => stop.identifier == neighborId)).ToArray();
 
     var ttc = FindObjectOfType<TimetableController>();
-    var branch = ttc.branches.FirstOrDefault(branch => branch.name == Branch);
-    if (branch == null || branch == default) {
-      branch = new TimetableBranch
-      {
-        name = Branch,
-        stations = [],
-      };
-      ttc.branches.Add(branch);
+
+    var branches = Branch.Split(':');
+    if (branches.Length > 0) {
+      for (int i = 0; i < branches.Length; i++) {
+        var brName = branches[i];
+        var junctionType = TimetableStation.JunctionType.None;
+        if (branches.Length > 1) {
+          if (i == 0) {
+            junctionType = TimetableStation.JunctionType.JunctionStation;
+          } else {
+            junctionType = TimetableStation.JunctionType.JunctionDuplicate;
+          }
+        }
+        var branch = ttc.branches.FirstOrDefault(branch => branch.name == brName);
+        if (branch == null || branch == default) {
+          logger.Information("PaxStop {name} requires branch {brName}, creating", name, brName);
+          branch = new TimetableBranch
+          {
+            name = brName,
+            stations = [],
+          };
+          ttc.branches.Add(branch);
+        }
+        if (!branch.stations.Exists(station => station.code == TimetableCode)) {
+          logger.Information("PaxStop {name} does not exists in TimetableCode, creating.", name);
+          var station = new TimetableStation
+          {
+            passengerStop = paxStop,
+            code = TimetableCode,
+            name = name,
+            junctionType = junctionType
+          };
+          branch.stations.Add(station);
+          branch.stations.Sort((TimetableStation a, TimetableStation b) =>
+              (a.passengerStop?.transform.GetComponentInParent<Area>().transform.GetSiblingIndex() ?? int.MaxValue) -
+              (b.passengerStop?.transform.GetComponentInParent<Area>().transform.GetSiblingIndex() ?? int.MaxValue));
+        } else {
+          logger.Information("PaxStop {name} exists in TimetableCode, updating.", name);
+          var station = branch.stations.First(station => station.code == TimetableCode);
+          station.code = TimetableCode;
+          station.name = name;
+          station.passengerStop = paxStop;
+          station.junctionType = junctionType;
+        }
+      }
     }
-    if (!branch.stations.Exists(station => station.code == TimetableCode)) {
-      var station = new TimetableStation
-      {
-        passengerStop = paxStop,
-        code = TimetableCode,
-        name = name,
-      };
-      branch.stations.Add(station);
-    } else {
-      var station = branch.stations.First(station => station.code == TimetableCode);
-      station.code = TimetableCode;
-      station.name = name;
-      station.passengerStop = paxStop;
-    }
+
+    FillDistances();
 
     if (wasActive && !paxStop.gameObject.activeSelf)
       paxStop.gameObject.SetActive(true);
     PassengerStopCache.Instance[paxStop.identifier] = paxStop;
     }
+
+  private void FillDistances()
+  {
+    foreach (var item in FindObjectsOfType<PassengerStop>(true)) {
+      if (item.identifier == Identifier) {
+        continue;
+      }
+
+      if (!PassengerStop.TryCalculateMilesBetweenPassengerStops(this.subIdentifier, item.identifier, out PassengerStop.DistanceInfo foobar)) {
+        logger.Warning("Could not calculate distance between {a} and {b}", this.subIdentifier, item.identifier);
+      } else {
+        logger.Information("Distance between {a} and {b} is {distance} miles", this.subIdentifier, item.identifier, foobar.DistanceInMiles);
+      }
+    }
+  }
 
   public override void Service(IIndustryContext ctx)
   {
