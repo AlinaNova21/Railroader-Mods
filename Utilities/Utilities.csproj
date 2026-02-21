@@ -24,12 +24,7 @@
 			<HintPath Condition="Exists('$(GameManagedDir)\%(Identity).dll')">$(GameManagedDir)\%(Identity).dll</HintPath>
 			<Private>True</Private>
 		</Reference>
-		<Reference Include="Serilog">
-			<HintPath>..\..\Railroader_Data\Managed\Serilog.dll</HintPath>
-		</Reference>
-		<Reference Include="Serilog">
-			<HintPath>..\..\Railroader_Data\Managed\Serilog.Sinks.Console.dll</HintPath>
-		</Reference>
+        <GameAssembly Include="Serilog"/>
 		<Reference Include="UnityEngine.CoreModule">
 			<HintPath Condition="Exists('$(GameManagedDir)\%(Identity).dll')">$(GameManagedDir)\%(Identity).dll</HintPath>
 			<Private>True</Private>

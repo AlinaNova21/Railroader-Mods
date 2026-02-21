@@ -19,7 +19,7 @@ internal static class PassengerStopOnEnable
     static TrackSpan[] PatchSpans(PassengerStop stop, TrackSpan[] spans)
     {
         var comp = stop.transform.parent.GetComponentInChildren<PaxStationComponent>();
-        if (comp != null) {
+        if (comp != null && comp.TrackSpans.Any()) {
             spans = comp.trackSpans.ToList().Where(span => span.upper?.segment != null && span.lower?.segment != null).ToArray();
             foreach (var span in spans) {
                 logger.Information("Span {id} {upper} {lower}", span.id, span.upper, span.lower);

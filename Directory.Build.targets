@@ -1,18 +1,18 @@
 ﻿<Project>
-  <PropertyGroup>
+<PropertyGroup>
     <!-- Use RefasMer reference assemblies when available -->
     <UseReferenceAssemblies Condition="'$(UseReferenceAssemblies)' == ''">true</UseReferenceAssemblies>
     <ReferenceAssembliesDir Condition="'$(ReferenceAssembliesDir)' == ''">$(MSBuildThisFileDirectory)ref-assemblies</ReferenceAssembliesDir>
-	<BepInExCoreDir Condition="'$(BepInExCoreDir)' == ''">$([System.IO.Path]::Combine(`$(GameDir)`, `BepInEx`, `core`))</BepInExCoreDir>
+    <BepInExCoreDir Condition="'$(BepInExCoreDir)' == ''">$([System.IO.Path]::Combine('$(GameDir)', 'BepInEx', 'core'))</BepInExCoreDir>
 
-	  <!-- Try to find the game directory (still needed for runtime deployment) -->
+    <!-- Try to find the game directory (still needed for runtime deployment) -->
     <GameManagedDir Condition="'$(GameManagedDir)' == ''"
-      >$([System.IO.Path]::Combine($([System.IO.Directory]::GetDirectories(`$(GameDir)`, `*_Data`)[0]), `Managed`))</GameManagedDir>
-	<!-- Copy the mod to the game directory -->
-    <GameModDir Condition="'$(GameModDir)' == ''">$([System.IO.Path]::Combine(`$(GameDir)`, `Mods`, `$(AssemblyName)`))</GameModDir>
-	<GamePluginDir Condition="'$(GamePluginDir)' == ''">$([System.IO.Path]::Combine(`$(GameDir)`, `BepInEx`, `plugins`, `$(AssemblyName)`))</GamePluginDir>
+    >$([System.IO.Path]::Combine($([System.IO.Directory]::GetDirectories('$(GameDir)', '*_Data')[0]), 'Managed'))</GameManagedDir>
+    <!-- Copy the mod to the game directory -->
+    <GameModDir Condition="'$(GameModDir)' == ''">$([System.IO.Path]::Combine('$(GameDir)', 'Mods', '$(AssemblyName)'))</GameModDir>
+    <GamePluginDir Condition="'$(GamePluginDir)' == ''">$([System.IO.Path]::Combine('$(GameDir)', 'BepInEx', 'plugins', '$(AssemblyName)'))</GamePluginDir>
     <!-- <OutDir Condition="'$(Configuration)' == 'Debug' And '$(IsMod)' == 'true'">$(GameModDir)/</OutDir> -->
-  </PropertyGroup>
+</PropertyGroup>
   <PropertyGroup>
     <IsMod Condition="'$(IsMod)' == ''">false</IsMod>
 	<IsPlugin Condition="'$(IsPlugin)' == ''">false</IsPlugin>
@@ -27,39 +27,37 @@
     <FileVersion>$(AssemblyVersion)</FileVersion>
     <ProductVersion>$(AssemblyVersion)</ProductVersion>
   </PropertyGroup>
-  <ItemGroup>
-	<Reference Include="@(BepInExReference)">
-		<HintPath Condition="Exists('$([System.IO.Path]::Combine(`$(BepInExCoreDir)`, `%(Identity).dll`))')"
-        >$([System.IO.Path]::Combine(`$(BepInExCoreDir)`, `%(Identity).dll`))</HintPath>
-	  <Private>false</Private>
-	</Reference>
-		<!-- Reference assemblies from RefasMer (preferred) -->
-	<Reference Include="@(GameAssembly)" Condition="'$(UseReferenceAssemblies)' == 'true'">
-	  <HintPath Condition="Exists('$([System.IO.Path]::Combine(`$(ReferenceAssembliesDir)`, `%(Identity).dll`))')"
-        >$([System.IO.Path]::Combine(`$(ReferenceAssembliesDir)`, `%(Identity).dll`))</HintPath
-      >
-      <HintPath Condition="Exists('$([System.IO.Path]::Combine(`$(ReferenceAssembliesDir)`, `%(Identity).exe`))')"
-        >$([System.IO.Path]::Combine(`$(ReferenceAssembliesDir)`, `%(Identity).exe`))</HintPath
-      >
-      <Private>false</Private>
-    </Reference>
+    <ItemGroup>
+      <Reference Include="@(BepInExReference)">
+        <HintPath Condition="Exists($([System.IO.Path]::Combine('$(BepInExCoreDir)', '%(Identity).dll')))">$([System.IO.Path]::Combine('$(BepInExCoreDir)', '%(Identity).dll'))</HintPath>
+        <Private>false</Private>
+      </Reference>
     
-    <!-- Fallback to game assemblies if reference assemblies not available or disabled -->
-    <Reference Include="@(GameAssembly)" Condition="'$(UseReferenceAssemblies)' != 'true'">
-	  <HintPath Condition="Exists('$([System.IO.Path]::Combine(`$(GameManagedDir)`, `%(Identity).dll`))')"
-        >$([System.IO.Path]::Combine(`$(GameManagedDir)`, `%(Identity).dll`))</HintPath
-      >
-      <HintPath Condition="Exists('$([System.IO.Path]::Combine(`$(GameManagedDir)`, `%(Identity).exe`))')"
-        >$([System.IO.Path]::Combine(`$(GameManagedDir)`, `%(Identity).exe`))</HintPath
-      >
-      <Private>false</Private>
-    </Reference>
-    <!-- Allow referencing things like OtherMod/Mod.dll -->
-    <ModReference Include="@(ModAssembly)">
-      <AssemblyName>$([System.IO.Path]::GetFileNameWithoutExtension("%(Identity)"))</AssemblyName>
-      <FullModPath>$([System.IO.Path]::Combine(`$(GameDir)`, `Mods`, `%(Identity)`))</FullModPath>
+      <!-- Unified Reference Logic: Try Reference Assemblies first, then Game Managed folder -->
+      <Reference Include="@(GameAssembly)">
+        <!-- 1. Try RefasMer folder if enabled -->
+        <HintPath Condition="'$(UseReferenceAssemblies)' == 'true' And Exists($([System.IO.Path]::Combine('$(ReferenceAssembliesDir)', '%(Identity).dll')))">$([System.IO.Path]::Combine('$(ReferenceAssembliesDir)', '%(Identity).dll'))</HintPath>
+        <HintPath Condition="'$(UseReferenceAssemblies)' == 'true' And Exists($([System.IO.Path]::Combine('$(ReferenceAssembliesDir)', '%(Identity).exe')))">$([System.IO.Path]::Combine('$(ReferenceAssembliesDir)', '%(Identity).exe'))</HintPath>
+    
+        <!-- 2. Fallback to Game folder (or primary source for libs not in RefasMer) -->
+        <HintPath Condition="Exists($([System.IO.Path]::Combine('$(GameManagedDir)', '%(Identity).dll')))">$([System.IO.Path]::Combine('$(GameManagedDir)', '%(Identity).dll'))</HintPath>
+        <HintPath Condition="Exists($([System.IO.Path]::Combine('$(GameManagedDir)', '%(Identity).exe')))">$([System.IO.Path]::Combine('$(GameManagedDir)', '%(Identity).exe'))</HintPath>
+        <Private>false</Private>
+      </Reference>
+
+        <!-- Fallback to game assemblies if reference assemblies not available or disabled -->
+        <Reference Include="@(GameAssembly)" Condition="'$(UseReferenceAssemblies)' != 'true'">
+            <HintPath Condition="Exists($([System.IO.Path]::Combine('$(GameManagedDir)', '%(Identity).dll')))">$([System.IO.Path]::Combine('$(GameManagedDir)', '%(Identity).dll'))</HintPath>
+            <HintPath Condition="Exists($([System.IO.Path]::Combine('$(GameManagedDir)', '%(Identity).exe')))">$([System.IO.Path]::Combine('$(GameManagedDir)', '%(Identity).exe'))</HintPath>
+            <Private>false</Private>
+        </Reference>
+
+        <!-- Allow referencing things like OtherMod/Mod.dll -->
+        <ModReference Include="@(ModAssembly)">
+        <AssemblyName>$([System.IO.Path]::GetFileNameWithoutExtension('%(Identity)'))</AssemblyName>
+        <FullModPath>$([System.IO.Path]::Combine('$(GameDir)', 'Mods', '%(Identity)'))</FullModPath>
     </ModReference>
-	  <Reference Include="@(ModReference-&gt;'%(AssemblyName)')">
+    <Reference Include="@(ModReference->'%(AssemblyName)')">
 		  <HintPath Condition="Exists('%(FullModPath)')">%(FullModPath)</HintPath>
 		  <Private>false</Private>
 	  </Reference>

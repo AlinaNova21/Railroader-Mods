@@ -21,6 +21,7 @@ internal static class CarInspectorPopulatePassengerCarPanel
         ordered.Add(stop);
       }
     }
+    ordered.Sort((a, b) => a.GetComponentInParent<Area>().transform.GetSiblingIndex().CompareTo(b.GetComponentInParent<Area>().transform.GetSiblingIndex()));
     return ordered;
   }
   static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)

@@ -91,8 +91,16 @@ public class Utils
       case "path":
         if (host != "scene")
           throw new ArgumentException($"Invalid uri: {uriString}, path uris must start with scene");
-        // TODO: Handle objects not found
-        var go = GameObject.Find(segments[0]);
+        GameObject go = null;
+        for (int s = 0; s < UnityEngine.SceneManagement.SceneManager.sceneCount; s++) {
+            var scene = UnityEngine.SceneManagement.SceneManager.GetSceneAt(s);
+            go = scene.GetRootGameObjects().FirstOrDefault(g => g.name == segments[0]);
+            if (go != null) break;
+        }
+        if (go == null) {
+            Log.Warning("Root Object not found: {segment}", segments[0]);
+            return null;
+        }
         for (int i = 1; i < segments.Length; i++) {
           var trans = go.transform.Find(segments[i]);
           if (!trans) {

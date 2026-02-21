@@ -2,21 +2,14 @@ using Amazon.S3;
 using Amazon.S3.Model;
 using CommandLine;
 using Newtonsoft.Json;
-using Serilog;  
-using Utilities;
 
 var config = new Dictionary<string, string>();
 AmazonS3Client client;
-Log.Logger = new LoggerConfiguration()
-    .WriteTo.Console()
-    .CreateLogger();
-var Logger = Log.ForContext<Program>();
 
-Parser.Default.ParseArguments<UploadOptions, CreateIndexOptions, ListOptions, MapOptions, ReflectOptions>(args)
+Parser.Default.ParseArguments<UploadOptions, CreateIndexOptions, ListOptions, ReflectOptions>(args)
   .WithParsed<UploadOptions>(opts => { SetupEnv(opts); UploadFiles(opts).Wait(); })
   .WithParsed<CreateIndexOptions>(opts => { SetupEnv(opts); CreateIndex(opts).Wait(); })
   .WithParsed<ListOptions>(opts => { SetupEnv(opts); ListFiles(opts).Wait(); })
-  .WithParsed<MapOptions>(opts => { SetupEnv(opts); MapHelper.Run(opts).Wait(); })
   .WithParsed<ReflectOptions>(opts => { ReflectAssembly(opts); });
 
 void ReflectAssembly(ReflectOptions opts)
@@ -33,7 +26,7 @@ void ReflectAssembly(ReflectOptions opts)
     }
     catch (System.Reflection.ReflectionTypeLoadException ex)
     {
-      Logger.Information($"Some types could not be loaded, working with available types...");
+      System.Console.WriteLine($"Some types could not be loaded, working with available types...");
       types = ex.Types.Where(t => t != null).ToArray()!;
     }
     
@@ -43,16 +36,16 @@ void ReflectAssembly(ReflectOptions opts)
       .OrderBy(t => t.FullName)
       .ToList();
     
-    Logger.Information($"Track-related types in {opts.AssemblyPath}:");
+    System.Console.WriteLine($"Track-related types in {opts.AssemblyPath}:");
     foreach (var type in trackTypes)
     {
       var typeKind = type.IsEnum ? "Enum" : type.IsClass ? "Class" : type.IsInterface ? "Interface" : "Other";
-      Logger.Information($"  {type.FullName} ({typeKind})");
+      System.Console.WriteLine($"  {type.FullName} ({typeKind})");
       
       if (type.IsEnum)
       {
         var values = Enum.GetNames(type);
-        Logger.Information($"    Values: {string.Join(", ", values)}");
+        System.Console.WriteLine($"    Values: {string.Join(", ", values)}");
       }
       else if (type.IsClass)
       {
@@ -64,10 +57,10 @@ void ReflectAssembly(ReflectOptions opts)
           
         if (relevantProps.Any())
         {
-          Logger.Information($"    Relevant Properties:");
+          System.Console.WriteLine($"    Relevant Properties:");
           foreach (var prop in relevantProps)
           {
-            Logger.Information($"      {prop.Name} : {prop.PropertyType.Name}");
+            System.Console.WriteLine($"      {prop.Name} : {prop.PropertyType.Name}");
           }
         }
       }
@@ -85,12 +78,12 @@ void ReflectAssembly(ReflectOptions opts)
       
       if (styleClassEnums.Any())
       {
-        Logger.Information($"\nStyle/Class enums in {opts.AssemblyPath}:");
+        System.Console.WriteLine($"\nStyle/Class enums in {opts.AssemblyPath}:");
         foreach (var enumType in styleClassEnums)
         {
-          Logger.Information($"  {enumType.FullName}");
+          System.Console.WriteLine($"  {enumType.FullName}");
           var values = Enum.GetNames(enumType);
-          Logger.Information($"    Values: {string.Join(", ", values)}");
+          System.Console.WriteLine($"    Values: {string.Join(", ", values)}");
         }
       }
     }
@@ -104,16 +97,16 @@ void ReflectAssembly(ReflectOptions opts)
         
       if (patternTypes.Any())
       {
-        Logger.Information($"\nTypes matching '{opts.SearchPattern}':");
+        System.Console.WriteLine($"\nTypes matching '{opts.SearchPattern}':");
         foreach (var type in patternTypes)
         {
           var typeKind = type.IsEnum ? "Enum" : type.IsClass ? "Class" : type.IsInterface ? "Interface" : "Other";
-          Logger.Information($"  {type.FullName} ({typeKind})");
+          System.Console.WriteLine($"  {type.FullName} ({typeKind})");
           
           if (type.IsEnum)
           {
             var values = Enum.GetNames(type);
-            Logger.Information($"    Values: {string.Join(", ", values)}");
+            System.Console.WriteLine($"    Values: {string.Join(", ", values)}");
           }
         }
       }
@@ -121,7 +114,7 @@ void ReflectAssembly(ReflectOptions opts)
   }
   catch (Exception ex)
   {
-    Logger.Error($"Error reflecting assembly: {ex.Message}");
+    System.Console.WriteLine($"Error reflecting assembly: {ex.Message}");
   }
 }
 
@@ -133,7 +126,7 @@ void SetupEnv(BaseOptions opts)
 
   var configFile = opts.Config;
   if (string.IsNullOrEmpty(configFile)) {
-    Logger.Information("Config file is not set.");
+    System.Console.WriteLine("Config file is not set.");
     throw new Exception("Config file is not set.");
   }
   if (configFile.Contains("/") || configFile.Contains("\\")) {
@@ -142,13 +135,13 @@ void SetupEnv(BaseOptions opts)
     configFile = FindConfig(configFile);
   }
   if (!File.Exists(configFile)) {
-    Logger.Information($"Config file {configFile} does not exist.");
+    System.Console.WriteLine($"Config file {configFile} does not exist.");
     throw new Exception($"Config file {configFile} does not exist.");
   }
   var raw = File.ReadAllText(configFile);
   config = JsonConvert.DeserializeObject<Dictionary<string, string>>(raw);
   if (config == null) {
-    Logger.Information($"Config file {configFile} is not valid JSON.");
+    System.Console.WriteLine($"Config file {configFile} is not valid JSON.");
     throw new Exception($"Config file {configFile} is not valid JSON.");
   }
   client = new AmazonS3Client(config["AccessKeyId"], config["AccessKeySecret"], new AmazonS3Config
@@ -173,16 +166,16 @@ async Task UploadFiles(UploadOptions opts)
     if (File.Exists(file)) {
       fileList.Add(file);
     } else {
-      Logger.Information($"File {file} does not exist.");
+      System.Console.WriteLine($"File {file} does not exist.");
       return;
     }
   }
   int uploaded = 0;
   int skipped = 0;
-  Logger.Information($"Uploading {fileList.Count} files to {config!["Bucket"]}/{opts.Prefix}...");
+  System.Console.WriteLine($"Uploading {fileList.Count} files to {config!["Bucket"]}/{opts.Prefix}...");
   foreach (var file in fileList) {
     if (!File.Exists(file)) {
-      Logger.Information($"File {file} does not exist.");
+      System.Console.WriteLine($"File {file} does not exist.");
       return;
     }
     var fileName = Path.GetFileName(file);
@@ -194,15 +187,15 @@ async Task UploadFiles(UploadOptions opts)
     await UploadFile(file, dest);
     uploaded++;
   }
-  Logger.Information($"Uploaded {uploaded} files to {config!["Bucket"]}/{opts.Prefix}, skipped {skipped}");
+  System.Console.WriteLine($"Uploaded {uploaded} files to {config!["Bucket"]}/{opts.Prefix}, skipped {skipped}");
 }
 
 async Task ListFiles(ListOptions opts)
 {
   var existingFiles = await GetListFiles(opts.Prefix);
-  Logger.Information($"Files in {opts.Prefix}:");
+  System.Console.WriteLine($"Files in {opts.Prefix}:");
   foreach (var file in existingFiles) {
-    Logger.Information(file);
+    System.Console.WriteLine(file);
   }
 }
 
@@ -216,12 +209,12 @@ async Task CreateIndex(CreateIndexOptions opts)
     }
   }
   await UploadFile(indexFile, $"{opts.Prefix}/index.txt");
-  Logger.Information($"Uploaded index file to {config!["Bucket"]}/{opts.Prefix}/index.txt");
+  System.Console.WriteLine($"Uploaded index file to {config!["Bucket"]}/{opts.Prefix}/index.txt");
 }
 
 async Task<List<string>> GetListFiles(string prefix)
 {
-  Logger.Information("Getting list of files...");
+  System.Console.WriteLine("Getting list of files...");
   var list = new List<string>();
   string token = "";
   while (true) {
@@ -233,14 +226,14 @@ async Task<List<string>> GetListFiles(string prefix)
     });
     var existingFiles = existingFilesResp.S3Objects?.Select(o => o.Key).ToList() ?? [];
     list.AddRange(existingFiles);
-    Logger.Information($"Got {existingFiles.Count} files, token: {existingFilesResp.NextContinuationToken}");
+    System.Console.WriteLine($"Got {existingFiles.Count} files, token: {existingFilesResp.NextContinuationToken}");
     if (existingFilesResp.IsTruncated ?? false) {
       token = existingFilesResp.NextContinuationToken;
     } else {
       break;
     }
   }
-  Logger.Information($"Got {list.Count} files");
+  System.Console.WriteLine($"Got {list.Count} files");
   return list;
 }
 
@@ -272,7 +265,7 @@ async Task UploadFile(string file, string path)
   };
   var response = await client.PutObjectAsync(req);
   var filename = Path.GetFileName(file);
-  Logger.Information($"Uploaded {filename} to {config!["Bucket"]}/{path}  Resp: {response.HttpStatusCode}");
+  System.Console.WriteLine($"Uploaded {filename} to {config!["Bucket"]}/{path}  Resp: {response.HttpStatusCode}");
 }
 
 class BaseOptions

@@ -73,6 +73,6 @@
 		<Reference Include="System.Net.Http" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Compile Include="Map\CustomMapPatches.local.cs" />
+	  <Compile Include="Map\CustomMapPatches.local.cs" Condition="Exists('Map\CustomMapPatches.local.cs')" />
 	</ItemGroup>
 </Project>
