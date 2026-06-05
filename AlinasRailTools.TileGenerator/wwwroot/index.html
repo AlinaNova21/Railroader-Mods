@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlinasRailTools Tile Generator</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div id="app">
+        <div id="sidebar">
+            <h1>Tile Generator</h1>
+
+            <div class="section">
+                <h2>Map</h2>
+                <select id="map-selector">
+                    <option value="">Select a map...</option>
+                </select>
+                <button id="new-map-btn">New Map</button>
+            </div>
+
+            <div id="map-info" class="section" style="display: none;">
+                <h2>Map Info</h2>
+                <div id="map-details"></div>
+            </div>
+
+            <div class="section">
+                <h2>Tile Sources</h2>
+                <label>
+                    <input type="checkbox" id="include-base-game" checked>
+                    Include Base Game
+                </label>
+                <label>
+                    <input type="checkbox" id="include-mods" checked>
+                    Include Mods
+                </label>
+            </div>
+
+            <div class="section">
+                <h2>Generation</h2>
+                <label>
+                    Zoom Level:
+                    <select id="zoom-level">
+                        <option value="13">13</option>
+                        <option value="14" selected>14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                    </select>
+                </label>
+                <div id="selection-info"></div>
+                <button id="generate-btn" disabled>Generate Selected</button>
+                <div id="generation-status"></div>
+                <div id="generation-progress" style="display: none;">
+                    <div class="progress-bar">
+                        <div id="progress-fill"></div>
+                    </div>
+                    <div id="progress-text"></div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Cache Info</h2>
+                <div id="cache-stats"></div>
+            </div>
+        </div>
+
+        <div id="map-container"></div>
+    </div>
+
+    <!-- New Map Modal -->
+    <div id="new-map-modal" class="modal">
+        <div class="modal-content">
+            <h2>Create New Map</h2>
+            <form id="new-map-form">
+                <label>
+                    Map Name:
+                    <input type="text" id="new-map-name" required>
+                </label>
+                <label>
+                    Origin Latitude:
+                    <input type="number" id="new-map-lat" step="any" required>
+                </label>
+                <label>
+                    Origin Longitude:
+                    <input type="number" id="new-map-lng" step="any" required>
+                </label>
+                <label>
+                    Tile Dimension (m):
+                    <input type="number" id="new-map-dim" value="500" required>
+                </label>
+                <div class="modal-buttons">
+                    <button type="submit">Create</button>
+                    <button type="button" id="cancel-new-map">Cancel</button>
+                </div>
+            </form>
+            <div class="hint">Tip: Click on the map after closing this dialog to set the origin</div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+    <script src="coords.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

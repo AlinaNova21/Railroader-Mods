@@ -1,0 +1,13 @@
+root = true
+
+[*.cs]
+# Ban Console.WriteLine - use Serilog logger instead
+dotnet_diagnostic.CA1303.severity = none
+dotnet_diagnostic.CA2014.severity = error
+
+# Ban specific API usage
+# RS0030: Banned API
+dotnet_code_quality.banned_symbol_names = T:System.Console.WriteLine
+
+# Use custom rule to ban Console.WriteLine/Write
+dotnet_diagnostic.RS0030.severity = error

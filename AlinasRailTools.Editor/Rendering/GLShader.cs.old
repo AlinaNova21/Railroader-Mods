@@ -1,0 +1,158 @@
+using Silk.NET.OpenGL;
+using System.Numerics;
+
+namespace AlinasRailTools.Editor.Rendering;
+
+/// <summary>
+/// OpenGL shader program wrapper
+/// </summary>
+public class GLShader : IDisposable
+{
+    private readonly GL _gl;
+    private readonly uint _program;
+    private readonly Dictionary<string, int> _uniformLocations = new();
+
+    public uint Handle => _program;
+
+    public GLShader(GL gl, string vertexSource, string fragmentSource)
+    {
+        _gl = gl;
+
+        // Compile vertex shader
+        uint vertexShader = CompileShader(ShaderType.VertexShader, vertexSource);
+
+        // Compile fragment shader
+        uint fragmentShader = CompileShader(ShaderType.FragmentShader, fragmentSource);
+
+        // Link program
+        _program = _gl.CreateProgram();
+        _gl.AttachShader(_program, vertexShader);
+        _gl.AttachShader(_program, fragmentShader);
+        _gl.LinkProgram(_program);
+
+        // Check for link errors
+        _gl.GetProgram(_program, ProgramPropertyARB.LinkStatus, out int linkStatus);
+        if (linkStatus == 0)
+        {
+            string infoLog = _gl.GetProgramInfoLog(_program);
+            Console.WriteLine($"[GLShader] ERROR: Program linking failed:");
+            Console.WriteLine(infoLog);
+            throw new Exception($"Shader program linking failed: {infoLog}");
+        }
+        else
+        {
+            Console.WriteLine($"[GLShader] Successfully linked program {_program}");
+        }
+
+        // Clean up shaders (they're linked into the program now)
+        _gl.DetachShader(_program, vertexShader);
+        _gl.DetachShader(_program, fragmentShader);
+        _gl.DeleteShader(vertexShader);
+        _gl.DeleteShader(fragmentShader);
+
+        Console.WriteLine($"[GLShader] Created shader program {_program}");
+    }
+
+    private uint CompileShader(ShaderType type, string source)
+    {
+        uint shader = _gl.CreateShader(type);
+        _gl.ShaderSource(shader, source);
+        _gl.CompileShader(shader);
+
+        // Check for compile errors
+        _gl.GetShader(shader, ShaderParameterName.CompileStatus, out int compileStatus);
+        if (compileStatus == 0)
+        {
+            string infoLog = _gl.GetShaderInfoLog(shader);
+            Console.WriteLine($"[GLShader] ERROR: Shader compilation failed ({type}):");
+            Console.WriteLine(infoLog);
+            throw new Exception($"Shader compilation failed ({type}): {infoLog}");
+        }
+        else
+        {
+            Console.WriteLine($"[GLShader] Successfully compiled {type} shader {shader}");
+        }
+
+        return shader;
+    }
+
+    public void Use()
+    {
+        _gl.UseProgram(_program);
+    }
+
+    public int GetUniformLocation(string name)
+    {
+        if (_uniformLocations.TryGetValue(name, out int location))
+        {
+            return location;
+        }
+
+        location = _gl.GetUniformLocation(_program, name);
+        _uniformLocations[name] = location;
+
+        if (location == -1)
+        {
+            Console.WriteLine($"[GLShader] Warning: Uniform '{name}' not found in shader {_program}");
+        }
+
+        return location;
+    }
+
+    public void SetInt(string name, int value)
+    {
+        int location = GetUniformLocation(name);
+        if (location != -1)
+        {
+            _gl.Uniform1(location, value);
+        }
+    }
+
+    public void SetFloat(string name, float value)
+    {
+        int location = GetUniformLocation(name);
+        if (location != -1)
+        {
+            _gl.Uniform1(location, value);
+        }
+    }
+
+    public void SetVector3(string name, Vector3 value)
+    {
+        int location = GetUniformLocation(name);
+        if (location != -1)
+        {
+            _gl.Uniform3(location, value.X, value.Y, value.Z);
+        }
+    }
+
+    public void SetVector4(string name, Vector4 value)
+    {
+        int location = GetUniformLocation(name);
+        if (location != -1)
+        {
+            _gl.Uniform4(location, value.X, value.Y, value.Z, value.W);
+        }
+    }
+
+    public void SetMatrix4x4(string name, Matrix4x4 value)
+    {
+        int location = GetUniformLocation(name);
+        if (location != -1)
+        {
+            // Use safe span-based API with stackalloc
+            Span<float> matrixData = stackalloc float[16];
+            matrixData[0] = value.M11; matrixData[1] = value.M12; matrixData[2] = value.M13; matrixData[3] = value.M14;
+            matrixData[4] = value.M21; matrixData[5] = value.M22; matrixData[6] = value.M23; matrixData[7] = value.M24;
+            matrixData[8] = value.M31; matrixData[9] = value.M32; matrixData[10] = value.M33; matrixData[11] = value.M34;
+            matrixData[12] = value.M41; matrixData[13] = value.M42; matrixData[14] = value.M43; matrixData[15] = value.M44;
+
+            _gl.UniformMatrix4(location, 1, true, matrixData);  // transpose=true for row-major to column-major
+        }
+    }
+
+    public void Dispose()
+    {
+        _gl.DeleteProgram(_program);
+    }
+}

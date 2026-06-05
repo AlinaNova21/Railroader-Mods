@@ -21,7 +21,6 @@ namespace AlinasUtils;
 
 class Toolbox : IDisposable
 {
-  private CTCDialog ctcDialog;
   private Button button;
   public Toolbox()
   {
@@ -132,9 +131,6 @@ class Toolbox : IDisposable
       var kv = StateManager.Shared.KeyValueObjectForId("_reputation");
       if (kv == null) return;
       kv["derailments"] = Value.Array([]);
-    });
-    builder.AddButton("CTC", () => {
-      ctcDialog.Show();
     });
   }
 

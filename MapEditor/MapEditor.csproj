@@ -35,7 +35,7 @@
     <GameAssembly Include="UnityEngine.InputLegacyModule" />
     <GameAssembly Include="UnityEngine.InputModule" />
     <GameAssembly Include="UnityEngine.ImageConversionModule" />
-    <GameAssembly Include="UnityEngine.IMGuiModule" />
+    <GameAssembly Include="UnityEngine.IMGUIModule" />
     <GameAssembly Include="UnityEngine.PhysicsModule" />
     <GameAssembly Include="UnityEngine.UI" />
     <GameAssembly Include="RuntimeLevelDesign.Runtime" />

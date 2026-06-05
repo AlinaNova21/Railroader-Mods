@@ -1,0 +1,268 @@
+using Silk.NET.OpenGL;
+
+namespace AlinasRailTools.Editor.Rendering;
+
+/// <summary>
+/// OpenGL texture wrapper
+/// </summary>
+public class GLTexture : IDisposable
+{
+    private readonly GL _gl;
+    private readonly uint _handle;
+
+    public uint Handle => _handle;
+    public int Width { get; }
+    public int Height { get; }
+
+    // Private constructor for pre-created texture handle
+    private GLTexture(GL gl, uint handle, int width, int height)
+    {
+        _gl = gl;
+        _handle = handle;
+        Width = width;
+        Height = height;
+    }
+
+    public unsafe GLTexture(GL gl, int width, int height, byte[] data, PixelFormat format = PixelFormat.Rgba, PixelType pixelType = PixelType.UnsignedByte, InternalFormat internalFormat = InternalFormat.Rgba)
+    {
+        int threadId = Environment.CurrentManagedThreadId;
+        Console.WriteLine($"[GLTexture] Thread {threadId}: Creating texture {width}x{height}, format={format}, dataLen={data.Length}");
+
+        _gl = gl;
+        Width = width;
+        Height = height;
+
+        _handle = _gl.GenTexture();
+        Console.WriteLine($"[GLTexture] Thread {threadId}: GenTexture returned {_handle}");
+
+        _gl.BindTexture(TextureTarget.Texture2D, _handle);
+
+        // Check for GL errors before texture upload
+        var preError = _gl.GetError();
+        if (preError != GLEnum.NoError)
+        {
+            Console.WriteLine($"[GLTexture] Thread {threadId}: WARNING - GL error before TexImage2D: {preError}");
+        }
+
+        if (data.Length > 0)
+        {
+            Console.WriteLine($"[GLTexture] Thread {threadId}: Uploading {data.Length} bytes via TexImage2D");
+            Console.WriteLine($"[GLTexture] Thread {threadId}: Parameters: target=Texture2D, level=0, internalFormat={internalFormat}, width={width}, height={height}, border=0, format={format}, type={pixelType}");
+
+            fixed (byte* ptr = data)
+            {
+                Console.WriteLine($"[GLTexture] Thread {threadId}: Pointer valid: {(nint)ptr != 0}, address: 0x{(nint)ptr:X}");
+
+                try
+                {
+                    _gl.TexImage2D(TextureTarget.Texture2D, 0, (int)internalFormat, (uint)width, (uint)height, 0, format, pixelType, ptr);
+                    Console.WriteLine($"[GLTexture] Thread {threadId}: TexImage2D call completed");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[GLTexture] Thread {threadId}: EXCEPTION in TexImage2D: {ex.Message}");
+                    throw;
+                }
+            }
+
+            var postError = _gl.GetError();
+            if (postError != GLEnum.NoError)
+            {
+                throw new Exception($"OpenGL error after TexImage2D: {postError}");
+            }
+
+            Console.WriteLine($"[GLTexture] Thread {threadId}: TexImage2D completed successfully");
+        }
+        else
+        {
+            Console.WriteLine($"[GLTexture] Thread {threadId}: Allocating empty texture via TexImage2D");
+            _gl.TexImage2D(TextureTarget.Texture2D, 0, (int)internalFormat, (uint)width, (uint)height, 0, format, pixelType, null);
+            Console.WriteLine($"[GLTexture] Thread {threadId}: TexImage2D completed");
+        }
+
+        _gl.TexParameterI(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)GLEnum.ClampToEdge);
+        _gl.TexParameterI(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)GLEnum.ClampToEdge);
+        _gl.TexParameterI(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)GLEnum.Linear);
+        _gl.TexParameterI(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)GLEnum.Linear);
+
+        _gl.BindTexture(TextureTarget.Texture2D, 0);
+
+        Console.WriteLine($"[GLTexture] Thread {threadId}: Created texture {_handle} ({width}x{height})");
+    }
+
+    // NOTE: FromImage method removed - no longer using ImageSharp
+
+    /// <summary>
+    /// Create R16 texture from byte array (2 bytes per pixel)
+    /// GL will interpret bytes as ushort values
+    /// </summary>
+    public static unsafe GLTexture CreateR16FromBytes(GL gl, int width, int height, byte[] data)
+    {
+        Console.WriteLine($"[GLTexture.CreateR16FromBytes] Creating R16 texture {width}x{height}, {data.Length} bytes");
+
+        int threadId = Environment.CurrentManagedThreadId;
+        Console.WriteLine($"[GLTexture.CreateR16FromBytes] Thread {threadId}: Starting texture creation");
+
+        // Check for pre-existing GL errors
+        var preError = gl.GetError();
+        if (preError != GLEnum.NoError)
+        {
+            Console.WriteLine($"[GLTexture.CreateR16FromBytes] WARNING: GL error before texture creation: {preError}");
+        }
+
+        // Create texture object
+        uint handle = gl.GenTexture();
+        Console.WriteLine($"[GLTexture.CreateR16FromBytes] Thread {threadId}: Generated texture handle {handle}");
+
+        if (handle == 0)
+        {
+            throw new Exception("Failed to generate texture handle (got 0)");
+        }
+
+        gl.BindTexture(TextureTarget.Texture2D, handle);
+
+        var bindError = gl.GetError();
+        if (bindError != GLEnum.NoError)
+        {
+            Console.WriteLine($"[GLTexture.CreateR16FromBytes] ERROR: GL error after bind: {bindError}");
+            throw new Exception($"OpenGL error binding texture: {bindError}");
+        }
+
+        // Set pixel store alignment for ushort data (2 bytes)
+        gl.PixelStore(PixelStoreParameter.UnpackAlignment, 2);
+
+        // Upload byte data using pointer - GL will read as ushorts (2 bytes = 1 ushort)
+        Console.WriteLine($"[GLTexture.CreateR16FromBytes] Thread {threadId}: Uploading {data.Length} bytes via TexImage2D (R16 normalized, pointer-based)");
+        fixed (byte* ptr = data)
+        {
+            gl.TexImage2D(TextureTarget.Texture2D, 0, (int)InternalFormat.R16, (uint)width, (uint)height, 0, PixelFormat.Red, PixelType.UnsignedShort, ptr);
+            GC.KeepAlive(data); // Ensure array isn't GC'd during upload
+        }
+
+        // Restore default alignment
+        gl.PixelStore(PixelStoreParameter.UnpackAlignment, 4);
+
+        var error = gl.GetError();
+        if (error != GLEnum.NoError)
+        {
+            Console.WriteLine($"[GLTexture.CreateR16FromBytes] ERROR: OpenGL error after TexImage2D: {error}");
+            throw new Exception($"OpenGL error creating R16 texture: {error}");
+        }
+
+        // Set texture parameters
+        gl.TexParameterI(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)GLEnum.ClampToEdge);
+        gl.TexParameterI(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)GLEnum.ClampToEdge);
+        gl.TexParameterI(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)GLEnum.Linear);
+        gl.TexParameterI(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)GLEnum.Linear);
+
+        var paramError = gl.GetError();
+        if (paramError != GLEnum.NoError)
+        {
+            Console.WriteLine($"[GLTexture.CreateR16FromBytes] ERROR: GL error after texture parameters: {paramError}");
+            throw new Exception($"OpenGL error setting texture parameters: {paramError}");
+        }
+
+        gl.BindTexture(TextureTarget.Texture2D, 0);
+
+        // Check for GL errors after unbinding
+        var unbindError = gl.GetError();
+        if (unbindError != GLEnum.NoError)
+        {
+            Console.WriteLine($"[GLTexture.CreateR16FromBytes] ERROR: GL error after unbind: {unbindError}");
+            throw new Exception($"OpenGL error after unbind: {unbindError}");
+        }
+
+        Console.WriteLine($"[GLTexture.CreateR16FromBytes] Thread {threadId}: R16 texture created successfully");
+
+        return new GLTexture(gl, handle, width, height);
+    }
+
+    /// <summary>
+    /// Create R16 texture (single channel, 16-bit normalized float)
+    /// Perfect for heightmap data with linear filtering support
+    /// </summary>
+    public static GLTexture CreateR16UI(GL gl, int width, int height, ushort[] data)
+    {
+        Console.WriteLine($"[GLTexture.CreateR16UI] Creating R16 texture {width}x{height}, {data.Length} ushorts");
+
+        int threadId = Environment.CurrentManagedThreadId;
+        Console.WriteLine($"[GLTexture.CreateR16UI] Thread {threadId}: Starting texture creation");
+
+        // Check for pre-existing GL errors
+        var preError = gl.GetError();
+        if (preError != GLEnum.NoError)
+        {
+            Console.WriteLine($"[GLTexture.CreateR16UI] WARNING: GL error before texture creation: {preError}");
+        }
+
+        // Create texture object directly without going through constructor
+        uint handle = gl.GenTexture();
+        Console.WriteLine($"[GLTexture.CreateR16UI] Thread {threadId}: Generated texture handle {handle}");
+
+        if (handle == 0)
+        {
+            throw new Exception("Failed to generate texture handle (got 0)");
+        }
+
+        gl.BindTexture(TextureTarget.Texture2D, handle);
+
+        // Upload ushort data using span-based API (safer than pointer)
+        Console.WriteLine($"[GLTexture.CreateR16UI] Thread {threadId}: Uploading {data.Length * 2} bytes via TexImage2D (R16 normalized, span-based)");
+        ReadOnlySpan<ushort> dataSpan = data;
+        gl.TexImage2D<ushort>(TextureTarget.Texture2D, 0, (int)InternalFormat.R16, (uint)width, (uint)height, 0, PixelFormat.Red, PixelType.UnsignedShort, dataSpan);
+
+        var error = gl.GetError();
+        if (error != GLEnum.NoError)
+        {
+            Console.WriteLine($"[GLTexture.CreateR16UI] ERROR: OpenGL error after TexImage2D: {error}");
+            throw new Exception($"OpenGL error creating R16 texture: {error}");
+        }
+
+        // Set texture parameters
+        gl.TexParameterI(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)GLEnum.ClampToEdge);
+        gl.TexParameterI(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)GLEnum.ClampToEdge);
+        gl.TexParameterI(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)GLEnum.Linear);
+        gl.TexParameterI(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)GLEnum.Linear);
+
+        gl.BindTexture(TextureTarget.Texture2D, 0);
+
+        Console.WriteLine($"[GLTexture.CreateR16UI] Thread {threadId}: R16 texture created successfully");
+
+        // Create the GLTexture wrapper object manually
+        return new GLTexture(gl, handle, width, height);
+    }
+
+    /// <summary>
+    /// Create R8G8 texture (two channel, 8-bit each)
+    /// NOTE: Currently unused - we use R16UI for height data
+    /// </summary>
+    public static GLTexture CreateR8G8(GL gl, int width, int height, byte[] data)
+    {
+        // Convert RG to RGBA for better driver compatibility
+        byte[] rgbaData = new byte[width * height * 4];
+        for (int i = 0; i < width * height; i++)
+        {
+            rgbaData[i * 4] = data[i * 2];     // R
+            rgbaData[i * 4 + 1] = data[i * 2 + 1]; // G
+            rgbaData[i * 4 + 2] = 0;           // B (unused)
+            rgbaData[i * 4 + 3] = 255;         // A
+        }
+        return new GLTexture(gl, width, height, rgbaData, PixelFormat.Rgba, PixelType.UnsignedByte, InternalFormat.Rgba8);
+    }
+
+    public void Bind(uint textureUnit = 0)
+    {
+        _gl.ActiveTexture(TextureUnit.Texture0 + (int)textureUnit);
+        _gl.BindTexture(TextureTarget.Texture2D, _handle);
+    }
+
+    public void Unbind()
+    {
+        _gl.BindTexture(TextureTarget.Texture2D, 0);
+    }
+
+    public void Dispose()
+    {
+        _gl.DeleteTexture(_handle);
+    }
+}

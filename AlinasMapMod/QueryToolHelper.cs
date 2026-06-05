@@ -1,5 +1,6 @@
 
 using System;
+using System.IO;
 using AlinasMapMod.Mods;
 using GalaSoft.MvvmLight.Messaging;
 using HarmonyLib;
@@ -81,6 +82,23 @@ class QueryTooltipHelper : SingletonModBase<QueryTooltipHelper>
       var pos = mapManager.TilePositionFromPoint(vector);
       @event.AppendText("Pos: {0:F0} {1:F0} {2:F0}", vector.x, vector.y, vector.z);
       @event.AppendText("Tile: {0:F0},{1:F0}", pos.x, pos.y);
+
+      // Add tile path relative to game directory
+      var tilePos = new Vector2Int((int)pos.x, (int)pos.y);
+      var store = AccessTools.Field(typeof(MapManager), "_store").GetValue(mapManager) as MapStore;
+      if (store != null) {
+        // Call the private PathFor method using Harmony AccessTools
+        var pathForMethod = AccessTools.Method(typeof(MapStore), "PathFor", new[] { typeof(Vector2Int) });
+        string tilePath = pathForMethod?.Invoke(store, new object[] { tilePos }) as string;
+
+        if (!string.IsNullOrEmpty(tilePath)) {
+          string gameDir = Directory.GetCurrentDirectory();
+          string relativePath = tilePath.StartsWith(gameDir)
+            ? tilePath.Substring(gameDir.Length).TrimStart(Path.DirectorySeparatorChar)
+            : tilePath;
+          @event.AppendText("Path: {0}", relativePath);
+        }
+      }
     }
   }
 }

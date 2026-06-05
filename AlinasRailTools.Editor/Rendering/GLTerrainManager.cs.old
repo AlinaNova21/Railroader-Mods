@@ -1,0 +1,481 @@
+using Silk.NET.OpenGL;
+using System.Numerics;
+using StbImageSharp;
+
+namespace AlinasRailTools.Editor.Rendering;
+
+/// <summary>
+/// OpenGL-based terrain tile manager
+/// </summary>
+public class GLTerrainManager : IDisposable
+{
+    private readonly GL _gl;
+    private Dictionary<Vector2Int, GLTerrainTile> _loadedTiles = new();
+    private Vector2Int _lastCameraGrid = new Vector2Int(-999999, -999999);
+
+    private Dictionary<Vector2Int, string?> _tilePathCache = new();
+
+    private GLShader? _terrainShader;
+    private GLShader? _terrainTestShader;
+    private GLMesh? _sharedTerrainMesh;
+
+    private string? _gameRootDir;
+
+    public int LoadRadius { get; set; } = 1; // Further reduced for testing
+    public int UnloadRadius { get; set; } = 2; // Further reduced
+    public string MapName { get; set; } = "BushnellWhittier";
+    private const int MaxTilesLoading = 5; // Limit concurrent background loads
+    private const int MaxTotalTiles = 15; // Hard limit on total loaded tiles
+
+    private string BaseGameMapsDir => Path.Combine(_gameRootDir!, "Railroader_Data", "StreamingAssets", "Maps");
+    private string ModsDir => Path.Combine(_gameRootDir!, "Mods");
+
+    public GLTerrainManager(GL gl)
+    {
+        _gl = gl;
+        Initialize();
+    }
+
+    private void Initialize()
+    {
+        // Discover game root directory
+        _gameRootDir = FindGameRootDirectory();
+        Console.WriteLine($"[GLTerrainManager] Game root: {_gameRootDir}");
+
+        // Load shaders from embedded resources
+        var assembly = typeof(GLTerrainManager).Assembly;
+        string vsCode = LoadEmbeddedResource(assembly, "AlinasRailTools.Editor.Shaders.terrain.vs");
+        string vsTestCode = LoadEmbeddedResource(assembly, "AlinasRailTools.Editor.Shaders.terrain_test.vs");
+        string fsCode = LoadEmbeddedResource(assembly, "AlinasRailTools.Editor.Shaders.terrain.fs");
+
+        Console.WriteLine("[GLTerrainManager] Loading shaders...");
+        _terrainShader = new GLShader(_gl, vsCode, fsCode);
+        _terrainTestShader = new GLShader(_gl, vsTestCode, fsCode);
+
+        // Generate shared terrain mesh
+        _sharedTerrainMesh = GLMesh.CreatePlane(_gl, 512.0f, 512.0f, 1000, 1000);
+        Console.WriteLine($"[GLTerrainManager] Created shared terrain mesh");
+    }
+
+    private string FindGameRootDirectory()
+    {
+        // Start from current directory and walk up looking for Railroader_Data
+        string currentDir = Directory.GetCurrentDirectory();
+
+        while (!string.IsNullOrEmpty(currentDir))
+        {
+            string testPath = Path.Combine(currentDir, "Railroader_Data");
+            if (Directory.Exists(testPath))
+            {
+                return currentDir;
+            }
+
+            var parent = Directory.GetParent(currentDir);
+            if (parent == null)
+                break;
+            currentDir = parent.FullName;
+        }
+
+        throw new DirectoryNotFoundException("Could not find Railroader game directory (looking for Railroader_Data folder)");
+    }
+
+    private string LoadEmbeddedResource(System.Reflection.Assembly assembly, string resourceName)
+    {
+        using var stream = assembly.GetManifestResourceStream(resourceName);
+        if (stream == null)
+        {
+            throw new FileNotFoundException($"Embedded resource not found: {resourceName}");
+        }
+        using var reader = new StreamReader(stream);
+        return reader.ReadToEnd();
+    }
+
+    public void Update(Vector3 cameraPosition)
+    {
+        var cameraGrid = WorldToGrid(cameraPosition);
+        if (cameraGrid != _lastCameraGrid)
+        {
+            StreamTiles(cameraGrid);
+            _lastCameraGrid = cameraGrid;
+        }
+    }
+
+
+    private GLTexture CreateHeightmapTextureFromPNG(string path)
+    {
+        try
+        {
+            Console.WriteLine($"[GLTerrainManager] Loading texture from: {path}");
+
+            // Load image using StbImageSharp
+            using var stream = File.OpenRead(path);
+            StbImage.stbi_set_flip_vertically_on_load(0); // Don't flip - terrain tiles are already correct orientation
+            var image = ImageResult.FromStream(stream, ColorComponents.RedGreenBlueAlpha);
+
+            Console.WriteLine($"[GLTerrainManager] Image loaded: {image.Width}x{image.Height}, components: {image.Comp}");
+
+            // Validate dimensions
+            if (image.Width != 513 || image.Height != 513)
+            {
+                throw new InvalidDataException($"Invalid terrain tile dimensions: {image.Width}x{image.Height}, expected 513x513. File: {path}");
+            }
+
+            // Extract RG bytes directly - no conversion needed
+            // R = high byte, G = low byte - GL will read as ushort
+            // 2 bytes per pixel (RG only)
+            var data = new byte[image.Width * image.Height * 2];
+            byte[] pixels = image.Data;
+
+            for (int i = 0; i < image.Width * image.Height; i++)
+            {
+                int srcIndex = i * 4; // RGBA = 4 bytes per pixel
+                int dstIndex = i * 2; // RG = 2 bytes per pixel
+                data[dstIndex + 0] = pixels[srcIndex + 0]; // R
+                data[dstIndex + 1] = pixels[srcIndex + 1]; // G
+            }
+
+            Console.WriteLine($"[GLTerrainManager] Extracted {data.Length} bytes (RG), creating R16 texture...");
+            var texture = GLTexture.CreateR16FromBytes(_gl, image.Width, image.Height, data);
+            Console.WriteLine($"[GLTerrainManager] Texture created successfully");
+            return texture;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[GLTerrainManager] ERROR creating heightmap texture from {path}: {ex.Message}");
+            Console.WriteLine($"[GLTerrainManager] Stack trace: {ex.StackTrace}");
+            throw;
+        }
+    }
+
+    private GLTexture CreateDebugTexture(string path)
+    {
+        using var stream = File.OpenRead(path);
+        StbImage.stbi_set_flip_vertically_on_load(0);
+        var image = ImageResult.FromStream(stream, ColorComponents.RedGreenBlueAlpha);
+
+        var data = new byte[image.Width * image.Height * 4];
+        byte[] pixels = image.Data;
+
+        for (int i = 0; i < image.Width * image.Height; i++)
+        {
+            int pixelIndex = i * 4;
+            byte r = pixels[pixelIndex + 0];
+            byte g = pixels[pixelIndex + 1];
+
+            // Decode height and convert to grayscale
+            ushort heightValue = (ushort)((r << 8) | g);
+            float height = (heightValue / 65535.0f) * 1000.0f + 500.0f;
+            byte gray = (byte)Math.Clamp((height - 500.0f) / 1000.0f * 255.0f, 0, 255);
+
+            data[i * 4 + 0] = gray;
+            data[i * 4 + 1] = gray;
+            data[i * 4 + 2] = gray;
+            data[i * 4 + 3] = 255;
+        }
+
+        return new GLTexture(_gl, image.Width, image.Height, data);
+    }
+
+    private static int _renderCallCount = 0;
+
+    public void Render(Camera camera, bool useTestShader = false)
+    {
+        if (_renderCallCount == 0)
+        {
+            Console.WriteLine($"[GLTerrainManager.Render] FIRST RENDER CALL - Loaded tiles: {_loadedTiles.Count}, useTestShader: {useTestShader}");
+        }
+
+        var shader = useTestShader ? _terrainTestShader! : _terrainShader!;
+        shader.Use();
+
+        // Check GL error after shader use
+        var shaderError = _gl.GetError();
+        if (shaderError != GLEnum.NoError && _renderCallCount < 3)
+        {
+            Console.WriteLine($"[GLTerrainManager.Render] GL error after shader.Use(): {shaderError}");
+        }
+
+        // Set uniforms
+        var view = camera.GetViewMatrix();
+        var projection = camera.GetProjectionMatrix();
+        var vp = view * projection;
+
+        // Lighting
+        shader.SetVector3("lightDir", Vector3.Normalize(new Vector3(0.5f, -1.0f, 0.3f)));
+        shader.SetVector3("lightColor", new Vector3(1.0f, 1.0f, 1.0f));
+        shader.SetVector3("ambientColor", new Vector3(0.3f, 0.3f, 0.3f));
+        shader.SetVector4("colDiffuse", new Vector4(0.6f, 0.4f, 0.2f, 1.0f)); // Brown
+
+        int renderedCount = 0;
+        foreach (var tile in _loadedTiles.Values)
+        {
+            // Only render tiles with heightmap textures
+            if (tile.HeightmapTexture != null)
+            {
+                // Bind heightmap texture
+                tile.HeightmapTexture.Bind(0);
+                shader.SetInt("heightmap", 0);
+
+                // Set model matrix (translate to tile position)
+                var model = Matrix4x4.CreateTranslation(
+                    tile.WorldPosition.X + 256, // Center on tile
+                    0,
+                    tile.WorldPosition.Z + 256
+                );
+
+                shader.SetMatrix4x4("matModel", model);
+                shader.SetMatrix4x4("mvp", model * vp);
+
+                if (_renderCallCount < 3 && renderedCount == 0)
+                {
+                    Console.WriteLine($"[GLTerrainManager.Render] Frame {_renderCallCount}: Tile position: {tile.WorldPosition}, model translation: ({tile.WorldPosition.X + 256}, 0, {tile.WorldPosition.Z + 256})");
+                    Console.WriteLine($"[GLTerrainManager.Render] Camera pos: {camera.Position}, target: {camera.Target}");
+                }
+
+                // Draw terrain mesh
+                _sharedTerrainMesh!.Draw();
+                renderedCount++;
+
+                // Check GL error after draw
+                var drawError = _gl.GetError();
+                if (drawError != GLEnum.NoError && _renderCallCount < 3)
+                {
+                    Console.WriteLine($"[GLTerrainManager.Render] GL error after draw: {drawError}");
+                }
+            }
+        }
+
+        if (_renderCallCount < 3)
+        {
+            Console.WriteLine($"[GLTerrainManager.Render] Frame {_renderCallCount}: Rendered {renderedCount}/{_loadedTiles.Count} tiles (useTestShader={useTestShader})");
+        }
+        _renderCallCount++;
+    }
+
+    public IEnumerable<GLTerrainTile> GetLoadedTiles()
+    {
+        return _loadedTiles.Values;
+    }
+
+    private Vector2Int WorldToGrid(Vector3 worldPos)
+    {
+        int x = (int)Math.Floor(worldPos.X / 512);
+        int z = (int)Math.Floor(worldPos.Z / 512);
+        return new Vector2Int(x, z);
+    }
+
+    private void StreamTiles(Vector2Int centerGrid)
+    {
+        // Unload far tiles
+        var tilesToUnload = _loadedTiles.Keys
+            .Where(gridPos => !IsWithinRadius(gridPos, centerGrid, UnloadRadius))
+            .ToList();
+
+        foreach (var gridPos in tilesToUnload)
+        {
+            UnloadTile(gridPos);
+        }
+
+        // Load tiles directly on main thread - LIMIT TO 2 PER FRAME to avoid blocking
+        int tilesLoadedThisFrame = 0;
+        const int MaxTilesPerFrame = 2;
+
+        for (int x = centerGrid.X - LoadRadius; x <= centerGrid.X + LoadRadius && tilesLoadedThisFrame < MaxTilesPerFrame; x++)
+        {
+            for (int y = centerGrid.Y - LoadRadius; y <= centerGrid.Y + LoadRadius && tilesLoadedThisFrame < MaxTilesPerFrame; y++)
+            {
+                var gridPos = new Vector2Int(x, y);
+                if (!_loadedTiles.ContainsKey(gridPos))
+                {
+                    LoadTile(gridPos);
+                    tilesLoadedThisFrame++;
+                }
+            }
+        }
+    }
+
+    private bool IsWithinRadius(Vector2Int pos, Vector2Int center, int radius)
+    {
+        int dx = pos.X - center.X;
+        int dy = pos.Y - center.Y;
+        return dx * dx + dy * dy <= radius * radius;
+    }
+
+    private void LoadTile(Vector2Int gridPos)
+    {
+        Console.WriteLine($"[GLTerrainManager.LoadTile] Loading tile {gridPos}");
+
+        var tilePath = FindTilePath(gridPos);
+        float[,] heightmap = tilePath != null
+            ? LoadHeightmapFromPNG(tilePath)
+            : GenerateFlatHeightmap();
+
+        var tile = new GLTerrainTile
+        {
+            GridPos = gridPos,
+            Heightmap = heightmap,
+        };
+
+        if (tilePath != null)
+        {
+            Console.WriteLine($"[GLTerrainManager.LoadTile] Creating texture for {tilePath}");
+            tile.HeightmapTexture = CreateHeightmapTextureFromPNG(tilePath);
+        }
+
+        _loadedTiles[gridPos] = tile;
+        Console.WriteLine($"[GLTerrainManager.LoadTile] Tile {gridPos} loaded successfully");
+    }
+
+    private string? FindTilePath(Vector2Int gridPos)
+    {
+        if (_tilePathCache.TryGetValue(gridPos, out var cachedPath))
+        {
+            return cachedPath;
+        }
+
+        string tileFileName = $"tile_{FormatCoordinate(gridPos.X)}_{FormatCoordinate(gridPos.Y)}.data";
+
+        var baseGamePath = Path.Combine(BaseGameMapsDir, MapName, tileFileName);
+        if (File.Exists(baseGamePath))
+        {
+            _tilePathCache[gridPos] = baseGamePath;
+            return baseGamePath;
+        }
+
+        if (Directory.Exists(ModsDir))
+        {
+            var modDirs = Directory.GetDirectories(ModsDir);
+            foreach (var modDir in modDirs)
+            {
+                var mapDir = Path.Combine(modDir, "Maps", MapName);
+                if (Directory.Exists(mapDir))
+                {
+                    var tilePath = Path.Combine(mapDir, tileFileName);
+                    if (File.Exists(tilePath))
+                    {
+                        _tilePathCache[gridPos] = tilePath;
+                        return tilePath;
+                    }
+                }
+            }
+        }
+
+        _tilePathCache[gridPos] = null;
+        return null;
+    }
+
+    private string FormatCoordinate(int coord)
+    {
+        if (coord < 0)
+        {
+            return $"-{Math.Abs(coord):D3}";
+        }
+        else
+        {
+            return $"{coord:D3}";
+        }
+    }
+
+    private float[,] LoadHeightmapFromPNG(string path)
+    {
+        var heightmap = new float[513, 513];
+
+        try
+        {
+            using var stream = File.OpenRead(path);
+            StbImage.stbi_set_flip_vertically_on_load(0);
+            var image = ImageResult.FromStream(stream, ColorComponents.RedGreenBlueAlpha);
+
+            byte[] pixels = image.Data;
+            for (int y = 0; y < 513; y++)
+            {
+                for (int x = 0; x < 513; x++)
+                {
+                    int idx = (y * 513 + x) * 4;
+                    byte r = pixels[idx + 0];
+                    byte g = pixels[idx + 1];
+                    ushort heightValue = (ushort)((r << 8) | g);
+                    float height = heightValue / 65.535f + 500.0f;
+                    heightmap[x, y] = height;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading heightmap: {ex.Message}");
+        }
+
+        return heightmap;
+    }
+
+    private float[,] GenerateFlatHeightmap()
+    {
+        var heightmap = new float[513, 513];
+        for (int z = 0; z < 513; z++)
+        {
+            for (int x = 0; x < 513; x++)
+            {
+                heightmap[x, z] = 500.0f;
+            }
+        }
+        return heightmap;
+    }
+
+    private void UnloadTile(Vector2Int gridPos)
+    {
+        if (_loadedTiles.TryGetValue(gridPos, out var tile))
+        {
+            tile.HeightmapTexture?.Dispose();
+            tile.DebugTexture?.Dispose();
+            _loadedTiles.Remove(gridPos);
+        }
+    }
+
+    public void Dispose()
+    {
+        foreach (var tile in _loadedTiles.Values)
+        {
+            tile.HeightmapTexture?.Dispose();
+            tile.DebugTexture?.Dispose();
+        }
+
+        _sharedTerrainMesh?.Dispose();
+        _terrainShader?.Dispose();
+        _terrainTestShader?.Dispose();
+    }
+}
+
+public class GLTerrainTile
+{
+    public Vector2Int GridPos { get; set; }
+    public float[,]? Heightmap { get; set; }
+    public GLTexture? HeightmapTexture { get; set; }
+    public GLTexture? DebugTexture { get; set; }
+
+    public Vector3 WorldPosition => new Vector3(GridPos.X * 512, 0, -GridPos.Y * 512);
+}
+
+public struct Vector2Int
+{
+    public int X { get; set; }
+    public int Y { get; set; }
+
+    public Vector2Int(int x, int y)
+    {
+        X = x;
+        Y = y;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is Vector2Int other && X == other.X && Y == other.Y;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(X, Y);
+    }
+
+    public static bool operator ==(Vector2Int a, Vector2Int b) => a.X == b.X && a.Y == b.Y;
+    public static bool operator !=(Vector2Int a, Vector2Int b) => !(a == b);
+}

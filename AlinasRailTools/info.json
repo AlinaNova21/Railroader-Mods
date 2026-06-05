@@ -1,0 +1,8 @@
+{
+  "Id": "AlinaNova21.AlinasRailTools",
+  "DisplayName": "Alina's Rail Tools",
+  "Author": "AlinaNova21",
+  "Version": "0.1.0",
+  "AssemblyName": "AlinasRailTools.dll",
+  "EntryMethod": "AlinasRailTools.UMM.Mod.Load"
+}

@@ -10,7 +10,7 @@ using Serilog;
 using UI.Builder;
 
 namespace AlinasUtils;
-public class AlinasUtilsPlugin : SingletonPluginBase<AlinasUtilsPlugin>, IUpdateHandler, IModTabHandler
+public class AlinasUtilsPlugin : SingletonPluginBase<AlinasUtilsPlugin>, IModTabHandler
 {
   internal IModdingContext ModdingContext { get; private set; }
   internal IModDefinition Definition { get; private set; }
@@ -91,10 +91,6 @@ public class AlinasUtilsPlugin : SingletonPluginBase<AlinasUtilsPlugin>, IUpdate
     //builder.AddButton("The Crash Rex Button", () => {
     //  MapManager.Instance.FetchAll();
     //});
-  }
-
-  public void Update()
-  {
   }
 
   public override void OnEnable()

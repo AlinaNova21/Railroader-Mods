@@ -1,0 +1,167 @@
+using Silk.NET.OpenGL;
+
+namespace AlinasRailTools.Editor.Rendering;
+
+/// <summary>
+/// OpenGL mesh with VAO, VBO, and optional EBO
+/// </summary>
+public class GLMesh : IDisposable
+{
+    private readonly GL _gl;
+    private readonly uint _vao;
+    private readonly uint _vbo;
+    private readonly uint _ebo;
+    private readonly int _vertexCount;
+    private readonly int _indexCount;
+    private readonly bool _hasIndices;
+
+    public uint VAO => _vao;
+    public int VertexCount => _vertexCount;
+    public int IndexCount => _indexCount;
+
+    /// <summary>
+    /// Create mesh with interleaved vertex data
+    /// Vertex format: Position (3 floats) + TexCoord (2 floats) + Normal (3 floats) = 8 floats per vertex
+    /// </summary>
+    public GLMesh(GL gl, float[] vertices, uint[]? indices = null)
+    {
+        _gl = gl;
+        _vertexCount = vertices.Length / 8; // 8 floats per vertex
+        _hasIndices = indices != null;
+        _indexCount = indices?.Length ?? 0;
+
+        // Generate VAO
+        _vao = _gl.GenVertexArray();
+        _gl.BindVertexArray(_vao);
+
+        // Generate and populate VBO
+        _vbo = _gl.GenBuffer();
+        _gl.BindBuffer(BufferTargetARB.ArrayBuffer, _vbo);
+
+        // Use safe span-based API
+        ReadOnlySpan<float> vertexSpan = vertices;
+        _gl.BufferData(BufferTargetARB.ArrayBuffer, vertexSpan, BufferUsageARB.StaticDraw);
+
+        // Setup vertex attributes
+        uint stride = 8 * sizeof(float);
+
+        // Position attribute (location 0)
+        _gl.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, stride, 0);
+        _gl.EnableVertexAttribArray(0);
+
+        // TexCoord attribute (location 1)
+        _gl.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, stride, 3 * sizeof(float));
+        _gl.EnableVertexAttribArray(1);
+
+        // Normal attribute (location 2)
+        _gl.VertexAttribPointer(2, 3, VertexAttribPointerType.Float, false, stride, 5 * sizeof(float));
+        _gl.EnableVertexAttribArray(2);
+
+        // Setup EBO if indices provided
+        if (_hasIndices && indices != null)
+        {
+            _ebo = _gl.GenBuffer();
+            _gl.BindBuffer(BufferTargetARB.ElementArrayBuffer, _ebo);
+
+            // Use safe span-based API
+            ReadOnlySpan<uint> indexSpan = indices;
+            _gl.BufferData(BufferTargetARB.ElementArrayBuffer, indexSpan, BufferUsageARB.StaticDraw);
+        }
+
+        // Unbind VAO
+        _gl.BindVertexArray(0);
+
+        Console.WriteLine($"[GLMesh] Created mesh with {_vertexCount} vertices, {(_hasIndices ? $"{_indexCount} indices" : "no indices")}");
+    }
+
+    /// <summary>
+    /// Generate a plane mesh with specified subdivisions
+    /// </summary>
+    public static GLMesh CreatePlane(GL gl, float width, float height, int subdivisionsX, int subdivisionsZ)
+    {
+        var vertices = new List<float>();
+        var indices = new List<uint>();
+
+        float halfWidth = width / 2.0f;
+        float halfHeight = height / 2.0f;
+
+        // Generate vertices
+        for (int z = 0; z <= subdivisionsZ; z++)
+        {
+            for (int x = 0; x <= subdivisionsX; x++)
+            {
+                float xPos = ((float)x / subdivisionsX) * width - halfWidth;
+                float zPos = ((float)z / subdivisionsZ) * height - halfHeight;
+                float u = (float)x / subdivisionsX;
+                float v = (float)z / subdivisionsZ;
+
+                // Position
+                vertices.Add(xPos);
+                vertices.Add(0.0f); // Y = 0, shader will displace
+                vertices.Add(zPos);
+
+                // TexCoord
+                vertices.Add(u);
+                vertices.Add(v);
+
+                // Normal (up)
+                vertices.Add(0.0f);
+                vertices.Add(1.0f);
+                vertices.Add(0.0f);
+            }
+        }
+
+        // Generate indices
+        for (int z = 0; z < subdivisionsZ; z++)
+        {
+            for (int x = 0; x < subdivisionsX; x++)
+            {
+                uint topLeft = (uint)(z * (subdivisionsX + 1) + x);
+                uint topRight = topLeft + 1;
+                uint bottomLeft = (uint)((z + 1) * (subdivisionsX + 1) + x);
+                uint bottomRight = bottomLeft + 1;
+
+                // First triangle
+                indices.Add(topLeft);
+                indices.Add(bottomLeft);
+                indices.Add(topRight);
+
+                // Second triangle
+                indices.Add(topRight);
+                indices.Add(bottomLeft);
+                indices.Add(bottomRight);
+            }
+        }
+
+        return new GLMesh(gl, vertices.ToArray(), indices.ToArray());
+    }
+
+    public void Bind()
+    {
+        _gl.BindVertexArray(_vao);
+    }
+
+    public void Draw()
+    {
+        Bind();
+
+        if (_hasIndices)
+        {
+            _gl.DrawElements(PrimitiveType.Triangles, (uint)_indexCount, DrawElementsType.UnsignedInt, 0);
+        }
+        else
+        {
+            _gl.DrawArrays(PrimitiveType.Triangles, 0, (uint)_vertexCount);
+        }
+    }
+
+    public void Dispose()
+    {
+        _gl.DeleteBuffer(_vbo);
+        if (_hasIndices)
+        {
+            _gl.DeleteBuffer(_ebo);
+        }
+        _gl.DeleteVertexArray(_vao);
+    }
+}

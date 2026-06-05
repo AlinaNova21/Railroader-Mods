@@ -1,7 +1,7 @@
 ﻿<Project>
   <PropertyGroup>
     <!-- Use RefasMer reference assemblies when available -->
-    <UseReferenceAssemblies Condition="'$(UseReferenceAssemblies)' == ''">true</UseReferenceAssemblies>
+    <UseReferenceAssemblies Condition="'$(UseReferenceAssemblies)' == ''">false</UseReferenceAssemblies>
     <ReferenceAssembliesDir Condition="'$(ReferenceAssembliesDir)' == ''">$(MSBuildThisFileDirectory)ref-assemblies</ReferenceAssembliesDir>
 	<BepInExCoreDir Condition="'$(BepInExCoreDir)' == ''">$([System.IO.Path]::Combine(`$(GameDir)`, `BepInEx`, `core`))</BepInExCoreDir>
 
@@ -46,12 +46,7 @@
     
     <!-- Fallback to game assemblies if reference assemblies not available or disabled -->
     <Reference Include="@(GameAssembly)" Condition="'$(UseReferenceAssemblies)' != 'true'">
-	  <HintPath Condition="Exists('$([System.IO.Path]::Combine(`$(GameManagedDir)`, `%(Identity).dll`))')"
-        >$([System.IO.Path]::Combine(`$(GameManagedDir)`, `%(Identity).dll`))</HintPath
-      >
-      <HintPath Condition="Exists('$([System.IO.Path]::Combine(`$(GameManagedDir)`, `%(Identity).exe`))')"
-        >$([System.IO.Path]::Combine(`$(GameManagedDir)`, `%(Identity).exe`))</HintPath
-      >
+	  <HintPath>$(GameManagedDir)/%(Identity).dll</HintPath>
       <Private>false</Private>
     </Reference>
     <!-- Allow referencing things like OtherMod/Mod.dll -->

@@ -30,6 +30,9 @@ internal class TileManager : SingletonModBase<TileManager>
   private Dictionary<Vector2Int, string> index = [];
   private bool HasAttemptedToDownloadIndex = false;
 
+  // Provider tracking per MapStore instance
+  private Dictionary<MapStore, RuntimeTileProviderProxy> providers = [];
+
   public TileManager()
   {
         Messenger.Default.Register<MapWillLoadEvent>(this, e => {
@@ -37,6 +40,7 @@ internal class TileManager : SingletonModBase<TileManager>
             tilepaths = [];
             requested.Clear();
             index.Clear();
+            providers.Clear();
         });
         Messenger.Default.Register<GraphWillChangeEvent>(this, e => {
             if (!e.State.Texts.TryGetValue("mapName", out var mapName)) {
@@ -220,5 +224,23 @@ internal class TileManager : SingletonModBase<TileManager>
     }
 
     return "";
+  }
+
+  /// <summary>
+  /// Registers a tile provider proxy for a specific MapStore instance.
+  /// </summary>
+  internal void RegisterProvider(MapStore store, RuntimeTileProviderProxy proxy)
+  {
+    providers[store] = proxy;
+    Logger.Information("Registered {providerType} provider for map store",
+      proxy.GetProviderType());
+  }
+
+  /// <summary>
+  /// Gets the registered tile provider proxy for a MapStore instance, if any.
+  /// </summary>
+  internal RuntimeTileProviderProxy? GetProvider(MapStore store)
+  {
+    return providers.TryGetValue(store, out var proxy) ? proxy : null;
   }
 }

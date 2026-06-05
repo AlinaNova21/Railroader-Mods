@@ -10,8 +10,6 @@ namespace AlinasUtils;
 
 internal class CTCDialog : WindowBase
 {
-  private readonly Window _Window;
-
   public override string WindowIdentifier => "ctc-dialog";
 
   public override string Title => "CTC";

@@ -1,0 +1,68 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- Optionally, set a few things to your liking -->
+    <MajorVersion>0</MajorVersion>
+    <MinorVersion>1</MinorVersion>
+    <IsMod>true</IsMod>
+	<IsPlugin>false</IsPlugin>
+    <PackageMod>true</PackageMod>
+    <PublishMod>false</PublishMod>
+    <Configurations>Debug;Release;PrivateTesting;Testing</Configurations>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PrivateTesting|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Testing|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="*.json" CopyToOutputDirectory="Always" />
+    <Content Include="docs/*" CopyToOutputDirectory="Always" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Core game assemblies needed for ART -->
+    <GameAssembly Include="Assembly-CSharp" />
+    <GameAssembly Include="0Harmony" />
+    <GameAssembly Include="Core" />
+    <GameAssembly Include="Definition" />
+	<GameAssembly Include="KeyValue.Runtime" />
+	<GameAssembly Include="Map.Runtime" />
+	<GameAssembly Include="Serilog" />
+    <GameAssembly Include="Newtonsoft.Json" />
+	<GameAssembly Include="UnityEngine" />
+	<GameAssembly Include="UnityEngine.CoreModule" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>..\ref-assemblies\Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityModManager">
+      <HintPath>..\..\..\..\..\..\Users\ashum\Downloads\UnityModManagerInstaller\UnityModManager.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup><!--BepInExReference Include="BepInEx" /-->
+  
+    <Compile Remove="BepinEx\**" />
+    <Content Remove="BepinEx\**" />
+    <EmbeddedResource Remove="BepinEx\**" />
+    <None Remove="BepinEx\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.14.0" />
+    <PackageReference Include="YamlDotNet" Version="16.3.0" />
+    <PackageReference Include="Tomlyn" Version="0.19.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AlinasRailTools.Shared\AlinasRailTools.Shared.csproj" />
+  </ItemGroup>
+</Project>

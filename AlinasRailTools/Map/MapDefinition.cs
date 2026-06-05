@@ -1,0 +1,20 @@
+using System.Collections.Generic;
+using Character;
+using Game.Progression;
+using UnityEngine;
+
+namespace AlinasRailTools.Map;
+
+public struct MapDefinition
+{
+    public string Identifier { get; set; }
+    public string MapName { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public string ProgressionId { get; set; }
+    public int InitialMoney { get; set; }
+    public Vector3 SpawnPosition { get; set; }
+    public Vector3 SpawnRotation { get; set; }
+    public List<SetupDescriptor.CarPlacement> CarPlacements { get; set; }
+    public bool ShowTutorial { get; set; }
+}
